@@ -16,29 +16,29 @@ class _StandingsState extends State<Standings> {
   Future<bool> loadData() async {
     bool complete = false;
     String year = Provider.of<JsonFiles>(context, listen: false).getYear();
+    String seasonStage =
+        Provider.of<JsonFiles>(context, listen: false).getSeasonStage();
     try {
-      var eastJson = await Network.getJson(Urls.eastStandingsUrl(year));
-      var westJson = await Network.getJson(Urls.westStandingsUrl(year));
+      // var eastJson = await Network.getJson(Urls.eastStandingsUrl(year));
+      // var westJson = await Network.getJson(Urls.westStandingsUrl(year));
+      var standings = await Network.getJson(Urls.nbaConferenceStandings());
+      var divStandings = await Network.getJson(Urls.nbaDivisionStandings());
       var seasons = await Network.getJson(Urls.seasonsUrl);
       var players = await Network.getJson(Urls.nbaAllPlayers());
       var teams = await Network.getJson(Urls.nbaAllTeams());
+      var teamStats = await Network.getJson(Urls.nbaTeamStats(year));
 
-      Provider.of<JsonFiles>(context, listen: false).setEastStandings(eastJson);
-      Provider.of<JsonFiles>(context, listen: false).setWestStandings(westJson);
+      Provider.of<JsonFiles>(context, listen: false)
+          .setConfStandings(standings);
+      Provider.of<JsonFiles>(context, listen: false)
+          .setDivStandings(divStandings);
       Provider.of<JsonFiles>(context, listen: false).setSeasons(seasons);
       Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
       Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
+      Provider.of<JsonFiles>(context, listen: false).setTeamStats(teamStats);
 
-      for (int idx = 0; idx < 15; idx++) {
-        Provider.of<JsonFiles>(context, listen: false)
-            .setEastIdIndex(eastJson["api"]["standings"][idx]["teamId"], idx);
-        Provider.of<JsonFiles>(context, listen: false)
-            .setWestIdIndex(westJson["api"]["standings"][idx]["teamId"], idx);
-      }
-      if ((Provider.of<JsonFiles>(context, listen: false).getEastStandings() !=
-              null) &&
-          (Provider.of<JsonFiles>(context, listen: false).getWestStandings() !=
-              null)) {
+      if (Provider.of<JsonFiles>(context, listen: false).getStandings() !=
+          null) {
         complete = true; // data gotten
       }
     } catch (e) {
@@ -98,6 +98,84 @@ class _StandingsState extends State<Standings> {
     );
   }
 
+  Widget getSeasonStageSelectDialog() {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      elevation: 12,
+      child: Container(
+        padding: EdgeInsets.all(15),
+        height: MediaQuery.of(context).size.height - 250,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Select Season Stage:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Divider(
+              thickness: 1,
+              color: Colors.red,
+            ),
+            ListView(
+              children: [
+                Center(
+                  child: ListTile(
+                    onTap: () {
+                      setState(() {
+                        Provider.of<JsonFiles>(context, listen: false)
+                            .setSeasonStage("1");
+                      });
+                      loadData();
+                      Navigator.pop(context);
+                    },
+                    title: Text('Preseason',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Center(
+                  child: ListTile(
+                    onTap: () {
+                      setState(() {
+                        Provider.of<JsonFiles>(context, listen: false)
+                            .setSeasonStage("2");
+                      });
+                      loadData();
+                      Navigator.pop(context);
+                    },
+                    title: Text('Regular Season',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Center(
+                  child: ListTile(
+                    onTap: () {
+                      setState(() {
+                        Provider.of<JsonFiles>(context, listen: false)
+                            .setSeasonStage("3");
+                      });
+                      loadData();
+                      Navigator.pop(context);
+                    },
+                    title: Text('Postseason',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ],
+              shrinkWrap: true,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     String year =
@@ -124,6 +202,21 @@ class _StandingsState extends State<Standings> {
                     }),
               },
             ),
+            RaisedButton(
+              child: Text(
+                Provider.of<JsonFiles>(context, listen: false)
+                    .getSeasonStageFormatted(),
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.blue[400],
+              onPressed: () => {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return getSeasonStageSelectDialog();
+                    }),
+              },
+            ),
           ],
           bottom: TabBar(
             tabs: [
@@ -136,34 +229,18 @@ class _StandingsState extends State<Standings> {
             ],
           ),
         ),
-        body: ((Provider.of<JsonFiles>(context, listen: false)
-                        .getEastStandings()) ==
-                    null &&
-                (Provider.of<JsonFiles>(context, listen: false)
-                        .getEastStandings() ==
-                    null))
+        body: (Provider.of<JsonFiles>(context, listen: false).getStandings() ==
+                null)
             ? FutureBuilder(
                 future: loadData(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   Widget table;
                   if (snapshot.data == true) {
                     table = Bar(
-                      eastTable:
-                          Provider.of<JsonFiles>(context).getEastStandings(),
-                      westTable:
-                          Provider.of<JsonFiles>(context).getWestStandings(),
-                      southeastTable: Provider.of<JsonFiles>(context)
-                          .getSoutheastStandings(),
-                      southwestTable: Provider.of<JsonFiles>(context)
-                          .getSouthwestStandings(),
-                      northwestTable: Provider.of<JsonFiles>(context)
-                          .getNorthwestStandings(),
-                      centralTable:
-                          Provider.of<JsonFiles>(context).getCentralStandings(),
-                      atlanticTable: Provider.of<JsonFiles>(context)
-                          .getAtlanticStandings(),
-                      pacificTable:
-                          Provider.of<JsonFiles>(context).getPacificStandings(),
+                      confStandings:
+                          Provider.of<JsonFiles>(context).getStandings(),
+                      divStandings:
+                          Provider.of<JsonFiles>(context).getDivStandings(),
                     );
                   } else if (snapshot.data == false) {
                     table = NoConnection();
@@ -176,8 +253,8 @@ class _StandingsState extends State<Standings> {
                 },
               )
             : Bar(
-                eastTable: Provider.of<JsonFiles>(context).getEastStandings(),
-                westTable: Provider.of<JsonFiles>(context).getWestStandings(),
+                confStandings: Provider.of<JsonFiles>(context).getStandings(),
+                divStandings: Provider.of<JsonFiles>(context).getDivStandings(),
               ),
       ),
     );

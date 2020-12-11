@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/standings_widgets/table.dart';
 import 'package:hoop/components/standings_widgets/table_div.dart';
-import 'package:hoop/json/jsons.dart';
-import 'package:provider/provider.dart';
-import '../../constant.dart';
 
 class Bar extends StatelessWidget {
-  final dynamic eastTable;
-  final dynamic westTable;
-  final dynamic southwestTable;
-  final dynamic southeastTable;
-  final dynamic northwestTable;
-  final dynamic centralTable;
-  final dynamic atlanticTable;
-  final dynamic pacificTable;
-  Bar(
-      {this.eastTable,
-      this.westTable,
-      this.southeastTable,
-      this.southwestTable,
-      this.northwestTable,
-      this.centralTable,
-      this.atlanticTable,
-      this.pacificTable});
+  final dynamic confStandings;
+  final dynamic divStandings;
+  Bar({this.confStandings, this.divStandings});
   @override
   Widget build(BuildContext context) {
     return TabBarView(
@@ -31,11 +14,16 @@ class Bar extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 'Eastern Conference',
                 style: TextStyle(fontSize: 18),
               ),
-              ConfTable(json: eastTable, teamIds: eastID),
+              ConfTable(
+                  json: confStandings["league"]["standard"]["conference"]
+                      ["east"]),
               SizedBox(
                 height: 30,
               ),
@@ -43,7 +31,9 @@ class Bar extends StatelessWidget {
                 'Western Conference',
                 style: TextStyle(fontSize: 18),
               ),
-              ConfTable(json: westTable, teamIds: westID),
+              ConfTable(
+                  json: confStandings["league"]["standard"]["conference"]
+                      ["west"]),
             ],
           ),
         ),
@@ -51,13 +41,16 @@ class Bar extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 'Atlantic Division',
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getAtlanticStandings(),
-                  teamIds: atlanticId),
+                  json: divStandings["league"]["standard"]["conference"]["east"]
+                      ["atlantic"]),
               SizedBox(
                 height: 20,
               ),
@@ -66,8 +59,8 @@ class Bar extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getCentralStandings(),
-                  teamIds: centralId),
+                  json: divStandings["league"]["standard"]["conference"]["east"]
+                      ["central"]),
               SizedBox(
                 height: 20,
               ),
@@ -76,8 +69,8 @@ class Bar extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getSoutheastStandings(),
-                  teamIds: southeastId),
+                  json: divStandings["league"]["standard"]["conference"]["east"]
+                      ["southeast"]),
               SizedBox(
                 height: 20,
               ),
@@ -86,8 +79,8 @@ class Bar extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getNorthwestStandings(),
-                  teamIds: northwestId),
+                  json: divStandings["league"]["standard"]["conference"]["west"]
+                      ["northwest"]),
               SizedBox(
                 height: 20,
               ),
@@ -96,8 +89,8 @@ class Bar extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getPacificStandings(),
-                  teamIds: pacificId),
+                  json: divStandings["league"]["standard"]["conference"]["west"]
+                      ["pacific"]),
               SizedBox(
                 height: 20,
               ),
@@ -106,8 +99,8 @@ class Bar extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               DivTable(
-                  json: Provider.of<JsonFiles>(context).getSouthwestStandings(),
-                  teamIds: southwestId),
+                  json: divStandings["league"]["standard"]["conference"]["west"]
+                      ["southwest"]),
             ],
           ),
         )

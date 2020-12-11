@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 
 class JsonFiles with ChangeNotifier {
-  String _year = "2019";
-  var _westStandings;
-  var _eastStandings;
+  String _year = "2020";
+  String _seasonStage = "2";
+  // var _westStandings;
+  // var _eastStandings;
+  //var _confStandings2;
+  //var _divStandings2;
+  var _teamStats;
   var _seasons;
-  List _southwestStandings = new List();
-  List _centralStandings = new List();
-  List _atlanticStandings = new List();
-  List _southeastStandings = new List();
-  List _pacificStandings = new List();
-  List _northwestStandings = new List();
+  var _transactions;
+
   Map _confStandings;
   Map _divStandings;
   var _eastId;
@@ -18,8 +18,9 @@ class JsonFiles with ChangeNotifier {
   var _games;
   Map _idEastIndex = {};
   Map _idWestIndex = {};
-  List<dynamic> _teamNews;
+  //List<dynamic> _teamNews;
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
+  Map<String, dynamic> _teamNews = {}; // teamID,Player_list
 
   //Nba Api variables
   var _allPlayers;
@@ -27,12 +28,16 @@ class JsonFiles with ChangeNotifier {
 
   void setYear(String year) {
     _year = year;
-    print(_year);
     notifyListeners();
   }
 
-  void setTeamNews(List<dynamic> news) {
-    _teamNews = news;
+  void setSeasonStage(String stage) {
+    _seasonStage = stage;
+    notifyListeners();
+  }
+
+  void setTeamNews(String teamId, dynamic news) {
+    _teamNews[teamId] = news;
   }
 
   void setAllPlayers(dynamic json) {
@@ -43,52 +48,29 @@ class JsonFiles with ChangeNotifier {
     _allTeams = json;
   }
 
-  void setWestStandings(dynamic json) {
-    _westStandings = json;
+  void setTeamStats(dynamic json) {
+    _teamStats = json;
+  }
 
-    for (int i = 0; i < _westStandings["api"]["standings"].length; i++) {
-      var team = _westStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "southwest") {
-        _southwestStandings.add(team);
-      }
-      if (team["division"]["name"] == "northwest") {
-        _northwestStandings.add(team);
-      }
-      if (team["division"]["name"] == "pacific") {
-        _pacificStandings.add(team);
-      }
-    }
+  void setTransactions(dynamic json) {
+    _transactions = json;
+  }
+
+  void setConfStandings(dynamic json) {
+    _confStandings = json;
+
     notifyListeners();
   }
 
-  void setEastStandings(dynamic json) {
-    _eastStandings = json;
+  void setDivStandings(dynamic json) {
+    _divStandings = json;
 
-    for (int i = 0; i < _eastStandings["api"]["standings"].length; i++) {
-      var team = _eastStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "atlantic") {
-        _atlanticStandings.add(team);
-      }
-      if (team["division"]["name"] == "central") {
-        _centralStandings.add(team);
-      }
-      if (team["division"]["name"] == "southeast") {
-        _southeastStandings.add(team);
-      }
-    }
     notifyListeners();
   }
 
   void setSeasons(dynamic json) {
     _seasons = json;
     notifyListeners();
-  }
-
-  void setConferenceStandings() {
-    if (_eastStandings && _westStandings) {
-      _confStandings.addAll(_eastStandings);
-      _confStandings.addAll(_westStandings);
-    }
   }
 
   void setEastIdIndex(String teamKey, int listLoc) {
@@ -125,7 +107,35 @@ class JsonFiles with ChangeNotifier {
     return _year + "-" + yearPlusOne;
   }
 
-  List<dynamic> getNews() => _teamNews;
+  String getSeasonStage() => _seasonStage;
+  String getSeasonStageFormatted() {
+    if (_seasonStage == "1") {
+      return "Preseason";
+    } else if (_seasonStage == "2") {
+      return "Regular Season";
+    } else {
+      return "Postseason";
+    }
+  }
+
+  dynamic getPlayer(String playerId) {
+    dynamic player;
+
+    if (_allPlayers != null) {
+      for (var p in _allPlayers["league"]["standard"]) {
+        if (p["personId"] == playerId) {
+          player = p;
+          break;
+        }
+      }
+    }
+
+    return player;
+  }
+
+  List<dynamic> getNews(String teamId) => _teamNews[teamId];
+
+  dynamic getTransactions() => _transactions;
 
   dynamic getAllPlayers() => _allPlayers;
   dynamic getAllTeams() => _allTeams;
@@ -142,83 +152,49 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getSeasons() => _seasons;
 
-  dynamic getEastStandings() => _eastStandings;
-
-  dynamic getWestStandings() => _westStandings;
+  dynamic getStandings() => _confStandings;
 
   dynamic getConfStandings() => _confStandings;
+  dynamic getDivStandings() => _divStandings;
 
-  dynamic getSouthwestStandings() {
-    _southwestStandings.clear();
-    for (int i = 0; i < _westStandings["api"]["standings"].length; i++) {
-      var team = _westStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "southwest") {
-        _southwestStandings.add(team);
+  dynamic getAllTeamStats() => _teamStats;
+  dynamic getTeamStats(String teamId) {
+    dynamic team;
+    if (_teamStats != null) {
+      for (var t in _teamStats["league"]["standard"]["regularSeason"]
+          ["teams"]) {
+        if (t["teamId"] == teamId) {
+          team = t;
+          break;
+        }
       }
     }
-
-    return _southwestStandings;
-  }
-
-  dynamic getSoutheastStandings() {
-    _southeastStandings.clear();
-    for (int i = 0; i < _eastStandings["api"]["standings"].length; i++) {
-      var team = _eastStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "southeast") {
-        _southeastStandings.add(team);
-      }
-    }
-
-    return _southeastStandings;
-  }
-
-  dynamic getNorthwestStandings() {
-    _northwestStandings.clear();
-    for (int i = 0; i < _westStandings["api"]["standings"].length; i++) {
-      var team = _westStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "northwest") {
-        _northwestStandings.add(team);
-      }
-    }
-
-    return _northwestStandings;
-  }
-
-  dynamic getCentralStandings() {
-    _centralStandings.clear();
-    for (int i = 0; i < _eastStandings["api"]["standings"].length; i++) {
-      var team = _eastStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "central") {
-        _centralStandings.add(team);
-      }
-    }
-
-    return _centralStandings;
-  }
-
-  dynamic getAtlanticStandings() {
-    _atlanticStandings.clear();
-    for (int i = 0; i < _eastStandings["api"]["standings"].length; i++) {
-      var team = _eastStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "atlantic") {
-        _atlanticStandings.add(team);
-      }
-    }
-
-    return _atlanticStandings;
-  }
-
-  dynamic getPacificStandings() {
-    _pacificStandings.clear();
-    for (int i = 0; i < _westStandings["api"]["standings"].length; i++) {
-      var team = _westStandings["api"]["standings"][i];
-      if (team["division"]["name"] == "pacific") {
-        _pacificStandings.add(team);
-      }
-    }
-
-    return _pacificStandings;
+    return team;
   }
 
   dynamic getTeamRoster(String teamId) => _teamPlayers[teamId];
+
+  String getTeamName(String teamId) {
+    String name = "";
+
+    for (var t in _allTeams["league"]["standard"]) {
+      if (t["teamId"] == teamId) {
+        name = t["fullName"];
+      }
+    }
+
+    return name;
+  }
+
+  String getPlayerName(String playerId) {
+    String name = "";
+
+    for (var p in _allPlayers["league"]["standard"]) {
+      if (p["personId"] == playerId) {
+        name = p["firstName"] + " " + p["lastName"];
+      }
+    }
+
+    return name;
+  }
 }

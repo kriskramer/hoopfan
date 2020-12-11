@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/games_view/games.dart';
+import 'package:hoop/screens/views/news_view/news_main.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
-import 'package:hoop/screens/views/teams_view/players.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -13,7 +13,8 @@ class _LayoutState extends State<Layout> {
   List<Widget> views = [
     Standings(),
     Games(),
-    Players(),
+    //Players(),
+    NewsMainScreen(),
   ];
 
   void onTapChangeView(int index) {
@@ -40,7 +41,7 @@ class _LayoutState extends State<Layout> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: "Teams",
+              label: "News",
             ),
           ],
           currentIndex: _selectedScreen,

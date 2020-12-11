@@ -2,53 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/screens/views/teams_view/teaminfo.dart';
-import 'package:hoop/services/network.dart';
-import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
-import 'package:hoop/json/jsons.dart';
 
 // Generates list of teams in alphabetical order and displays as a card
 List<Widget> teams(BuildContext context) {
   List<Widget> teamCard = [];
   Map allTeams = {}; // combine all teams into single map
-  allTeams.addAll(eastID);
-  allTeams.addAll(westID);
-
-  Map nbaTeams = {};
-  nbaTeams = Provider.of<JsonFiles>(context, listen: false).getAllTeams();
+  allTeams.addAll(allTeams);
 
   for (String id in sortedIds) {
     teamCard.add(
       GestureDetector(
         onTap: () {
-          dynamic teamsJson;
-          if ((Provider.of<JsonFiles>(context, listen: false)
-                      .getEastStandings() !=
-                  null &&
-              Provider.of<JsonFiles>(context, listen: false)
-                      .getEastStandings() !=
-                  null)) {
-            if (allTeams[id][3] == "East") {
-              int indexPos = Provider.of<JsonFiles>(context, listen: false)
-                  .getEastIdIndex()[id];
-              teamsJson = Provider.of<JsonFiles>(context, listen: false)
-                  .getEastStandings()["api"]["standings"][indexPos];
-            } else if (allTeams[id][3] == "West") {
-              int indexPos = Provider.of<JsonFiles>(context, listen: false)
-                  .getWestIdIndex()[id];
-              teamsJson = Provider.of<JsonFiles>(context, listen: false)
-                  .getWestStandings()["api"]["standings"][indexPos];
-            }
-          }
+          //dynamic teamsJson;
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => TeamDetails(
-                teamurl: allTeams[id][2],
-                json: teamsJson,
-                fullName: allTeams[id][0],
-                shortName: allTeams[id][1],
-                triCode: allTeams[id][4],
                 nbaTeamId: allTeams[id][5],
               ),
             ),
@@ -70,9 +40,9 @@ List<Widget> teams(BuildContext context) {
                   CircleAvatar(
                     child: CachedLogo(
                       url: allTeams[id][2],
-                      radius: 40,
+                      radius: 20,
                     ),
-                    radius: 40,
+                    radius: 20,
                     backgroundColor: Colors.transparent,
                   ),
                   Text(

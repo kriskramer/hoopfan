@@ -6,18 +6,26 @@ import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class TeamNewsPage extends StatelessWidget {
-  final String team;
-  TeamNewsPage(this.team);
+  final String teamName;
+  final String teamId;
+  TeamNewsPage(this.teamName, this.teamId);
 
   Future<bool> loadNews(BuildContext context) async {
     bool complete = false;
-    try {
-      var news = await Network.getJson(Urls.teamNews(this.team));
-      Provider.of<JsonFiles>(context, listen: false).setTeamNews(news);
-    } catch (e) {
-      print(e);
+
+    if (Provider.of<JsonFiles>(context, listen: false).getNews(teamId) ==
+        null) {
+      try {
+        var news = await Network.getJson(Urls.teamNews(this.teamName));
+        if (news != null) {
+          Provider.of<JsonFiles>(context, listen: false)
+              .setTeamNews(teamId, news["entries"]);
+        }
+      } catch (e) {
+        print(e);
+      }
+      complete = true;
     }
-    complete = true;
 
     return complete;
   }
@@ -26,15 +34,15 @@ class TeamNewsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$team News'),
+        title: Text('$teamName News'),
       ),
       body: SingleChildScrollView(
           child: FutureBuilder(
               future: this.loadNews(context),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
-                  dynamic json =
-                      Provider.of<JsonFiles>(context, listen: false).getNews();
+                  dynamic json = Provider.of<JsonFiles>(context, listen: false)
+                      .getNews(teamId);
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -46,7 +54,7 @@ class TeamNewsPage extends StatelessWidget {
                         padding: EdgeInsets.all(8),
                         child: InkWell(
                           onTap: () {
-                            Network.launchSite(json[index]["url"]);
+                            Network.launchSite(json[index]["link"]);
                           },
                           child: Column(
                             children: [
@@ -67,14 +75,12 @@ class TeamNewsPage extends StatelessWidget {
                               SizedBox(
                                 height: 4,
                               ),
-                              Text(json[index]["description"]
-                                  .toString()
-                                  .replaceAll('\n', '')),
+                              Text(removeAllHtmlTags(json[index]["summary"])),
                               SizedBox(
                                 height: 4,
                               ),
                               Text(
-                                json[index]["url"],
+                                json[index]["link"],
                                 style: TextStyle(
                                   fontSize: 10,
                                 ),
@@ -111,5 +117,12 @@ class TeamNewsPage extends StatelessWidget {
                 }
               })),
     );
+  }
+
+  String removeAllHtmlTags(String htmlText) {
+    htmlText = htmlText.replaceAll("&nbsp;", " ");
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    return htmlText.replaceAll(exp, '');
   }
 }

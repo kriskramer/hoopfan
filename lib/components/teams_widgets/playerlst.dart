@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/components/teams_widgets/roster.dart';
@@ -9,12 +7,13 @@ import 'package:provider/provider.dart';
 
 class PlayerList extends StatelessWidget {
   final String teamId;
-  PlayerList({this.teamId});
+  final int teamColor;
 
-  List<Map> teamRoster = new List<Map>();
+  PlayerList({@required this.teamId, this.teamColor});
 
   @override
   Widget build(BuildContext context) {
+    List<Map> teamRoster = new List<Map>();
     return Provider.of<JsonFiles>(context, listen: false)
                 .getTeamRoster(teamId) ==
             null
@@ -37,6 +36,7 @@ class PlayerList extends StatelessWidget {
                     teamId, teamRoster); // add teamRoster json to Provider
                 playerList = Roster(
                   json: teamRoster,
+                  teamColor: teamColor,
                 );
               } else if (snapshot.hasError) {
                 playerList = Column(
@@ -60,6 +60,7 @@ class PlayerList extends StatelessWidget {
         : Roster(
             json: Provider.of<JsonFiles>(context, listen: false)
                 .getTeamRoster(teamId),
+            teamColor: teamColor,
           );
   }
 }

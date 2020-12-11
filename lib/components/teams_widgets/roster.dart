@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
-import 'package:provider/provider.dart';
 
 class Roster extends StatelessWidget {
   final dynamic json;
-  Roster({this.json});
+  final int teamColor;
+
+  Roster({@required this.json, this.teamColor});
+
   List<List<DataRow>> roster(BuildContext ctx) {
     List<DataRow> playerNames = [];
     List<DataRow> playerAttributes = [];
     for (int index = 0; index < json.length; index++) {
       dynamic player = json[index];
-      //Map league = player["leagues"];
       if (player["isActive"]) {
-        // && league.keys.contains("standard")) {
         playerNames.add(
           DataRow(
             cells: [
@@ -27,7 +26,10 @@ class Roster extends StatelessWidget {
                 Navigator.push(
                   ctx,
                   MaterialPageRoute(
-                    builder: (context) => PlayerDetail(json: player),
+                    builder: (context) => PlayerDetail(
+                      json: player,
+                      teamColor: teamColor,
+                    ),
                   ),
                 );
               }),

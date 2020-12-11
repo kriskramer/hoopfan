@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/components/games_widgets/game_card.dart';
 import 'package:hoop/components/games_widgets/time.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/model/game_details.dart';
 
-//TODO: group game cards based on the date played
 class SeasonGames extends StatelessWidget {
   final dynamic jsonFile;
   SeasonGames({this.jsonFile});
