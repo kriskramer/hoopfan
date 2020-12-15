@@ -8,6 +8,26 @@ class ScheduleHelper {
 
     return null;
   }
+
+  static List<dynamic> getUpcomingSchedule() {
+    DateTime today = new DateTime.now();
+    String year = today.year.toString();
+    String month = today.month.toString();
+    String day = today.day.toString();
+    String todayString = "${year + month + day}";
+
+    var sched = current_season_schedule["league"]["standard"];
+    List<dynamic> upcomingGames = new List<dynamic>();
+
+    for (var g in sched) {
+      print(g);
+      if (int.parse(todayString) < int.parse(g["startDateEastern"])) {
+        upcomingGames.add(g);
+      }
+    }
+
+    return upcomingGames;
+  }
 }
 
 // 2020 schedule - all teams

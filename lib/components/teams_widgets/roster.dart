@@ -27,8 +27,7 @@ class Roster extends StatelessWidget {
                   ctx,
                   MaterialPageRoute(
                     builder: (context) => PlayerDetail(
-                      json: player,
-                      teamColor: teamColor,
+                      playerId: player["personId"],
                     ),
                   ),
                 );

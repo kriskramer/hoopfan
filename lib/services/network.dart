@@ -28,6 +28,24 @@ class Network {
     }
   }
 
+  static Future<dynamic> getJsonWithBingHeader(String url) async {
+    // make request to get Json file
+    try {
+      var response = await http.get(url, headers: {
+        'Ocp-Apim-Subscription-Key': "235ced56b4ba4206a1e59e1785657176"
+      });
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var json = convert.jsonDecode(response.body);
+          return json;
+        }
+      }
+    } catch (e) {
+      //TODO: Handle this exception
+      print(e);
+    }
+  }
+
   static Future<void> launchSite(String url) async {
     if (await canLaunch(url)) {
       await launch(

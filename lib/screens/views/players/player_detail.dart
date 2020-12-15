@@ -2,22 +2,32 @@ import 'package:flutter/material.dart';
 
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/constant.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:provider/provider.dart';
 
 class PlayerDetail extends StatelessWidget {
-  final dynamic json;
-  final int teamColor;
+  final String playerId;
 
-  PlayerDetail({@required this.json, this.teamColor});
+  PlayerDetail({@required this.playerId});
 
   @override
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
+    var player =
+        Provider.of<JsonFiles>(context, listen: false).getPlayer(playerId);
+
+    var teamColor = ConstantHelper.getTeamColor(player["teamId"]);
+    var teamTextColor = ConstantHelper.getTeamTextColor(player["teamId"]);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Player Details'),
+        title: Text(
+          'Player Details',
+          style: TextStyle(color: Color(teamTextColor)),
+        ),
         backgroundColor: teamColor != null
             ? Color(teamColor)
             : Theme.of(context).primaryColor,
@@ -29,30 +39,30 @@ class PlayerDetail extends StatelessWidget {
               children: [
                 CachedLogo(
                   url:
-                      "https://cdn.nba.com/headshots/nba/latest/1040x760/${json["personId"]}.png",
+                      "https://cdn.nba.com/headshots/nba/latest/1040x760/${player["personId"]}.png",
                   radius: 100,
                 ),
                 Column(
                   children: [
                     Text(
-                      json["firstName"],
+                      player["firstName"],
                       style: TextStyle(fontSize: 30),
                     ),
                     Text(
-                      json["lastName"],
+                      player["lastName"],
                       style: TextStyle(fontSize: 24),
                     ),
                     Row(
                       children: [
                         Text(
-                          "#" + json["jersey"],
+                          "#" + player["jersey"],
                           style: TextStyle(fontSize: 24),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Text(
-                          json["pos"],
+                          player["pos"],
                           style: TextStyle(fontSize: 24),
                         ),
                       ],
@@ -73,15 +83,16 @@ class PlayerDetail extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text('Height', style: TextStyle(color: Colors.white70)),
+                      Text('Height',
+                          style: TextStyle(color: Color(teamTextColor))),
                       Text(
-                          json["heightFeet"] +
+                          player["heightFeet"] +
                               "\' " +
-                              json["heightInches"] +
+                              player["heightInches"] +
                               "\" (" +
-                              json["heightMeters"] +
+                              player["heightMeters"] +
                               ")",
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   ),
                   SizedBox(
@@ -89,13 +100,14 @@ class PlayerDetail extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Weight', style: TextStyle(color: Colors.white70)),
+                      Text('Weight',
+                          style: TextStyle(color: Color(teamTextColor))),
                       Text(
-                          json["weightPounds"] +
+                          player["weightPounds"] +
                               " (" +
-                              json["weightKilograms"] +
+                              player["weightKilograms"] +
                               ")",
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   ),
                   SizedBox(
@@ -103,9 +115,10 @@ class PlayerDetail extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Country', style: TextStyle(color: Colors.white70)),
-                      Text(json["country"],
-                          style: TextStyle(color: Colors.white)),
+                      Text('Country',
+                          style: TextStyle(color: Color(teamTextColor))),
+                      Text(player["country"],
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   ),
                   SizedBox(
@@ -114,9 +127,9 @@ class PlayerDetail extends StatelessWidget {
                   Column(
                     children: [
                       Text('Years Pro',
-                          style: TextStyle(color: Colors.white70)),
-                      Text(json["yearsPro"],
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Color(teamTextColor))),
+                      Text(player["yearsPro"],
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   )
                 ],
@@ -133,9 +146,10 @@ class PlayerDetail extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text('Age', style: TextStyle(color: Colors.white70)),
-                      Text(getAge(json["dateOfBirthUTC"]),
-                          style: TextStyle(color: Colors.white)),
+                      Text('Age',
+                          style: TextStyle(color: Color(teamTextColor))),
+                      Text(getAge(player["dateOfBirthUTC"]),
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   ),
                   SizedBox(
@@ -143,9 +157,10 @@ class PlayerDetail extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Birthday', style: TextStyle(color: Colors.white70)),
-                      Text(json["dateOfBirthUTC"],
-                          style: TextStyle(color: Colors.white)),
+                      Text('Birthday',
+                          style: TextStyle(color: Color(teamTextColor))),
+                      Text(player["dateOfBirthUTC"],
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   ),
                   SizedBox(
@@ -153,15 +168,16 @@ class PlayerDetail extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Drafted', style: TextStyle(color: Colors.white70)),
+                      Text('Drafted',
+                          style: TextStyle(color: Color(teamTextColor))),
                       Row(
                         children: [
-                          Text("Pick " + json["draft"]["pickNum"],
-                              style: TextStyle(color: Colors.white)),
-                          Text(" R" + json["draft"]["roundNum"],
-                              style: TextStyle(color: Colors.white)),
-                          Text(" " + json["draft"]["seasonYear"],
-                              style: TextStyle(color: Colors.white)),
+                          Text("Pick " + player["draft"]["pickNum"],
+                              style: TextStyle(color: Color(teamTextColor))),
+                          Text(" R" + player["draft"]["roundNum"],
+                              style: TextStyle(color: Color(teamTextColor))),
+                          Text(" " + player["draft"]["seasonYear"],
+                              style: TextStyle(color: Color(teamTextColor))),
                         ],
                       )
                     ],
@@ -171,9 +187,10 @@ class PlayerDetail extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('College', style: TextStyle(color: Colors.white70)),
-                      Text(getShortString(json["lastAffiliation"]),
-                          style: TextStyle(color: Colors.white)),
+                      Text('College',
+                          style: TextStyle(color: Color(teamTextColor))),
+                      Text(getShortString(player["lastAffiliation"]),
+                          style: TextStyle(color: Color(teamTextColor))),
                     ],
                   )
                 ],
@@ -185,7 +202,7 @@ class PlayerDetail extends StatelessWidget {
             // Use a FutureBuilder to get the player data and then build out a data table or some other widget
             FutureBuilder(
                 future: Network.getJson(
-                    Urls.nbaPlayerStats("2020", json["personId"])),
+                    Urls.nbaPlayerStats("2020", player["personId"])),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
@@ -225,7 +242,7 @@ class PlayerDetail extends StatelessWidget {
 
             // This seems to only work for some players. Taking it out for now
             // FutureBuilder(
-            //     future: Network.getJson(Urls.nbaPlayerBio(json["personId"])),
+            //     future: Network.getplayer(Urls.nbaPlayerBio(player["personId"])),
             //     builder:
             //         (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             //       var widget;
@@ -411,6 +428,7 @@ class PlayerDetail extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: DataTable(
           columnSpacing: 14,
+          dataRowHeight: 30,
           columns: [
             DataColumn(label: Text("Year")),
             DataColumn(label: Text("MIN")),

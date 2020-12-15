@@ -40,14 +40,14 @@ class _TeamDetailsState extends State<TeamDetails> {
     final teamStats = Provider.of<JsonFiles>(context, listen: false)
         .getTeamStats(widget.nbaTeamId);
 
-    final test = ConstantHelper.getTeamDetailsExtra(widget.nbaTeamId);
-    String primaryColor =
-        test["primaryColor"].toString().replaceFirst("#", "FF");
-    var teamColor = int.parse(primaryColor, radix: 16);
+    var teamColor = ConstantHelper.getTeamColor(widget.nbaTeamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(widget.nbaTeamId);
 
     year = Provider.of<JsonFiles>(context, listen: false).getYear();
 
     var deviceWidth = MediaQuery.of(context).size.width;
+
+    //var a = Network.getJsonWithBingHeader(Urls.getBingVideoSearch("dallas mavericks"));
 
     Future<void> _launched;
     // final String streak = standings != null
@@ -60,18 +60,24 @@ class _TeamDetailsState extends State<TeamDetails> {
       child: Scaffold(
         backgroundColor: Color(0XFFEDF1FF),
         appBar: AppBar(
-          title: Text(ta[0]),
+          title: Text(
+            ta[0],
+            style: TextStyle(color: Color(teamTextColor)),
+          ),
           backgroundColor: Color(teamColor),
           bottom: TabBar(
             tabs: [
               Tab(
-                text: "Team",
+                child:
+                    Text("Team", style: TextStyle(color: Color(teamTextColor))),
               ),
               Tab(
-                text: "Roster",
+                child: Text("Roster",
+                    style: TextStyle(color: Color(teamTextColor))),
               ),
               Tab(
-                text: "Schedule",
+                child: Text("Schedule",
+                    style: TextStyle(color: Color(teamTextColor))),
               )
             ],
           ),
@@ -157,10 +163,10 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        RaisedButton(
+                                        FlatButton(
                                           child: Text('News',
                                               style: TextStyle(
-                                                  color: Colors.white)),
+                                                  color: Color(teamTextColor))),
                                           color: Color(teamColor),
                                           onPressed: () {
                                             Navigator.push(
@@ -175,14 +181,14 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         RaisedButton(
                                           child: Text('Stats',
                                               style: TextStyle(
-                                                  color: Colors.white)),
+                                                  color: Color(teamTextColor))),
                                           color: Color(teamColor),
                                           onPressed: () {},
                                         ),
                                         RaisedButton(
                                           child: Text('Info',
                                               style: TextStyle(
-                                                  color: Colors.white)),
+                                                  color: Color(teamTextColor))),
                                           color: Color(teamColor),
                                           onPressed: () {
                                             Navigator.push(
@@ -213,7 +219,8 @@ class _TeamDetailsState extends State<TeamDetails> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey, width: 1),
+                            border:
+                                Border.all(color: Colors.grey[300], width: 1),
                           ),
                           child: Column(children: [
                             Row(
@@ -254,7 +261,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey, width: 1),
+                          border: Border.all(color: Colors.grey[300], width: 1),
                         ),
                         child: Column(
                           children: [
@@ -490,7 +497,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                   border: Border.all(color: Colors.grey[400], width: 1))),
           Text(
             value,
-            style: TextStyle(fontSize: 20, color: Colors.grey),
+            style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
         ],
       ),

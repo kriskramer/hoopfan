@@ -2,11 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class JsonFiles with ChangeNotifier {
   String _year = "2020";
-  String _seasonStage = "2";
-  // var _westStandings;
-  // var _eastStandings;
-  //var _confStandings2;
-  //var _divStandings2;
+  String _seasonStage;
   var _teamStats;
   var _seasons;
   var _transactions;
@@ -18,13 +14,26 @@ class JsonFiles with ChangeNotifier {
   var _games;
   Map _idEastIndex = {};
   Map _idWestIndex = {};
-  //List<dynamic> _teamNews;
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
   Map<String, dynamic> _teamNews = {}; // teamID,Player_list
+  var _nbaNews;
+  var _todaysGames;
+  var _prevGames;
+  var _upcomingGames;
+  String _selectedDate;
 
   //Nba Api variables
   var _allPlayers;
   var _allTeams;
+
+  String getToday() {
+    DateTime today = DateTime.now();
+    String year = today.year.toString();
+    String month = today.month.toString();
+    String day = today.day.toString();
+
+    return year + month + day;
+  }
 
   void setYear(String year) {
     _year = year;
@@ -33,6 +42,11 @@ class JsonFiles with ChangeNotifier {
 
   void setSeasonStage(String stage) {
     _seasonStage = stage;
+    notifyListeners();
+  }
+
+  void setNbaNews(dynamic json) {
+    _nbaNews = json;
     notifyListeners();
   }
 
@@ -73,6 +87,20 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setSelectedDate(DateTime date) {
+    String year = date.year.toString();
+    String month = date.month.toString();
+    String day = date.day.toString();
+
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    _selectedDate = year + month + day;
+  }
+
   void setEastIdIndex(String teamKey, int listLoc) {
     _idEastIndex[teamKey] = listLoc;
     notifyListeners();
@@ -97,6 +125,21 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUpcomingGames(dynamic json) {
+    _upcomingGames = json;
+    notifyListeners();
+  }
+
+  void setTodaysGames(dynamic json) {
+    _todaysGames = json;
+    notifyListeners();
+  }
+
+  void setPreviousGames(dynamic json) {
+    _prevGames = json;
+    notifyListeners();
+  }
+
   void addTeamPlayers(String teamId, dynamic teamList) {
     _teamPlayers[teamId] = teamList;
   }
@@ -118,21 +161,6 @@ class JsonFiles with ChangeNotifier {
     }
   }
 
-  dynamic getPlayer(String playerId) {
-    dynamic player;
-
-    if (_allPlayers != null) {
-      for (var p in _allPlayers["league"]["standard"]) {
-        if (p["personId"] == playerId) {
-          player = p;
-          break;
-        }
-      }
-    }
-
-    return player;
-  }
-
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
 
   dynamic getTransactions() => _transactions;
@@ -152,20 +180,37 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getSeasons() => _seasons;
 
+  String getSelectedDate() => _selectedDate;
+
   dynamic getStandings() => _confStandings;
 
   dynamic getConfStandings() => _confStandings;
   dynamic getDivStandings() => _divStandings;
 
+  dynamic getNbaNews() => _nbaNews;
+
+  dynamic getUpcomingGames() => _upcomingGames;
+  dynamic getTodaysGames() => _todaysGames;
+  dynamic getPreviousGames() => _prevGames;
+
   dynamic getAllTeamStats() => _teamStats;
   dynamic getTeamStats(String teamId) {
     dynamic team;
     if (_teamStats != null) {
-      for (var t in _teamStats["league"]["standard"]["regularSeason"]
-          ["teams"]) {
-        if (t["teamId"] == teamId) {
-          team = t;
-          break;
+      if (_seasonStage == "1") {
+        for (var t in _teamStats["league"]["standard"]["preseason"]["teams"]) {
+          if (t["teamId"] == teamId) {
+            team = t;
+            break;
+          }
+        }
+      } else if (_seasonStage == "2") {
+        for (var t in _teamStats["league"]["standard"]["regularSeason"]
+            ["teams"]) {
+          if (t["teamId"] == teamId) {
+            team = t;
+            break;
+          }
         }
       }
     }
@@ -184,6 +229,21 @@ class JsonFiles with ChangeNotifier {
     }
 
     return name;
+  }
+
+  dynamic getPlayer(String playerId) {
+    dynamic player;
+
+    if (_allPlayers != null) {
+      for (var p in _allPlayers["league"]["standard"]) {
+        if (p["personId"] == playerId) {
+          player = p;
+          break;
+        }
+      }
+    }
+
+    return player;
   }
 
   String getPlayerName(String playerId) {

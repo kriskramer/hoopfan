@@ -36,6 +36,10 @@ class _StandingsState extends State<Standings> {
       Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
       Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
       Provider.of<JsonFiles>(context, listen: false).setTeamStats(teamStats);
+      Provider.of<JsonFiles>(context, listen: false).setSeasonStage(
+          standings["league"]["standard"]["seasonStageId"].toString());
+      Provider.of<JsonFiles>(context, listen: false)
+          .setSelectedDate(DateTime.now());
 
       if (Provider.of<JsonFiles>(context, listen: false).getStandings() !=
           null) {

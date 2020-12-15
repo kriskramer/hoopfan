@@ -808,6 +808,19 @@ class ConstantHelper {
 
     return team;
   }
+
+  static int getTeamColor(String teamId) {
+    dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+    String primaryColor =
+        team["primaryColor"].toString().replaceFirst("#", "FF");
+    return int.parse(primaryColor, radix: 16);
+  }
+
+  static int getTeamTextColor(String teamId) {
+    dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+    String textColor = team["textColor"].toString().replaceFirst("#", "FF");
+    return int.parse(textColor, radix: 16);
+  }
 }
 
 // This data is loaded via the below url/feed
@@ -6678,6 +6691,7 @@ Map teamDetailsExtra = {
         "ttsName": "Atlanta Hawks",
         "primaryColor": "#e21a37",
         "secondaryColor": "#e21a37",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.hawks&hl=en",
@@ -6699,6 +6713,7 @@ Map teamDetailsExtra = {
         "ttsName": "Brooklyn Nets",
         "primaryColor": "#000000",
         "secondaryColor": "#000000",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.brooklynnets.android&hl=en",
@@ -6719,6 +6734,7 @@ Map teamDetailsExtra = {
         "ttsName": "Boston Celtics",
         "primaryColor": "#00611b",
         "secondaryColor": "#00611b",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.mobile.android.celtics&hl=en",
@@ -6739,6 +6755,7 @@ Map teamDetailsExtra = {
         "ttsName": "Charlotte Hornets",
         "primaryColor": "#00848e",
         "secondaryColor": "#00848e",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.bobcats&hl=en",
@@ -6760,6 +6777,7 @@ Map teamDetailsExtra = {
         "ttsName": "Chicago Bulls",
         "primaryColor": "#b00203",
         "secondaryColor": "#b00203",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.bulls&hl=en",
@@ -6780,6 +6798,7 @@ Map teamDetailsExtra = {
         "ttsName": "Cleveland Cavaliers",
         "primaryColor": "#860038",
         "secondaryColor": "#860038",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.detroitlabs.cavaliers&hl=en",
@@ -6801,6 +6820,7 @@ Map teamDetailsExtra = {
         "ttsName": "Dallas Mavericks",
         "primaryColor": "#006bb6",
         "secondaryColor": "#006bb6",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.mobileroadie.app_1202&hl=en",
@@ -6822,6 +6842,7 @@ Map teamDetailsExtra = {
         "ttsName": "Denver Nuggets",
         "primaryColor": "#0e2240",
         "secondaryColor": "#0e2240",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.b3connect.dmf.nuggets&hl=en",
@@ -6842,6 +6863,7 @@ Map teamDetailsExtra = {
         "ttsName": "Detroit Pistons",
         "primaryColor": "#fa002c",
         "secondaryColor": "#fa002c",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.b3connect.dmf.pistons&hl=en",
@@ -6863,6 +6885,7 @@ Map teamDetailsExtra = {
         "ttsName": "Golden State Warriors",
         "primaryColor": "#003399",
         "secondaryColor": "#003399",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.warriors&hl=en",
@@ -6884,6 +6907,7 @@ Map teamDetailsExtra = {
         "ttsName": "Houston Rockets",
         "primaryColor": "#cd212b",
         "secondaryColor": "#cd212b",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.rockets&hl=en",
@@ -6904,6 +6928,7 @@ Map teamDetailsExtra = {
         "ttsName": "Indiana Pacers",
         "primaryColor": "#ffb517",
         "secondaryColor": "#ffb517",
+        "textColor": "#000000",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.pacers&hl=en",
@@ -6925,6 +6950,7 @@ Map teamDetailsExtra = {
         "ttsName": "L.A. Clippers",
         "primaryColor": "#ed174b",
         "secondaryColor": "#ed174b",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.lucidappeal.laclippers&hl=en",
@@ -6945,6 +6971,7 @@ Map teamDetailsExtra = {
         "ttsName": "L.A. Lakers",
         "primaryColor": "#fdba33",
         "secondaryColor": "#fdba33",
+        "textColor": "#000000",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.lucidappeal.appmold&hl=en",
@@ -6966,6 +6993,7 @@ Map teamDetailsExtra = {
         "ttsName": "Memphis Grizzlies",
         "primaryColor": "#5d76a9",
         "secondaryColor": "#5d76a9",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.grizzlies&hl=en",
@@ -6987,6 +7015,7 @@ Map teamDetailsExtra = {
         "ttsName": "Miami Heat",
         "primaryColor": "#98002e",
         "secondaryColor": "#98002e",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.xcosoftware.miamiheat&hl=en",
@@ -7008,6 +7037,7 @@ Map teamDetailsExtra = {
         "tricode": "MIL",
         "primaryColor": "#00471b",
         "secondaryColor": "#00471b",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.bucks&hl=en",
@@ -7028,6 +7058,7 @@ Map teamDetailsExtra = {
         "ttsName": "Minnesota Timberwolves",
         "primaryColor": "#2b6291",
         "secondaryColor": "#2b6291",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.timberwolves&hl=en",
@@ -7049,6 +7080,7 @@ Map teamDetailsExtra = {
         "ttsName": "New Orleans Pelicans",
         "primaryColor": "#0c2340",
         "secondaryColor": "#0c2340",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.pelicans&hl=en",
@@ -7070,6 +7102,7 @@ Map teamDetailsExtra = {
         "ttsName": "New York Knicks",
         "primaryColor": "#f58426",
         "secondaryColor": "#f58426",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.msgi.knicks&hl=en",
@@ -7091,6 +7124,7 @@ Map teamDetailsExtra = {
         "ttsName": "Oklahoma City Thunder",
         "primaryColor": "#002d62",
         "secondaryColor": "#002d62",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.thunder&hl=en",
@@ -7112,6 +7146,7 @@ Map teamDetailsExtra = {
         "ttsName": "Orlando Magic",
         "primaryColor": "#0077c0",
         "secondaryColor": "#0077c0",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.magic&hl=en",
@@ -7133,6 +7168,7 @@ Map teamDetailsExtra = {
         "ttsName": "Philadelphia 76ers",
         "primaryColor": "#ef0022",
         "secondaryColor": "#ef0022",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.sixers&hl=en",
@@ -7154,6 +7190,7 @@ Map teamDetailsExtra = {
         "ttsName": "Phoenix Suns",
         "primaryColor": "#e76221",
         "secondaryColor": "#e76221",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.suns&hl=en",
@@ -7175,6 +7212,7 @@ Map teamDetailsExtra = {
         "ttsName": "Portland Trail Blazers",
         "primaryColor": "#cc0000",
         "secondaryColor": "#cc0000",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.trailblazers&hl=en",
@@ -7196,6 +7234,7 @@ Map teamDetailsExtra = {
         "ttsName": "Sacramento Kings",
         "primaryColor": "#51388a",
         "secondaryColor": "#51388a",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.kings&hl=en",
@@ -7216,6 +7255,7 @@ Map teamDetailsExtra = {
         "ttsName": "San Antonio Spurs",
         "primaryColor": "#959191",
         "secondaryColor": "#959191",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.spurs&hl=en",
@@ -7237,6 +7277,7 @@ Map teamDetailsExtra = {
         "ttsName": "Toronto Raptors",
         "primaryColor": "#bd1b21",
         "secondaryColor": "#bd1b21",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.oneup.raptors&hl=en",
@@ -7258,6 +7299,7 @@ Map teamDetailsExtra = {
         "ttsName": "Utah Jazz",
         "primaryColor": "#f9a11e",
         "secondaryColor": "#f9a11e",
+        "textColor": "#000000",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.jazz&hl=en",
@@ -7278,6 +7320,7 @@ Map teamDetailsExtra = {
         "ttsName": "Washington Wizards",
         "primaryColor": "#cf142b",
         "secondaryColor": "#cf142b",
+        "textColor": "#FFFFFF",
         "app": {
           "android":
               "https://play.google.com/store/apps/details?id=com.yinzcam.nba.wizards&hl=en",

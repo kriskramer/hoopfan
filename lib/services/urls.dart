@@ -44,6 +44,10 @@ class Urls {
       //"https://bing-news-search1.p.rapidapi.com/news/search?q=$team&freshness=Day&textFormat=Raw&safeSearch=Off?rapidapi-key=${NbaApi.key}";
       "https://google-search3.p.rapidapi.com/api/v1/news/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
+  static String getBingVideoSearch(String team) {
+    return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";
+  }
+
   static String sioTeam(String team) =>
       "$_sioBaseUrl/Players/$team?key=e26bf32a407a4c59bb1998de668ba83e";
 
@@ -102,8 +106,7 @@ class Urls {
       "http://data.nba.net/prod/v1/$gameDate/${gameId}_Book.pdf";
 
   // Returns the play by play for a game by period
-  static String nbaPlayByPlay(
-          String gameDate, String gameId, String periodNum, String period) =>
+  static String nbaPlayByPlay(String gameDate, String gameId, String period) =>
       "http://data.nba.net/prod/v1/$gameDate/${gameId}_pbp_$period.json";
 
   // Returns the preview article for a specified game
@@ -118,4 +121,47 @@ class Urls {
 
   static String nbaDivisionStandings() =>
       "http://data.nba.net/10s//prod/v1/current/standings_division.json";
+
+  static String nbaGamesToday() {
+    DateTime today = new DateTime.now();
+    String year = today.year.toString();
+    String month = today.month.toString();
+    String day = today.day.toString();
+
+    return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+  }
+
+  static String nbaGamesSelectedDate(String date) {
+    return "http://data.nba.net/10s/prod/v1/$date/scoreboard.json";
+  }
+
+  static String nbaGamesDayMinusOne() {
+    DateTime today = new DateTime.now();
+    DateTime yesterday = today.subtract(new Duration(days: 1));
+    String year = yesterday.year.toString();
+    String month = yesterday.month.toString();
+    String day = yesterday.day.toString();
+
+    return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+  }
+
+  static String nbaGamesDayMinusTwo() {
+    DateTime today = new DateTime.now();
+    DateTime prevDay = today.subtract(new Duration(days: 2));
+    String year = prevDay.year.toString();
+    String month = prevDay.month.toString();
+    String day = prevDay.day.toString();
+
+    return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+  }
+
+  static String nbaGamesDayMinusThree() {
+    DateTime today = new DateTime.now();
+    DateTime prevDay = today.subtract(new Duration(days: 1));
+    String year = prevDay.year.toString();
+    String month = prevDay.month.toString();
+    String day = prevDay.day.toString();
+
+    return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+  }
 }
