@@ -3,9 +3,9 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/games_widgets/time.dart';
 import 'package:hoop/constant.dart';
 
-class SeasonGames extends StatelessWidget {
+class SeasonGamesz extends StatelessWidget {
   final dynamic jsonFile;
-  SeasonGames({this.jsonFile});
+  SeasonGamesz({this.jsonFile});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

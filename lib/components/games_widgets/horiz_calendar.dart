@@ -1,498 +1,158 @@
+library horizontal_calendar;
+
 import 'package:flutter/material.dart';
-import 'package:horizontal_calendar_widget/date_helper.dart';
-import 'package:horizontal_calendar_widget/horizontal_calendar.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui';
 
-const labelMonth = 'Month';
-const labelDate = 'Date';
-const labelWeekDay = 'Week Day';
+//import 'date_utils.dart';
 
-class DemoWidget extends StatefulWidget {
-  const DemoWidget({
+typedef OnDateSelected(date);
+
+class HorizontalCalendar extends StatefulWidget {
+  final DateTime date;
+  final DateTime initialDate;
+  final DateTime lastDate;
+  final Color textColor;
+  final Color backgroundColor;
+  final Color selectedColor;
+  final OnDateSelected onDateSelected;
+
+  HorizontalCalendar({
     Key key,
+    @required this.date,
+    this.initialDate,
+    this.lastDate,
+    this.textColor,
+    this.backgroundColor,
+    this.selectedColor,
+    @required this.onDateSelected,
   }) : super(key: key);
 
   @override
-  _DemoWidgetState createState() => _DemoWidgetState();
+  _CalendarState createState() => _CalendarState();
 }
 
-class _DemoWidgetState extends State<DemoWidget> {
-  DateTime firstDate;
-  DateTime lastDate;
-  String dateFormat = 'dd';
-  String monthFormat = 'MMM';
-  String weekDayFormat = 'EEE';
-  List<String> order = [labelMonth, labelDate, labelWeekDay];
-  bool forceRender = false;
-
-  Color defaultDecorationColor = Colors.transparent;
-  BoxShape defaultDecorationShape = BoxShape.rectangle;
-  bool isCircularRadiusDefault = true;
-
-  Color selectedDecorationColor = Colors.blue;
-  BoxShape selectedDecorationShape = BoxShape.rectangle;
-  bool isCircularRadiusSelected = true;
-
-  Color disabledDecorationColor = Colors.grey;
-  BoxShape disabledDecorationShape = BoxShape.rectangle;
-  bool isCircularRadiusDisabled = true;
-
-  int minSelectedDateCount = 1;
-  int maxSelectedDateCount = 1;
-  RangeValues selectedDateCount;
-
-  List<DateTime> initialSelectedDates;
+class _CalendarState extends State<HorizontalCalendar> {
+  DateTime _startDate;
+  DateTime selecteDate;
 
   @override
   void initState() {
     super.initState();
-    const int days = 30;
-    firstDate = toDateMonthYear(DateTime.now());
-    lastDate = toDateMonthYear(firstDate.add(Duration(days: days - 1)));
-    selectedDateCount = RangeValues(
-      minSelectedDateCount.toDouble(),
-      maxSelectedDateCount.toDouble(),
-    );
-    initialSelectedDates = feedInitialSelectedDates(minSelectedDateCount, days);
-  }
 
-  List<DateTime> feedInitialSelectedDates(int target, int calendarDays) {
-    List<DateTime> selectedDates = List();
-
-    for (int i = 0; i < calendarDays; i++) {
-      if (selectedDates.length == target) {
-        break;
-      }
-      DateTime date = firstDate.add(Duration(days: i));
-      if (date.weekday != DateTime.sunday) {
-        selectedDates.add(date);
-      }
-    }
-
-    return selectedDates;
+    selecteDate = widget.date;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        SizedBox(height: 16),
-        HorizontalCalendar(
-          key: forceRender ? UniqueKey() : Key('Calendar'),
-          height: 100,
-          padding: EdgeInsets.all(22),
-          firstDate: firstDate,
-          lastDate: lastDate,
-          dateFormat: dateFormat,
-          weekDayFormat: weekDayFormat,
-          monthFormat: monthFormat,
-          defaultDecoration: BoxDecoration(
-            color: defaultDecorationColor,
-            shape: defaultDecorationShape,
-            borderRadius: defaultDecorationShape == BoxShape.rectangle &&
-                    isCircularRadiusDefault
-                ? BorderRadius.circular(8)
-                : null,
+    double width = MediaQuery.of(context).size.width;
+    _startDate = selecteDate.subtract(Duration(days: 3));
+
+    return Container(
+      height: width * 0.1428,
+      decoration: BoxDecoration(
+        color: widget.backgroundColor ?? Colors.white,
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          ListView.builder(
+            itemCount: 7,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              DateTime _date = _startDate.add(Duration(days: index));
+              int diffDays = _date.difference(selecteDate).inDays;
+              int checkPastDate = _date.difference(DateTime.now()).inDays;
+
+              return Container(
+                width: (width - 10) * 0.125,
+                color: diffDays != 0
+                    ? widget.backgroundColor ?? Colors.white
+                    : widget.selectedColor ?? Colors.blue,
+                alignment: Alignment.center,
+                child: FlatButton(
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
+                  onPressed: () {
+                    //if (checkPastDate >= 0) {
+                    //print('a');
+                    widget.onDateSelected(Utils.getDate(_date));
+                    setState(() {
+                      selecteDate = _startDate.add(Duration(days: index));
+                      _startDate = _startDate.add(Duration(days: index));
+                    });
+                    //}
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        Utils.getDayOfWeek(_date),
+                        style: TextStyle(
+                          color: diffDays != 0
+                              ? checkPastDate >= 0
+                                  ? widget.textColor ?? Colors.black45
+                                  : Colors.grey[300]
+                              : Colors.white,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                      SizedBox(height: 2.0),
+                      Text(
+                        Utils.getDayOfMonth(_date),
+                        style: TextStyle(
+                          color: diffDays != 0
+                              ? checkPastDate >= 0
+                                  ? widget.textColor ?? Colors.black45
+                                  : Colors.grey[300]
+                              : Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-          selectedDecoration: BoxDecoration(
-            color: selectedDecorationColor,
-            shape: selectedDecorationShape,
-            borderRadius: selectedDecorationShape == BoxShape.rectangle &&
-                    isCircularRadiusSelected
-                ? BorderRadius.circular(8)
-                : null,
+          Container(
+            child: IconButton(
+              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              icon: Icon(
+                Icons.calendar_today,
+                color: widget.textColor ?? Colors.black45,
+                size: 20.0,
+              ),
+              onPressed: () async {
+                DateTime date = await selectDate();
+                widget.onDateSelected(Utils.getDate(date));
+                setState(() => selecteDate = date);
+              },
+            ),
           ),
-          disabledDecoration: BoxDecoration(
-            color: disabledDecorationColor,
-            shape: disabledDecorationShape,
-            borderRadius: disabledDecorationShape == BoxShape.rectangle &&
-                    isCircularRadiusDisabled
-                ? BorderRadius.circular(8)
-                : null,
-          ),
-          //isDateDisabled: (date) => date.weekday == DateTime.sunday,
-          labelOrder: order.map(toLabelType).toList(),
-          minSelectedDateCount: minSelectedDateCount,
-          maxSelectedDateCount: maxSelectedDateCount,
-          initialSelectedDates: initialSelectedDates,
-        ),
-        SizedBox(height: 32),
-        // Expanded(
-        //   child: ListView(
-        //     children: <Widget>[
-        //       Header(headerText: 'Date Ranges'),
-        //       Row(
-        //         children: <Widget>[
-        //           Expanded(
-        //             child: PropertyLabel(
-        //               label: 'First Date',
-        //               value: Text(DateFormat('dd/MM/yyyy').format(firstDate)),
-        //               onTap: () async {
-        //                 final date = await datePicker(context, firstDate);
-        //                 if (date == null) {
-        //                   return;
-        //                 }
-
-        //                 if (lastDate.isBefore(date)) {
-        //                   showMessage('First Date cannot be after Last Date');
-        //                   return;
-        //                 }
-
-        //                 int min = minSelectedDateCount;
-        //                 if (!isRangeValid(date, lastDate, min)) {
-        //                   showMessage(
-        //                     "Date range is too low to set this configuration",
-        //                   );
-        //                   return;
-        //                 }
-
-        //                 setState(() {
-        //                   forceRender = true;
-        //                   dateRangeChange(date, lastDate);
-        //                 });
-        //               },
-        //             ),
-        //           ),
-        //           Expanded(
-        //             child: PropertyLabel(
-        //               label: 'Last Date',
-        //               value: Text(DateFormat('dd/MM/yyyy').format(lastDate)),
-        //               onTap: () async {
-        //                 final date = await datePicker(context, lastDate);
-        //                 if (date == null) {
-        //                   return;
-        //                 }
-
-        //                 if (firstDate.isAfter(date)) {
-        //                   showMessage(
-        //                     'Last Date cannot be before First Date',
-        //                   );
-        //                   return;
-        //                 }
-
-        //                 int min = minSelectedDateCount;
-        //                 if (!isRangeValid(firstDate, date, min)) {
-        //                   showMessage(
-        //                     "Date range is too low to set this configuration",
-        //                   );
-        //                   return;
-        //                 }
-
-        //                 setState(() {
-        //                   forceRender = true;
-        //                   dateRangeChange(firstDate, date);
-        //                 });
-        //               },
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //       Header(headerText: 'Date Selection'),
-        //       PropertyLabel(
-        //         label:
-        //             'Min-Max Selectable Dates ($minSelectedDateCount - $maxSelectedDateCount)',
-        //         value: CustomRangeSlider(
-        //           range: selectedDateCount,
-        //           min: 0,
-        //           max: 15,
-        //           onRangeSet: (newRange) {
-        //             selectedDateCount = newRange;
-        //           },
-        //         ),
-        //       ),
-        //       RaisedButton(
-        //         child: Text('Update'),
-        //         onPressed: () {
-        //           setState(() {
-        //             int min = selectedDateCount.start.toInt();
-        //             if (!isRangeValid(firstDate, lastDate, min)) {
-        //               showMessage(
-        //                 "Date range is too low to set this configuration",
-        //               );
-        //               return;
-        //             }
-
-        //             minSelectedDateCount = selectedDateCount.start.toInt();
-        //             maxSelectedDateCount = selectedDateCount.end.toInt();
-        //             initialSelectedDates = feedInitialSelectedDates(
-        //               minSelectedDateCount,
-        //               daysCount(firstDate, lastDate),
-        //             );
-        //             showMessage("Updated");
-        //           });
-        //         },
-        //       ),
-        //       Header(headerText: 'Formats'),
-        //       PropertyLabel(
-        //         label: 'Date Format',
-        //         value: DropDownProperty(
-        //           hint: 'Select Date Format',
-        //           value: dateFormat,
-        //           options: ['dd', 'dd/MM'],
-        //           onChange: (format) {
-        //             setState(() {
-        //               forceRender = false;
-        //               dateFormat = format;
-        //             });
-        //           },
-        //         ),
-        //       ),
-        //       PropertyLabel(
-        //         label: 'Month Format',
-        //         value: DropDownProperty(
-        //           hint: 'Select Month Format',
-        //           value: monthFormat,
-        //           options: [
-        //             'MM',
-        //             'MMM',
-        //           ],
-        //           onChange: (format) {
-        //             setState(() {
-        //               forceRender = false;
-        //               monthFormat = format;
-        //             });
-        //           },
-        //         ),
-        //       ),
-        //       PropertyLabel(
-        //         label: 'WeekDay Format',
-        //         value: DropDownProperty(
-        //           hint: 'Select Weekday Format',
-        //           value: weekDayFormat,
-        //           options: ['EEE', 'EEEE'],
-        //           onChange: (format) {
-        //             setState(() {
-        //               forceRender = false;
-        //               weekDayFormat = format;
-        //             });
-        //           },
-        //         ),
-        //       ),
-        //       Header(headerText: 'Labels'),
-        //       PropertyLabel(
-        //         label: 'Label Orders (Drag & Drop to reorder)',
-        //         value: Align(
-        //           alignment: Alignment.centerLeft,
-        //           child: Row(
-        //             children: <Widget>[
-        //               SizedBox(
-        //                 height: 200,
-        //                 width: 150,
-        //                 child: ReorderableListView(
-        //                   children: order
-        //                       .map(
-        //                         (listItem) => Align(
-        //                           key: Key(listItem),
-        //                           heightFactor: 1,
-        //                           alignment: Alignment.centerLeft,
-        //                           child: Chip(
-        //                             onDeleted: () => listItem != labelDate
-        //                                 ? setState(() {
-        //                                     forceRender = false;
-        //                                     order.remove(listItem);
-        //                                   })
-        //                                 : null,
-        //                             deleteIcon: listItem != labelDate
-        //                                 ? Icon(Icons.cancel)
-        //                                 : null,
-        //                             label: Text(listItem),
-        //                           ),
-        //                         ),
-        //                       )
-        //                       .toList(),
-        //                   onReorder: (oldIndex, newIndex) {
-        //                     setState(() {
-        //                       forceRender = false;
-        //                       if (newIndex > oldIndex) {
-        //                         newIndex -= 1;
-        //                       }
-        //                       final item = order.removeAt(oldIndex);
-        //                       order.insert(newIndex, item);
-        //                     });
-        //                   },
-        //                 ),
-        //               ),
-        //               RaisedButton(
-        //                 child: Text('Add Labels'),
-        //                 onPressed: () {
-        //                   setState(() {
-        //                     forceRender = false;
-        //                     if (!order.contains(labelMonth)) {
-        //                       order.add(labelMonth);
-        //                     }
-        //                     if (!order.contains(labelWeekDay)) {
-        //                       order.add(labelWeekDay);
-        //                     }
-        //                   });
-        //                 },
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //       Header(headerText: 'Default Decoration'),
-        //       DecorationBuilder(
-        //         decorationShape: defaultDecorationShape,
-        //         onSelectShape: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             defaultDecorationShape = value;
-        //           });
-        //         },
-        //         isCircularRadius: isCircularRadiusDefault,
-        //         onCircularRadiusChange: (isSelected) {
-        //           setState(
-        //             () {
-        //               isCircularRadiusDefault = isSelected;
-        //             },
-        //           );
-        //         },
-        //         color: defaultDecorationColor,
-        //         onColorChange: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             defaultDecorationColor = value;
-        //           });
-        //         },
-        //       ),
-        //       Header(headerText: 'Selected Decoration'),
-        //       DecorationBuilder(
-        //         decorationShape: selectedDecorationShape,
-        //         onSelectShape: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             selectedDecorationShape = value;
-        //           });
-        //         },
-        //         isCircularRadius: isCircularRadiusSelected,
-        //         onCircularRadiusChange: (isSelected) {
-        //           setState(
-        //             () {
-        //               forceRender = false;
-        //               isCircularRadiusSelected = isSelected;
-        //             },
-        //           );
-        //         },
-        //         color: selectedDecorationColor,
-        //         onColorChange: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             selectedDecorationColor = value;
-        //           });
-        //         },
-        //       ),
-        //       Header(headerText: 'Disabled Decoration'),
-        //       DecorationBuilder(
-        //         decorationShape: disabledDecorationShape,
-        //         onSelectShape: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             disabledDecorationShape = value;
-        //           });
-        //         },
-        //         isCircularRadius: isCircularRadiusDisabled,
-        //         onCircularRadiusChange: (isSelected) {
-        //           setState(
-        //             () {
-        //               forceRender = false;
-        //               isCircularRadiusDisabled = isSelected;
-        //             },
-        //           );
-        //         },
-        //         color: disabledDecorationColor,
-        //         onColorChange: (value) {
-        //           setState(() {
-        //             forceRender = false;
-        //             disabledDecorationColor = value;
-        //           });
-        //         },
-        //       )
-        //     ],
-        //   ),
-        // )
-      ],
+        ],
+      ),
     );
   }
 
-  void showMessage(String message) {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
-  bool isRangeValid(DateTime first, DateTime last, int minSelection) {
-    int availableDays = availableDaysCount(
-      getDateList(first, last),
-      [DateTime.sunday],
-    );
-
-    return availableDays >= minSelection;
-  }
-
-  int availableDaysCount(List<DateTime> dates, List<int> disabledDays) =>
-      dates.where((date) => !disabledDays.contains(date.weekday)).length;
-
-  void dateRangeChange(DateTime first, DateTime last) {
-    firstDate = first;
-    lastDate = last;
-    initialSelectedDates = feedInitialSelectedDates(
-      minSelectedDateCount,
-      daysCount(first, last),
-    );
-    selectedDateCount = RangeValues(
-      minSelectedDateCount.toDouble(),
-      maxSelectedDateCount.toDouble(),
+  Future<DateTime> selectDate() async {
+    return await showDatePicker(
+      context: context,
+      initialDatePickerMode: DatePickerMode.day,
+      initialDate: selecteDate,
+      firstDate:
+          widget.initialDate ?? DateTime.now().subtract(Duration(days: 30)),
+      lastDate: widget.lastDate ?? DateTime.now().add(Duration(days: 30)),
     );
   }
 }
 
-Future<DateTime> datePicker(
-  BuildContext context,
-  DateTime initialDate,
-) async {
-  final selectedDate = await showDatePicker(
-    context: context,
-    initialDate: initialDate,
-    firstDate: DateTime.now().subtract(
-      Duration(days: 365),
-    ),
-    lastDate: DateTime.now().add(
-      Duration(days: 365),
-    ),
-  );
-  return toDateMonthYear(selectedDate);
-}
+class Utils {
+  static String getDayOfWeek(DateTime date) => DateFormat('EEE').format(date);
 
-LabelType toLabelType(String label) {
-  LabelType type;
-  switch (label) {
-    case labelMonth:
-      type = LabelType.month;
-      break;
-    case labelDate:
-      type = LabelType.date;
-      break;
-    case labelWeekDay:
-      type = LabelType.weekday;
-      break;
-  }
-  return type;
-}
+  static String getDayOfMonth(DateTime date) => DateFormat('dd').format(date);
 
-String fromLabelType(LabelType label) {
-  String labelString;
-  switch (label) {
-    case LabelType.month:
-      labelString = labelMonth;
-      break;
-    case LabelType.date:
-      labelString = labelDate;
-      break;
-    case LabelType.weekday:
-      labelString = labelWeekDay;
-      break;
-  }
-  return labelString;
+  static String getDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 }

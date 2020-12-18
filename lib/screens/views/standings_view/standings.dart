@@ -16,8 +16,8 @@ class _StandingsState extends State<Standings> {
   Future<bool> loadData() async {
     bool complete = false;
     String year = Provider.of<JsonFiles>(context, listen: false).getYear();
-    String seasonStage =
-        Provider.of<JsonFiles>(context, listen: false).getSeasonStage();
+    // String seasonStage =
+    //     Provider.of<JsonFiles>(context, listen: false).getSeasonStage();
     try {
       // var eastJson = await Network.getJson(Urls.eastStandingsUrl(year));
       // var westJson = await Network.getJson(Urls.westStandingsUrl(year));

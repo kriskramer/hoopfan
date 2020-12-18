@@ -12,7 +12,7 @@ class ScheduledGameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isHomeTeam = game["isHomeTeam"];
-    bool notPlayed = game["hTeam"]["score"] == "";
+    //bool notPlayed = game["hTeam"]["score"] == "";
 
     final standingsJson = Provider.of<JsonFiles>(context, listen: false)
         .getStandings()["league"]["standard"]["conference"];

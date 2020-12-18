@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/completed_game_card.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
-import 'package:hoop/constant_schedule.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -40,8 +38,8 @@ class PreviousGames extends StatelessWidget {
     if (Provider.of<JsonFiles>(context, listen: false).getPreviousGames() ==
         null) {
       var games1 = await Network.getJson(Urls.nbaGamesDayMinusOne());
-      var games2 = await Network.getJson(Urls.nbaGamesDayMinusTwo());
-      var games3 = await Network.getJson(Urls.nbaGamesDayMinusThree());
+      // var games2 = await Network.getJson(Urls.nbaGamesDayMinusTwo());
+      // var games3 = await Network.getJson(Urls.nbaGamesDayMinusThree());
 
       if (games1 != null) {
         Provider.of<JsonFiles>(context, listen: false).setPreviousGames(games1);

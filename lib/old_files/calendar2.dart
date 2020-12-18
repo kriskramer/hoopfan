@@ -3,7 +3,7 @@ import 'package:flutter_calendar/flutter_calendar.dart';
 
 class CalendarViewApp extends StatelessWidget {
   void handleNewDate(date) {
-    print("handleNewDate ${date}");
+    print("handleNewDate $date");
   }
 
   @override
@@ -41,7 +41,7 @@ class CalendarViewApp extends StatelessWidget {
             isExpandable: true,
             dayBuilder: (BuildContext context, DateTime day) {
               return new InkWell(
-                onTap: () => print("OnTap ${day}"),
+                onTap: () => print("OnTap $day"),
                 child: new Container(
                   decoration: new BoxDecoration(
                       border: new Border.all(color: Colors.black38)),

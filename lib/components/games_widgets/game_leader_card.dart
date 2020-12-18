@@ -19,41 +19,43 @@ class GameLeaderCard extends StatelessWidget {
     dynamic player =
         Provider.of<JsonFiles>(context, listen: false).getPlayer(playerId);
 
-    return Container(
-      margin: EdgeInsets.all(5),
-      child: GestureDetector(
-        onTap: () {
-          //dynamic teamsJson;
+    return playerId != ""
+        ? Container(
+            margin: EdgeInsets.all(5),
+            child: GestureDetector(
+              onTap: () {
+                //dynamic teamsJson;
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    PlayerDetail(playerId: player["personId"])),
-          );
-        },
-        child: Column(
-          children: [
-            CachedLogo(
-              url:
-                  "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-              radius: 40,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          PlayerDetail(playerId: player["personId"])),
+                );
+              },
+              child: Column(
+                children: [
+                  CachedLogo(
+                    url:
+                        "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
+                    radius: 40,
+                  ),
+                  Column(children: [
+                    Text(player["firstName"]),
+                    Text(player["lastName"])
+                  ]),
+                  Text(
+                    value,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    description,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
             ),
-            Column(children: [
-              Text(player["firstName"]),
-              Text(player["lastName"])
-            ]),
-            Text(
-              value,
-              style: TextStyle(fontSize: 20),
-            ),
-            Text(
-              description,
-              style: TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
-      ),
-    );
+          )
+        : Text('');
   }
 }

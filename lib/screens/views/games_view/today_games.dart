@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
-import 'package:hoop/components/games_widgets/calendar2.dart';
 import 'package:hoop/components/games_widgets/completed_game_card.dart';
 import 'package:hoop/components/games_widgets/horiz_calendar.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
@@ -8,6 +9,7 @@ import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+//import 'package:horizontal_calendar/horizontal_calendar.dart';
 import 'package:provider/provider.dart';
 
 class TodaysGames extends StatefulWidget {
@@ -17,19 +19,34 @@ class TodaysGames extends StatefulWidget {
 
 class _TodaysGamesState extends State<TodaysGames> {
   Future<dynamic> _listGames;
+  DateTime selectedDate;
+  Timer _timer;
+  int timerDuration = 150;
 
   @override
   void initState() {
     super.initState();
     _listGames = loadGames();
-    print('1');
+    startTimer();
   }
 
   void refreshGames() {
     setState(() {
       _listGames = loadGames();
-      print('1');
     });
+  }
+
+  void startTimer() {
+    _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
+      refreshGames();
+      print('today_games timer tick');
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -51,15 +68,29 @@ class _TodaysGamesState extends State<TodaysGames> {
                 var gamesInProgress = getGamesInProgress(games);
                 var gamesWaiting = getGamesWaiting(games);
 
+                // Don't need to update the view if all the games are done
+                if (gamesCompleted.length == count) {
+                  _timer.cancel();
+                }
+
+                if (gamesWaiting.length > 0 && gamesInProgress.length == 0) {
+                  timerDuration = 1000;
+                }
+                if (gamesInProgress.length > 0) {
+                  timerDuration = 150;
+                }
+
                 return count == 0
                     ? Column(
                         children: [
-                          Calendar(
-                            // onSelectedRangeChange: (range) =>
-                            //     print("Range is ${range.item1}, ${range.item2}"),
-                            onDateSelected: (date) =>
-                                handleNewDate(date, context),
-                          ),
+                          HorizontalCalendar(
+                              date: DateTime.now(),
+                              textColor: Colors.black45,
+                              backgroundColor: Colors.white,
+                              selectedColor: Colors.blue,
+                              onDateSelected: (date) {
+                                handleNewDate(date, context);
+                              }),
                           Center(
                             child: Text('No games listed'),
                           )
@@ -67,15 +98,14 @@ class _TodaysGamesState extends State<TodaysGames> {
                       )
                     : Column(
                         children: [
-                          Calendar(
-                            // onSelectedRangeChange: (range) =>
-                            //     print("Range is ${range.item1}, ${range.item2}"),
-                            onDateSelected: (date) =>
-                                handleNewDate(date, context),
-                          ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
+                          HorizontalCalendar(
+                              date: DateTime.now(),
+                              textColor: Colors.black45,
+                              backgroundColor: Colors.white,
+                              selectedColor: Colors.blue,
+                              onDateSelected: (date) {
+                                handleNewDate(date, context);
+                              }),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -86,7 +116,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                                 );
                               }),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -98,7 +128,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                                 );
                               }),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -109,17 +139,18 @@ class _TodaysGamesState extends State<TodaysGames> {
                                   game: gamesWaiting[index],
                                 );
                               }),
-                          //DemoWidget(),
-                          //CalendarViewApp(),
                         ],
                       );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return Column(children: [
-                  Calendar(
-                    onSelectedRangeChange: (range) =>
-                        print("Range is ${range.item1}, ${range.item2}"),
-                    onDateSelected: (date) => handleNewDate(date, context),
-                  ),
+                  HorizontalCalendar(
+                      date: DateTime.now(),
+                      textColor: Colors.black45,
+                      backgroundColor: Colors.white,
+                      selectedColor: Colors.blue,
+                      onDateSelected: (date) {
+                        handleNewDate(date, context);
+                      }),
                   Center(
                     child: Text('No games listed'),
                   )
@@ -132,8 +163,9 @@ class _TodaysGamesState extends State<TodaysGames> {
             }));
   }
 
-  void handleNewDate(DateTime date, BuildContext context) {
-    Provider.of<JsonFiles>(context, listen: false).setSelectedDate(date);
+  void handleNewDate(String date, BuildContext context) {
+    DateTime dt = DateTime.parse(date);
+    Provider.of<JsonFiles>(context, listen: false).setSelectedDate(dt);
     refreshGames();
   }
 
@@ -143,23 +175,23 @@ class _TodaysGamesState extends State<TodaysGames> {
     return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
   }
 
-  Future<bool> loadData(BuildContext context) async {
-    if (Provider.of<JsonFiles>(context, listen: false).getTodaysGames() ==
-        null) {
-      var selectedDate =
-          Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-      var games =
-          await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
+  // Future<bool> loadData(BuildContext context) async {
+  //   if (Provider.of<JsonFiles>(context, listen: false).getTodaysGames() ==
+  //       null) {
+  //     var selectedDate =
+  //         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
+  //     var games =
+  //         await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
 
-      if (games != null) {
-        Provider.of<JsonFiles>(context, listen: false).setTodaysGames(games);
-        return true;
-      }
-      return false;
-    }
+  //     if (games != null) {
+  //       Provider.of<JsonFiles>(context, listen: false).setTodaysGames(games);
+  //       return true;
+  //     }
+  //     return false;
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
 
   // Widget getDateSlider() {
   //   Widget d;
@@ -200,7 +232,7 @@ class _TodaysGamesState extends State<TodaysGames> {
 
     for (var g in json["games"]) {
       //print(g);
-      if (g["isGameActivated"] == true && g["statusNum"] == 2) {
+      if (g["isGameActivated"]) {
         games.add(g);
       }
     }

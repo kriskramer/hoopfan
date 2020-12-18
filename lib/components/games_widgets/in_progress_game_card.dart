@@ -17,54 +17,56 @@ class InProgressGameCard extends StatelessWidget {
     dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
     dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
 
-    return Card(
-      elevation: 5,
-      child: Container(
-        margin: EdgeInsets.all(5),
-        padding: EdgeInsets.all(5),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => GameView(
-                  game: game,
-                ),
+    return Container(
+      //margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(width: 1, color: Colors.grey)),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => GameView(
+                game: game,
               ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CachedLogo(
-                  url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+            ),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CachedLogo(
+                radius: 35,
+                url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+            Text(
+              "(${vTeam["win"]}-${vTeam["loss"]})",
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            Column(children: [
               Text(
-                "(${vTeam["win"]}-${vTeam["loss"]})",
-                style: TextStyle(color: Colors.grey[700]),
+                game["vTeam"]["score"].toString() +
+                    " - " +
+                    game["hTeam"]["score"],
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.red[600],
+                    fontWeight: FontWeight.bold),
               ),
-              Column(children: [
-                Text(
-                  game["vTeam"]["score"].toString() +
-                      " - " +
-                      game["hTeam"]["score"],
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.red[800],
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  getCurrentPeriod(game),
-                  style: TextStyle(fontSize: 16, color: Colors.red),
-                ),
-              ]),
               Text(
-                "(${hTeam["win"]}-${hTeam["loss"]})",
-                style: TextStyle(color: Colors.grey[700]),
+                getCurrentPeriod(game),
+                style: TextStyle(fontSize: 16, color: Colors.green[800]),
               ),
-              CachedLogo(
-                  url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
-            ],
-          ),
+            ]),
+            Text(
+              "(${hTeam["win"]}-${hTeam["loss"]})",
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            CachedLogo(
+                radius: 35,
+                url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+          ],
         ),
       ),
     );

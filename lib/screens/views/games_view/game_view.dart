@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/game_box_score.dart';
 import 'package:hoop/components/games_widgets/game_leader_card.dart';
+import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
 import 'package:hoop/components/games_widgets/game_stats.dart';
+import 'package:hoop/components/games_widgets/on_court_card.dart';
+import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/screens/views/teams_view/teaminfo.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -19,37 +25,90 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
+  //Future<dynamic> _gameData;
+  Timer _timer;
+  int timerDuration = 100;
+
+  @override
+  void initState() {
+    super.initState();
+    loadGameData();
+    // TODO: Can't figure out the timer... it runs fine a few times, then just seems to crash the app.
+    _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
+      //refreshGameData();
+      print('game_view timer tick');
+    });
+  }
+
+  void refreshGameData() {
+    //setState(() {
+    loadGameData();
+    //});
+  }
+
+  // void startTimer() {
+  //   _timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
+  //     refreshGameData();
+  //     //_timer = null;
+  //   });
+  // }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String gameId = widget.game["gameId"];
-    String gameUrlCode = widget.game["gameUrlCode"];
-    String gameDate = gameUrlCode.split("/")[0];
+    // String gameId = widget.game["gameId"];
+    // String gameUrlCode = widget.game["gameUrlCode"];
+    // String gameDate = gameUrlCode.split("/")[0];
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Game Details"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              refreshGameData();
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: Network.getJson(Urls.nbaBoxScore(gameDate, gameId)),
+            future: loadGameData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                print('reloading game_view data');
                 var gameData = snapshot.data["basicGameData"];
                 var stats = snapshot.data["stats"];
 
-                var vScore = gameData["vTeam"]["score"] == ""
-                    ? "0"
-                    : gameData["vTeam"]["score"];
-                var hScore = gameData["hTeam"]["score"] == ""
-                    ? "0"
-                    : gameData["hTeam"]["score"];
+                // var vScore = gameData["vTeam"]["score"] == ""
+                //     ? "0"
+                //     : gameData["vTeam"]["score"];
+                // var hScore = gameData["hTeam"]["score"] == ""
+                //     ? "0"
+                //     : gameData["hTeam"]["score"];
                 var arena = gameData["arena"]["name"];
                 var arenaLoc = gameData["arena"]["city"] +
                     " " +
                     gameData["arena"]["stateAbbr"];
                 //var clock = gameData["clock"];
 
+                bool preview = gameData["isPreviewArticleAvail"];
+                bool recap = gameData["isRecapArticleAvail"];
+
                 var gameStatus = gameData["statusNum"];
+                var gameActivated = gameData["isGameActivated"];
+
+                if (gameData["isGameActivated"]) {
+                  timerDuration = 50;
+                } else {
+                  _timer.cancel();
+                }
 
                 return Column(
                   children: [
@@ -69,9 +128,9 @@ class _GameViewState extends State<GameView> {
                     SizedBox(
                       height: 15,
                     ),
-                    gameStatus == 1
-                        ? scheduledGameHeader(gameData)
-                        : inProgressGameHeader(gameData),
+                    gameStatus > 1 || gameActivated
+                        ? inProgressGameHeader(gameData)
+                        : scheduledGameHeader(gameData),
                     SizedBox(
                       height: 5,
                     ),
@@ -99,6 +158,13 @@ class _GameViewState extends State<GameView> {
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              preview
+                                  ? FlatButton(
+                                      onPressed: () {},
+                                      child: Text('Preview',
+                                          style: TextStyle(color: Colors.blue)),
+                                    )
+                                  : Text(''),
                               Text(
                                 'Lead Changes: ',
                                 style: TextStyle(fontSize: 14),
@@ -118,41 +184,22 @@ class _GameViewState extends State<GameView> {
                                 stats["timesTied"],
                                 style: TextStyle(fontSize: 18),
                               ),
+                              recap
+                                  ? FlatButton(
+                                      onPressed: () {},
+                                      child: Text('Recap',
+                                          style: TextStyle(color: Colors.blue)),
+                                    )
+                                  : Text(''),
                             ],
                           ),
                     SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        RaisedButton(
-                          color: Colors.lightBlue,
-                          onPressed: () {},
-                          child: Text('Preview',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                        RaisedButton(
-                          color: Colors.lightBlue,
-                          onPressed: () {},
-                          child: Text('Play by Play',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                        RaisedButton(
-                          color: Colors.lightBlue,
-                          onPressed: () {},
-                          child: Text('Recap',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     gameStatus == 1
                         ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
                         : DefaultTabController(
-                            length: 4, // length of tabs
+                            length: 5, // length of tabs
                             initialIndex: 0,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -162,10 +209,11 @@ class _GameViewState extends State<GameView> {
                                     labelColor: Colors.green,
                                     unselectedLabelColor: Colors.black,
                                     tabs: [
-                                      Tab(text: 'Leaders'),
+                                      Tab(text: 'Feed'),
                                       Tab(text: gameData["vTeam"]["triCode"]),
                                       Tab(text: gameData["hTeam"]["triCode"]),
                                       Tab(text: 'Stats'),
+                                      Tab(text: 'Odds'),
                                     ],
                                   ),
                                 ),
@@ -177,11 +225,29 @@ class _GameViewState extends State<GameView> {
                                               color: Colors.grey, width: 0.5))),
                                   child: TabBarView(
                                     children: <Widget>[
+                                      // Container(
+                                      //   child: Center(
+                                      //     child:
+                                      //         getGameLeaders(gameData, stats),
+                                      //   ),
+                                      // ),
                                       Container(
-                                        child: Center(
-                                          child:
-                                              getGameLeaders(gameData, stats),
-                                        ),
+                                        alignment: Alignment.topLeft,
+                                        child: Column(children: [
+                                          Container(
+                                            padding: EdgeInsets.all(15),
+                                            child: OnCourtCard(
+                                              stats: stats,
+                                              game: gameData,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          GamePbpFeed(
+                                            gameData: gameData,
+                                          ),
+                                        ]),
                                       ),
                                       Container(
                                         child: GameBoxScore(
@@ -203,12 +269,14 @@ class _GameViewState extends State<GameView> {
                                           gameData: gameData,
                                         ),
                                       ),
+                                      Container(child: Text('Odds'))
                                     ],
                                   ),
                                 )
                               ],
                             ),
                           ),
+                    gameStatus < 3 ? hotToWatchCard() : Text(''),
                   ],
                 );
               } else {
@@ -217,6 +285,14 @@ class _GameViewState extends State<GameView> {
             }),
       ),
     );
+  }
+
+  Future<dynamic> loadGameData() async {
+    String gameId = widget.game["gameId"];
+    String gameUrlCode = widget.game["gameUrlCode"];
+    String gameDate = gameUrlCode.split("/")[0];
+    print('game_view network call');
+    return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
   }
 
   Widget getGameLeaders(dynamic game, dynamic stats) {
@@ -253,11 +329,15 @@ class _GameViewState extends State<GameView> {
             description: "Points",
             value: vTeam["points"]["value"].toString()),
         GameLeaderCard(
-            playerId: vTeam["assists"]["players"][0]["personId"],
+            playerId: vTeam["assists"]["players"].length > 0
+                ? vTeam["assists"]["players"][0]["personId"]
+                : "",
             description: "Assists",
             value: vTeam["assists"]["value"].toString()),
         GameLeaderCard(
-            playerId: vTeam["rebounds"]["players"][0]["personId"],
+            playerId: vTeam["rebounds"]["players"].length > 0
+                ? vTeam["rebounds"]["players"][0]["personId"]
+                : "",
             description: "Rebounds",
             value: vTeam["rebounds"]["value"].toString()),
       ]),
@@ -310,22 +390,25 @@ class _GameViewState extends State<GameView> {
 
   Widget hotToWatchCard() {
     return Card(
-      child: Column(
-        children: [
-          Text("How to watch"),
-          Container(
-              padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
-              child: Text(
-                getHowToWatchBroadcast(widget.game),
-                style: TextStyle(fontSize: 12),
-              )),
-          Container(
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 12),
-              child: Text(
-                getHowToWatchAudio(widget.game),
-                style: TextStyle(fontSize: 12),
-              ))
-        ],
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Text("HOW TO WATCH", style: TextStyle(fontWeight: FontWeight.bold)),
+            Container(
+                padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
+                child: Text(
+                  getHowToWatchBroadcast(widget.game),
+                  style: TextStyle(fontSize: 12),
+                )),
+            Container(
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 12),
+                child: Text(
+                  getHowToWatchAudio(widget.game),
+                  style: TextStyle(fontSize: 12),
+                ))
+          ],
+        ),
       ),
     );
   }
@@ -482,9 +565,9 @@ class _GameViewState extends State<GameView> {
         gameData["vTeam"]["score"] == "" ? "0" : gameData["vTeam"]["score"];
     var hScore =
         gameData["hTeam"]["score"] == "" ? "0" : gameData["hTeam"]["score"];
-    var arena = gameData["arena"]["name"];
-    var arenaLoc =
-        gameData["arena"]["city"] + " " + gameData["arena"]["stateAbbr"];
+    // var arena = gameData["arena"]["name"];
+    // var arenaLoc =
+    //     gameData["arena"]["city"] + " " + gameData["arena"]["stateAbbr"];
 
     var gameStatus = gameData["statusNum"];
     return Row(
@@ -496,7 +579,7 @@ class _GameViewState extends State<GameView> {
         Column(children: [
           GestureDetector(
             child: CachedLogo(
-                radius: 20,
+                radius: 30,
                 url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
             onTap: () {
               Navigator.push(
@@ -511,7 +594,7 @@ class _GameViewState extends State<GameView> {
           ),
           Text(
             "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 16),
           ),
         ]),
         Column(children: [
@@ -528,7 +611,7 @@ class _GameViewState extends State<GameView> {
         Column(children: [
           GestureDetector(
             child: CachedLogo(
-                radius: 20,
+                radius: 30,
                 url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"])),
             onTap: () {
               Navigator.push(
@@ -543,7 +626,7 @@ class _GameViewState extends State<GameView> {
           ),
           Text(
             "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 16),
           ),
         ]),
         SizedBox(

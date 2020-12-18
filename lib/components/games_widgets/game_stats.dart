@@ -20,12 +20,12 @@ class GameStats extends StatelessWidget {
                 height: 10,
               ),
               headerRow(gameData),
-              statsRow(stats["vTeam"]["totals"]["fgp"],
-                  stats["hTeam"]["totals"]["fgp"], "FG %"),
-              statsRow(stats["vTeam"]["totals"]["ftp"],
-                  stats["hTeam"]["totals"]["ftp"], "FT %"),
-              statsRow(stats["vTeam"]["totals"]["tpp"],
-                  stats["hTeam"]["totals"]["tpp"], "3P %"),
+              statsRow(stats["vTeam"]["totals"]["fgp"] + "%",
+                  stats["hTeam"]["totals"]["fgp"] + "%", "FG %"),
+              statsRow(stats["vTeam"]["totals"]["ftp"] + "%",
+                  stats["hTeam"]["totals"]["ftp"] + "%", "FT %"),
+              statsRow(stats["vTeam"]["totals"]["tpp"] + "%",
+                  stats["hTeam"]["totals"]["tpp"] + "%", "3P %"),
               statsRow(stats["vTeam"]["totals"]["totReb"],
                   stats["hTeam"]["totals"]["totReb"], "Rebounds"),
               statsRow(stats["vTeam"]["totals"]["assists"],
@@ -63,7 +63,7 @@ class GameStats extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 75,
           child: CachedLogo(
             url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"]),
             radius: 20,
@@ -71,12 +71,12 @@ class GameStats extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 120,
           child: Center(child: Text('')),
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 75,
           child: CachedLogo(
             url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"]),
             radius: 20,
@@ -92,7 +92,7 @@ class GameStats extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 75,
           child: Center(
               child: Text(
             val1,
@@ -103,12 +103,12 @@ class GameStats extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey))),
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 120,
           child: Center(child: Text(name, style: TextStyle(fontSize: 14))),
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: 125,
+          width: 75,
           child: Center(child: Text(val2, style: TextStyle(fontSize: 18))),
         ),
       ],

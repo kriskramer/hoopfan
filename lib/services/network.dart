@@ -46,6 +46,28 @@ class Network {
     }
   }
 
+  static Future<dynamic> getTwitterStream() async {
+    String url = "https://api.twitter.com/2/tweets/search/stream?";
+    // make request to get Json file
+    try {
+      var response = await http.get(url, headers: {
+        'Authorization':
+            "Bearer AAAAAAAAAAAAAAAAAAAAAIr4KgEAAAAAAeA5QVwDwCoTwQTtUcLBEWkQkBU%3DuY8dkZF6DUxj63dxoszJwBlc4Awaud863H4xPeznECZvSoxTsm"
+      });
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var json = convert.jsonDecode(response.body);
+          return json;
+        }
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      //TODO: Handle this exception
+      print(e);
+    }
+  }
+
   static Future<void> launchSite(String url) async {
     if (await canLaunch(url)) {
       await launch(

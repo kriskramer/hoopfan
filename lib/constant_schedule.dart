@@ -1,10 +1,10 @@
 class ScheduleHelper {
   static List<dynamic> getFullSchedule(String teamId) {
-    var sched = current_season_schedule["league"]["standard"];
+    //var sched = current_season_schedule["league"]["standard"];
 
-    for (var g in sched) {
-      //print(g);
-    }
+    // for (var g in sched) {
+    //   //print(g);
+    // }
 
     return null;
   }
