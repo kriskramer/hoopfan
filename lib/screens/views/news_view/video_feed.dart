@@ -5,7 +5,11 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class NbaNewsFeed extends StatelessWidget {
+class NbaVideoFeed extends StatelessWidget {
+  final searchTerms;
+
+  NbaVideoFeed({this.searchTerms});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -14,62 +18,53 @@ class NbaNewsFeed extends StatelessWidget {
             future: loadData(context),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                var news =
-                    Provider.of<JsonFiles>(context, listen: false).getNbaNews();
+                var videos = Provider.of<JsonFiles>(context, listen: false)
+                    .getNbaVideos();
 
                 return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: news["entries"].length,
+                  itemCount: videos["value"].length,
                   itemBuilder: (context, index) {
                     // Check if Id is in allTeam and points aint empty
                     return Column(children: [
-                      Card(
-                        elevation: 3,
-                        child: Container(
-                          margin: EdgeInsets.all(12),
-                          child: InkWell(
-                            onTap: () {
-                              Network.launchSite(
-                                  news["entries"][index]["link"]);
-                            },
-                            child: Column(
-                              children: [
-                                Text(
-                                  news["entries"][index]["title"],
+                      InkWell(
+                        onTap: () {
+                          Network.launchSite(
+                              videos["value"][index]["contentUrl"]);
+                        },
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Stack(children: [
+                              Image.network(
+                                  videos["value"][index]["thumbnailUrl"]),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  videos["value"][index]["name"],
                                   style: TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  news["entries"][index]["published"],
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(removeAllHtmlTags(
-                                    news["entries"][index]["summary"])),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  news["entries"][index]["link"],
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.blue),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Divider(),
-                              ],
+                              ),
+                            ]),
+                            Text(
+                              videos["value"][index]["thumbnailUrl"],
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.blue),
                             ),
-                          ),
+                            Text(
+                              formatDate(
+                                  videos["value"][index]["datePublished"]),
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -102,13 +97,13 @@ class NbaNewsFeed extends StatelessWidget {
   }
 
   Future<bool> loadData(BuildContext context) async {
-    var n = Provider.of<JsonFiles>(context, listen: false).getNbaNews();
+    var n = Provider.of<JsonFiles>(context, listen: false).getNbaVideos();
 
     if (n == null) {
       try {
-        var news =
-            await Network.getJson(Urls.teamGoogleNewsSearch("nba basketball"));
-        Provider.of<JsonFiles>(context, listen: false).setNbaNews(news);
+        var videos = await Network.getJsonWithBingHeader(
+            Urls.getBingVideoSearch(searchTerms));
+        Provider.of<JsonFiles>(context, listen: false).setNbaVideo(videos);
         return true;
       } catch (e) {
         print(e);
@@ -125,5 +120,14 @@ class NbaNewsFeed extends StatelessWidget {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
     return htmlText.replaceAll(exp, '');
+  }
+
+  String formatDate(String date) {
+    String d = "";
+
+    var dt = DateTime.parse(date);
+    d = "${dt.month}-${dt.day}-${dt.year}";
+
+    return d;
   }
 }

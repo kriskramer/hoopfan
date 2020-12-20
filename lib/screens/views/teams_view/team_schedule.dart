@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/completed_game_card.dart';
+import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
 import 'package:hoop/components/teams_widgets/scheduled_game_card.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -39,6 +41,14 @@ class TeamSchedule extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: preseasonGames.length,
                 itemBuilder: (context, index) {
+                  if (preseasonGames[index]["statusNum"] == 1) {
+                    return ScheduledGameCard(game: preseasonGames[index]);
+                  } else if (preseasonGames[index]["statusNum"] == 2) {
+                    return InProgressGameCard(game: preseasonGames[index]);
+                  } else if (preseasonGames[index]["statusNum"] == 3) {
+                    return CompletedGameCard(game: preseasonGames[index]);
+                  }
+                  // If I can't resolve the statusNum, just return scheduled game card
                   return ScheduledGameCard(game: preseasonGames[index]);
                 },
               ),
@@ -53,6 +63,14 @@ class TeamSchedule extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: regseasonGames.length,
                 itemBuilder: (context, index) {
+                  if (regseasonGames[index]["statusNum"] == 1) {
+                    return ScheduledGameCard(game: regseasonGames[index]);
+                  } else if (regseasonGames[index]["statusNum"] == 2) {
+                    return InProgressGameCard(game: regseasonGames[index]);
+                  } else if (regseasonGames[index]["statusNum"] == 3) {
+                    return CompletedGameCard(game: regseasonGames[index]);
+                  }
+                  // If I can't resolve the statusNum, just return scheduled game card
                   return ScheduledGameCard(game: regseasonGames[index]);
                 },
               ),

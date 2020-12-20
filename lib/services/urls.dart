@@ -40,9 +40,12 @@ class Urls {
       "$_apiBaseUrl/players/teamId/$id/?rapidapi-key=${NbaApi.key}";
   static String link(String team) => _teamBaseUrl + team + "/";
 
-  static String teamNews(String team) =>
+  static String teamGoogleNewsSearch(String team) =>
       //"https://bing-news-search1.p.rapidapi.com/news/search?q=$team&freshness=Day&textFormat=Raw&safeSearch=Off?rapidapi-key=${NbaApi.key}";
       "https://google-search3.p.rapidapi.com/api/v1/news/q=$team?rapidapi-key=${GoogleSearchApi.key}";
+
+  static String teamGoogleImageSearch(String team) =>
+      "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
   static String getBingVideoSearch(String team) {
     return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";

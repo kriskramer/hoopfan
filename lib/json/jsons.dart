@@ -16,7 +16,9 @@ class JsonFiles with ChangeNotifier {
   Map _idWestIndex = {};
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
   Map<String, dynamic> _teamNews = {}; // teamID,Player_list
+  Map<String, dynamic> _teamVideos = {};
   var _nbaNews;
+  var _nbaVideos;
   var _todaysGames;
   var _prevGames;
   var _upcomingGames;
@@ -50,8 +52,17 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setNbaVideo(dynamic json) {
+    _nbaVideos = json;
+    notifyListeners();
+  }
+
   void setTeamNews(String teamId, dynamic news) {
     _teamNews[teamId] = news;
+  }
+
+  void setTeamVideos(String teamId, dynamic videos) {
+    _teamVideos[teamId] = videos;
   }
 
   void setAllPlayers(dynamic json) {
@@ -115,15 +126,15 @@ class JsonFiles with ChangeNotifier {
     _games = json;
   }
 
-  void setEastId(dynamic json) {
-    _eastId = json;
-    notifyListeners();
-  }
+  // void setEastId(dynamic json) {
+  //   _eastId = json;
+  //   notifyListeners();
+  // }
 
-  void setWestId(dynamic json) {
-    _westId = json;
-    notifyListeners();
-  }
+  // void setWestId(dynamic json) {
+  //   _westId = json;
+  //   notifyListeners();
+  // }
 
   void setUpcomingGames(dynamic json) {
     _upcomingGames = json;
@@ -162,6 +173,7 @@ class JsonFiles with ChangeNotifier {
   }
 
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
+  dynamic getTeamVideos(String teamId) => _teamVideos[teamId];
 
   dynamic getTransactions() => _transactions;
 
@@ -188,6 +200,7 @@ class JsonFiles with ChangeNotifier {
   dynamic getDivStandings() => _divStandings;
 
   dynamic getNbaNews() => _nbaNews;
+  dynamic getNbaVideos() => _nbaVideos;
 
   dynamic getUpcomingGames() => _upcomingGames;
   dynamic getTodaysGames() => _todaysGames;

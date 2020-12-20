@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/news_view/news_feed.dart';
 import 'package:hoop/screens/views/news_view/transactions_view.dart';
+import 'package:hoop/screens/views/news_view/video_feed.dart';
 
 class NewsMainScreen extends StatefulWidget {
   @override
@@ -33,9 +34,7 @@ class _NewsMainScreenState extends State<NewsMainScreen> {
         body: TabBarView(
           children: [
             NbaNewsFeed(),
-            SingleChildScrollView(
-              child: Text('Video List'),
-            ),
+            NbaVideoFeed(searchTerms: "nba basketball"),
             Transactions(),
           ],
         ),

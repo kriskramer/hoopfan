@@ -52,6 +52,8 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     if (widget.gameData["statusNum"] == false) {
       _timer.cancel();
     }
+    period = widget.gameData["period"]["current"].toString();
+    //print(period);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(children: [
@@ -66,6 +68,9 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                   itemCount: 5, //plays.length,
                   itemBuilder: (context, index) {
                     int idx = index + plays.length - 5;
+                    if (idx < 0) {
+                      idx = 0;
+                    }
                     return Container(
                       padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
                       child: Row(

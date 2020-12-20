@@ -44,6 +44,7 @@ class ScheduledGameCard extends StatelessWidget {
                 width: 5,
               ),
               CachedLogo(
+                radius: 30,
                 url: isHomeTeam
                     ? ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])
                     : ConstantHelper.getTeamLogo(game["hTeam"]["teamId"]),

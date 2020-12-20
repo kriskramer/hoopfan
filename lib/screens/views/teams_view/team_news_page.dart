@@ -17,7 +17,8 @@ class TeamNewsPage extends StatelessWidget {
     if (Provider.of<JsonFiles>(context, listen: false).getNews(teamId) ==
         null) {
       try {
-        var news = await Network.getJson(Urls.teamNews(this.teamName));
+        var news =
+            await Network.getJson(Urls.teamGoogleNewsSearch(this.teamName));
         if (news != null) {
           Provider.of<JsonFiles>(context, listen: false)
               .setTeamNews(teamId, news["entries"]);

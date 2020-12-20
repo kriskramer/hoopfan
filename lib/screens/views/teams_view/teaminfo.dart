@@ -4,6 +4,7 @@ import 'package:hoop/constant.dart';
 import 'package:hoop/components/teams_widgets/playerlst.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/teams_view/team_info_page.dart';
+import 'package:hoop/screens/views/teams_view/team_media_page.dart';
 import 'package:hoop/screens/views/teams_view/team_news_page.dart';
 import 'package:hoop/screens/views/teams_view/team_schedule.dart';
 import 'package:hoop/services/network.dart';
@@ -164,7 +165,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         FlatButton(
-                                          child: Text('News',
+                                          child: Text('Media',
                                               style: TextStyle(
                                                   color: Color(teamTextColor))),
                                           color: Color(teamColor),
@@ -173,8 +174,9 @@ class _TeamDetailsState extends State<TeamDetails> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      TeamNewsPage(ta[0],
-                                                          widget.nbaTeamId)),
+                                                      TeamMediaPage(
+                                                          teamId: widget
+                                                              .nbaTeamId)),
                                             );
                                           },
                                         ),
@@ -197,7 +199,6 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                   builder: (context) =>
                                                       TeamInfoPage(
                                                     team: team,
-                                                    teamColor: teamColor,
                                                   ),
                                                 ));
                                           },

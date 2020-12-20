@@ -5,6 +5,7 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/game_box_score.dart';
 import 'package:hoop/components/games_widgets/game_leader_card.dart';
+import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
 import 'package:hoop/components/games_widgets/game_stats.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
@@ -25,33 +26,26 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
-  //Future<dynamic> _gameData;
+  Future<dynamic> _gameData;
   Timer _timer;
-  int timerDuration = 100;
+  int timerDuration = 45;
 
   @override
   void initState() {
     super.initState();
-    loadGameData();
+    _gameData = loadGameData();
     // TODO: Can't figure out the timer... it runs fine a few times, then just seems to crash the app.
     _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
-      //refreshGameData();
+      refreshGameData();
       print('game_view timer tick');
     });
   }
 
   void refreshGameData() {
-    //setState(() {
-    loadGameData();
-    //});
+    setState(() {
+      _gameData = loadGameData();
+    });
   }
-
-  // void startTimer() {
-  //   _timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
-  //     refreshGameData();
-  //     //_timer = null;
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -79,7 +73,7 @@ class _GameViewState extends State<GameView> {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: loadGameData(),
+            future: _gameData,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 print('reloading game_view data');
@@ -105,7 +99,7 @@ class _GameViewState extends State<GameView> {
                 var gameActivated = gameData["isGameActivated"];
 
                 if (gameData["isGameActivated"]) {
-                  timerDuration = 50;
+                  timerDuration = 45;
                 } else {
                   _timer.cancel();
                 }
@@ -241,8 +235,8 @@ class _GameViewState extends State<GameView> {
                                               game: gameData,
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 5,
+                                          GameLeadersFeed(
+                                            stats: stats,
                                           ),
                                           GamePbpFeed(
                                             gameData: gameData,

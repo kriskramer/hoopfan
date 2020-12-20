@@ -190,38 +190,38 @@ class _StandingsState extends State<Standings> {
         appBar: AppBar(
           backgroundColor: Color(0XFF1F6BA3),
           automaticallyImplyLeading: false, // hides back arrow button
-          toolbarHeight: 90,
-          actions: [
-            RaisedButton(
-              child: Text(
-                'Season: $year',
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.blue[400],
-              onPressed: () => {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return getSeasonSelectDialog();
-                    }),
-              },
-            ),
-            RaisedButton(
-              child: Text(
-                Provider.of<JsonFiles>(context, listen: false)
-                    .getSeasonStageFormatted(),
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.blue[400],
-              onPressed: () => {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return getSeasonStageSelectDialog();
-                    }),
-              },
-            ),
-          ],
+          toolbarHeight: 60,
+          // actions: [
+          //   RaisedButton(
+          //     child: Text(
+          //       'Season: $year',
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //     color: Colors.blue[400],
+          //     onPressed: () => {
+          //       showDialog(
+          //           context: context,
+          //           builder: (context) {
+          //             return getSeasonSelectDialog();
+          //           }),
+          //     },
+          //   ),
+          //   RaisedButton(
+          //     child: Text(
+          //       Provider.of<JsonFiles>(context, listen: false)
+          //           .getSeasonStageFormatted(),
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //     color: Colors.blue[400],
+          //     onPressed: () => {
+          //       showDialog(
+          //           context: context,
+          //           builder: (context) {
+          //             return getSeasonStageSelectDialog();
+          //           }),
+          //     },
+          //   ),
+          // ],
           bottom: TabBar(
             tabs: [
               Tab(

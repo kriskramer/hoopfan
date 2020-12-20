@@ -21,7 +21,8 @@ class GameLeaderCard extends StatelessWidget {
 
     return playerId != ""
         ? Container(
-            margin: EdgeInsets.all(5),
+            //margin: EdgeInsets.all(5),
+            color: Colors.grey[200],
             child: GestureDetector(
               onTap: () {
                 //dynamic teamsJson;
@@ -33,12 +34,13 @@ class GameLeaderCard extends StatelessWidget {
                           PlayerDetail(playerId: player["personId"])),
                 );
               },
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CachedLogo(
                     url:
                         "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                    radius: 40,
+                    radius: 25,
                   ),
                   Column(children: [
                     Text(player["firstName"]),

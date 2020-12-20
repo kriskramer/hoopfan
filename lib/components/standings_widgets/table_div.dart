@@ -18,7 +18,7 @@ class _DivTableState extends State<DivTable> {
           DataCell(
               Text(
                 "${index + 1} ${team["teamSitesOnly"]["teamNickname"]}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ), onTap: () {
             var teamId = widget.json[index]["teamId"];
             print(teamId);
@@ -35,31 +35,31 @@ class _DivTableState extends State<DivTable> {
           DataCell(
             Text(
               "${team["win"]}".trim(),
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ), //
           ),
           DataCell(
             Text(
               "${team["loss"]}",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
               "${team["winPct"]}",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
               "${team["gamesBehind"]}",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
               "${team["streak"]}",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ],

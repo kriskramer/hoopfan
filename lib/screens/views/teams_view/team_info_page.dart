@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/constant.dart';
 
 class TeamInfoPage extends StatelessWidget {
   final dynamic team;
-  final int teamColor;
-  TeamInfoPage({@required this.team, this.teamColor});
+
+  TeamInfoPage({@required this.team});
 
   @override
   Widget build(BuildContext context) {
     final retired = team[5]["RetiredMembers"];
     final hof = team[4]["HallOfFameInductees"];
     final awards = team[3]["Awards"];
+    final teamId = team[0]["Details"][0]["Team_Id"].toString();
+    final teamColor = ConstantHelper.getTeamColor(teamId);
+    final teamTextColor = ConstantHelper.getTeamTextColor(teamId);
 
     return Scaffold(
       appBar: AppBar(
@@ -27,10 +31,10 @@ class TeamInfoPage extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              ...teamSummary(team),
-              ...awardsList(awards),
-              ...retiredList(retired),
-              ...hofList(hof),
+              ...teamSummary(team, teamId, teamColor, teamTextColor),
+              ...awardsList(awards, teamId, teamColor, teamTextColor),
+              ...retiredList(retired, teamId, teamColor, teamTextColor),
+              ...hofList(hof, teamId, teamColor, teamTextColor),
             ],
           ),
         ),
@@ -38,8 +42,21 @@ class TeamInfoPage extends StatelessWidget {
     );
   }
 
-  List<Widget> teamSummary(dynamic json) {
+  List<Widget> teamSummary(
+      dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
+    list.add(Card(
+        color: Color(ConstantHelper.getTeamColor(teamId)),
+        elevation: 1,
+        child: Container(
+            padding: EdgeInsets.all(2),
+            //width: deviceWidth - 80,
+            child: Center(
+                child: Text('Team Details',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Color(
+                            ConstantHelper.getTeamTextColor(teamId))))))));
 
     list.add(
       Text(
@@ -151,12 +168,24 @@ class TeamInfoPage extends StatelessWidget {
     return list;
   }
 
-  List<Widget> awardsList(dynamic json) {
+  List<Widget> awardsList(
+      dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
 
     dynamic champs = json[0]["Championships"];
     dynamic conf = json[1]["ConferenceTitles"];
     dynamic div = json[2]["DivitionalTitles"];
+
+    list.add(Card(
+        color: Color(teamColor),
+        elevation: 1,
+        child: Container(
+            padding: EdgeInsets.all(2),
+            //width: deviceWidth - 80,
+            child: Center(
+                child: Text('Awards & Championships',
+                    style: TextStyle(
+                        fontSize: 18, color: Color(teamTextColor)))))));
 
     list.add(SizedBox(
       height: 5,
@@ -236,15 +265,21 @@ class TeamInfoPage extends StatelessWidget {
     return list;
   }
 
-  List<Widget> retiredList(dynamic json) {
+  List<Widget> retiredList(
+      dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
 
-    list.add(
-      Text(
-        'Retired Players and Executives',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
+    list.add(Card(
+        color: Color(teamColor),
+        elevation: 1,
+        child: Container(
+            padding: EdgeInsets.all(2),
+            //width: deviceWidth - 80,
+            child: Center(
+                child: Text('Retired Players and Executives',
+                    style: TextStyle(
+                        fontSize: 18, color: Color(teamTextColor)))))));
+
     list.add(SizedBox(
       height: 5,
     ));
@@ -279,15 +314,21 @@ class TeamInfoPage extends StatelessWidget {
     return list;
   }
 
-  List<Widget> hofList(dynamic json) {
+  List<Widget> hofList(
+      dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
 
-    list.add(
-      Text(
-        'Hall of Fame Members',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
+    list.add(Card(
+        color: Color(teamColor),
+        elevation: 1,
+        child: Container(
+            padding: EdgeInsets.all(2),
+            //width: deviceWidth - 80,
+            child: Center(
+                child: Text('Hall of Fame Members',
+                    style: TextStyle(
+                        fontSize: 18, color: Color(teamTextColor)))))));
+
     list.add(SizedBox(
       height: 5,
     ));
