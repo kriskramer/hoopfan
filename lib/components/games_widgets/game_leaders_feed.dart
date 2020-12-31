@@ -38,7 +38,7 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
     leaders.add(GameLeaderCard(
       playerId: vTeam["points"]["players"].length > 0
           ? vTeam["points"]["players"][0]["personId"]
-          : "",,
+          : "",
       description: "Points",
       value: vTeam["points"]["value"].toString(),
       teamColor: vTeamColor,

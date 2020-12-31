@@ -81,7 +81,7 @@ class _GameViewState extends State<GameView> {
             future: _gameData,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                print('reloading game_view data');
+                //print('reloading game_view data');
                 var gameData = snapshot.data["basicGameData"];
                 var stats = snapshot.data["stats"];
 
