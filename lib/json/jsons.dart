@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class JsonFiles with ChangeNotifier {
   String _year = "2020";
-  String _seasonStage;
+  String _seasonStage = "2";
   var _teamStats;
   var _seasons;
   var _transactions;
@@ -17,6 +17,8 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
   Map<String, dynamic> _teamNews = {}; // teamID,Player_list
   Map<String, dynamic> _teamVideos = {};
+  Map<String, dynamic> _previewArticles = {};
+  Map<String, dynamic> _recapArticles = {};
   var _nbaNews;
   var _nbaVideos;
   var _todaysGames;
@@ -63,6 +65,14 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamVideos(String teamId, dynamic videos) {
     _teamVideos[teamId] = videos;
+  }
+
+  void setPreviewArticles(String gameId, dynamic article) {
+    _previewArticles[gameId] = article;
+  }
+
+  void setRecapArticles(String gameId, dynamic article) {
+    _recapArticles[gameId] = article;
   }
 
   void setAllPlayers(dynamic json) {
@@ -174,6 +184,9 @@ class JsonFiles with ChangeNotifier {
 
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
   dynamic getTeamVideos(String teamId) => _teamVideos[teamId];
+
+  dynamic getPreviewArticle(String gameId) => _previewArticles[gameId];
+  dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
 
   dynamic getTransactions() => _transactions;
 

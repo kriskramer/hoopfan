@@ -157,7 +157,9 @@ class _TodaysGamesState extends State<TodaysGames> {
                 ]);
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+                      child: CircularProgressIndicator()),
                 );
               }
             }));

@@ -20,12 +20,12 @@ class GameStats extends StatelessWidget {
                 height: 10,
               ),
               headerRow(gameData),
-              statsRow(stats["vTeam"]["totals"]["fgp"] + "%",
-                  stats["hTeam"]["totals"]["fgp"] + "%", "FG %"),
-              statsRow(stats["vTeam"]["totals"]["ftp"] + "%",
-                  stats["hTeam"]["totals"]["ftp"] + "%", "FT %"),
-              statsRow(stats["vTeam"]["totals"]["tpp"] + "%",
-                  stats["hTeam"]["totals"]["tpp"] + "%", "3P %"),
+              statsRow(stats["vTeam"]["totals"]["fgp"],
+                  stats["hTeam"]["totals"]["fgp"], "FG %", true),
+              statsRow(stats["vTeam"]["totals"]["ftp"],
+                  stats["hTeam"]["totals"]["ftp"], "FT %", true),
+              statsRow(stats["vTeam"]["totals"]["tpp"],
+                  stats["hTeam"]["totals"]["tpp"], "3P %", true),
               statsRow(stats["vTeam"]["totals"]["totReb"],
                   stats["hTeam"]["totals"]["totReb"], "Rebounds"),
               statsRow(stats["vTeam"]["totals"]["assists"],
@@ -71,7 +71,7 @@ class GameStats extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: 120,
+          width: 140,
           child: Center(child: Text('')),
         ),
         Container(
@@ -86,19 +86,39 @@ class GameStats extends StatelessWidget {
     );
   }
 
-  Widget statsRow(String val1, String val2, String name) {
+  Widget statsRow(String val1, String val2, String name,
+      [bool isPercent = false]) {
+    var v1 = double.parse(val1);
+    var v2 = double.parse(val2);
+    var vLead = v1 > v2;
+    var hLead = v2 > v1;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
+          //alignment: Alignment.centerRight,
           padding: EdgeInsets.all(5),
           width: 75,
           child: Center(
               child: Text(
-            val1,
-            style: TextStyle(fontSize: 18),
+            val1 + (isPercent ? " %" : ""),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: vLead ? FontWeight.bold : FontWeight.normal),
           )),
         ),
+        vLead
+            ? Container(
+                alignment: Alignment.center,
+                width: 10,
+                child: Icon(
+                  Icons.arrow_drop_up,
+                  color: Colors.green,
+                ))
+            : SizedBox(
+                width: 10,
+              ),
         Container(
           decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey))),
@@ -106,10 +126,27 @@ class GameStats extends StatelessWidget {
           width: 120,
           child: Center(child: Text(name, style: TextStyle(fontSize: 14))),
         ),
+        hLead
+            ? Container(
+                alignment: Alignment.center,
+                width: 10,
+                child: Icon(
+                  Icons.arrow_drop_up,
+                  color: Colors.green,
+                ))
+            : SizedBox(
+                width: 10,
+              ),
         Container(
           padding: EdgeInsets.all(5),
           width: 75,
-          child: Center(child: Text(val2, style: TextStyle(fontSize: 18))),
+          child: Center(
+              child: Text(
+            val2 + (isPercent ? " %" : ""),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: hLead ? FontWeight.bold : FontWeight.normal),
+          )),
         ),
       ],
     );

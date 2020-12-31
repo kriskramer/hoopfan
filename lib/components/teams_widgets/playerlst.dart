@@ -32,8 +32,8 @@ class PlayerList extends StatelessWidget {
                   }
                 }
 
-                Provider.of<JsonFiles>(context, listen: false).addTeamPlayers(
-                    teamId, teamRoster); // add teamRoster json to Provider
+                Provider.of<JsonFiles>(context, listen: false)
+                    .addTeamPlayers(teamId, teamRoster);
                 playerList = Roster(
                   json: teamRoster,
                   teamColor: teamColor,

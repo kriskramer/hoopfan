@@ -6,7 +6,24 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class Transactions extends StatelessWidget {
+class Transactions extends StatefulWidget {
+  @override
+  _TransactionsState createState() => _TransactionsState();
+}
+
+class _TransactionsState extends State<Transactions> {
+  dynamic _transactions;
+  String _filteredTeamId = "";
+  String _filteredPlayerId = "";
+  bool _filterByTeam = false;
+  bool _filterByPlayer = false;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,81 +34,40 @@ class Transactions extends StatelessWidget {
             List<Widget> list = new List<Widget>();
 
             if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return NoConnection();
             }
 
             if (snapshot.data == true) {
-              list.add(Text('Last 200 Transactions',
-                  style: TextStyle(fontSize: 24)));
-              list.add(SizedBox(height: 10));
+              list.add(SizedBox(height: 15));
+              list.add(Text(
+                  'Unfiltered results will show the last 250 transactions. Filtered results have no limit.',
+                  style: TextStyle(fontSize: 14)));
+              list.add(SizedBox(height: 15));
 
               var transactions = Provider.of<JsonFiles>(context, listen: false)
                   .getTransactions()["NBA_Player_Movement"]["rows"];
-              for (int i = 0; i < 200; i++) {
-                var tx = transactions[i];
-                list.add(Container(
-                  margin: EdgeInsets.all(15),
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        Text(
-                          tx["TRANSACTION_DATE"] + "  -  ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          tx["Transaction_Type"],
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      tx["TRANSACTION_DESCRIPTION"],
-                      style: TextStyle(fontSize: 18, color: Colors.grey[700]),
-                    ),
-                    Row(
-                      children: [
-                        FlatButton(
-                          height: 25,
-                          child: Text(
-                            Provider.of<JsonFiles>(context, listen: false)
-                                .getTeamName(tx["TEAM_ID"]
-                                    .toString()
-                                    .replaceAll(".0", "")),
-                            style: TextStyle(
-                                color: Colors.blue[800],
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TeamDetails(
-                                        nbaTeamId: tx["TEAM_ID"]
-                                            .toString()
-                                            .replaceAll(".0", ""))));
-                          },
-                        ),
-                        SizedBox(width: 10),
-                        FlatButton(
-                          height: 25,
-                          child: Text(
-                            Provider.of<JsonFiles>(context, listen: false)
-                                .getPlayerName(tx["PLAYER_ID"]
-                                    .toString()
-                                    .replaceAll(".0", "")),
-                            style: TextStyle(
-                                color: Colors.blue[800],
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    )
-                  ]),
-                ));
+
+              if (_filterByTeam) {
+                for (int i = 0; i < transactions.length; i++) {
+                  var tx = transactions[i];
+                  if (tx["TEAM_ID"].toString().replaceAll(".0", "") ==
+                      _filteredTeamId) {
+                    list.add(transactionItem(tx));
+                  }
+                }
+              } else if (_filterByPlayer) {
+                for (int i = 0; i < transactions.length; i++) {
+                  var tx = transactions[i];
+                  if (tx["PLAYER_ID"].toString().replaceAll(".0", "") ==
+                      _filteredPlayerId) {
+                    list.add(transactionItem(tx));
+                  }
+                }
+              } else {
+                for (int i = 0; i < 250; i++) {
+                  var tx = transactions[i];
+                  list.add(transactionItem(tx));
+                }
               }
             } else {
               return NoConnection();
@@ -104,13 +80,14 @@ class Transactions extends StatelessWidget {
   }
 
   Future<bool> loadData(BuildContext context) async {
-    var tx = Provider.of<JsonFiles>(context, listen: false).getTransactions();
+    var _transactions =
+        Provider.of<JsonFiles>(context, listen: false).getTransactions();
 
-    if (tx == null) {
+    if (_transactions == null) {
       try {
-        var transactions = await Network.getJson(Urls.nbaPlayerMovement());
+        _transactions = await Network.getJson(Urls.nbaPlayerMovement());
         Provider.of<JsonFiles>(context, listen: false)
-            .setTransactions(transactions);
+            .setTransactions(_transactions);
         return true;
       } catch (e) {
         print(e);
@@ -120,5 +97,148 @@ class Transactions extends StatelessWidget {
     }
 
     return false;
+  }
+
+  void filterByTeam(String teamId) {
+    setState(() {
+      _filterByTeam = true;
+      _filteredTeamId = teamId;
+    });
+  }
+
+  void filterByPlayer(String playerId) {
+    setState(() {
+      _filterByPlayer = true;
+      _filteredPlayerId = playerId;
+    });
+  }
+
+  void clearFilters() {
+    setState(() {
+      _filterByPlayer = false;
+      _filterByTeam = false;
+      _filteredPlayerId = "";
+      _filteredTeamId = "";
+    });
+  }
+
+  Widget transactionItem(dynamic tx) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration:
+          BoxDecoration(border: Border.all(width: 1, color: Colors.grey)),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                tx["TRANSACTION_DATE"] + "  -  ",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                tx["Transaction_Type"],
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text(
+            tx["TRANSACTION_DESCRIPTION"],
+            style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 35,
+            child: Row(children: [
+              GestureDetector(
+                child: Text(
+                  Provider.of<JsonFiles>(context, listen: false).getTeamName(
+                      tx["TEAM_ID"].toString().replaceAll(".0", "")),
+                  style: TextStyle(
+                      color: Colors.blue[800], fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TeamDetails(
+                              nbaTeamId: tx["TEAM_ID"]
+                                  .toString()
+                                  .replaceAll(".0", ""))));
+                },
+              ),
+              _filterByTeam
+                  ? IconButton(
+                      iconSize: 20,
+                      icon: Icon(Icons.cancel),
+                      onPressed: () {
+                        clearFilters();
+                      },
+                    )
+                  : IconButton(
+                      iconSize: 20,
+                      icon: Icon(Icons.filter_alt),
+                      onPressed: () {
+                        var teamId =
+                            tx["TEAM_ID"].toString().replaceAll(".0", "");
+                        filterByTeam(teamId);
+                      },
+                    ),
+            ]),
+          ),
+          isPlayer(tx, context)
+              ? Container(
+                  height: 35,
+                  child: Row(children: [
+                    GestureDetector(
+                      child: Text(
+                        Provider.of<JsonFiles>(context, listen: false)
+                            .getPlayerName(tx["PLAYER_ID"]
+                                .toString()
+                                .replaceAll(".0", "")),
+                        style: TextStyle(
+                            color: Colors.blue[800],
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () {},
+                    ),
+                    _filterByPlayer
+                        ? IconButton(
+                            iconSize: 20,
+                            icon: Icon(Icons.cancel),
+                            onPressed: () {
+                              clearFilters();
+                            },
+                          )
+                        : IconButton(
+                            iconSize: 20,
+                            icon: Icon(Icons.filter_alt),
+                            onPressed: () {
+                              var playerId = tx["PLAYER_ID"]
+                                  .toString()
+                                  .replaceAll(".0", "");
+                              filterByPlayer(playerId);
+                            },
+                          ),
+                  ]),
+                )
+              : SizedBox(
+                  height: 1,
+                ),
+        ],
+      ),
+    );
+  }
+
+  bool isPlayer(dynamic tx, BuildContext context) {
+    if (Provider.of<JsonFiles>(context, listen: false)
+            .getPlayerName(tx["PLAYER_ID"].toString().replaceAll(".0", "")) ==
+        "") {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

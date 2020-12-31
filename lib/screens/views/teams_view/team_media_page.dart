@@ -22,6 +22,7 @@ class TeamMediaPage extends StatelessWidget {
           backgroundColor: Color(0XFFEDF1FF),
           appBar: AppBar(
             backgroundColor: Color(teamColor),
+            title: Text("$teamName Media"),
             bottom: TabBar(
               tabs: [
                 Tab(

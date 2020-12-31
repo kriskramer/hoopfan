@@ -59,7 +59,7 @@ class _ConfTableState extends State<ConfTable> {
           ),
           DataCell(
             Text(
-              "${team["streak"]}",
+              "${team["lastTenWin"]}-${team["lastTenLoss"]}",
               style: TextStyle(fontSize: 14),
             ),
           ),
@@ -113,15 +113,15 @@ class _ConfTableState extends State<ConfTable> {
           label: Text(
             'GB',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.deepPurple,
             ),
           ),
         ),
         DataColumn(
           label: Text(
-            'Str',
+            'L10',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.blue,
             ),
           ),
         ),

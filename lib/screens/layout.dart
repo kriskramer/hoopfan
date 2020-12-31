@@ -13,7 +13,6 @@ class _LayoutState extends State<Layout> {
   List<Widget> views = [
     Standings(),
     TodaysGames(),
-    //Players(),
     NewsMainScreen(),
   ];
 

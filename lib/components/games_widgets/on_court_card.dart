@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 
@@ -11,7 +9,7 @@ class OnCourtCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var s = stats;
+    //var s = stats;
 
     String vTeamId = game["vTeam"]["teamId"];
     String hTeamId = game["hTeam"]["teamId"];

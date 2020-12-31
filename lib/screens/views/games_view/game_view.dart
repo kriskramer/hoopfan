@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/game_box_score.dart';
+import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
+import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
 import 'package:hoop/components/games_widgets/game_leader_card.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
 import 'package:hoop/components/games_widgets/game_stats.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
+import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
+import 'package:hoop/screens/views/games_view/game_preview_article.dart';
+import 'package:hoop/screens/views/games_view/game_recap_article.dart';
 import 'package:hoop/screens/views/teams_view/teaminfo.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -98,6 +103,10 @@ class _GameViewState extends State<GameView> {
                 var gameStatus = gameData["statusNum"];
                 var gameActivated = gameData["isGameActivated"];
 
+                var gameId = gameData["gameId"];
+                var date = gameData["gameUrlCode"].toString().split("/")[0];
+                // var currentPeriod = gameData["period"]["current"];
+
                 if (gameData["isGameActivated"]) {
                   timerDuration = 45;
                 } else {
@@ -148,13 +157,52 @@ class _GameViewState extends State<GameView> {
                       height: 5,
                     ),
                     stats == null
-                        ? SizedBox()
+                        ? Row(
+                            children: [
+                              preview
+                                  ? FlatButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                GamePreviewArticle(
+                                              gameDate: date,
+                                              gameId: gameId,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Text('Preview',
+                                          style: TextStyle(color: Colors.blue)),
+                                    )
+                                  : Text(''),
+                              recap
+                                  ? FlatButton(
+                                      onPressed: () {},
+                                      child: Text('Recap',
+                                          style: TextStyle(color: Colors.blue)),
+                                    )
+                                  : Text(''),
+                            ],
+                          )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               preview
                                   ? FlatButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                GamePreviewArticle(
+                                              gameDate: date,
+                                              gameId: gameId,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: Text('Preview',
                                           style: TextStyle(color: Colors.blue)),
                                     )
@@ -180,7 +228,18 @@ class _GameViewState extends State<GameView> {
                               ),
                               recap
                                   ? FlatButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                GameRecapArticle(
+                                              gameDate: date,
+                                              gameId: gameId,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: Text('Recap',
                                           style: TextStyle(color: Colors.blue)),
                                     )
@@ -212,19 +271,13 @@ class _GameViewState extends State<GameView> {
                                   ),
                                 ),
                                 Container(
-                                  height: 700, //height of TabBarView
+                                  height: 1000, //height of TabBarView
                                   decoration: BoxDecoration(
                                       border: Border(
                                           top: BorderSide(
                                               color: Colors.grey, width: 0.5))),
                                   child: TabBarView(
                                     children: <Widget>[
-                                      // Container(
-                                      //   child: Center(
-                                      //     child:
-                                      //         getGameLeaders(gameData, stats),
-                                      //   ),
-                                      // ),
                                       Container(
                                         alignment: Alignment.topLeft,
                                         child: Column(children: [
@@ -235,12 +288,24 @@ class _GameViewState extends State<GameView> {
                                               game: gameData,
                                             ),
                                           ),
+                                          QuarterScores(
+                                            game: gameData,
+                                          ),
                                           GameLeadersFeed(
                                             stats: stats,
+                                            game: gameData,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
                                           ),
                                           GamePbpFeed(
                                             gameData: gameData,
                                           ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          GameFoulTroubleFeed(
+                                              game: gameData, stats: stats),
                                         ]),
                                       ),
                                       Container(
@@ -287,90 +352,6 @@ class _GameViewState extends State<GameView> {
     String gameDate = gameUrlCode.split("/")[0];
     print('game_view network call');
     return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
-  }
-
-  Widget getGameLeaders(dynamic game, dynamic stats) {
-    Widget c;
-    dynamic hTeam = stats["hTeam"]["leaders"];
-    dynamic vTeam = stats["vTeam"]["leaders"];
-    String vTeamName = ConstantHelper.getTeamName(game["vTeam"]["teamId"]);
-    String hTeamName = ConstantHelper.getTeamName(game["hTeam"]["teamId"]);
-    String vTeamId = game["vTeam"]["teamId"];
-    String hTeamId = game["hTeam"]["teamId"];
-    var deviceWidth = MediaQuery.of(context).size.width;
-
-    c = Column(children: [
-      //Text('LEADERS', style: TextStyle(fontSize: 24)),
-      SizedBox(
-        height: 15,
-      ),
-      Card(
-        color: Color(ConstantHelper.getTeamColor(vTeamId)),
-        elevation: 4,
-        child: Container(
-            padding: EdgeInsets.all(5),
-            width: deviceWidth - 80,
-            child: Center(
-                child: Text(vTeamName,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color:
-                            Color(ConstantHelper.getTeamTextColor(vTeamId)))))),
-      ),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        GameLeaderCard(
-            playerId: vTeam["points"]["players"][0]["personId"],
-            description: "Points",
-            value: vTeam["points"]["value"].toString()),
-        GameLeaderCard(
-            playerId: vTeam["assists"]["players"].length > 0
-                ? vTeam["assists"]["players"][0]["personId"]
-                : "",
-            description: "Assists",
-            value: vTeam["assists"]["value"].toString()),
-        GameLeaderCard(
-            playerId: vTeam["rebounds"]["players"].length > 0
-                ? vTeam["rebounds"]["players"][0]["personId"]
-                : "",
-            description: "Rebounds",
-            value: vTeam["rebounds"]["value"].toString()),
-      ]),
-      SizedBox(
-        height: 5,
-      ),
-      Card(
-        color: Color(ConstantHelper.getTeamColor(hTeamId)),
-        elevation: 4,
-        child: Container(
-            padding: EdgeInsets.all(5),
-            width: deviceWidth - 80,
-            child: Center(
-                child: Text(hTeamName,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color:
-                            Color(ConstantHelper.getTeamTextColor(hTeamId)))))),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GameLeaderCard(
-              playerId: hTeam["points"]["players"][0]["personId"],
-              description: "Points",
-              value: hTeam["points"]["value"].toString()),
-          GameLeaderCard(
-              playerId: hTeam["assists"]["players"][0]["personId"],
-              description: "Assists",
-              value: hTeam["assists"]["value"].toString()),
-          GameLeaderCard(
-              playerId: hTeam["rebounds"]["players"][0]["personId"],
-              description: "Rebounds",
-              value: hTeam["rebounds"]["value"].toString()),
-        ],
-      )
-    ]);
-
-    return c;
   }
 
   String formatDate(String date) {

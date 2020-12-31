@@ -16,14 +16,9 @@ class _StandingsState extends State<Standings> {
   Future<bool> loadData() async {
     bool complete = false;
     String year = Provider.of<JsonFiles>(context, listen: false).getYear();
-    // String seasonStage =
-    //     Provider.of<JsonFiles>(context, listen: false).getSeasonStage();
     try {
-      // var eastJson = await Network.getJson(Urls.eastStandingsUrl(year));
-      // var westJson = await Network.getJson(Urls.westStandingsUrl(year));
       var standings = await Network.getJson(Urls.nbaConferenceStandings());
       var divStandings = await Network.getJson(Urls.nbaDivisionStandings());
-      var seasons = await Network.getJson(Urls.seasonsUrl);
       var players = await Network.getJson(Urls.nbaAllPlayers());
       var teams = await Network.getJson(Urls.nbaAllTeams());
       var teamStats = await Network.getJson(Urls.nbaTeamStats(year));
@@ -32,12 +27,9 @@ class _StandingsState extends State<Standings> {
           .setConfStandings(standings);
       Provider.of<JsonFiles>(context, listen: false)
           .setDivStandings(divStandings);
-      Provider.of<JsonFiles>(context, listen: false).setSeasons(seasons);
       Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
       Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
       Provider.of<JsonFiles>(context, listen: false).setTeamStats(teamStats);
-      Provider.of<JsonFiles>(context, listen: false).setSeasonStage(
-          standings["league"]["standard"]["seasonStageId"].toString());
       Provider.of<JsonFiles>(context, listen: false)
           .setSelectedDate(DateTime.now());
 
@@ -49,135 +41,6 @@ class _StandingsState extends State<Standings> {
       print(e);
     }
     return complete;
-  }
-
-  Widget getSeasonSelectDialog() {
-    var seasons = Provider.of<JsonFiles>(context, listen: false).getSeasons();
-    var seasonList = seasons["api"]["seasons"];
-
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      elevation: 12,
-      child: Container(
-        padding: EdgeInsets.all(15),
-        height: MediaQuery.of(context).size.height - 250,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Select Season:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.red,
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: seasonList.length,
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: ListTile(
-                      onTap: () {
-                        setState(() {
-                          Provider.of<JsonFiles>(context, listen: false)
-                              .setYear(seasonList[index]);
-                        });
-                        loadData();
-                        Navigator.pop(context);
-                      },
-                      title: Text(seasonList[index],
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  );
-                })
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget getSeasonStageSelectDialog() {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      elevation: 12,
-      child: Container(
-        padding: EdgeInsets.all(15),
-        height: MediaQuery.of(context).size.height - 250,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Select Season Stage:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.red,
-            ),
-            ListView(
-              children: [
-                Center(
-                  child: ListTile(
-                    onTap: () {
-                      setState(() {
-                        Provider.of<JsonFiles>(context, listen: false)
-                            .setSeasonStage("1");
-                      });
-                      loadData();
-                      Navigator.pop(context);
-                    },
-                    title: Text('Preseason',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                Center(
-                  child: ListTile(
-                    onTap: () {
-                      setState(() {
-                        Provider.of<JsonFiles>(context, listen: false)
-                            .setSeasonStage("2");
-                      });
-                      loadData();
-                      Navigator.pop(context);
-                    },
-                    title: Text('Regular Season',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                Center(
-                  child: ListTile(
-                    onTap: () {
-                      setState(() {
-                        Provider.of<JsonFiles>(context, listen: false)
-                            .setSeasonStage("3");
-                      });
-                      loadData();
-                      Navigator.pop(context);
-                    },
-                    title: Text('Postseason',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              shrinkWrap: true,
-            )
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -263,4 +126,134 @@ class _StandingsState extends State<Standings> {
       ),
     );
   }
+
+  // Widget getSeasonSelectDialog() {
+  //   var seasons = Provider.of<JsonFiles>(context, listen: false).getSeasons();
+  //   var seasonList = seasons["api"]["seasons"];
+
+  //   return Dialog(
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+  //     elevation: 12,
+  //     child: Container(
+  //       padding: EdgeInsets.all(15),
+  //       height: MediaQuery.of(context).size.height - 250,
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: <Widget>[
+  //           SizedBox(
+  //             height: 10,
+  //           ),
+  //           Text(
+  //             'Select Season:',
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //           ),
+  //           Divider(
+  //             thickness: 1,
+  //             color: Colors.red,
+  //           ),
+  //           ListView.builder(
+  //               shrinkWrap: true,
+  //               itemCount: seasonList.length,
+  //               itemBuilder: (context, index) {
+  //                 return Center(
+  //                   child: ListTile(
+  //                     onTap: () {
+  //                       setState(() {
+  //                         Provider.of<JsonFiles>(context, listen: false)
+  //                             .setYear(seasonList[index]);
+  //                       });
+  //                       loadData();
+  //                       Navigator.pop(context);
+  //                     },
+  //                     title: Text(seasonList[index],
+  //                         style: TextStyle(
+  //                             fontSize: 20, fontWeight: FontWeight.bold)),
+  //                   ),
+  //                 );
+  //               })
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget getSeasonStageSelectDialog() {
+  //   return Dialog(
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+  //     elevation: 12,
+  //     child: Container(
+  //       padding: EdgeInsets.all(15),
+  //       height: MediaQuery.of(context).size.height - 250,
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: <Widget>[
+  //           SizedBox(
+  //             height: 10,
+  //           ),
+  //           Text(
+  //             'Select Season Stage:',
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //           ),
+  //           Divider(
+  //             thickness: 1,
+  //             color: Colors.red,
+  //           ),
+  //           ListView(
+  //             children: [
+  //               Center(
+  //                 child: ListTile(
+  //                   onTap: () {
+  //                     setState(() {
+  //                       Provider.of<JsonFiles>(context, listen: false)
+  //                           .setSeasonStage("1");
+  //                     });
+  //                     loadData();
+  //                     Navigator.pop(context);
+  //                   },
+  //                   title: Text('Preseason',
+  //                       style: TextStyle(
+  //                           fontSize: 20, fontWeight: FontWeight.bold)),
+  //                 ),
+  //               ),
+  //               Center(
+  //                 child: ListTile(
+  //                   onTap: () {
+  //                     setState(() {
+  //                       Provider.of<JsonFiles>(context, listen: false)
+  //                           .setSeasonStage("2");
+  //                     });
+  //                     loadData();
+  //                     Navigator.pop(context);
+  //                   },
+  //                   title: Text('Regular Season',
+  //                       style: TextStyle(
+  //                           fontSize: 20, fontWeight: FontWeight.bold)),
+  //                 ),
+  //               ),
+  //               Center(
+  //                 child: ListTile(
+  //                   onTap: () {
+  //                     setState(() {
+  //                       Provider.of<JsonFiles>(context, listen: false)
+  //                           .setSeasonStage("3");
+  //                     });
+  //                     loadData();
+  //                     Navigator.pop(context);
+  //                   },
+  //                   title: Text('Postseason',
+  //                       style: TextStyle(
+  //                           fontSize: 20, fontWeight: FontWeight.bold)),
+  //                 ),
+  //               ),
+  //             ],
+  //             shrinkWrap: true,
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
 }

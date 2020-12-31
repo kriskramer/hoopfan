@@ -821,6 +821,11 @@ class ConstantHelper {
     String textColor = team["textColor"].toString().replaceFirst("#", "FF");
     return int.parse(textColor, radix: 16);
   }
+
+  static String getTeamBackgroundImage(String teamId) {
+    dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+    return team["web"]["background-image"];
+  }
 }
 
 // This data is loaded via the below url/feed
@@ -6704,6 +6709,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/hawks",
+          "background-image":
+              "https://www.nba.com/hawks/sites/hawks/files/1617_hwk_mk_playoffs_digitaltoolkit_background_white.jpg",
           "tickets": "http://www.nba.com/hawks/tickets"
         }
       },
@@ -6725,6 +6732,7 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/nets",
+          "background-image": "",
           "tickets": "http://www.nba.com/nets/tickets"
         }
       },
@@ -6746,6 +6754,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/celtics",
+          "background-image":
+              "https://www.nba.com/celtics/sites/celtics/files/2014-celtics-bg-1900x1600_3.jpg",
           "tickets": "http://www.nba.com/celtics/tickets"
         }
       },
@@ -6768,6 +6778,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/hornets",
+          "background-image":
+              "https://www.nba.com/hornets/sites/hornets/files/hornets_generic_web_skin.jpg",
           "tickets": "http://www.nba.com/hornets/tickets"
         }
       },
@@ -6789,6 +6801,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/bulls",
+          "background-image":
+              "https://www.nba.com/bulls/sites/bulls/files/bulls_game_experience.jpg",
           "tickets": "http://www.nba.com/bulls/tickets"
         }
       },
@@ -6811,6 +6825,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/cavaliers",
+          "background-image":
+              "https://www.nba.com/cavaliers/sites/cavaliers/files/2018-game-tracker-background.jpg",
           "tickets": "http://www.nba.com/cavaliers/tickets"
         }
       },
@@ -6833,6 +6849,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.mavs.com",
+          "background-image":
+              "https://www.nba.com/mavericks/sites/mavericks/files/mavs-bg.jpg",
           "tickets": "http://www.mavs.com/tickets"
         }
       },
@@ -6854,6 +6872,7 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/nuggets",
+          "background-image": "",
           "tickets": "http://www.nba.com/nuggets/tickets"
         }
       },
@@ -6876,6 +6895,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/pistons",
+          "background-image":
+              "https://www.nba.com/pistons/sites/pistons/files/2019_background.jpg",
           "tickets": "http://www.nba.com/pistons/tickets"
         }
       },
@@ -6898,6 +6919,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/warriors",
+          "background-image":
+              "https://www.nba.com/warriors/sites/warriors/files/1920-gametracker_0.png",
           "tickets": "http://www.nba.com/warriors/tickets"
         }
       },
@@ -6919,6 +6942,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/rockets",
+          "background-image":
+              "https://www.nba.com/rockets/sites/rockets/files/game-experience-graphic_02.jpg",
           "tickets": "http://www.nba.com/rockets/tickets"
         }
       },
@@ -6941,6 +6966,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/pacers",
+          "background-image":
+              "https://www.nba.com/pacers/sites/pacers/files/2017-18-sitebackground-logo.png",
           "tickets": "http://www.nba.com/pacers/tickets"
         }
       },
@@ -6962,6 +6989,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/clippers",
+          "background-image":
+              "https://www.nba.com/clippers/sites/clippers/files/background-image-for-header_clippers.jpg",
           "tickets": "http://www.nba.com/clippers/tickets"
         }
       },
@@ -6984,6 +7013,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/lakers",
+          "background-image":
+              "https://www.nba.com/lakers/sites/lakers/files/1920_lal_mktg_gametracker_2000x600.jpg",
           "tickets": "http://www.nba.com/lakers/tickets"
         }
       },
@@ -7006,6 +7037,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/grizzlies",
+          "background-image":
+              "https://www.nba.com/grizzlies/sites/grizzlies/files/pattern_navy_background_0.jpg",
           "tickets": "http://www.nba.com/grizzlies/tickets"
         }
       },
@@ -7028,6 +7061,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/heat",
+          "background-image":
+              "https://www.nba.com/heat/sites/heat/files/heat_game_experience.jpg",
           "tickets": "http://www.nba.com/heat/tickets"
         }
       },
@@ -7049,6 +7084,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/bucks",
+          "background-image":
+              "https://www.nba.com/bucks/sites/bucks/files/gettyimages-491586636-2.jpg",
           "tickets": "http://www.nba.com/bucks/tickets"
         }
       },
@@ -7071,6 +7108,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/timberwolves",
+          "background-image":
+              "https://www.nba.com/timberwolves/sites/timberwolves/files/wolves-game-tracker-cover-logo-170717.jpg",
           "tickets": "http://www.nba.com/timberwolves/tickets"
         }
       },
@@ -7093,6 +7132,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/pelicans",
+          "background-image":
+              "https://www.nba.com/pelicans/sites/pelicans/files/gametracker-bkgd2-1920.jpg",
           "tickets": "http://www.nba.com/pelicans/tickets"
         }
       },
@@ -7115,6 +7156,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/knicks",
+          "background-image":
+              "https://www.nba.com/knicks/sites/knicks/files/site_bkgd_0.png",
           "tickets": "http://www.nba.com/knicks/tickets"
         }
       },
@@ -7137,6 +7180,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/thunder",
+          "background-image":
+              "https://www.nba.com/thunder/sites/thunder/files/grid-bg-1718_0.jpg",
           "tickets": "http://www.nba.com/thunder/tickets"
         }
       },
@@ -7159,6 +7204,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/magic",
+          "background-image":
+              "https://www.nba.com/magic/sites/magic/files/gameblock-bg-2017.jpg",
           "tickets": "http://www.nba.com/magic/tickets"
         }
       },
@@ -7181,6 +7228,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/sixers",
+          "background-image":
+              "https://www.nba.com/sixers/sites/sixers/files/1920-gametracker-bg.jpg",
           "tickets": "http://www.nba.com/sixers/tickets"
         }
       },
@@ -7203,6 +7252,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/suns",
+          "background-image":
+              "https://www.nba.com/suns/sites/suns/files/newsuns_bg.png",
           "tickets": "http://www.nba.com/suns/tickets"
         }
       },
@@ -7225,6 +7276,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/blazers",
+          "background-image":
+              "https://www.nba.com/blazers/sites/blazers/files/background.png",
           "tickets": "http://www.nba.com/blazers/tickets"
         }
       },
@@ -7246,6 +7299,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/kings",
+          "background-image":
+              "https://www.nba.com/kings/sites/kings/files/gameday_takeoverheader.jpg",
           "tickets": "http://www.nba.com/kings/tickets"
         }
       },
@@ -7268,6 +7323,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/spurs",
+          "background-image":
+              "https://www.nba.com/spurs/sites/spurs/files/slatebg.jpg",
           "tickets": "http://www.nba.com/spurs/tickets"
         }
       },
@@ -7290,6 +7347,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/raptors",
+          "background-image":
+              "https://www.nba.com/raptors/sites/raptors/files/1718-default-header-image.jpg",
           "tickets": "http://www.nba.com/raptors/tickets"
         }
       },
@@ -7311,6 +7370,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/jazz",
+          "background-image":
+              "https://www.nba.com/jazz/sites/jazz/files/jaz1718_gametracker2000x600.jpg",
           "tickets": "http://www.nba.com/jazz/tickets"
         }
       },
@@ -7333,6 +7394,8 @@ Map teamDetailsExtra = {
         },
         "web": {
           "homepage": "http://www.nba.com/wizards",
+          "background-image":
+              "https://www.nba.com/wizards/sites/wizards/files/1718-bg-2120x18002.jpg",
           "tickets": "http://www.nba.com/wizards/tickets"
         }
       },

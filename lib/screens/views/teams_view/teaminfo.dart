@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
@@ -43,6 +45,8 @@ class _TeamDetailsState extends State<TeamDetails> {
 
     var teamColor = ConstantHelper.getTeamColor(widget.nbaTeamId);
     var teamTextColor = ConstantHelper.getTeamTextColor(widget.nbaTeamId);
+    var teamBackgroundImage =
+        ConstantHelper.getTeamBackgroundImage(widget.nbaTeamId);
 
     year = Provider.of<JsonFiles>(context, listen: false).getYear();
 
@@ -94,7 +98,14 @@ class _TeamDetailsState extends State<TeamDetails> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Padding(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  colorFilter: new ColorFilter.mode(
+                                      Colors.black.withOpacity(0.50),
+                                      BlendMode.dstATop),
+                                  image: NetworkImage(teamBackgroundImage),
+                                  fit: BoxFit.cover)),
                           padding: EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -130,12 +141,12 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                 Text(
                                                   ta[1],
                                                   style: TextStyle(
-                                                    color: Colors.grey,
+                                                    color: Colors.grey[800],
                                                   ),
                                                 ),
                                                 Icon(
                                                   Icons.link,
-                                                  color: Colors.grey,
+                                                  color: Colors.grey[800],
                                                 ),
                                               ],
                                             ),
@@ -145,10 +156,16 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       SizedBox(width: 20),
                                       Column(
                                         children: [
-                                          Text(ta[3].toString().toUpperCase() +
-                                              'ERN CONFERENCE'),
-                                          Text(ta[6].toString().toUpperCase() +
-                                              ' DIVISION'),
+                                          Text(
+                                              ta[3].toString().toUpperCase() +
+                                                  'ERN CONFERENCE',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              ta[6].toString().toUpperCase() +
+                                                  ' DIVISION',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
                                           SizedBox(height: 10),
                                           Text(
                                             "${standings["win"]} - ${standings["loss"]}",
@@ -158,54 +175,51 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       )
                                     ],
                                   ),
-                                  Container(
-                                    width: deviceWidth - 80,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        FlatButton(
-                                          child: Text('Media',
-                                              style: TextStyle(
-                                                  color: Color(teamTextColor))),
-                                          color: Color(teamColor),
-                                          onPressed: () {
-                                            Navigator.push(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      FlatButton(
+                                        child: Text('Media',
+                                            style: TextStyle(
+                                                color: Color(teamTextColor))),
+                                        color: Color(teamColor),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeamMediaPage(
+                                                        teamId:
+                                                            widget.nbaTeamId)),
+                                          );
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text('Stats',
+                                            style: TextStyle(
+                                                color: Color(teamTextColor))),
+                                        color: Color(teamColor),
+                                        onPressed: () {},
+                                      ),
+                                      FlatButton(
+                                        child: Text('Info',
+                                            style: TextStyle(
+                                                color: Color(teamTextColor))),
+                                        color: Color(teamColor),
+                                        onPressed: () {
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TeamMediaPage(
-                                                          teamId: widget
-                                                              .nbaTeamId)),
-                                            );
-                                          },
-                                        ),
-                                        RaisedButton(
-                                          child: Text('Stats',
-                                              style: TextStyle(
-                                                  color: Color(teamTextColor))),
-                                          color: Color(teamColor),
-                                          onPressed: () {},
-                                        ),
-                                        RaisedButton(
-                                          child: Text('Info',
-                                              style: TextStyle(
-                                                  color: Color(teamTextColor))),
-                                          color: Color(teamColor),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TeamInfoPage(
-                                                    team: team,
-                                                  ),
-                                                ));
-                                          },
-                                        ),
-                                        //...socialList(social, teamColor),
-                                      ],
-                                    ),
+                                                builder: (context) =>
+                                                    TeamInfoPage(
+                                                  team: team,
+                                                ),
+                                              ));
+                                        },
+                                      ),
+                                      //...socialList(social, teamColor),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -298,6 +312,18 @@ class _TeamDetailsState extends State<TeamDetails> {
                                           ? "0"
                                           : teamStats["eff"]["rank"],
                                       "EFF"),
+                                  stat(
+                                      teamStats == null
+                                          ? "0"
+                                          : getPythagorean(
+                                              teamStats["ppg"]["avg"]
+                                                  .toString(),
+                                              teamStats["oppg"]["avg"]
+                                                  .toString(),
+                                              standings["win"],
+                                              standings["loss"]),
+                                      "",
+                                      "Pyth %"),
                                 ],
                               ),
                               SizedBox(height: 10),
@@ -472,7 +498,7 @@ class _TeamDetailsState extends State<TeamDetails> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Text(
-          "$desc ($rank)",
+          rank == "" ? "$desc" : "$desc ($rank)",
           style: TextStyle(
             color: Colors.grey,
           ),
@@ -516,214 +542,22 @@ class _TeamDetailsState extends State<TeamDetails> {
               child: Column(
                 children: [
                   Text("Team Leaders", style: TextStyle(fontSize: 24)),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["ppg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["ppg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["ppg"][0]["value"] + " PPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["trpg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["trpg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["trpg"][0]["value"] + " RPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["apg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["apg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["apg"][0]["value"] + " APG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["fgp"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["fgp"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["fgp"][0]["value"] + " %",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["bpg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["bpg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["bpg"][0]["value"] + " BPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["spg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["spg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["spg"][0]["value"] + " SPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["tpg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["tpg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["tpg"][0]["value"] + " TPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            CachedLogo(
-                              url:
-                                  "https://cdn.nba.com/headshots/nba/latest/1040x760/${stats["pfpg"][0]["personId"]}.png",
-                              radius: 35,
-                            ),
-                            Text(
-                              getPlayerName(stats["pfpg"][0]["personId"]),
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                        Text(
-                          stats["pfpg"][0]["value"] + " PFPG",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ],
-                    ),
-                  )
+                  getTeamLeaderCard(stats["ppg"][0]["personId"],
+                      stats["ppg"][0]["value"] + " PPG"),
+                  getTeamLeaderCard(stats["trpg"][0]["personId"],
+                      stats["trpg"][0]["value"] + " RPG"),
+                  getTeamLeaderCard(stats["apg"][0]["personId"],
+                      stats["apg"][0]["value"] + " APG"),
+                  getTeamLeaderCard(stats["fgp"][0]["personId"],
+                      stats["fgp"][0]["value"] + " FG%"),
+                  getTeamLeaderCard(stats["bpg"][0]["personId"],
+                      stats["bpg"][0]["value"] + " BPG"),
+                  getTeamLeaderCard(stats["spg"][0]["personId"],
+                      stats["spg"][0]["value"] + " SPG"),
+                  getTeamLeaderCard(stats["tpg"][0]["personId"],
+                      stats["tpg"][0]["value"] + " TPG"),
+                  getTeamLeaderCard(stats["pfpg"][0]["personId"],
+                      stats["pfpg"][0]["value"] + " PFPG"),
                 ],
               ),
             );
@@ -733,6 +567,38 @@ class _TeamDetailsState extends State<TeamDetails> {
 
           return cntr;
         });
+  }
+
+  Widget getTeamLeaderCard(String personId, String value) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey[300]),
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              CachedLogo(
+                url:
+                    "https://cdn.nba.com/headshots/nba/latest/1040x760/$personId.png",
+                radius: 35,
+              ),
+              Text(
+                getPlayerName(personId),
+                style: TextStyle(fontSize: 18),
+              )
+            ],
+          ),
+          Text(
+            value,
+            style: TextStyle(fontSize: 24),
+          ),
+        ],
+      ),
+    );
   }
 
   String getPlayerName(String playerId) {
@@ -767,5 +633,17 @@ class _TeamDetailsState extends State<TeamDetails> {
     }
 
     return team;
+  }
+
+  String getPythagorean(
+      String ppgString, String oppgString, String wins, String losses) {
+    int w = int.parse(wins);
+    int l = int.parse(losses);
+    int games = w + l;
+    double ppg = double.parse(ppgString);
+    double oppg = double.parse(oppgString);
+
+    double pyth = games * (pow(ppg, 16.5) / (pow(ppg, 16.5) + pow(oppg, 16.5)));
+    return (pyth * 100).toStringAsFixed(2) + "%";
   }
 }

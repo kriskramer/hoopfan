@@ -40,10 +40,6 @@ class TeamNewsPage extends StatelessWidget {
     var teamColor = int.parse(primaryColor, radix: 16);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$teamName News'),
-        backgroundColor: Color(teamColor),
-      ),
       body: SingleChildScrollView(
           child: FutureBuilder(
               future: this.loadNews(context),

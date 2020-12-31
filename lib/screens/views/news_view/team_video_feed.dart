@@ -53,23 +53,23 @@ class TeamVideoFeed extends StatelessWidget {
                                 ),
                               ),
                             ]),
-                            Text(
-                              videos["value"][index]["thumbnailUrl"],
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.blue),
-                            ),
-                            Text(
-                              formatDate(
-                                  videos["value"][index]["datePublished"]),
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
+                            // Text(
+                            //   videos["value"][index]["thumbnailUrl"],
+                            //   style:
+                            //       TextStyle(fontSize: 10, color: Colors.blue),
+                            // ),
+                            // Text(
+                            //   formatDate(
+                            //       videos["value"][index]["datePublished"]),
+                            //   style: TextStyle(
+                            //     fontSize: 10,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 4,
+                        height: 15,
                       ),
                     ]);
                   },
@@ -129,8 +129,10 @@ class TeamVideoFeed extends StatelessWidget {
   String formatDate(String date) {
     String d = "";
 
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
+    var dt = DateTime.tryParse(date);
+    if (dt != null) {
+      d = "${dt.month}-${dt.day}-${dt.year}";
+    }
 
     return d;
   }

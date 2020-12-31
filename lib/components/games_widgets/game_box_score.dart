@@ -57,8 +57,12 @@ class GameBoxScore extends StatelessWidget {
       });
     }
 
-    c = Column(
+    c = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        isHomeTeam
+            ? getPlayerNamesDataTable(hTeamPlayers, context)
+            : getPlayerNamesDataTable(vTeamPlayers, context),
         isHomeTeam
             ? getDataTable(hTeamPlayers, context)
             : getDataTable(vTeamPlayers, context),
@@ -68,15 +72,12 @@ class GameBoxScore extends StatelessWidget {
     return c;
   }
 
-  Widget getDataTable(List<dynamic> players, BuildContext ctx) {
+  Widget getPlayerNamesDataTable(List<dynamic> players, BuildContext ctx) {
     List<DataRow> rows = new List<DataRow>();
 
     for (var p in players) {
       rows.add(
         DataRow(cells: [
-          DataCell(Row(children: [
-            Text(p["jersey"]),
-          ])),
           DataCell(Text(p["lastName"]), onTap: () {
             Navigator.push(
               ctx,
@@ -87,6 +88,40 @@ class GameBoxScore extends StatelessWidget {
               ),
             );
           }),
+        ]),
+      );
+    }
+
+    return DataTable(
+      columnSpacing: 1,
+      horizontalMargin: 5,
+      dataRowHeight: 28,
+      columns: [
+        DataColumn(label: Text('Name')),
+      ],
+      rows: rows,
+    );
+  }
+
+  Widget getDataTable(List<dynamic> players, BuildContext ctx) {
+    List<DataRow> rows = new List<DataRow>();
+
+    for (var p in players) {
+      rows.add(
+        DataRow(cells: [
+          DataCell(
+            Text(p["jersey"]),
+          ),
+          // DataCell(Text(p["lastName"]), onTap: () {
+          //   Navigator.push(
+          //     ctx,
+          //     MaterialPageRoute(
+          //       builder: (context) => PlayerDetail(
+          //         playerId: p["personId"],
+          //       ),
+          //     ),
+          //   );
+          // }),
           DataCell(Row(children: [
             p["isOnCourt"]
                 ? CircleAvatar(
@@ -103,24 +138,24 @@ class GameBoxScore extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["fga"]))),
           DataCell(Center(child: Text(p["fgm"]))),
+          DataCell(Center(child: Text(p["fga"]))),
           DataCell(Center(
             child: Text(
               p["fgp"] == "" ? "" : p["fgp"] + "%",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["fta"]))),
           DataCell(Center(child: Text(p["ftm"]))),
+          DataCell(Center(child: Text(p["fta"]))),
           DataCell(Center(
             child: Text(
               p["ftp"] == "" ? "" : p["ftp"] + "%",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["tpa"]))),
           DataCell(Center(child: Text(p["tpm"]))),
+          DataCell(Center(child: Text(p["tpa"]))),
           DataCell(Center(
             child: Text(
               p["tpp"] == "" ? "" : p["tpp"] + "%",
@@ -154,41 +189,44 @@ class GameBoxScore extends StatelessWidget {
       );
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        columnSpacing: 10,
-        dataRowHeight: 28,
-        columns: [
-          DataColumn(label: Text('#')),
-          DataColumn(label: Text('Name')),
-          DataColumn(label: Text('Pos')),
-          DataColumn(label: Text('Min')),
-          DataColumn(label: Text('Pts')),
-          DataColumn(label: Text('FGa')),
-          DataColumn(label: Text('FGm')),
-          DataColumn(label: Text('FG %')),
-          DataColumn(label: Text('FTa')),
-          DataColumn(label: Text('FTm')),
-          DataColumn(label: Text('FT %')),
-          DataColumn(label: Text('3Pa')),
-          DataColumn(label: Text('3Pm')),
-          DataColumn(label: Text('3P %')),
-          DataColumn(label: Text('Asts')),
-          DataColumn(label: Text('TO')),
-          DataColumn(label: Text('Stls')),
-          DataColumn(label: Text('Blks')),
-          DataColumn(label: Text('OReb')),
-          DataColumn(label: Text('DReb')),
-          DataColumn(label: Text('TReb')),
-          DataColumn(label: Text('PF')),
-          DataColumn(label: Text('+/-')),
-          DataColumn(label: Text('TSA')),
-          DataColumn(label: Text('TS %')),
-          DataColumn(label: Text('eFG %')),
-          DataColumn(label: Text('DNP')),
-        ],
-        rows: rows,
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          columnSpacing: 10,
+          horizontalMargin: 5,
+          dataRowHeight: 28,
+          columns: [
+            DataColumn(label: Text('#')),
+            //DataColumn(label: Text('Name')),
+            DataColumn(label: Text('Pos')),
+            DataColumn(label: Text('Min')),
+            DataColumn(label: Text('Pts')),
+            DataColumn(label: Text('FGm')),
+            DataColumn(label: Text('FGa')),
+            DataColumn(label: Text('FG %')),
+            DataColumn(label: Text('FTm')),
+            DataColumn(label: Text('FTa')),
+            DataColumn(label: Text('FT %')),
+            DataColumn(label: Text('3Pm')),
+            DataColumn(label: Text('3Pa')),
+            DataColumn(label: Text('3P %')),
+            DataColumn(label: Text('Asts')),
+            DataColumn(label: Text('TO')),
+            DataColumn(label: Text('Stls')),
+            DataColumn(label: Text('Blks')),
+            DataColumn(label: Text('OReb')),
+            DataColumn(label: Text('DReb')),
+            DataColumn(label: Text('TReb')),
+            DataColumn(label: Text('PF')),
+            DataColumn(label: Text('+/-')),
+            DataColumn(label: Text('TSA')),
+            DataColumn(label: Text('TS %')),
+            DataColumn(label: Text('eFG %')),
+            DataColumn(label: Text('DNP')),
+          ],
+          rows: rows,
+        ),
       ),
     );
   }

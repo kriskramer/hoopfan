@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
+import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -53,6 +55,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
       _timer.cancel();
     }
     period = widget.gameData["period"]["current"].toString();
+
     //print(period);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -62,26 +65,39 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               var plays = snapshot.data["plays"];
-              return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5, //plays.length,
-                  itemBuilder: (context, index) {
-                    int idx = index + plays.length - 5;
-                    if (idx < 0) {
-                      idx = 0;
-                    }
-                    return Container(
-                      padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(plays[idx]["clock"] + " - "),
-                          Flexible(child: Text(plays[idx]["description"]))
-                        ],
-                      ),
-                    );
-                  });
+              return Column(children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5, //plays.length,
+                    itemBuilder: (context, index) {
+                      int idx = index + plays.length - 5;
+                      if (idx < 0) {
+                        idx = 0;
+                      }
+                      return Container(
+                        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(plays[idx]["clock"] + " - "),
+                            getTeamCard(
+                                plays[idx]["description"], widget.gameData),
+                            Flexible(
+                                child: Text(getPbPDescriptionFormatted(
+                                    plays[idx]["description"],
+                                    widget.gameData)))
+                          ],
+                        ),
+                      );
+                    }),
+                GameLeadChartSmall(
+                  pbp: plays,
+                  vTeamId: widget.gameData["vTeam"]["teamId"],
+                  hTeamId: widget.gameData["hTeam"]["teamId"],
+                  period: period,
+                ),
+              ]);
             }
             return Text('');
           },
@@ -105,5 +121,59 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
 
   Future<void> getData(String date, String gameId, String period) async {
     _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
+  }
+
+  Widget getTeamCard(String desc, dynamic game) {
+    String vTeamTriCode = game["vTeam"]["triCode"];
+    String hTeamTriCode = game["hTeam"]["triCode"];
+
+    var vTeamId = widget.gameData["vTeam"]["teamId"];
+    var hTeamId = widget.gameData["hTeam"]["teamId"];
+    var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
+    var vTeamTextColor = ConstantHelper.getTeamTextColor(vTeamId);
+    var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
+    var hTeamTextColor = ConstantHelper.getTeamTextColor(hTeamId);
+
+    int vTeamIndex = desc.indexOf("[" + vTeamTriCode) + 1;
+    int hTeamIndex = desc.indexOf("[" + hTeamTriCode) + 1;
+
+    if (vTeamIndex > 0) {
+      return Card(
+        elevation: 1,
+        child: Container(
+          color: Color(vTeamColor),
+          padding: EdgeInsets.all(2),
+          child: Text(
+            vTeamTriCode,
+            style: TextStyle(color: Color(vTeamTextColor)),
+          ),
+        ),
+      );
+    } else if (hTeamIndex > 0) {
+      return Card(
+        elevation: 1,
+        child: Container(
+          color: Color(hTeamColor),
+          padding: EdgeInsets.all(2),
+          child: Text(
+            hTeamTriCode,
+            style: TextStyle(color: Color(hTeamTextColor)),
+          ),
+        ),
+      );
+    } else {
+      return Text('');
+    }
+  }
+
+  String getPbPDescriptionFormatted(String desc, dynamic game) {
+    String vTeamTriCode = game["vTeam"]["triCode"];
+    String hTeamTriCode = game["hTeam"]["triCode"];
+    desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
+    desc = desc.replaceAll("[" + hTeamTriCode + "]", "");
+    desc = desc.replaceAll("[" + vTeamTriCode + " ", "[");
+    desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
+
+    return desc;
   }
 }
