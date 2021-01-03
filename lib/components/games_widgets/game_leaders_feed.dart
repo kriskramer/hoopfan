@@ -116,10 +116,29 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: IndexedStack(
-        index: _currentIndex,
-        children: [...leaders],
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity < 0) {
+          setState(() {
+            _currentIndex++;
+            if (_currentIndex == leaders.length) {
+              _currentIndex = 0;
+            }
+          });
+        } else {
+          setState(() {
+            _currentIndex--;
+            if (_currentIndex < 0) {
+              _currentIndex = leaders.length - 1;
+            }
+          });
+        }
+      },
+      child: Container(
+        child: IndexedStack(
+          index: _currentIndex,
+          children: [...leaders],
+        ),
       ),
     );
   }

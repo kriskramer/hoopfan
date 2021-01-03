@@ -8,6 +8,7 @@ import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
 import 'package:hoop/components/games_widgets/game_leader_card.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
+import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
 import 'package:hoop/components/games_widgets/game_stats.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
@@ -132,7 +133,7 @@ class _GameViewState extends State<GameView> {
                       height: 15,
                     ),
                     gameStatus > 1 || gameActivated
-                        ? inProgressGameHeader(gameData)
+                        ? inProgressGameHeader(gameData, stats)
                         : scheduledGameHeader(gameData),
                     SizedBox(
                       height: 5,
@@ -271,7 +272,7 @@ class _GameViewState extends State<GameView> {
                                   ),
                                 ),
                                 Container(
-                                  height: 1000, //height of TabBarView
+                                  height: 1200, //height of TabBarView
                                   decoration: BoxDecoration(
                                       border: Border(
                                           top: BorderSide(
@@ -335,6 +336,9 @@ class _GameViewState extends State<GameView> {
                               ],
                             ),
                           ),
+                    GameOfficials(
+                      game: gameData,
+                    ),
                     gameStatus < 3 ? hotToWatchCard() : Text(''),
                   ],
                 );
@@ -476,6 +480,13 @@ class _GameViewState extends State<GameView> {
   }
 
   Widget scheduledGameHeader(dynamic gameData) {
+    var seriesWin = gameData["vTeam"]["seriesWin"] == ""
+        ? "0"
+        : gameData["vTeam"]["seriesWin"];
+    var seriesLoss = gameData["vTeam"]["seriesLoss"] == ""
+        ? "0"
+        : gameData["vTeam"]["seriesLoss"];
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -507,6 +518,10 @@ class _GameViewState extends State<GameView> {
           SizedBox(
             height: 5,
           ),
+          Text("Series ($seriesWin - $seriesLoss)"),
+          SizedBox(
+            height: 5,
+          ),
           Text(gameData["arena"]["name"]),
           Text(gameData["arena"]["city"]),
         ]),
@@ -535,14 +550,24 @@ class _GameViewState extends State<GameView> {
     );
   }
 
-  Widget inProgressGameHeader(dynamic gameData) {
+  Widget inProgressGameHeader(dynamic gameData, dynamic stats) {
     var vScore =
         gameData["vTeam"]["score"] == "" ? "0" : gameData["vTeam"]["score"];
     var hScore =
         gameData["hTeam"]["score"] == "" ? "0" : gameData["hTeam"]["score"];
+    var vFullTimeouts = stats["vTeam"]["totals"]["full_timeout_remaining"];
+    var vShortTimeouts = stats["vTeam"]["totals"]["short_timeout_remaining"];
+    var hFullTimeouts = stats["hTeam"]["totals"]["full_timeout_remaining"];
+    var hShortTimeouts = stats["hTeam"]["totals"]["short_timeout_remaining"];
     // var arena = gameData["arena"]["name"];
     // var arenaLoc =
     //     gameData["arena"]["city"] + " " + gameData["arena"]["stateAbbr"];
+    var seriesWin = gameData["vTeam"]["seriesWin"] == ""
+        ? "0"
+        : gameData["vTeam"]["seriesWin"];
+    var seriesLoss = gameData["vTeam"]["seriesLoss"] == ""
+        ? "0"
+        : gameData["vTeam"]["seriesLoss"];
 
     var gameStatus = gameData["statusNum"];
     return Row(
@@ -571,6 +596,30 @@ class _GameViewState extends State<GameView> {
             "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
             style: TextStyle(fontSize: 16),
           ),
+          SizedBox(
+            height: 10,
+          ),
+          // THis shows the available timeouts
+          Row(
+            children: [
+              for (int i = 0; i < int.parse(vFullTimeouts); i++)
+                Container(
+                  margin: EdgeInsets.all(1),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.cyan,
+                    minRadius: 4,
+                  ),
+                ),
+              for (int i = 0; i < int.parse(vShortTimeouts); i++)
+                Container(
+                  margin: EdgeInsets.all(1),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    minRadius: 3,
+                  ),
+                ),
+            ],
+          )
         ]),
         Column(children: [
           Text(
@@ -582,6 +631,10 @@ class _GameViewState extends State<GameView> {
               : gameStatus == 3
                   ? Text('Final', style: TextStyle(fontSize: 24))
                   : Text(''),
+          SizedBox(
+            height: 5,
+          ),
+          Text("Series ($seriesWin - $seriesLoss)"),
         ]),
         Column(children: [
           GestureDetector(
@@ -603,6 +656,29 @@ class _GameViewState extends State<GameView> {
             "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
             style: TextStyle(fontSize: 16),
           ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              for (int i = 0; i < int.parse(hFullTimeouts); i++)
+                Container(
+                  margin: EdgeInsets.all(1),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.cyan,
+                    minRadius: 4,
+                  ),
+                ),
+              for (int i = 0; i < int.parse(hShortTimeouts); i++)
+                Container(
+                  margin: EdgeInsets.all(1),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    minRadius: 3,
+                  ),
+                ),
+            ],
+          )
         ]),
         SizedBox(
           width: 10,

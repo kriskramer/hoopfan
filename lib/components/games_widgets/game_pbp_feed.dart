@@ -129,41 +129,38 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
 
     var vTeamId = widget.gameData["vTeam"]["teamId"];
     var hTeamId = widget.gameData["hTeam"]["teamId"];
-    var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
-    var vTeamTextColor = ConstantHelper.getTeamTextColor(vTeamId);
-    var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
-    var hTeamTextColor = ConstantHelper.getTeamTextColor(hTeamId);
 
     int vTeamIndex = desc.indexOf("[" + vTeamTriCode) + 1;
     int hTeamIndex = desc.indexOf("[" + hTeamTriCode) + 1;
 
     if (vTeamIndex > 0) {
-      return Card(
-        elevation: 1,
-        child: Container(
-          color: Color(vTeamColor),
-          padding: EdgeInsets.all(2),
-          child: Text(
-            vTeamTriCode,
-            style: TextStyle(color: Color(vTeamTextColor)),
-          ),
-        ),
-      );
+      return getTeamTricodeCard(vTeamId);
     } else if (hTeamIndex > 0) {
-      return Card(
-        elevation: 1,
-        child: Container(
-          color: Color(hTeamColor),
-          padding: EdgeInsets.all(2),
-          child: Text(
-            hTeamTriCode,
-            style: TextStyle(color: Color(hTeamTextColor)),
-          ),
-        ),
-      );
+      return getTeamTricodeCard(hTeamId);
     } else {
       return Text('');
     }
+  }
+
+  Widget getTeamTricodeCard(String teamId) {
+    var teamColor = ConstantHelper.getTeamColor(teamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
+    var tricode = ConstantHelper.getTeamTriCode(teamId);
+
+    return Card(
+      elevation: 2,
+      color: Color(teamColor),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(2),
+        child: Text(
+          tricode,
+          style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+        ),
+      ),
+    );
   }
 
   String getPbPDescriptionFormatted(String desc, dynamic game) {

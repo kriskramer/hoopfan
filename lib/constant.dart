@@ -826,6 +826,11 @@ class ConstantHelper {
     dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
     return team["web"]["background-image"];
   }
+
+  static String getTeamTriCode(String teamId) {
+    dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+    return team["tricode"];
+  }
 }
 
 // This data is loaded via the below url/feed

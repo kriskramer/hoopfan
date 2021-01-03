@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/pbp_dialog.dart';
 import 'package:hoop/constant.dart';
+import '../../model/lead_tracker.dart';
 
 class GameLeadChart extends StatelessWidget {
   final dynamic pbp;
   final String vTeamId;
   final String hTeamId;
   final String period;
+  final dynamic game;
 
-  GameLeadChart({this.pbp, this.vTeamId, this.hTeamId, this.period});
+  GameLeadChart({this.pbp, this.vTeamId, this.hTeamId, this.period, this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +29,11 @@ class GameLeadChart extends StatelessWidget {
     }
 
     return Container(
-        padding: EdgeInsets.all(10),
+        //padding: EdgeInsets.all(10),
         margin: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(16)),
+        // decoration: BoxDecoration(
+        //     border: Border.all(color: Colors.grey, width: 1),
+        //     borderRadius: BorderRadius.circular(16)),
         child: Column(children: [
           Text(
             'Lead Tracker - Period ' + period,
@@ -39,12 +42,12 @@ class GameLeadChart extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          ...getLeadTrackerRows(list, vTeamId, hTeamId)
+          ...getLeadTrackerRows(list, vTeamId, hTeamId, context)
         ]));
   }
 
-  List<Widget> getLeadTrackerRows(
-      List<LeadTrackerItem> items, String vTeamId, String hTeamId) {
+  List<Widget> getLeadTrackerRows(List<LeadTrackerItem> items, String vTeamId,
+      String hTeamId, BuildContext context) {
     var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
     var vTeamTextColor = ConstantHelper.getTeamTextColor(vTeamId);
     var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
@@ -67,55 +70,69 @@ class GameLeadChart extends StatelessWidget {
         tie = true;
       }
 
-      list.add(Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(width: 40, child: Text(t.clock.replaceAll("00:", ""))),
-          Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey[200], width: 1))),
-              alignment: Alignment.centerRight,
-              width: 135,
-              height: 15,
-              child: vLead
-                  ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      Text(lead.toString()),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Container(
-                        width: getLeadWidth(lead),
-                        color: Color(vTeamColor),
-                      ),
-                    ])
-                  : Text('')),
-          SizedBox(
-            width: 2,
-          ),
-          Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey[200], width: 1))),
-              width: 135,
-              height: 15,
-              child: hLead
-                  ? Row(children: [
-                      Container(
-                        width: getLeadWidth(lead),
-                        color: Color(hTeamColor),
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Text(
-                        lead.toString(),
-                      ),
-                    ])
-                  : Text('')),
-        ],
+      list.add(GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return PbpDialog(
+                  pbp: pbp,
+                  item: t,
+                  game: game,
+                );
+              });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(width: 40, child: Text(t.clock.replaceAll("00:", ""))),
+            Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey[200], width: 1))),
+                alignment: Alignment.centerRight,
+                width: 135,
+                height: 15,
+                child: vLead
+                    ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                        Text(lead.toString()),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          width: getLeadWidth(lead),
+                          color: Color(vTeamColor),
+                        ),
+                      ])
+                    : Text('')),
+            SizedBox(
+              width: 2,
+            ),
+            Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey[200], width: 1))),
+                width: 135,
+                height: 15,
+                child: hLead
+                    ? Row(children: [
+                        Container(
+                          width: getLeadWidth(lead),
+                          color: Color(hTeamColor),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          lead.toString(),
+                        ),
+                      ])
+                    : Text('')),
+          ],
+        ),
       ));
     }
+
     return list;
   }
 
@@ -131,15 +148,4 @@ class GameLeadChart extends StatelessWidget {
     // } else
     //   return lead * 1.9;
   }
-}
-
-class LeadTrackerItem {
-  String clock;
-  int period;
-  int vScore;
-  int hScore;
-  bool isScoreChange;
-
-  LeadTrackerItem(
-      {this.clock, this.period, this.vScore, this.hScore, this.isScoreChange});
 }

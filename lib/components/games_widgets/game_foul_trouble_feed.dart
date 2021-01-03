@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/team_tricode_card.dart';
 
 import '../../constant.dart';
 
@@ -100,17 +101,8 @@ class GameFoulTroubleFeed extends StatelessWidget {
 
     for (var p in vTeamPlayers) {
       list.add(Row(children: [
-        Card(
-          elevation: 1,
-          child: Container(
-            color: Color(vTeamColor),
-            child: Text(
-              vTeamTriCode.toUpperCase(),
-              style: TextStyle(color: Color(vTeamTextColor)),
-            ),
-            padding: EdgeInsets.all(4),
-          ),
-        ),
+        getTeamTricodeCard(
+            vTeamTriCode.toUpperCase(), vTeamColor, vTeamTextColor),
         SizedBox(
           width: 5,
         ),
@@ -126,17 +118,8 @@ class GameFoulTroubleFeed extends StatelessWidget {
     }
     for (var p in hTeamPlayers) {
       list.add(Row(children: [
-        Card(
-          elevation: 1,
-          child: Container(
-            color: Color(hTeamColor),
-            child: Text(
-              hTeamTriCode.toUpperCase(),
-              style: TextStyle(color: Color(hTeamTextColor)),
-            ),
-            padding: EdgeInsets.all(4),
-          ),
-        ),
+        getTeamTricodeCard(
+            hTeamTriCode.toUpperCase(), hTeamColor, hTeamTextColor),
         SizedBox(
           width: 5,
         ),
@@ -217,17 +200,8 @@ class GameFoulTroubleFeed extends StatelessWidget {
 
     for (int i = 0; i < 3; i++) {
       list.add(Row(children: [
-        Card(
-          elevation: 1,
-          child: Container(
-            color: Color(vTeamColor),
-            child: Text(
-              vTeamTriCode.toUpperCase(),
-              style: TextStyle(color: Color(vTeamTextColor)),
-            ),
-            padding: EdgeInsets.all(4),
-          ),
-        ),
+        getTeamTricodeCard(
+            vTeamTriCode.toUpperCase(), vTeamColor, vTeamTextColor),
         SizedBox(
           width: 5,
         ),
@@ -244,17 +218,8 @@ class GameFoulTroubleFeed extends StatelessWidget {
 
     for (int i = 0; i < 3; i++) {
       list.add(Row(children: [
-        Card(
-          elevation: 1,
-          child: Container(
-            color: Color(hTeamColor),
-            child: Text(
-              hTeamTriCode.toUpperCase(),
-              style: TextStyle(color: Color(hTeamTextColor)),
-            ),
-            padding: EdgeInsets.all(4),
-          ),
-        ),
+        getTeamTricodeCard(
+            hTeamTriCode.toUpperCase(), hTeamColor, hTeamTextColor),
         SizedBox(
           width: 5,
         ),
@@ -284,5 +249,22 @@ class GameFoulTroubleFeed extends StatelessWidget {
     if (fouls == null) fouls = 0;
 
     return fouls;
+  }
+
+  Widget getTeamTricodeCard(String tricode, int teamColor, int teamTextColor) {
+    return Card(
+      elevation: 2,
+      color: Color(teamColor),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(2),
+        child: Text(
+          tricode,
+          style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+        ),
+      ),
+    );
   }
 }

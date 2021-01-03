@@ -17,6 +17,8 @@ class UpcomingGameCard extends StatelessWidget {
     dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
     dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
 
+    var countdown = getStartCountdown(game);
+
     return Container(
       //margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(5),
@@ -55,6 +57,17 @@ class UpcomingGameCard extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
+              countdown != ""
+                  ? Container(
+                      padding: EdgeInsets.all(4),
+                      child: Text(
+                        countdown,
+                        style: TextStyle(
+                            color: Colors.purple, fontWeight: FontWeight.bold),
+                      ))
+                  : SizedBox(
+                      height: 1,
+                    ),
             ]),
             Text(
               "(${hTeam["win"]}-${hTeam["loss"]})",
@@ -142,5 +155,23 @@ class UpcomingGameCard extends StatelessWidget {
     howToWatch = "$nat  $v  $h";
 
     return howToWatch;
+  }
+
+  String getStartCountdown(dynamic game) {
+    String startTimeUTC = game["startTimeUTC"];
+
+    if (startTimeUTC == "") {
+      return "";
+    }
+
+    DateTime start = DateTime.parse(startTimeUTC);
+
+    Duration duration = start.difference(DateTime.now());
+
+    if (duration.inMinutes < 91 && duration.inMinutes > 0) {
+      return "${duration.inMinutes.toString()} min to go!";
+    }
+
+    return "";
   }
 }
