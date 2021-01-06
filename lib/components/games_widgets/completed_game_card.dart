@@ -17,6 +17,8 @@ class CompletedGameCard extends StatelessWidget {
     dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
     dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
 
+    bool isOvertime = game["period"]["current"] > 4 ? true : false;
+
     return Container(
       //margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(5),
@@ -58,7 +60,7 @@ class CompletedGameCard extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.blue),
               ),
               Text(
-                "Final",
+                isOvertime ? "Final/OT" : "Final",
                 style: TextStyle(color: Colors.blue, fontSize: 16),
               ),
             ]),

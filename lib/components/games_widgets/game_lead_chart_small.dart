@@ -12,62 +12,30 @@ class GameLeadChartSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<LeadTrackerItem> list = new List<LeadTrackerItem>();
-    for (var p in pbp) {
-      LeadTrackerItem item = new LeadTrackerItem(
-          clock: p["clock"],
-          period: 1,
-          vScore: int.parse(p["vTeamScore"]),
-          hScore: int.parse(p["hTeamScore"]),
-          isScoreChange: p["isScoreChange"]);
-      if (item.isScoreChange) {
-        list.add(item);
-      }
-      // print('test');
-    }
+    LeadTrackerList list = new LeadTrackerList();
+    list.importPbp(pbp, int.parse(period));
 
     return Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(15),
-        // decoration: BoxDecoration(
-        //     border: Border.all(color: Colors.grey, width: 1),
-        //     borderRadius: BorderRadius.circular(16)),
         child: Column(children: [
-          Text(
-            'Lead Tracker - Period ' + period,
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          ...getLeadTrackerRows(list, vTeamId, hTeamId)
-        ]));
+      Text(
+        'Lead Tracker - Period ' + period,
+        style: TextStyle(fontSize: 16),
+      ),
+      SizedBox(
+        height: 15,
+      ),
+      ...getLeadTrackerRows(list, vTeamId, hTeamId)
+    ]));
   }
 
   List<Widget> getLeadTrackerRows(
-      List<LeadTrackerItem> items, String vTeamId, String hTeamId) {
+      LeadTrackerList list, String vTeamId, String hTeamId) {
     var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
-    //var vTeamTextColor = ConstantHelper.getTeamTextColor(vTeamId);
     var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
-    //var hTeamTextColor = ConstantHelper.getTeamTextColor(hTeamId);
-    List<Widget> list = new List<Widget>();
+    List<Widget> rows = new List<Widget>();
 
-    for (var t in items) {
-      var lead = t.vScore - t.hScore;
-      bool vLead = false;
-      bool hLead = false;
-      bool tie = false;
-
-      if (lead > 0) {
-        vLead = true;
-      } else if (lead < 0) {
-        hLead = true;
-        lead *= -1;
-      } else {
-        tie = true;
-      }
-
-      list.add(Row(
+    for (var t in list.items) {
+      rows.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(width: 40, child: Text(t.clock.replaceAll("00:", ""))),
@@ -76,16 +44,16 @@ class GameLeadChartSmall extends StatelessWidget {
                   border: Border(
                       bottom: BorderSide(color: Colors.grey[200], width: 1))),
               alignment: Alignment.centerRight,
-              width: 135,
+              width: 125,
               height: 15,
-              child: vLead
+              child: t.isVisitorLead()
                   ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      Text(lead.toString()),
+                      Text(t.getLead().toString()),
                       SizedBox(
                         width: 4,
                       ),
                       Container(
-                        width: getLeadWidth(lead),
+                        width: getLeadWidth(t.getLead()),
                         color: Color(vTeamColor),
                       ),
                     ])
@@ -97,26 +65,26 @@ class GameLeadChartSmall extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(color: Colors.grey[200], width: 1))),
-              width: 135,
+              width: 125,
               height: 15,
-              child: hLead
+              child: t.isHomeLead()
                   ? Row(children: [
                       Container(
-                        width: getLeadWidth(lead),
+                        width: getLeadWidth(t.getLead()),
                         color: Color(hTeamColor),
                       ),
                       SizedBox(
                         width: 4,
                       ),
                       Text(
-                        lead.toString(),
+                        t.getLead().toString(),
                       ),
                     ])
                   : Text('')),
         ],
       ));
     }
-    return list.length > 9 ? list.sublist(list.length - 10) : list;
+    return rows.length > 9 ? rows.sublist(rows.length - 10) : rows;
   }
 
   double getLeadWidth(int lead) {

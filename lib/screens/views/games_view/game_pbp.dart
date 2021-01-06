@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/games_widgets/game_lead_tracker.dart';
@@ -15,6 +16,8 @@ class GamePlayByPlay extends StatelessWidget {
     String date = gameData["startDateEastern"];
     String gameId = gameData["gameId"];
 
+    bool isOvertime = gameData["period"]["current"] > 4 ? true : false;
+
     //var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -29,142 +32,23 @@ class GamePlayByPlay extends StatelessWidget {
           ),
           Text(
               'Tap on the lead tracker to get the play-by-play for that period.'),
-          // FutureBuilder(
-          //   future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "1")),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       var plays = snapshot.data["plays"];
-          //       return ExpansionTile(
-          //         title: Text('1st quarter'),
-          //         children: [
-          //           ListView.builder(
-          //               shrinkWrap: true,
-          //               physics: const NeverScrollableScrollPhysics(),
-          //               itemCount: plays.length,
-          //               itemBuilder: (context, index) {
-          //                 return Container(
-          //                   padding: EdgeInsets.all(8),
-          //                   child: Row(
-          //                     mainAxisAlignment: MainAxisAlignment.start,
-          //                     children: [
-          //                       Text(plays[index]["clock"] + " - "),
-          //                       getTeamCard(
-          //                           plays[index]["description"], gameData),
-          //                       Flexible(
-          //                           child: Text(getPbPDescriptionFormatted(
-          //                               plays[index]["description"], gameData)))
-          //                     ],
-          //                   ),
-          //                 );
-          //               }),
-          //         ],
-          //       );
-          //     }
-          //     return Text('');
-          //   },
-          // ),
-          // FutureBuilder(
-          //   future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "2")),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       var plays = snapshot.data["plays"];
-          //       return ExpansionTile(
-          //         title: Text('2nd quarter'),
-          //         children: [
-          //           ListView.builder(
-          //               shrinkWrap: true,
-          //               physics: const NeverScrollableScrollPhysics(),
-          //               itemCount: plays.length,
-          //               itemBuilder: (context, index) {
-          //                 return Container(
-          //                   padding: EdgeInsets.all(8),
-          //                   child: Row(
-          //                     mainAxisAlignment: MainAxisAlignment.start,
-          //                     children: [
-          //                       Text(plays[index]["clock"] + " - "),
-          //                       getTeamCard(
-          //                           plays[index]["description"], gameData),
-          //                       Flexible(
-          //                           child: Text(getPbPDescriptionFormatted(
-          //                               plays[index]["description"], gameData)))
-          //                     ],
-          //                   ),
-          //                 );
-          //               }),
-          //         ],
-          //       );
-          //     }
-          //     return Text('');
-          //   },
-          // ),
-          // FutureBuilder(
-          //   future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "3")),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       var plays = snapshot.data["plays"];
-          //       return ExpansionTile(
-          //         title: Text('3rd quarter'),
-          //         children: [
-          //           ListView.builder(
-          //               shrinkWrap: true,
-          //               physics: const NeverScrollableScrollPhysics(),
-          //               itemCount: plays.length,
-          //               itemBuilder: (context, index) {
-          //                 return Container(
-          //                   padding: EdgeInsets.all(8),
-          //                   child: Row(
-          //                     mainAxisAlignment: MainAxisAlignment.start,
-          //                     children: [
-          //                       Text(plays[index]["clock"] + " - "),
-          //                       getTeamCard(
-          //                           plays[index]["description"], gameData),
-          //                       Flexible(
-          //                           child: Text(getPbPDescriptionFormatted(
-          //                               plays[index]["description"], gameData)))
-          //                     ],
-          //                   ),
-          //                 );
-          //               }),
-          //         ],
-          //       );
-          //     }
-          //     return Text('');
-          //   },
-          // ),
-          // FutureBuilder(
-          //   future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "4")),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       var plays = snapshot.data["plays"];
-          //       return ExpansionTile(
-          //         title: Text('4th quarter'),
-          //         children: [
-          //           ListView.builder(
-          //               shrinkWrap: true,
-          //               physics: const NeverScrollableScrollPhysics(),
-          //               itemCount: plays.length,
-          //               itemBuilder: (context, index) {
-          //                 return Container(
-          //                   padding: EdgeInsets.all(8),
-          //                   child: Row(
-          //                     mainAxisAlignment: MainAxisAlignment.start,
-          //                     children: [
-          //                       Text(plays[index]["clock"] + " - "),
-          //                       getTeamCard(
-          //                           plays[index]["description"], gameData),
-          //                       Flexible(
-          //                           child: Text(getPbPDescriptionFormatted(
-          //                               plays[index]["description"], gameData)))
-          //                     ],
-          //                   ),
-          //                 );
-          //               }),
-          //         ],
-          //       );
-          //     }
-          //     return Text('');
-          //   },
-          // ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CachedLogo(
+                  radius: 30,
+                  url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
+              SizedBox(
+                width: 25,
+              ),
+              CachedLogo(
+                  radius: 30,
+                  url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"]))
+            ],
+          ),
           FutureBuilder(
               future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "1")),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -237,6 +121,45 @@ class GamePlayByPlay extends StatelessWidget {
           // SizedBox(
           //   height: 5,
           // ),
+          gameData["period"]["current"] == 5
+              ? FutureBuilder(
+                  future:
+                      Network.getJson(Urls.nbaPlayByPlay(date, gameId, "5")),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      var plays = snapshot.data["plays"];
+                      return GameLeadChart(
+                        pbp: plays,
+                        vTeamId: gameData["vTeam"]["teamId"],
+                        hTeamId: gameData["hTeam"]["teamId"],
+                        period: "OT 1",
+                        game: gameData,
+                      );
+                    }
+                    return Text('');
+                  })
+              : SizedBox(),
+          gameData["period"]["current"] == 6
+              ? FutureBuilder(
+                  future:
+                      Network.getJson(Urls.nbaPlayByPlay(date, gameId, "6")),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      var plays = snapshot.data["plays"];
+                      return GameLeadChart(
+                        pbp: plays,
+                        vTeamId: gameData["vTeam"]["teamId"],
+                        hTeamId: gameData["hTeam"]["teamId"],
+                        period: "OT 2",
+                        game: gameData,
+                      );
+                    }
+                    return Text('');
+                  })
+              : SizedBox(),
+          SizedBox(
+            height: 30,
+          ),
         ]),
       ),
     );

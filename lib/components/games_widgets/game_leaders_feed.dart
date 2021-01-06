@@ -35,70 +35,87 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
     String vTeamTriCode = widget.game["vTeam"]["triCode"];
     String hTeamTriCode = widget.game["hTeam"]["triCode"];
 
-    leaders.add(GameLeaderCard(
-      playerId: vTeam["points"]["players"].length > 0
-          ? vTeam["points"]["players"][0]["personId"]
-          : "",
-      description: "Points",
-      value: vTeam["points"]["value"].toString(),
-      teamColor: vTeamColor,
-      teamTextColor: vTeamTextColor,
-      triCode: vTeamTriCode,
-    ));
-    leaders.add(GameLeaderCard(
-      playerId: vTeam["assists"]["players"].length > 0
-          ? vTeam["assists"]["players"][0]["personId"]
-          : "",
-      description: "Assists",
-      value: vTeam["assists"]["value"].toString(),
-      teamColor: vTeamColor,
-      teamTextColor: vTeamTextColor,
-      triCode: vTeamTriCode,
-    ));
-    leaders.add(
-      GameLeaderCard(
-        playerId: vTeam["rebounds"]["players"].length > 0
-            ? vTeam["rebounds"]["players"][0]["personId"]
+    for (int i = 0; i < vTeam["points"]["players"].length; i++) {
+      leaders.add(GameLeaderCard(
+        playerId: vTeam["points"]["players"].length > 0
+            ? vTeam["points"]["players"][i]["personId"]
             : "",
-        description: "Rebounds",
-        value: vTeam["rebounds"]["value"].toString(),
+        description: "Points",
+        value: vTeam["points"]["value"].toString(),
         teamColor: vTeamColor,
         teamTextColor: vTeamTextColor,
         triCode: vTeamTriCode,
-      ),
-    );
-    leaders.add(GameLeaderCard(
-      playerId: hTeam["points"]["players"].length > 0
-          ? hTeam["points"]["players"][0]["personId"]
-          : "",
-      description: "Points",
-      value: hTeam["points"]["value"].toString(),
-      teamColor: hTeamColor,
-      teamTextColor: hTeamTextColor,
-      triCode: hTeamTriCode,
-    ));
-    leaders.add(GameLeaderCard(
-      playerId: hTeam["assists"]["players"].length > 0
-          ? hTeam["assists"]["players"][0]["personId"]
-          : "",
-      description: "Assists",
-      value: hTeam["assists"]["value"].toString(),
-      teamColor: hTeamColor,
-      teamTextColor: hTeamTextColor,
-      triCode: hTeamTriCode,
-    ));
-    leaders.add(GameLeaderCard(
-      playerId: hTeam["rebounds"]["players"].length > 0
-          ? hTeam["rebounds"]["players"][0]["personId"]
-          : "",
-      description: "Rebounds",
-      value: hTeam["rebounds"]["value"].toString(),
-      teamColor: hTeamColor,
-      teamTextColor: hTeamTextColor,
-      triCode: hTeamTriCode,
-    ));
+      ));
+    }
 
-    _timer = new Timer.periodic(Duration(seconds: 4), (t) {
+    for (int i = 0; i < vTeam["assists"]["players"].length; i++) {
+      leaders.add(GameLeaderCard(
+        playerId: vTeam["assists"]["players"].length > 0
+            ? vTeam["assists"]["players"][i]["personId"]
+            : "",
+        description: "Assists",
+        value: vTeam["assists"]["value"].toString(),
+        teamColor: vTeamColor,
+        teamTextColor: vTeamTextColor,
+        triCode: vTeamTriCode,
+      ));
+    }
+
+    for (int i = 0; i < vTeam["rebounds"]["players"].length; i++) {
+      leaders.add(
+        GameLeaderCard(
+          playerId: vTeam["rebounds"]["players"].length > 0
+              ? vTeam["rebounds"]["players"][i]["personId"]
+              : "",
+          description: "Rebounds",
+          value: vTeam["rebounds"]["value"].toString(),
+          teamColor: vTeamColor,
+          teamTextColor: vTeamTextColor,
+          triCode: vTeamTriCode,
+        ),
+      );
+    }
+
+    for (int i = 0; i < hTeam["points"]["players"].length; i++) {
+      leaders.add(GameLeaderCard(
+        playerId: hTeam["points"]["players"].length > 0
+            ? hTeam["points"]["players"][i]["personId"]
+            : "",
+        description: "Points",
+        value: hTeam["points"]["value"].toString(),
+        teamColor: hTeamColor,
+        teamTextColor: hTeamTextColor,
+        triCode: hTeamTriCode,
+      ));
+    }
+
+    for (int i = 0; i < hTeam["assists"]["players"].length; i++) {
+      leaders.add(GameLeaderCard(
+        playerId: hTeam["assists"]["players"].length > 0
+            ? hTeam["assists"]["players"][i]["personId"]
+            : "",
+        description: "Assists",
+        value: hTeam["assists"]["value"].toString(),
+        teamColor: hTeamColor,
+        teamTextColor: hTeamTextColor,
+        triCode: hTeamTriCode,
+      ));
+    }
+
+    for (int i = 0; i < hTeam["rebounds"]["players"].length; i++) {
+      leaders.add(GameLeaderCard(
+        playerId: hTeam["rebounds"]["players"].length > 0
+            ? hTeam["rebounds"]["players"][i]["personId"]
+            : "",
+        description: "Rebounds",
+        value: hTeam["rebounds"]["value"].toString(),
+        teamColor: hTeamColor,
+        teamTextColor: hTeamTextColor,
+        triCode: hTeamTriCode,
+      ));
+    }
+
+    _timer = new Timer.periodic(Duration(seconds: 3), (t) {
       setState(() {
         _currentIndex++;
         if (_currentIndex == leaders.length) {

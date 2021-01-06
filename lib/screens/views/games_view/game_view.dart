@@ -11,8 +11,11 @@ import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
 import 'package:hoop/components/games_widgets/game_stats.dart';
+import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
+import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/quarter_scores.dart';
+import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
@@ -133,8 +136,8 @@ class _GameViewState extends State<GameView> {
                       height: 15,
                     ),
                     gameStatus > 1 || gameActivated
-                        ? inProgressGameHeader(gameData, stats)
-                        : scheduledGameHeader(gameData),
+                        ? InProgressGameHeader(gameData: gameData, stats: stats)
+                        : ScheduledGameHeader(gameData: gameData),
                     SizedBox(
                       height: 5,
                     ),
@@ -263,7 +266,7 @@ class _GameViewState extends State<GameView> {
                                     labelColor: Colors.green,
                                     unselectedLabelColor: Colors.black,
                                     tabs: [
-                                      Tab(text: 'Feed'),
+                                      Tab(text: 'Game'),
                                       Tab(text: gameData["vTeam"]["triCode"]),
                                       Tab(text: gameData["hTeam"]["triCode"]),
                                       Tab(text: 'Stats'),
@@ -339,7 +342,10 @@ class _GameViewState extends State<GameView> {
                     GameOfficials(
                       game: gameData,
                     ),
-                    gameStatus < 3 ? hotToWatchCard() : Text(''),
+                    gameStatus < 3
+                        ? HowToWatchCard(game: widget.game)
+                        : Text(''),
+                    gameStatus < 3 ? getTicketsCard() : Text(''),
                   ],
                 );
               } else {
@@ -367,323 +373,51 @@ class _GameViewState extends State<GameView> {
     return d;
   }
 
-  Widget hotToWatchCard() {
+  Widget getTicketsCard() {
     return Card(
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Text("HOW TO WATCH", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text("GET TICKETS", style: TextStyle(fontWeight: FontWeight.bold)),
             Container(
                 padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
                 child: Text(
-                  getHowToWatchBroadcast(widget.game),
+                  //widget.game["tickets"]["mobileApp"],
+                  'Coming Soon',
                   style: TextStyle(fontSize: 12),
                 )),
-            Container(
-                padding: EdgeInsets.fromLTRB(15, 5, 15, 12),
-                child: Text(
-                  getHowToWatchAudio(widget.game),
-                  style: TextStyle(fontSize: 12),
-                ))
           ],
         ),
       ),
     );
   }
 
-  String getHowToWatchBroadcast(dynamic game) {
-    String howToWatch = "";
-    String nat, v, h;
+  // String getCurrentPeriod(dynamic json) {
+  //   var period = json["period"]["current"];
+  //   var periodString = "";
+  //   var clock = json["clock"];
+  //   var isHalftime = json["period"]["isHalftime"];
+  //   var clockString = "";
 
-    if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
-      nat =
-          game["watch"]["broadcast"]["broadcasters"]["national"][0]["longName"];
-    } else {
-      nat = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["hTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["hTeam"][0]["longName"];
-    } else {
-      h = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["vTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["vTeam"][0]["longName"];
-    } else {
-      v = "";
-    }
+  //   if (period == 1) {
+  //     periodString = "1st";
+  //   } else if (period == 2) {
+  //     periodString = "2nd";
+  //   } else if (period == 3) {
+  //     periodString = "3rd";
+  //   } else if (period == 4) {
+  //     periodString = "4th";
+  //   } else if (period > 4) {
+  //     periodString = "OT";
+  //   }
 
-    howToWatch =
-        "Broadcast: ${nat == "" ? "" : nat + ",  "}${v == "" ? "" : v + ",  "}$h";
+  //   if (isHalftime) {
+  //     clockString = "Halftime";
+  //   } else {
+  //     clockString = periodString + "  " + clock;
+  //   }
 
-    return howToWatch;
-  }
-
-  String getHowToWatchAudio(dynamic game) {
-    String howToWatch = "";
-    String nat, v, h;
-
-    if (game["watch"]["broadcast"]["audio"]["national"]["broadcasters"].length >
-        0) {
-      nat = game["watch"]["broadcast"]["audio"]["national"]["broadcasters"][0]
-          ["longName"];
-    } else {
-      nat = "";
-    }
-    if (game["watch"]["broadcast"]["audio"]["hTeam"]["broadcasters"].length >
-        0) {
-      h = game["watch"]["broadcast"]["audio"]["hTeam"]["broadcasters"][0]
-          ["longName"];
-    } else {
-      h = "";
-    }
-    if (game["watch"]["broadcast"]["audio"]["vTeam"]["broadcasters"].length >
-        0) {
-      v = game["watch"]["broadcast"]["audio"]["vTeam"]["broadcasters"][0]
-          ["longName"];
-    } else {
-      v = "";
-    }
-
-    howToWatch =
-        "Radio: ${nat == "" ? "" : nat + ",  "}${v == "" ? "" : v + ",  "}$h";
-
-    return howToWatch;
-  }
-
-  String getCurrentPeriod(dynamic json) {
-    var period = json["period"]["current"];
-    var periodString = "";
-    var clock = json["clock"];
-    var isHalftime = json["period"]["isHalftime"];
-    var clockString = "";
-
-    if (period == 1) {
-      periodString = "1st";
-    } else if (period == 2) {
-      periodString = "2nd";
-    } else if (period == 3) {
-      periodString = "3rd";
-    } else if (period == 4) {
-      periodString = "4th";
-    } else if (period > 4) {
-      periodString = "OT";
-    }
-
-    if (isHalftime) {
-      clockString = "Halftime";
-    } else {
-      clockString = periodString + "  " + clock;
-    }
-
-    return clockString;
-  }
-
-  Widget scheduledGameHeader(dynamic gameData) {
-    var seriesWin = gameData["vTeam"]["seriesWin"] == ""
-        ? "0"
-        : gameData["vTeam"]["seriesWin"];
-    var seriesLoss = gameData["vTeam"]["seriesLoss"] == ""
-        ? "0"
-        : gameData["vTeam"]["seriesLoss"];
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(children: [
-          GestureDetector(
-            child: CachedLogo(
-                radius: 40,
-                url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["vTeam"]["teamId"])));
-            },
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
-            style: TextStyle(fontSize: 18),
-          ),
-        ]),
-        Column(children: [
-          Text(formatDate(gameData["startDateEastern"]),
-              style: TextStyle(fontSize: 18)),
-          Text(gameData["startTimeEastern"], style: TextStyle(fontSize: 18)),
-          SizedBox(
-            height: 5,
-          ),
-          Text("Series ($seriesWin - $seriesLoss)"),
-          SizedBox(
-            height: 5,
-          ),
-          Text(gameData["arena"]["name"]),
-          Text(gameData["arena"]["city"]),
-        ]),
-        Column(children: [
-          GestureDetector(
-            child: CachedLogo(
-                radius: 40,
-                url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"])),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["hTeam"]["teamId"])));
-            },
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
-            style: TextStyle(fontSize: 18),
-          ),
-        ]),
-      ],
-    );
-  }
-
-  Widget inProgressGameHeader(dynamic gameData, dynamic stats) {
-    var vScore =
-        gameData["vTeam"]["score"] == "" ? "0" : gameData["vTeam"]["score"];
-    var hScore =
-        gameData["hTeam"]["score"] == "" ? "0" : gameData["hTeam"]["score"];
-    var vFullTimeouts = stats["vTeam"]["totals"]["full_timeout_remaining"];
-    var vShortTimeouts = stats["vTeam"]["totals"]["short_timeout_remaining"];
-    var hFullTimeouts = stats["hTeam"]["totals"]["full_timeout_remaining"];
-    var hShortTimeouts = stats["hTeam"]["totals"]["short_timeout_remaining"];
-    // var arena = gameData["arena"]["name"];
-    // var arenaLoc =
-    //     gameData["arena"]["city"] + " " + gameData["arena"]["stateAbbr"];
-    var seriesWin = gameData["vTeam"]["seriesWin"] == ""
-        ? "0"
-        : gameData["vTeam"]["seriesWin"];
-    var seriesLoss = gameData["vTeam"]["seriesLoss"] == ""
-        ? "0"
-        : gameData["vTeam"]["seriesLoss"];
-
-    var gameStatus = gameData["statusNum"];
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        SizedBox(
-          width: 10,
-        ),
-        Column(children: [
-          GestureDetector(
-            child: CachedLogo(
-                radius: 30,
-                url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["vTeam"]["teamId"])));
-            },
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          // THis shows the available timeouts
-          Row(
-            children: [
-              for (int i = 0; i < int.parse(vFullTimeouts); i++)
-                Container(
-                  margin: EdgeInsets.all(1),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.cyan,
-                    minRadius: 4,
-                  ),
-                ),
-              for (int i = 0; i < int.parse(vShortTimeouts); i++)
-                Container(
-                  margin: EdgeInsets.all(1),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.red,
-                    minRadius: 3,
-                  ),
-                ),
-            ],
-          )
-        ]),
-        Column(children: [
-          Text(
-            "$vScore - $hScore",
-            style: TextStyle(fontSize: 36, color: Colors.red),
-          ),
-          gameStatus == 2
-              ? Text(getCurrentPeriod(gameData), style: TextStyle(fontSize: 24))
-              : gameStatus == 3
-                  ? Text('Final', style: TextStyle(fontSize: 24))
-                  : Text(''),
-          SizedBox(
-            height: 5,
-          ),
-          Text("Series ($seriesWin - $seriesLoss)"),
-        ]),
-        Column(children: [
-          GestureDetector(
-            child: CachedLogo(
-                radius: 30,
-                url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"])),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["hTeam"]["teamId"])));
-            },
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              for (int i = 0; i < int.parse(hFullTimeouts); i++)
-                Container(
-                  margin: EdgeInsets.all(1),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.cyan,
-                    minRadius: 4,
-                  ),
-                ),
-              for (int i = 0; i < int.parse(hShortTimeouts); i++)
-                Container(
-                  margin: EdgeInsets.all(1),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.red,
-                    minRadius: 3,
-                  ),
-                ),
-            ],
-          )
-        ]),
-        SizedBox(
-          width: 10,
-        ),
-      ],
-    );
-  }
+  //   return clockString;
+  // }
 }

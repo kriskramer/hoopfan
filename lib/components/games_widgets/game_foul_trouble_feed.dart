@@ -12,32 +12,25 @@ class GameFoulTroubleFeed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Foul Trouble',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                ...getFoulLeaders(stats, game),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Heavy Minutes',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                ...getMinutesLeaders(stats, game),
-              ],
-            )
-          ]),
-    );
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        //getvTeamMinutesLeaders(stats, game),
+        Text(
+          'Foul Trouble',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        ...getFoulLeaders(stats, game),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          'Heavy Minutes',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        ...getMinutesLeaders(stats, game),
+      ],
+    ));
   }
 
   List<Widget> getFoulLeaders(dynamic stats, dynamic game) {
@@ -52,7 +45,8 @@ class GameFoulTroubleFeed extends StatelessWidget {
     String vTeamTriCode = game["vTeam"]["triCode"];
     String hTeamTriCode = game["hTeam"]["triCode"];
     int period = game["period"]["current"];
-    List<Widget> list = new List<Widget>();
+    List<Widget> rows = new List<Widget>();
+    //List<Widget> list2 = new List<Widget>();
     List<dynamic> vTeamPlayers = new List<dynamic>();
     List<dynamic> hTeamPlayers = new List<dynamic>();
     dynamic players = stats["activePlayers"];
@@ -100,7 +94,10 @@ class GameFoulTroubleFeed extends StatelessWidget {
     }
 
     for (var p in vTeamPlayers) {
-      list.add(Row(children: [
+      rows.add(Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(
+          width: 50,
+        ),
         getTeamTricodeCard(
             vTeamTriCode.toUpperCase(), vTeamColor, vTeamTextColor),
         SizedBox(
@@ -116,8 +113,12 @@ class GameFoulTroubleFeed extends StatelessWidget {
         ),
       ]));
     }
+
     for (var p in hTeamPlayers) {
-      list.add(Row(children: [
+      rows.add(Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(
+          width: 50,
+        ),
         getTeamTricodeCard(
             hTeamTriCode.toUpperCase(), hTeamColor, hTeamTextColor),
         SizedBox(
@@ -134,7 +135,7 @@ class GameFoulTroubleFeed extends StatelessWidget {
       ]));
     }
 
-    return list;
+    return rows;
   }
 
   List<Widget> getMinutesLeaders(dynamic stats, dynamic game) {
@@ -148,8 +149,7 @@ class GameFoulTroubleFeed extends StatelessWidget {
         ConstantHelper.getTeamTextColor(game["hTeam"]["teamId"]);
     String vTeamTriCode = game["vTeam"]["triCode"];
     String hTeamTriCode = game["hTeam"]["triCode"];
-    int period = game["period"]["current"];
-    List<Widget> list = new List<Widget>();
+    List<Widget> rows = new List<Widget>();
     List<dynamic> vTeamPlayers = new List<dynamic>();
     List<dynamic> hTeamPlayers = new List<dynamic>();
     dynamic players = stats["activePlayers"];
@@ -199,7 +199,10 @@ class GameFoulTroubleFeed extends StatelessWidget {
     });
 
     for (int i = 0; i < 3; i++) {
-      list.add(Row(children: [
+      rows.add(Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(
+          width: 50,
+        ),
         getTeamTricodeCard(
             vTeamTriCode.toUpperCase(), vTeamColor, vTeamTextColor),
         SizedBox(
@@ -217,7 +220,10 @@ class GameFoulTroubleFeed extends StatelessWidget {
     }
 
     for (int i = 0; i < 3; i++) {
-      list.add(Row(children: [
+      rows.add(Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        SizedBox(
+          width: 50,
+        ),
         getTeamTricodeCard(
             hTeamTriCode.toUpperCase(), hTeamColor, hTeamTextColor),
         SizedBox(
@@ -234,7 +240,7 @@ class GameFoulTroubleFeed extends StatelessWidget {
       ]));
     }
 
-    return list;
+    return rows;
   }
 
   // Need this method to do cleanup on the JSON values, which can sometimes be null or empty
