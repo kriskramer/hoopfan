@@ -53,8 +53,6 @@ class ScheduledGameHeader extends StatelessWidget {
           SizedBox(
             height: 5,
           ),
-          Text(gameData["arena"]["name"]),
-          Text(gameData["arena"]["city"]),
           countdown != ""
               ? Container(
                   padding: EdgeInsets.all(4),

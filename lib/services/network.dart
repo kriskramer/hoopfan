@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -46,6 +47,8 @@ class Network {
     }
   }
 
+  static StreamController<dynamic> twitterStream = StreamController();
+
   static Future<dynamic> getTwitterStream() async {
     String url = "https://api.twitter.com/2/tweets/search/stream?";
     // make request to get Json file
@@ -57,6 +60,7 @@ class Network {
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
           var json = convert.jsonDecode(response.body);
+          Network.twitterStream.add(json);
           return json;
         }
       } else {

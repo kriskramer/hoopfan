@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/model/advanced_stats.dart';
 
 class GameStats extends StatelessWidget {
   final dynamic stats;
@@ -13,33 +14,31 @@ class GameStats extends StatelessWidget {
     dynamic vTeam = stats["vTeam"]["totals"];
     dynamic hTeam = stats["hTeam"]["totals"];
 
+    AdvancedStats st = AdvancedStats(stats: stats);
+
+    print('teatstst');
+
     return Container(
       child: Column(
         children: [
           SizedBox(
-            height: 10,
+            height: 15,
           ),
           headerRow(gameData),
+          SizedBox(
+            height: 10,
+          ),
           statsRow(vTeam["fgp"], hTeam["fgp"], "FG %", true),
           statsRow(vTeam["ftp"], hTeam["ftp"], "FT %", true),
           statsRow(vTeam["tpp"], hTeam["tpp"], "3P %", true),
-          statsRow(
-              getTSPct(vTeam["fga"], vTeam["fta"], vTeam["points"]),
-              getTSPct(hTeam["fga"], hTeam["fta"], hTeam["points"]),
-              "TS %",
-              true),
-          statsRow(getEfg(vTeam["fga"], vTeam["tpm"], vTeam["fgm"]),
-              getEfg(hTeam["fga"], hTeam["tpm"], hTeam["fgm"]), "eFG %", true),
+          statsRow(st.vTeam.tsPct, st.hTeam.tsPct, "TS %", true),
+          statsRow(st.vTeam.efg, st.hTeam.efg, "eFG %", true),
           statsRow(vTeam["totReb"], hTeam["totReb"], "Rebounds"),
           statsRow(vTeam["assists"], hTeam["assists"], "Assists"),
           statsRow(vTeam["steals"], hTeam["steals"], "Steals"),
           statsRow(vTeam["blocks"], hTeam["blocks"], "Blocks"),
           statsRow(vTeam["turnovers"], hTeam["turnovers"], "TOs"),
-          statsRow(
-              getTovPct(vTeam["fga"], vTeam["fta"], vTeam["turnovers"]),
-              getTovPct(hTeam["fga"], hTeam["fta"], hTeam["turnovers"]),
-              "TOV %",
-              true),
+          statsRow(st.vTeam.tovPct, st.hTeam.tovPct, "TOV %", true),
           statsRow(vTeam["pFouls"], hTeam["pFouls"], "Fouls"),
           statsRow(stats["vTeam"]["fastBreakPoints"],
               stats["hTeam"]["fastBreakPoints"], "Fast Break Pts"),
@@ -53,30 +52,18 @@ class GameStats extends StatelessWidget {
               stats["hTeam"]["secondChancePoints"], "2nd Chance Pts"),
           statsRow(stats["vTeam"]["pointsOffTurnovers"],
               stats["hTeam"]["pointsOffTurnovers"], "Pts off TOs"),
-          statsRow(
-              getPPP(vTeam["fga"], vTeam["fta"], vTeam["turnovers"],
-                  vTeam["points"]),
-              getPPP(hTeam["fga"], hTeam["fta"], hTeam["turnovers"],
-                  hTeam["points"]),
-              "PPP"),
-          statsRow(
-              getORtg(vTeam["fga"], vTeam["fta"], vTeam["turnovers"],
-                  vTeam["points"]),
-              getORtg(hTeam["fga"], hTeam["fta"], hTeam["turnovers"],
-                  hTeam["points"]),
-              "ORtg"),
-          statsRow(
-              getDRtg(vTeam["fga"], vTeam["fta"], vTeam["turnovers"],
-                  hTeam["points"]),
-              getDRtg(hTeam["fga"], hTeam["fta"], hTeam["turnovers"],
-                  vTeam["points"]),
-              "DRtg"),
+          statsRow(st.vTeam.ppp, st.hTeam.ppp, "PPP"),
+          statsRow(st.vTeam.getORtg(), st.hTeam.getORtg(), "ORtg"),
+          statsRow(st.vTeam.getDRtg(st.hTeam.points),
+              st.hTeam.getDRtg(st.vTeam.points), "DRtg"),
           statsRowText("${vTeam["fgm"]}/${vTeam["fga"]}",
               "${hTeam["fgm"]}/${hTeam["fga"]}", "FGs"),
           statsRowText("${vTeam["ftm"]}/${vTeam["fta"]}",
               "${hTeam["ftm"]}/${hTeam["fta"]}", "FTs"),
           statsRowText("${vTeam["tpm"]}/${vTeam["tpa"]}",
               "${hTeam["tpm"]}/${hTeam["tpa"]}", "3Ps"),
+          statsRowText(st.getVTeamPoss(), st.getHTeamPoss(), "Poss"),
+          //statsRowText(st.getVTeamPace(), st.getHTeamPace(), "Pace"),
           SizedBox(
             height: 15,
           ),
@@ -100,7 +87,37 @@ class GameStats extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(5),
           width: 140,
-          child: Center(child: Text('')),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Lead Changes: ',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  Text(
+                    stats["leadChanges"],
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Ties: ',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  Text(
+                    stats["timesTied"],
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         Container(
           padding: EdgeInsets.all(5),

@@ -17,7 +17,10 @@ class CompletedGameCard extends StatelessWidget {
     dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
     dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
 
-    bool isOvertime = game["period"]["current"] > 4 ? true : false;
+    bool isOvertime = false;
+    if (game["period"] != null) {
+      isOvertime = game["period"]["current"] > 4 ? true : false;
+    }
 
     return Container(
       //margin: EdgeInsets.all(5),

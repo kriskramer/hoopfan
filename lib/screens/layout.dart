@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/games_view/today_games.dart';
 import 'package:hoop/screens/views/news_view/news_main.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
@@ -14,6 +15,7 @@ class _LayoutState extends State<Layout> {
     Standings(),
     TodaysGames(),
     NewsMainScreen(),
+    AccountMain(),
   ];
 
   void onTapChangeView(int index) {
@@ -29,6 +31,7 @@ class _LayoutState extends State<Layout> {
         body: views.elementAt(_selectedScreen),
         backgroundColor: Color(0XFFEDF1FF),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.table_chart_outlined),
@@ -39,8 +42,12 @@ class _LayoutState extends State<Layout> {
               label: "Games",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.article),
               label: "News",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "User",
             ),
           ],
           currentIndex: _selectedScreen,

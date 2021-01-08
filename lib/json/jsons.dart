@@ -19,6 +19,7 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _teamVideos = {};
   Map<String, dynamic> _previewArticles = {};
   Map<String, dynamic> _recapArticles = {};
+  Map<String, dynamic> _gameNews = {};
   var _nbaNews;
   var _nbaVideos;
   var _todaysGames;
@@ -65,6 +66,10 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamVideos(String teamId, dynamic videos) {
     _teamVideos[teamId] = videos;
+  }
+
+  void setGameNews(String searchString, dynamic news) {
+    _gameNews[searchString] = news;
   }
 
   void setPreviewArticles(String gameId, dynamic article) {
@@ -187,6 +192,7 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getPreviewArticle(String gameId) => _previewArticles[gameId];
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
+  dynamic getGameNews(String searchString) => _gameNews[searchString];
 
   dynamic getTransactions() => _transactions;
 

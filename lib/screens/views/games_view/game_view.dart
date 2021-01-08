@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/game_box_score.dart';
 import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
@@ -18,6 +19,8 @@ import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/screens/views/games_view/game_conversation.dart';
+import 'package:hoop/screens/views/games_view/game_news.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/screens/views/games_view/game_preview_article.dart';
 import 'package:hoop/screens/views/games_view/game_recap_article.dart';
@@ -89,18 +92,6 @@ class _GameViewState extends State<GameView> {
                 var gameData = snapshot.data["basicGameData"];
                 var stats = snapshot.data["stats"];
 
-                // var vScore = gameData["vTeam"]["score"] == ""
-                //     ? "0"
-                //     : gameData["vTeam"]["score"];
-                // var hScore = gameData["hTeam"]["score"] == ""
-                //     ? "0"
-                //     : gameData["hTeam"]["score"];
-                var arena = gameData["arena"]["name"];
-                var arenaLoc = gameData["arena"]["city"] +
-                    " " +
-                    gameData["arena"]["stateAbbr"];
-                //var clock = gameData["clock"];
-
                 bool preview = gameData["isPreviewArticleAvail"];
                 bool recap = gameData["isRecapArticleAvail"];
 
@@ -110,6 +101,13 @@ class _GameViewState extends State<GameView> {
                 var gameId = gameData["gameId"];
                 var date = gameData["gameUrlCode"].toString().split("/")[0];
                 // var currentPeriod = gameData["period"]["current"];
+
+                var newsSearchString = "nba game " +
+                    gameData["vTeam"]["triCode"] +
+                    " " +
+                    gameData["hTeam"]["triCode"] +
+                    " " +
+                    gameData["startDateEastern"];
 
                 if (gameData["isGameActivated"]) {
                   timerDuration = 45;
@@ -139,119 +137,127 @@ class _GameViewState extends State<GameView> {
                         ? InProgressGameHeader(gameData: gameData, stats: stats)
                         : ScheduledGameHeader(gameData: gameData),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    ButtonBar(
+                      alignment: MainAxisAlignment.spaceEvenly,
+                      layoutBehavior: ButtonBarLayoutBehavior.constrained,
                       children: [
-                        Text(
-                          arena,
-                          style: TextStyle(fontSize: 12),
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor:
+                                    preview ? Colors.blue[900] : Colors.grey,
+                                radius: 20,
+                                child: Icon(
+                                  Icons.article,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'Preview',
+                                style: TextStyle(color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            if (preview) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GamePreviewArticle(
+                                    gameDate: date,
+                                    gameId: gameId,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
-                        SizedBox(
-                          width: 10,
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.green[900],
+                                radius: 20,
+                                child: Icon(
+                                  Icons.article,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'News',
+                                style: TextStyle(color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GameNews(
+                                  searchString: newsSearchString,
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        Text(
-                          arenaLoc,
-                          style: TextStyle(fontSize: 12),
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.green[900],
+                                radius: 20,
+                                child: Icon(
+                                  Icons.chat_bubble_outline,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'Chat',
+                                style: TextStyle(color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                          onTap: () {},
+                        ),
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor:
+                                    recap ? Colors.blue[900] : Colors.grey,
+                                radius: 20,
+                                child: Icon(
+                                  Icons.article,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                'Recap',
+                                style: TextStyle(color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            if (recap) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GameRecapArticle(
+                                    gameDate: date,
+                                    gameId: gameId,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 5,
-                    ),
-                    stats == null
-                        ? Row(
-                            children: [
-                              preview
-                                  ? FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                GamePreviewArticle(
-                                              gameDate: date,
-                                              gameId: gameId,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Text('Preview',
-                                          style: TextStyle(color: Colors.blue)),
-                                    )
-                                  : Text(''),
-                              recap
-                                  ? FlatButton(
-                                      onPressed: () {},
-                                      child: Text('Recap',
-                                          style: TextStyle(color: Colors.blue)),
-                                    )
-                                  : Text(''),
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              preview
-                                  ? FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                GamePreviewArticle(
-                                              gameDate: date,
-                                              gameId: gameId,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Text('Preview',
-                                          style: TextStyle(color: Colors.blue)),
-                                    )
-                                  : Text(''),
-                              Text(
-                                'Lead Changes: ',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              Text(
-                                stats["leadChanges"],
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Ties: ',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              Text(
-                                stats["timesTied"],
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              recap
-                                  ? FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                GameRecapArticle(
-                                              gameDate: date,
-                                              gameId: gameId,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Text('Recap',
-                                          style: TextStyle(color: Colors.blue)),
-                                    )
-                                  : Text(''),
-                            ],
-                          ),
-                    SizedBox(
-                      height: 10,
                     ),
                     gameStatus == 1
                         ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
@@ -332,13 +338,22 @@ class _GameViewState extends State<GameView> {
                                           gameData: gameData,
                                         ),
                                       ),
-                                      Container(child: Text('Odds'))
+                                      Container(
+                                          padding: EdgeInsets.all(20),
+                                          child: Text(
+                                              'This feature is not yet fully implemented.')),
                                     ],
                                   ),
                                 )
                               ],
                             ),
                           ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    ArenaCard(
+                      gameData: gameData,
+                    ),
                     GameOfficials(
                       game: gameData,
                     ),
@@ -392,32 +407,4 @@ class _GameViewState extends State<GameView> {
       ),
     );
   }
-
-  // String getCurrentPeriod(dynamic json) {
-  //   var period = json["period"]["current"];
-  //   var periodString = "";
-  //   var clock = json["clock"];
-  //   var isHalftime = json["period"]["isHalftime"];
-  //   var clockString = "";
-
-  //   if (period == 1) {
-  //     periodString = "1st";
-  //   } else if (period == 2) {
-  //     periodString = "2nd";
-  //   } else if (period == 3) {
-  //     periodString = "3rd";
-  //   } else if (period == 4) {
-  //     periodString = "4th";
-  //   } else if (period > 4) {
-  //     periodString = "OT";
-  //   }
-
-  //   if (isHalftime) {
-  //     clockString = "Halftime";
-  //   } else {
-  //     clockString = periodString + "  " + clock;
-  //   }
-
-  //   return clockString;
-  // }
 }
