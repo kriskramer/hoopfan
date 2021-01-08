@@ -22,7 +22,7 @@ class GameLeadChart extends StatelessWidget {
         margin: EdgeInsets.all(15),
         child: Column(children: [
           Text(
-            'Lead Tracker - Period ' + period,
+            'Lead Tracker - Period ' + getPeriodText(period),
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(
@@ -117,5 +117,14 @@ class GameLeadChart extends StatelessWidget {
     //   return lead * 2.9;
     // } else
     //   return lead * 1.9;
+  }
+
+  String getPeriodText(String period) {
+    if (period == "5") {
+      return "OT 1";
+    } else if (period == "6") {
+      return "OT 2";
+    } else
+      return period.toString();
   }
 }

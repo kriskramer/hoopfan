@@ -56,6 +56,9 @@ class Urls {
 
   // nba data urls ////////////////////////////
 
+  // Returns all usable APIs for today. Not used in the app, but kept here for reference.
+  // "http://data.nba.net/10s/prod/v1/today.json"
+
   // Returns ALL nba games for the given year
   static String nbaFullSchedule(String year) =>
       "http://data.nba.net/10s/prod/v2/$year/schedule.json";

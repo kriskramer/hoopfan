@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/game_box_score.dart';
 import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
-import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
-import 'package:hoop/components/games_widgets/game_leader_card.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
@@ -17,14 +14,10 @@ import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
-import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games_view/game_conversation.dart';
 import 'package:hoop/screens/views/games_view/game_news.dart';
-import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/screens/views/games_view/game_preview_article.dart';
 import 'package:hoop/screens/views/games_view/game_recap_article.dart';
-import 'package:hoop/screens/views/teams_view/teaminfo.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -102,12 +95,7 @@ class _GameViewState extends State<GameView> {
                 var date = gameData["gameUrlCode"].toString().split("/")[0];
                 // var currentPeriod = gameData["period"]["current"];
 
-                var newsSearchString = "nba game " +
-                    gameData["vTeam"]["triCode"] +
-                    " " +
-                    gameData["hTeam"]["triCode"] +
-                    " " +
-                    gameData["startDateEastern"];
+                var newsSearchString = getNewsSearchString(gameData);
 
                 if (gameData["isGameActivated"]) {
                   timerDuration = 45;
@@ -148,11 +136,11 @@ class _GameViewState extends State<GameView> {
                             children: [
                               CircleAvatar(
                                 backgroundColor:
-                                    preview ? Colors.blue[900] : Colors.grey,
+                                    preview ? Colors.blue[100] : Colors.grey,
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
-                                  color: Colors.white,
+                                  //color: Colors.white,
                                 ),
                               ),
                               Text(
@@ -179,11 +167,10 @@ class _GameViewState extends State<GameView> {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.green[900],
+                                backgroundColor: Colors.red[100],
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
-                                  color: Colors.white,
                                 ),
                               ),
                               Text(
@@ -207,11 +194,11 @@ class _GameViewState extends State<GameView> {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.green[900],
+                                backgroundColor: Colors.amber[100],
                                 radius: 20,
                                 child: Icon(
                                   Icons.chat_bubble_outline,
-                                  color: Colors.white,
+                                  //color: Colors.white,
                                 ),
                               ),
                               Text(
@@ -227,11 +214,11 @@ class _GameViewState extends State<GameView> {
                             children: [
                               CircleAvatar(
                                 backgroundColor:
-                                    recap ? Colors.blue[900] : Colors.grey,
+                                    recap ? Colors.purple[100] : Colors.grey,
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
-                                  color: Colors.white,
+                                  //color: Colors.white,
                                 ),
                               ),
                               Text(
@@ -406,5 +393,19 @@ class _GameViewState extends State<GameView> {
         ),
       ),
     );
+  }
+
+  String getNewsSearchString(dynamic gameData) {
+    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
+    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+
+    var search = "nba game " +
+        vTeamName +
+        " at " +
+        hTeamName +
+        " " +
+        gameData["startDateEastern"];
+
+    return search;
   }
 }

@@ -16,10 +16,6 @@ class GamePlayByPlay extends StatelessWidget {
     String date = gameData["startDateEastern"];
     String gameId = gameData["gameId"];
 
-    bool isOvertime = gameData["period"]["current"] > 4 ? true : false;
-
-    //var width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Play by Play'),
@@ -132,7 +128,7 @@ class GamePlayByPlay extends StatelessWidget {
                         pbp: plays,
                         vTeamId: gameData["vTeam"]["teamId"],
                         hTeamId: gameData["hTeam"]["teamId"],
-                        period: "OT 1",
+                        period: "5",
                         game: gameData,
                       );
                     }
@@ -150,7 +146,7 @@ class GamePlayByPlay extends StatelessWidget {
                         pbp: plays,
                         vTeamId: gameData["vTeam"]["teamId"],
                         hTeamId: gameData["hTeam"]["teamId"],
-                        period: "OT 2",
+                        period: "6",
                         game: gameData,
                       );
                     }

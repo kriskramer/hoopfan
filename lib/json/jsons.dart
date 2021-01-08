@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:hoop/model/lead_tracker.dart';
 
 class JsonFiles with ChangeNotifier {
   String _year = "2020";
@@ -20,6 +21,8 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _previewArticles = {};
   Map<String, dynamic> _recapArticles = {};
   Map<String, dynamic> _gameNews = {};
+  Map<String, dynamic> _pbps = {};
+  Map<String, dynamic> _fullGameLeadTracker = {};
   var _nbaNews;
   var _nbaVideos;
   var _todaysGames;
@@ -62,6 +65,15 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamNews(String teamId, dynamic news) {
     _teamNews[teamId] = news;
+  }
+
+  // key value is gameId and period concatenated together with a "-"
+  void setGamePbp(String gameAndPeriodId, dynamic pbp) {
+    _pbps[gameAndPeriodId] = pbp;
+  }
+
+  void setGameLeadTracker(String gameId, LeadTrackerList list) {
+    _fullGameLeadTracker[gameId] = list;
   }
 
   void setTeamVideos(String teamId, dynamic videos) {
@@ -193,6 +205,10 @@ class JsonFiles with ChangeNotifier {
   dynamic getPreviewArticle(String gameId) => _previewArticles[gameId];
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
   dynamic getGameNews(String searchString) => _gameNews[searchString];
+
+  dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
+  LeadTrackerList getFullGameLeadTracker(String gameId) =>
+      _fullGameLeadTracker[gameId];
 
   dynamic getTransactions() => _transactions;
 

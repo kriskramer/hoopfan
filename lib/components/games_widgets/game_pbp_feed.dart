@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:provider/provider.dart';
 
 class GamePbpFeed extends StatefulWidget {
   final dynamic gameData;
@@ -120,7 +122,25 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
   }
 
   Future<void> getData(String date, String gameId, String period) async {
+    // Get the current period's pbp feed in real-time
     _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
+
+    int currentPeriod = int.parse(period);
+    // Make sure prior pbp feeds are stored in the provider. Don't need to keep grabbing them
+    // each time the user taps the screen.
+    if (currentPeriod > 1) {
+      for (int i = 1; i < currentPeriod; i++) {
+        var gameAndPeriodId = gameId + "-" + i.toString();
+        if (Provider.of<JsonFiles>(context, listen: false)
+                .getPbp(gameAndPeriodId) ==
+            null) {
+          var previousPbp =
+              Network.getJson(Urls.nbaPlayByPlay(date, gameId, i.toString()));
+          Provider.of<JsonFiles>(context, listen: false)
+              .setGamePbp(gameAndPeriodId, previousPbp);
+        }
+      }
+    }
   }
 
   Widget getTeamCard(String desc, dynamic game) {

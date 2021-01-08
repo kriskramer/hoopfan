@@ -11,6 +11,10 @@ class PbpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LeadTrackerList list = LeadTrackerList();
+    list.importPbp(pbp, item.period);
+    list.getLast10Points(item.clock);
+
     Widget dialog;
     dialog = new Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
