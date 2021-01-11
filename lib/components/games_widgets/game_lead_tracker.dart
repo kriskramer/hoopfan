@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/lead_tracker_dialog.dart';
 import 'package:hoop/components/games_widgets/pbp_dialog.dart';
 import 'package:hoop/constant.dart';
 import '../../model/lead_tracker.dart';
@@ -21,9 +22,29 @@ class GameLeadChart extends StatelessWidget {
         //padding: EdgeInsets.all(10),
         margin: EdgeInsets.all(15),
         child: Column(children: [
-          Text(
-            'Lead Tracker - Period ' + getPeriodText(period),
-            style: TextStyle(fontSize: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Lead Tracker - Period ' + getPeriodText(period),
+              ),
+              FlatButton(
+                child: Text(
+                  'View Play-by-Play',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PbpDialog(
+                          pbp: pbp,
+                          game: game,
+                        );
+                      });
+                },
+              )
+            ],
           ),
           SizedBox(
             height: 15,
@@ -39,15 +60,14 @@ class GameLeadChart extends StatelessWidget {
 
     List<Widget> rows = new List<Widget>();
 
-    for (var t in list.items) {
+    for (var lti in list.items) {
       rows.add(GestureDetector(
         onTap: () {
           showDialog(
               context: context,
               builder: (context) {
-                return PbpDialog(
-                  pbp: pbp,
-                  item: t,
+                return LeadTrackerDialog(
+                  leadTrackerItem: lti,
                   game: game,
                 );
               });
@@ -55,7 +75,7 @@ class GameLeadChart extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(width: 40, child: Text(t.clock.replaceAll("00:", ""))),
+            Container(width: 40, child: Text(lti.clock.replaceAll("00:", ""))),
             Container(
                 decoration: BoxDecoration(
                     border: Border(
@@ -63,14 +83,14 @@ class GameLeadChart extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 width: 135,
                 height: 15,
-                child: t.isVisitorLead()
+                child: lti.isVisitorLead()
                     ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Text(t.getLead().toString()),
+                        Text(lti.getLead().toString()),
                         SizedBox(
                           width: 4,
                         ),
                         Container(
-                          width: getLeadWidth(t.getLead()),
+                          width: getLeadWidth(lti.getLead()),
                           color: Color(vTeamColor),
                         ),
                       ])
@@ -84,17 +104,17 @@ class GameLeadChart extends StatelessWidget {
                         bottom: BorderSide(color: Colors.grey[200], width: 1))),
                 width: 135,
                 height: 15,
-                child: t.isHomeLead()
+                child: lti.isHomeLead()
                     ? Row(children: [
                         Container(
-                          width: getLeadWidth(t.getLead()),
+                          width: getLeadWidth(lti.getLead()),
                           color: Color(hTeamColor),
                         ),
                         SizedBox(
                           width: 4,
                         ),
                         Text(
-                          t.getLead().toString(),
+                          lti.getLead().toString(),
                         ),
                       ])
                     : Text('')),

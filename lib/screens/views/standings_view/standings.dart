@@ -45,8 +45,8 @@ class _StandingsState extends State<Standings> {
 
   @override
   Widget build(BuildContext context) {
-    String year =
-        Provider.of<JsonFiles>(context, listen: false).getYearFormatted();
+    // String year =
+    //     Provider.of<JsonFiles>(context, listen: false).getYearFormatted();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -54,37 +54,6 @@ class _StandingsState extends State<Standings> {
           backgroundColor: Color(0XFF1F6BA3),
           automaticallyImplyLeading: false, // hides back arrow button
           toolbarHeight: 60,
-          // actions: [
-          //   RaisedButton(
-          //     child: Text(
-          //       'Season: $year',
-          //       style: TextStyle(color: Colors.white),
-          //     ),
-          //     color: Colors.blue[400],
-          //     onPressed: () => {
-          //       showDialog(
-          //           context: context,
-          //           builder: (context) {
-          //             return getSeasonSelectDialog();
-          //           }),
-          //     },
-          //   ),
-          //   RaisedButton(
-          //     child: Text(
-          //       Provider.of<JsonFiles>(context, listen: false)
-          //           .getSeasonStageFormatted(),
-          //       style: TextStyle(color: Colors.white),
-          //     ),
-          //     color: Colors.blue[400],
-          //     onPressed: () => {
-          //       showDialog(
-          //           context: context,
-          //           builder: (context) {
-          //             return getSeasonStageSelectDialog();
-          //           }),
-          //     },
-          //   ),
-          // ],
           bottom: TabBar(
             tabs: [
               Tab(
@@ -172,84 +141,6 @@ class _StandingsState extends State<Standings> {
   //                   ),
   //                 );
   //               })
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget getSeasonStageSelectDialog() {
-  //   return Dialog(
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-  //     elevation: 12,
-  //     child: Container(
-  //       padding: EdgeInsets.all(15),
-  //       height: MediaQuery.of(context).size.height - 250,
-  //       child: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: <Widget>[
-  //           SizedBox(
-  //             height: 10,
-  //           ),
-  //           Text(
-  //             'Select Season Stage:',
-  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //           ),
-  //           Divider(
-  //             thickness: 1,
-  //             color: Colors.red,
-  //           ),
-  //           ListView(
-  //             children: [
-  //               Center(
-  //                 child: ListTile(
-  //                   onTap: () {
-  //                     setState(() {
-  //                       Provider.of<JsonFiles>(context, listen: false)
-  //                           .setSeasonStage("1");
-  //                     });
-  //                     loadData();
-  //                     Navigator.pop(context);
-  //                   },
-  //                   title: Text('Preseason',
-  //                       style: TextStyle(
-  //                           fontSize: 20, fontWeight: FontWeight.bold)),
-  //                 ),
-  //               ),
-  //               Center(
-  //                 child: ListTile(
-  //                   onTap: () {
-  //                     setState(() {
-  //                       Provider.of<JsonFiles>(context, listen: false)
-  //                           .setSeasonStage("2");
-  //                     });
-  //                     loadData();
-  //                     Navigator.pop(context);
-  //                   },
-  //                   title: Text('Regular Season',
-  //                       style: TextStyle(
-  //                           fontSize: 20, fontWeight: FontWeight.bold)),
-  //                 ),
-  //               ),
-  //               Center(
-  //                 child: ListTile(
-  //                   onTap: () {
-  //                     setState(() {
-  //                       Provider.of<JsonFiles>(context, listen: false)
-  //                           .setSeasonStage("3");
-  //                     });
-  //                     loadData();
-  //                     Navigator.pop(context);
-  //                   },
-  //                   title: Text('Postseason',
-  //                       style: TextStyle(
-  //                           fontSize: 20, fontWeight: FontWeight.bold)),
-  //                 ),
-  //               ),
-  //             ],
-  //             shrinkWrap: true,
-  //           )
   //         ],
   //       ),
   //     ),

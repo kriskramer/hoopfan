@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
+import 'package:hoop/json/jsons.dart';
+import 'package:hoop/model/lead_tracker.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/games_widgets/game_lead_tracker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constant.dart';
 
@@ -15,6 +18,7 @@ class GamePlayByPlay extends StatelessWidget {
   Widget build(BuildContext context) {
     String date = gameData["startDateEastern"];
     String gameId = gameData["gameId"];
+    LeadTrackerList list = LeadTrackerList();
 
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +30,11 @@ class GamePlayByPlay extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Text(
-              'Tap on the lead tracker to get the play-by-play for that period.'),
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Text(
+                'Tap View Play-by-Play to get the play-by-play for that period. Tap a row in the lead tracker to see scoring trends up to that moment in the game.'),
+          ),
           SizedBox(
             height: 15,
           ),
@@ -45,113 +52,21 @@ class GamePlayByPlay extends StatelessWidget {
                   url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"]))
             ],
           ),
-          FutureBuilder(
-              future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "1")),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  var plays = snapshot.data["plays"];
-                  return GameLeadChart(
-                    pbp: plays,
-                    vTeamId: gameData["vTeam"]["teamId"],
-                    hTeamId: gameData["hTeam"]["teamId"],
-                    period: "1",
-                    game: gameData,
-                  );
-                }
-                return Text('');
-              }),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          FutureBuilder(
-              future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "2")),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  var plays = snapshot.data["plays"];
-                  return GameLeadChart(
-                    pbp: plays,
-                    vTeamId: gameData["vTeam"]["teamId"],
-                    hTeamId: gameData["hTeam"]["teamId"],
-                    period: "2",
-                    game: gameData,
-                  );
-                }
-                return Text('');
-              }),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          FutureBuilder(
-              future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "3")),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  var plays = snapshot.data["plays"];
-                  return GameLeadChart(
-                    pbp: plays,
-                    vTeamId: gameData["vTeam"]["teamId"],
-                    hTeamId: gameData["hTeam"]["teamId"],
-                    period: "3",
-                    game: gameData,
-                  );
-                }
-                return Text('');
-              }),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          FutureBuilder(
-              future: Network.getJson(Urls.nbaPlayByPlay(date, gameId, "4")),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  var plays = snapshot.data["plays"];
-                  return GameLeadChart(
-                    pbp: plays,
-                    vTeamId: gameData["vTeam"]["teamId"],
-                    hTeamId: gameData["hTeam"]["teamId"],
-                    period: "4",
-                    game: gameData,
-                  );
-                }
-                return Text('');
-              }),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          gameData["period"]["current"] == 5
-              ? FutureBuilder(
-                  future:
-                      Network.getJson(Urls.nbaPlayByPlay(date, gameId, "5")),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      var plays = snapshot.data["plays"];
-                      return GameLeadChart(
-                        pbp: plays,
-                        vTeamId: gameData["vTeam"]["teamId"],
-                        hTeamId: gameData["hTeam"]["teamId"],
-                        period: "5",
-                        game: gameData,
-                      );
-                    }
-                    return Text('');
-                  })
+          getLeadTrackerBuilder(date, gameData, "1", context, list),
+          gameData["period"]["current"] >= 2
+              ? getLeadTrackerBuilder(date, gameData, "2", context, list)
               : SizedBox(),
-          gameData["period"]["current"] == 6
-              ? FutureBuilder(
-                  future:
-                      Network.getJson(Urls.nbaPlayByPlay(date, gameId, "6")),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      var plays = snapshot.data["plays"];
-                      return GameLeadChart(
-                        pbp: plays,
-                        vTeamId: gameData["vTeam"]["teamId"],
-                        hTeamId: gameData["hTeam"]["teamId"],
-                        period: "6",
-                        game: gameData,
-                      );
-                    }
-                    return Text('');
-                  })
+          gameData["period"]["current"] >= 3
+              ? getLeadTrackerBuilder(date, gameData, "3", context, list)
+              : SizedBox(),
+          gameData["period"]["current"] >= 4
+              ? getLeadTrackerBuilder(date, gameData, "4", context, list)
+              : SizedBox(),
+          gameData["period"]["current"] >= 5
+              ? getLeadTrackerBuilder(date, gameData, "5", context, list)
+              : SizedBox(),
+          gameData["period"]["current"] >= 6
+              ? getLeadTrackerBuilder(date, gameData, "6", context, list)
               : SizedBox(),
           SizedBox(
             height: 30,
@@ -162,6 +77,44 @@ class GamePlayByPlay extends StatelessWidget {
   }
 
   //Future<bool> loadData(BuildContext context) async {}
+
+  Widget getLeadTrackerBuilder(String date, dynamic gameData, String period,
+      BuildContext context, LeadTrackerList list) {
+    String date = gameData["startDateEastern"];
+    String gameId = gameData["gameId"];
+    Future<dynamic> _pbpFeed;
+
+    // String gameAndPeriodId = gameId + "-" + period;
+    // if (Provider.of<JsonFiles>(context, listen: false)
+    //         .getPbp(gameAndPeriodId) !=
+    //     null) {
+    //   _pbpFeed = Provider.of<JsonFiles>(context, listen: false)
+    //       .getPbp(gameAndPeriodId);
+    // } else {
+    _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
+    // }
+
+    return FutureBuilder(
+        future:
+            _pbpFeed, //Network.getJson(Urls.nbaPlayByPlay(date, gameId, period)),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            var plays = snapshot.data["plays"];
+
+            Provider.of<JsonFiles>(context, listen: false)
+                .setGamePbp(gameId + "-" + period, plays);
+
+            return GameLeadChart(
+              pbp: plays,
+              vTeamId: gameData["vTeam"]["teamId"],
+              hTeamId: gameData["hTeam"]["teamId"],
+              period: period,
+              game: gameData,
+            );
+          }
+          return Text('');
+        });
+  }
 
   Widget getTeamCard(String desc, dynamic game) {
     String vTeamTriCode = game["vTeam"]["triCode"];

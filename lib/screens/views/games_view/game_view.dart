@@ -136,11 +136,11 @@ class _GameViewState extends State<GameView> {
                             children: [
                               CircleAvatar(
                                 backgroundColor:
-                                    preview ? Colors.blue[100] : Colors.grey,
+                                    preview ? Colors.teal[200] : Colors.grey,
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
-                                  //color: Colors.white,
+                                  color: Colors.grey[100],
                                 ),
                               ),
                               Text(
@@ -167,10 +167,11 @@ class _GameViewState extends State<GameView> {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.red[100],
+                                backgroundColor: Colors.teal[200],
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
+                                  color: Colors.grey[100],
                                 ),
                               ),
                               Text(
@@ -194,11 +195,11 @@ class _GameViewState extends State<GameView> {
                           child: Column(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.amber[100],
+                                backgroundColor: Colors.teal[200],
                                 radius: 20,
                                 child: Icon(
                                   Icons.chat_bubble_outline,
-                                  //color: Colors.white,
+                                  color: Colors.grey[100],
                                 ),
                               ),
                               Text(
@@ -214,11 +215,11 @@ class _GameViewState extends State<GameView> {
                             children: [
                               CircleAvatar(
                                 backgroundColor:
-                                    recap ? Colors.purple[100] : Colors.grey,
+                                    recap ? Colors.teal[200] : Colors.grey,
                                 radius: 20,
                                 child: Icon(
                                   Icons.article,
-                                  //color: Colors.white,
+                                  color: Colors.grey[100],
                                 ),
                               ),
                               Text(

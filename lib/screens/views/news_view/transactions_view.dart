@@ -12,7 +12,7 @@ class Transactions extends StatefulWidget {
 }
 
 class _TransactionsState extends State<Transactions> {
-  dynamic _transactions;
+  //dynamic _transactions;
   String _filteredTeamId = "";
   String _filteredPlayerId = "";
   bool _filterByTeam = false;

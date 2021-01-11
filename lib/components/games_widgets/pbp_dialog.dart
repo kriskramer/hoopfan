@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/team_tricode_card.dart';
-import '../../model/lead_tracker.dart';
 
 class PbpDialog extends StatelessWidget {
   final dynamic pbp;
-  final LeadTrackerItem item;
+  //final LeadTrackerItem item;
   final dynamic game;
 
-  PbpDialog({this.pbp, this.item, this.game});
+  PbpDialog({this.pbp, this.game});
 
   @override
   Widget build(BuildContext context) {
-    LeadTrackerList list = LeadTrackerList();
-    list.importPbp(pbp, item.period);
-    list.getLast10Points(item.clock);
-
     Widget dialog;
     dialog = new Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

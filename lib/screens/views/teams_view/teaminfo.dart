@@ -7,7 +7,6 @@ import 'package:hoop/components/teams_widgets/playerlst.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/teams_view/team_info_page.dart';
 import 'package:hoop/screens/views/teams_view/team_media_page.dart';
-import 'package:hoop/screens/views/teams_view/team_news_page.dart';
 import 'package:hoop/screens/views/teams_view/team_schedule.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -323,7 +322,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                               standings["win"],
                                               standings["loss"]),
                                       "",
-                                      "Pyth %"),
+                                      "Pyth W-L"),
                                 ],
                               ),
                               SizedBox(height: 10),
@@ -474,7 +473,7 @@ class _TeamDetailsState extends State<TeamDetails> {
 
     for (var r in json) {
       String account = r["AccountType"];
-      String link = r["WebSite_Link"];
+      //String link = r["WebSite_Link"];
       buttons.add(RaisedButton(
         color: Color(teamColor),
         onPressed: () {
@@ -548,8 +547,11 @@ class _TeamDetailsState extends State<TeamDetails> {
                       stats["trpg"][0]["value"] + " RPG"),
                   getTeamLeaderCard(stats["apg"][0]["personId"],
                       stats["apg"][0]["value"] + " APG"),
-                  getTeamLeaderCard(stats["fgp"][0]["personId"],
-                      stats["fgp"][0]["value"] + " FG%"),
+                  getTeamLeaderCard(
+                      stats["fgp"][0]["personId"],
+                      (double.parse(stats["fgp"][0]["value"]) * 100)
+                              .toStringAsFixed(1) +
+                          " FG%"),
                   getTeamLeaderCard(stats["bpg"][0]["personId"],
                       stats["bpg"][0]["value"] + " BPG"),
                   getTeamLeaderCard(stats["spg"][0]["personId"],
@@ -577,20 +579,23 @@ class _TeamDetailsState extends State<TeamDetails> {
         color: Colors.white,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: [
-              CachedLogo(
-                url:
-                    "https://cdn.nba.com/headshots/nba/latest/1040x760/$personId.png",
-                radius: 35,
-              ),
-              Text(
-                getPlayerName(personId),
-                style: TextStyle(fontSize: 18),
-              )
-            ],
+          Container(
+            width: 200,
+            child: Column(
+              children: [
+                CachedLogo(
+                  url:
+                      "https://cdn.nba.com/headshots/nba/latest/1040x760/$personId.png",
+                  radius: 35,
+                ),
+                Text(
+                  getPlayerName(personId),
+                  style: TextStyle(fontSize: 18),
+                )
+              ],
+            ),
           ),
           Text(
             value,
@@ -644,6 +649,25 @@ class _TeamDetailsState extends State<TeamDetails> {
     double oppg = double.parse(oppgString);
 
     double pyth = games * (pow(ppg, 16.5) / (pow(ppg, 16.5) + pow(oppg, 16.5)));
-    return (pyth * 100).toStringAsFixed(2) + "%";
+    String pythW = pyth.toStringAsFixed(0);
+    String pythL = (games - int.parse(pythW)).toString();
+    return pythW + "-" + pythL;
+  }
+
+  String getORtg(String points, String fga, String fta, String turnovers) {
+    double ortg = 100 *
+        int.parse(points) /
+        (int.parse(fga) + (0.44 * int.parse(fta)) + int.parse(turnovers));
+
+    return ortg.toStringAsFixed(2);
+  }
+
+  String getDRtg(
+      String opponentPoints, String fga, String fta, String turnovers) {
+    double drtg = 100 *
+        int.parse(opponentPoints) /
+        (int.parse(fga) + (0.44 * int.parse(fta)) + int.parse(turnovers));
+
+    return drtg.toStringAsFixed(2);
   }
 }

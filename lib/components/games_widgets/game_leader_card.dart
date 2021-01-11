@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
 import 'package:provider/provider.dart';

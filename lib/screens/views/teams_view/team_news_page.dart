@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
-import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -34,10 +33,10 @@ class TeamNewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final test = ConstantHelper.getTeamDetailsExtra(teamId);
-    String primaryColor =
-        test["primaryColor"].toString().replaceFirst("#", "FF");
-    var teamColor = int.parse(primaryColor, radix: 16);
+    //final test = ConstantHelper.getTeamDetailsExtra(teamId);
+    // String primaryColor =
+    //     test["primaryColor"].toString().replaceFirst("#", "FF");
+    //var teamColor = int.parse(primaryColor, radix: 16);
 
     return Scaffold(
       body: SingleChildScrollView(

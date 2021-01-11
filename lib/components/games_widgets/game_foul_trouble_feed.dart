@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/team_tricode_card.dart';
-
 import '../../constant.dart';
 
 class GameFoulTroubleFeed extends StatelessWidget {

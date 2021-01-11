@@ -338,7 +338,7 @@ class TeamInfoPage extends StatelessWidget {
       String position = r["Position"] != null ? r["Position"].toString() : "";
       String seasons =
           r["SeasonsWithTeam"] != null ? r["SeasonsWithTeam"].toString() : "";
-      String year = r["Year"] != null ? "(" + r["Year"].toString() + ")" : "";
+      //String year = r["Year"] != null ? "(" + r["Year"].toString() + ")" : "";
 
       // Some execs go in with multiple titles, which flows off the screen
       if (position.length > 20) {

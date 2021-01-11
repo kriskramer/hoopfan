@@ -3,6 +3,7 @@ import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/games_view/today_games.dart';
 import 'package:hoop/screens/views/news_view/news_main.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
+import 'package:hoop/screens/views/stats/stats_main.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _LayoutState extends State<Layout> {
     Standings(),
     TodaysGames(),
     NewsMainScreen(),
+    StatsMain(),
     AccountMain(),
   ];
 
@@ -44,6 +46,10 @@ class _LayoutState extends State<Layout> {
             BottomNavigationBarItem(
               icon: Icon(Icons.article),
               label: "News",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: "Stats",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

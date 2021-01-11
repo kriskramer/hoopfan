@@ -1,12 +1,12 @@
 class AdvancedStats {
   final dynamic stats;
 
-  TeamStats vTeam;
-  TeamStats hTeam;
+  TeamGameStats vTeam;
+  TeamGameStats hTeam;
 
   AdvancedStats({this.stats}) {
-    this.vTeam = TeamStats(teamStats: stats["vTeam"]);
-    this.hTeam = TeamStats(teamStats: stats["hTeam"]);
+    this.vTeam = TeamGameStats(teamStats: stats["vTeam"]);
+    this.hTeam = TeamGameStats(teamStats: stats["hTeam"]);
   }
 
   String getVTeamPoss() {
@@ -48,7 +48,7 @@ class AdvancedStats {
   }
 }
 
-class TeamStats {
+class TeamGameStats {
   final dynamic teamStats;
 
   int fgm;
@@ -79,7 +79,7 @@ class TeamStats {
   int plusMinus;
   int minutes;
 
-  TeamStats({this.teamStats}) {
+  TeamGameStats({this.teamStats}) {
     var s = teamStats;
     var st = teamStats["totals"];
     fgm = int.parse(st["fgm"]);

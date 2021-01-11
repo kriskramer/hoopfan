@@ -230,7 +230,6 @@ class JsonFiles with ChangeNotifier {
   String getSelectedDate() => _selectedDate;
 
   dynamic getStandings() => _confStandings;
-
   dynamic getConfStandings() => _confStandings;
   dynamic getDivStandings() => _divStandings;
 

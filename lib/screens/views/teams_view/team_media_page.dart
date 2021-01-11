@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/news_view/news_feed.dart';
 import 'package:hoop/screens/views/news_view/team_video_feed.dart';
-import 'package:hoop/screens/views/news_view/video_feed.dart';
 import 'package:hoop/screens/views/teams_view/team_news_page.dart';
 
 class TeamMediaPage extends StatelessWidget {

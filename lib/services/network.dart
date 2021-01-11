@@ -47,8 +47,6 @@ class Network {
     }
   }
 
-  static StreamController<dynamic> twitterStream = StreamController();
-
   static Future<dynamic> getTwitterStream() async {
     String url = "https://api.twitter.com/2/tweets/search/stream?";
     // make request to get Json file
@@ -60,7 +58,7 @@ class Network {
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
           var json = convert.jsonDecode(response.body);
-          Network.twitterStream.add(json);
+          //Network.twitterStream.add(json);
           return json;
         }
       } else {
