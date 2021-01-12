@@ -129,12 +129,13 @@ class Urls {
       "http://data.nba.net/10s//prod/v1/current/standings_division.json";
 
   static String nbaGamesToday() {
-    DateTime today = new DateTime.now();
-    String year = today.year.toString();
-    String month = today.month.toString();
-    String day = today.day.toString();
+    // DateTime today = new DateTime.now();
+    // String year = today.year.toString();
+    // String month = today.month.toString();
+    // String day = today.day.toString();
 
-    return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    //return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    return "http://data.nba.net/10s/prod/v1/20210111/scoreboard.json";
   }
 
   static String nbaGamesSelectedDate(String date) {

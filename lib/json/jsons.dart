@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/player_box_score.dart';
 
 class JsonFiles with ChangeNotifier {
   String _year = "2020";
@@ -29,6 +30,7 @@ class JsonFiles with ChangeNotifier {
   var _prevGames;
   var _upcomingGames;
   String _selectedDate;
+  PlayerBoxScoreList _playerBoxScores;
 
   //Nba Api variables
   var _allPlayers;
@@ -118,6 +120,10 @@ class JsonFiles with ChangeNotifier {
     _divStandings = json;
 
     notifyListeners();
+  }
+
+  void setPlayerBoxScores(PlayerBoxScoreList list) {
+    _playerBoxScores = list;
   }
 
   void setSeasons(dynamic json) {
@@ -235,6 +241,8 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getNbaNews() => _nbaNews;
   dynamic getNbaVideos() => _nbaVideos;
+
+  PlayerBoxScoreList getPlayerBoxScores() => _playerBoxScores;
 
   dynamic getUpcomingGames() => _upcomingGames;
   dynamic getTodaysGames() => _todaysGames;

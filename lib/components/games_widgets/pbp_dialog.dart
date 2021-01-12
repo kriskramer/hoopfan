@@ -33,7 +33,7 @@ class PbpDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(pbp[index]["clock"] + " - "),
-                        TeamTricodeCard(
+                        TeamTricodeCardFromBoxScore(
                             desc: pbp[index]["description"], game: game),
                         Flexible(
                             child: Text(getPbPDescriptionFormatted(

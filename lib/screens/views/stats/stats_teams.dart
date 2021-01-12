@@ -42,6 +42,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('Streaks'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -60,6 +61,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('Wins and Losses'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -78,6 +80,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('Points per Game'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -96,6 +99,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('Opponent Points per Game'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -114,6 +118,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('FG %'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -132,6 +137,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('FT %'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -150,6 +156,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('3P %'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
@@ -168,6 +175,7 @@ class _StatsTeamsState extends State<StatsTeams> {
         ),
         getSectionHeader('Total Rebs'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [

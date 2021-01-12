@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/stats/stats_teams.dart';
+import 'package:hoop/screens/views/stats/stats_today.dart';
 
 class StatsMain extends StatelessWidget {
   @override
@@ -31,9 +32,7 @@ class StatsMain extends StatelessWidget {
               SingleChildScrollView(
                 child: Text('PLayers'),
               ),
-              SingleChildScrollView(
-                child: Text('Now'),
-              )
+              SingleChildScrollView(child: StatsToday())
             ],
           )),
     );

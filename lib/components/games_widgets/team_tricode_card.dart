@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 
-class TeamTricodeCard extends StatelessWidget {
+class TeamTricodeCardFromBoxScore extends StatelessWidget {
   final String desc;
   final dynamic game;
 
-  TeamTricodeCard({this.desc, this.game});
+  TeamTricodeCardFromBoxScore({this.desc, this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -55,5 +55,33 @@ class TeamTricodeCard extends StatelessWidget {
     } else {
       return Text('');
     }
+  }
+}
+
+class TeamTricodeCardFromTeamId extends StatelessWidget {
+  final String teamId;
+
+  TeamTricodeCardFromTeamId({this.teamId});
+
+  @override
+  Widget build(BuildContext context) {
+    var teamColor = ConstantHelper.getTeamColor(teamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
+    var triCode = ConstantHelper.getTeamTriCode(teamId);
+
+    return Card(
+      elevation: 2,
+      color: Color(teamColor),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(2),
+        child: Text(
+          triCode,
+          style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+        ),
+      ),
+    );
   }
 }
