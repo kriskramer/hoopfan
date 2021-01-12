@@ -185,3 +185,137 @@ class TeamStats {
     );
   }
 }
+
+class TeamStatsList {
+  List<TeamStats> items = List<TeamStats>();
+
+  void sortByName(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.nickname.compareTo(b.nickname));
+    } else {
+      items.sort((a, b) => b.nickname.compareTo(a.nickname));
+    }
+  }
+
+  void sortByPPG(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.ppg.avg.compareTo(b.ppg.avg));
+    } else {
+      items.sort((a, b) => b.ppg.avg.compareTo(a.ppg.avg));
+    }
+  }
+
+  void sortByOPPG(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.oppg.avg.compareTo(b.oppg.avg));
+    } else {
+      items.sort((a, b) => b.oppg.avg.compareTo(a.oppg.avg));
+    }
+  }
+
+  void sortByEff(bool asc) {
+    if (asc) {
+      items.sort((a, b) {
+        if (double.parse(a.eff.avg) < double.parse(b.eff.avg))
+          return 1;
+        else
+          return -1;
+      });
+    } else {
+      items.sort((a, b) {
+        if (double.parse(b.eff.avg) < double.parse(a.eff.avg))
+          return 1;
+        else
+          return -1;
+      });
+    }
+  }
+
+  void sortByFgp(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.fgp.avg.compareTo(b.fgp.avg));
+    } else {
+      items.sort((a, b) => b.fgp.avg.compareTo(a.fgp.avg));
+    }
+  }
+
+  void sortByFtp(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.ftp.avg.compareTo(b.ftp.avg));
+    } else {
+      items.sort((a, b) => b.ftp.avg.compareTo(a.ftp.avg));
+    }
+  }
+
+  void sortByTpp(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.tpp.avg.compareTo(b.tpp.avg));
+    } else {
+      items.sort((a, b) => b.tpp.avg.compareTo(a.tpp.avg));
+    }
+  }
+
+  void sortByOReb(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.orpg.avg.compareTo(b.orpg.avg));
+    } else {
+      items.sort((a, b) => b.orpg.avg.compareTo(a.orpg.avg));
+    }
+  }
+
+  void sortByDReb(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.drpg.avg.compareTo(b.drpg.avg));
+    } else {
+      items.sort((a, b) => b.drpg.avg.compareTo(a.drpg.avg));
+    }
+  }
+
+  void sortByTReb(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.trpg.avg.compareTo(b.trpg.avg));
+    } else {
+      items.sort((a, b) => b.trpg.avg.compareTo(a.trpg.avg));
+    }
+  }
+
+  void sortByAsts(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.apg.avg.compareTo(b.apg.avg));
+    } else {
+      items.sort((a, b) => b.apg.avg.compareTo(a.apg.avg));
+    }
+  }
+
+  void sortByStls(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.spg.avg.compareTo(b.spg.avg));
+    } else {
+      items.sort((a, b) => b.spg.avg.compareTo(a.spg.avg));
+    }
+  }
+
+  void sortByBlks(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.bpg.avg.compareTo(b.bpg.avg));
+    } else {
+      items.sort((a, b) => b.bpg.avg.compareTo(a.bpg.avg));
+    }
+  }
+
+  void sortByTOs(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.tpg.avg.compareTo(b.tpg.avg));
+    } else {
+      items.sort((a, b) => b.tpg.avg.compareTo(a.tpg.avg));
+    }
+  }
+
+  void sortByPFs(bool asc) {
+    if (asc) {
+      items.sort((a, b) => a.pfpg.avg.compareTo(b.pfpg.avg));
+    } else {
+      items.sort((a, b) => b.pfpg.avg.compareTo(a.pfpg.avg));
+    }
+  }
+}
