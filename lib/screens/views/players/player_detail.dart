@@ -197,7 +197,7 @@ class PlayerDetail extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             // Use a FutureBuilder to get the player data and then build out a data table or some other widget
             FutureBuilder(
@@ -215,8 +215,18 @@ class PlayerDetail extends StatelessWidget {
                         ["stats"]["regularSeason"];
 
                     //print(statsSummary);
-
-                    return getStatsTable(statsSummary, statsRegSeason);
+                    return Column(
+                      children: [
+                        Text(
+                          'Per Game Stats',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        getStatsTable(statsSummary, statsRegSeason)
+                      ],
+                    );
                   } else if (snapshot.hasError) {
                     return Center(
                       child: Column(
@@ -240,7 +250,7 @@ class PlayerDetail extends StatelessWidget {
                   //return Text('data');
                 }),
 
-            // This seems to only work for some players. Taking it out for now
+            // The bio seems to only work for some players. Taking it out for now
             // FutureBuilder(
             //     future: Network.getplayer(Urls.nbaPlayerBio(player["personId"])),
             //     builder:
@@ -429,6 +439,13 @@ class PlayerDetail extends StatelessWidget {
       child: DataTable(
           columnSpacing: 14,
           dataRowHeight: 30,
+          headingRowHeight: 30,
+          headingTextStyle:
+              TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+          headingRowColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+            return Colors.grey[300]; // Use the default value.
+          }),
           columns: [
             DataColumn(label: Text("Year")),
             DataColumn(label: Text("MIN")),

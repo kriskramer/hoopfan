@@ -23,9 +23,8 @@ class TeamInfoPage extends StatelessWidget {
             : Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
-        child: Card(
-          margin: EdgeInsets.all(20),
-          elevation: 4,
+        child: Container(
+          margin: EdgeInsets.all(15),
           child: Column(
             children: [
               SizedBox(
@@ -45,9 +44,9 @@ class TeamInfoPage extends StatelessWidget {
   List<Widget> teamSummary(
       dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
-    list.add(Card(
+    list.add(Container(
         color: Color(ConstantHelper.getTeamColor(teamId)),
-        elevation: 1,
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
             padding: EdgeInsets.all(2),
             //width: deviceWidth - 80,
@@ -176,9 +175,9 @@ class TeamInfoPage extends StatelessWidget {
     dynamic conf = json[1]["ConferenceTitles"];
     dynamic div = json[2]["DivitionalTitles"];
 
-    list.add(Card(
+    list.add(Container(
         color: Color(teamColor),
-        elevation: 1,
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
             padding: EdgeInsets.all(2),
             //width: deviceWidth - 80,
@@ -269,9 +268,9 @@ class TeamInfoPage extends StatelessWidget {
       dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
 
-    list.add(Card(
+    list.add(Container(
         color: Color(teamColor),
-        elevation: 1,
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
             padding: EdgeInsets.all(2),
             //width: deviceWidth - 80,
@@ -318,9 +317,9 @@ class TeamInfoPage extends StatelessWidget {
       dynamic json, String teamId, int teamColor, int teamTextColor) {
     List<Widget> list = new List<Widget>();
 
-    list.add(Card(
+    list.add(Container(
         color: Color(teamColor),
-        elevation: 1,
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
             padding: EdgeInsets.all(2),
             //width: deviceWidth - 80,

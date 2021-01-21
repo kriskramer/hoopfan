@@ -102,7 +102,9 @@ class _TodaysGamesState extends State<TodaysGames> {
                               backgroundColor: Colors.white,
                               selectedColor: Colors.blue,
                               onDateSelected: (date) {
-                                handleNewDate(date, context);
+                                if (date != null) {
+                                  handleNewDate(date, context);
+                                }
                               }),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),

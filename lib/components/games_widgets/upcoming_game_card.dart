@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -11,12 +12,12 @@ class UpcomingGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final standingsJson = Provider.of<JsonFiles>(context, listen: false)
-        .getStandings()["league"]["standard"]["conference"];
-
-    dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
-    dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
-
+    final standings = Provider.of<JsonFiles>(context, listen: false)
+        .getLeagueStandings(); //["league"]["standard"]["conference"];
+    final LeagueStanding vTeam =
+        standings.getTeamStandings(game["vTeam"]["teamId"]);
+    final LeagueStanding hTeam =
+        standings.getTeamStandings(game["hTeam"]["teamId"]);
     var countdown = getStartCountdown(game);
 
     return Container(
@@ -41,7 +42,7 @@ class UpcomingGameCard extends StatelessWidget {
                 radius: 35,
                 url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
             Text(
-              "(${vTeam["win"]}-${vTeam["loss"]})",
+              "(${vTeam.wins}-${vTeam.losses})",
               style: TextStyle(color: Colors.grey[700], fontSize: 14),
             ),
             Column(children: [
@@ -70,7 +71,7 @@ class UpcomingGameCard extends StatelessWidget {
                     ),
             ]),
             Text(
-              "(${hTeam["win"]}-${hTeam["loss"]})",
+              "(${hTeam.wins}-${hTeam.losses})",
               style: TextStyle(color: Colors.grey[700], fontSize: 14),
             ),
             CachedLogo(
@@ -91,45 +92,45 @@ class UpcomingGameCard extends StatelessWidget {
     return d;
   }
 
-  dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
-    dynamic team;
-    String teamId = game["vTeam"]["teamId"];
+  // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
+  //   dynamic team;
+  //   String teamId = game["vTeam"]["teamId"];
 
-    for (var t in json["east"]) {
-      if (t["teamId"] == teamId) {
-        team = t;
-        break;
-      }
-    }
-    for (var t in json["west"]) {
-      if (t["teamId"] == teamId) {
-        team = t;
-        break;
-      }
-    }
+  //   for (var t in json["east"]) {
+  //     if (t["teamId"] == teamId) {
+  //       team = t;
+  //       break;
+  //     }
+  //   }
+  //   for (var t in json["west"]) {
+  //     if (t["teamId"] == teamId) {
+  //       team = t;
+  //       break;
+  //     }
+  //   }
 
-    return team;
-  }
+  //   return team;
+  // }
 
-  dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
-    dynamic team;
-    String teamId = game["hTeam"]["teamId"];
+  // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
+  //   dynamic team;
+  //   String teamId = game["hTeam"]["teamId"];
 
-    for (var t in json["east"]) {
-      if (t["teamId"] == teamId) {
-        team = t;
-        break;
-      }
-    }
-    for (var t in json["west"]) {
-      if (t["teamId"] == teamId) {
-        team = t;
-        break;
-      }
-    }
+  //   for (var t in json["east"]) {
+  //     if (t["teamId"] == teamId) {
+  //       team = t;
+  //       break;
+  //     }
+  //   }
+  //   for (var t in json["west"]) {
+  //     if (t["teamId"] == teamId) {
+  //       team = t;
+  //       break;
+  //     }
+  //   }
 
-    return team;
-  }
+  //   return team;
+  // }
 
   String getHowToWatch() {
     String howToWatch = "";

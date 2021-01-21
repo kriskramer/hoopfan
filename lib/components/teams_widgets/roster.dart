@@ -103,6 +103,7 @@ class Roster extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
+              columnSpacing: 15,
               columns: [
                 DataColumn(
                   label: Text(

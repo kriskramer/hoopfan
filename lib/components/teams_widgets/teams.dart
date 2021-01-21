@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/screens/views/teams_view/teaminfo.dart';
+import 'package:hoop/screens/views/teams_view/team_main.dart';
 
 // Generates list of teams in alphabetical order and displays as a card
 List<Widget> teams(BuildContext context) {

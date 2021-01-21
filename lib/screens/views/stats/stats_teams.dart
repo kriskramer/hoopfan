@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/models/standing.dart';
+import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/team_stats/team_stats.dart';
+import 'package:hoop/services/network.dart';
+import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class StatsTeams extends StatefulWidget {
@@ -10,8 +12,7 @@ class StatsTeams extends StatefulWidget {
 }
 
 class _StatsTeamsState extends State<StatsTeams> {
-  List<Standing> listStandings = new List<Standing>();
-  //List<TeamStats> listTeamStats = new List<TeamStats>();
+  LeagueStandingList listStandings;
   TeamStatsList listTeamStats = new TeamStatsList();
   bool sort = true;
   int colIndex = 1;
@@ -201,10 +202,7 @@ class _StatsTeamsState extends State<StatsTeams> {
             ))),
         Container(
           padding: EdgeInsets.all(15),
-          child: SingleChildScrollView(
-            child: getAllTeamStatsDataTable(),
-            scrollDirection: Axis.horizontal,
-          ),
+          child: getAllTeamStatsDataTable(),
         )
       ],
     ));
@@ -214,12 +212,12 @@ class _StatsTeamsState extends State<StatsTeams> {
     sortStandingsByWinStreak();
     List<DataRow> list = new List<DataRow>();
 
-    for (var s in listStandings) {
+    for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamSitesOnly.teamNickname),
+          Text(s.teamName),
         ),
-        DataCell(Text(s.streak.toString()))
+        DataCell(Text(s.strCurrentStreak))
       ]));
     }
 
@@ -238,12 +236,12 @@ class _StatsTeamsState extends State<StatsTeams> {
     sortStandingsByLosingStreak();
     List<DataRow> list = new List<DataRow>();
 
-    for (var s in listStandings) {
+    for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamSitesOnly.teamNickname),
+          Text(s.teamName),
         ),
-        DataCell(Text(s.streak.toString()))
+        DataCell(Text(s.strCurrentStreak))
       ]));
     }
 
@@ -262,12 +260,12 @@ class _StatsTeamsState extends State<StatsTeams> {
     sortStandingsByWins();
     List<DataRow> list = new List<DataRow>();
 
-    for (var s in listStandings) {
+    for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamSitesOnly.teamNickname),
+          Text(s.teamName),
         ),
-        DataCell(Text(s.win))
+        DataCell(Text(s.wins.toString()))
       ]));
     }
 
@@ -286,12 +284,12 @@ class _StatsTeamsState extends State<StatsTeams> {
     sortStandingsByLosses();
     List<DataRow> list = new List<DataRow>();
 
-    for (var s in listStandings) {
+    for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamSitesOnly.teamNickname),
+          Text(s.teamName),
         ),
-        DataCell(Text(s.loss))
+        DataCell(Text(s.losses.toString()))
       ]));
     }
 
@@ -743,11 +741,17 @@ class _StatsTeamsState extends State<StatsTeams> {
     }
 
     List<DataRow> list = new List<DataRow>();
+    List<DataRow> list2 = new List<DataRow>();
 
     for (var t in listTeamStats.items) {
-      list.add(DataRow(cells: [
+      list2.add(DataRow(cells: [
         DataCell(
           Text(t.nickname),
+        ),
+      ]));
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(''),
         ),
         DataCell(Text(t.ppg.avg)),
         DataCell(Text(t.oppg.avg)),
@@ -766,146 +770,185 @@ class _StatsTeamsState extends State<StatsTeams> {
       ]));
     }
 
-    return DataTable(
-      sortAscending: sort,
-      sortColumnIndex: colIndex,
-      columnSpacing: 8,
-      horizontalMargin: 5,
-      dataRowHeight: 25,
-      headingRowHeight: 25,
-      columns: [
-        DataColumn(
-            label: Text('Team'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('PPG'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('OPPG'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('Eff'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('FG%'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('FT%'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('3P%'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('OReb'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('DReb'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('TReb'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('Asts'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('Stls'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('Blks'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('TOs'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-        DataColumn(
-            label: Text('PFs'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-                colIndex = columnIndex;
-              });
-            }),
-      ],
-      rows: [
-        ...list,
-      ],
-    );
+    return Row(children: [
+      DataTable(
+        sortAscending: sort,
+        //sortColumnIndex: colIndex,
+        columnSpacing: 8,
+        horizontalMargin: 5,
+        dataRowHeight: 25,
+        headingRowHeight: 25,
+        headingTextStyle:
+            TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+        headingRowColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+          return Colors.grey[300];
+        }), // Use the default value.
+        columns: [
+          DataColumn(
+              label: Text('Team'),
+              onSort: (columnIndex, ascending) {
+                setState(() {
+                  sort = !sort;
+                  colIndex = columnIndex;
+                });
+              }),
+        ],
+        rows: [
+          ...list2,
+        ],
+      ),
+      Expanded(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            sortAscending: sort,
+            sortColumnIndex: colIndex,
+            columnSpacing: 8,
+            horizontalMargin: 5,
+            dataRowHeight: 25,
+            headingRowHeight: 25,
+            headingTextStyle:
+                TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+            headingRowColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              return Colors.grey[300];
+            }), // Use the default value.
+            columns: [
+              DataColumn(
+                label: Text(''),
+              ),
+              DataColumn(
+                  label: Text('PPG'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('OPPG'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('Eff'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('FG%'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('FT%'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('3P%'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('OReb'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('DReb'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('TReb'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('Asts'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('Stls'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('Blks'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('TOs'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+              DataColumn(
+                  label: Text('PFs'),
+                  onSort: (columnIndex, ascending) {
+                    setState(() {
+                      sort = !sort;
+                      colIndex = columnIndex;
+                    });
+                  }),
+            ],
+            rows: [
+              ...list,
+            ],
+          ),
+        ),
+      ),
+    ]);
   }
 
   Widget getSectionHeader(String headerText) {
     return Container(
         width: double.infinity,
         height: 20,
-        color: Colors.amber[100],
+        //color: Colors.amber[100],
+        decoration: BoxDecoration(
+            color: Colors.grey[200],
+            border: Border.symmetric(
+                horizontal: BorderSide(color: Colors.grey, width: 1))),
         child: Center(
             child: Text(
           headerText,
@@ -913,22 +956,23 @@ class _StatsTeamsState extends State<StatsTeams> {
         )));
   }
 
-  void loadData() {
-    dynamic standings;
+  void loadData() async {
+    //dynamic standings;
     dynamic teamStats;
 
-    standings =
-        Provider.of<JsonFiles>(context, listen: false).getConfStandings();
+    listStandings =
+        Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
 
-    for (var s in standings["league"]["standard"]["conference"]["east"]) {
-      listStandings.add(Standing.fromJson(s));
-    }
-    for (var s in standings["league"]["standard"]["conference"]["west"]) {
-      listStandings.add(Standing.fromJson(s));
-    }
+    String year = Provider.of<JsonFiles>(context, listen: false).getYear();
 
-    teamStats =
-        Provider.of<JsonFiles>(context, listen: false).getAllTeamStats();
+    if (Provider.of<JsonFiles>(context, listen: false).getAllTeamStats() ==
+        null) {
+      teamStats = await Network.getJson(Urls.nbaTeamStats(year));
+      Provider.of<JsonFiles>(context, listen: false).setTeamStats(teamStats);
+    } else {
+      teamStats =
+          Provider.of<JsonFiles>(context, listen: false).getAllTeamStats();
+    }
 
     for (var t in teamStats["league"]["standard"]["regularSeason"]["teams"]) {
       listTeamStats.items.add(TeamStats.fromJson(t));
@@ -937,8 +981,8 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   void sortStandingsByWinStreak() {
     // Sort by win streak
-    listStandings.sort((a, b) {
-      if (a.sortKey.streak > b.sortKey.streak)
+    listStandings.items.sort((a, b) {
+      if (a.currentStreak < b.currentStreak)
         return 1;
       else
         return -1;
@@ -947,8 +991,8 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   void sortStandingsByLosingStreak() {
     // Sort by losing streak
-    listStandings.sort((a, b) {
-      if (a.sortKey.streak < b.sortKey.streak)
+    listStandings.items.sort((a, b) {
+      if (a.currentStreak > b.currentStreak)
         return 1;
       else
         return -1;
@@ -957,8 +1001,8 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   void sortStandingsByWins() {
     // Sort by total wins
-    listStandings.sort((a, b) {
-      if (int.parse(a.win) < int.parse(b.win))
+    listStandings.items.sort((a, b) {
+      if (a.wins < b.wins)
         return 1;
       else
         return -1;
@@ -967,8 +1011,8 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   void sortStandingsByLosses() {
     // Sort by total wins
-    listStandings.sort((a, b) {
-      if (int.parse(a.loss) < int.parse(b.loss))
+    listStandings.items.sort((a, b) {
+      if (a.losses < b.losses)
         return 1;
       else
         return -1;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hoop/services/network.dart';
 
 class TwitterFeed extends StatelessWidget {
-  Future<dynamic> _feed;
   @override
   Widget build(BuildContext context) {
     loadData();
@@ -10,7 +9,7 @@ class TwitterFeed extends StatelessWidget {
   }
 
   Future<dynamic> loadData() async {
-    _feed = await Network.getTwitterStream();
-    print(_feed);
+    var feed = await Network.getTwitterStream();
+    print(feed);
   }
 }

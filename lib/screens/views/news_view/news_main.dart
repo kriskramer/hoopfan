@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/injury_report.dart';
 import 'package:hoop/screens/views/news_view/news_feed.dart';
 import 'package:hoop/screens/views/news_view/transactions_view.dart';
 import 'package:hoop/screens/views/news_view/video_feed.dart';
@@ -12,7 +13,7 @@ class _NewsMainScreenState extends State<NewsMainScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         backgroundColor: Color(0XFFEDF1FF),
         appBar: AppBar(
@@ -26,6 +27,9 @@ class _NewsMainScreenState extends State<NewsMainScreen> {
                 text: "Video",
               ),
               Tab(
+                text: "Injuries",
+              ),
+              Tab(
                 text: "Transactions",
               )
             ],
@@ -35,6 +39,7 @@ class _NewsMainScreenState extends State<NewsMainScreen> {
           children: [
             NbaNewsFeed(),
             NbaVideoFeed(searchTerms: "nba basketball"),
+            InjuryReport(),
             Transactions(),
           ],
         ),

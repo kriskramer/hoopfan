@@ -12,88 +12,95 @@ class NbaVideoFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool blocked = true;
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: FutureBuilder(
-            future: loadData(context),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                var videos = Provider.of<JsonFiles>(context, listen: false)
-                    .getNbaVideos();
+        child: blocked
+            ? Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                    'This feature is blocked for testing. It will be re-enabled once the app goes live.'),
+              )
+            : FutureBuilder(
+                future: loadData(context),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    var videos = Provider.of<JsonFiles>(context, listen: false)
+                        .getNbaVideos();
 
-                return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: videos["value"].length,
-                  itemBuilder: (context, index) {
-                    // Check if Id is in allTeam and points aint empty
-                    return Column(children: [
-                      InkWell(
-                        onTap: () {
-                          Network.launchSite(
-                              videos["value"][index]["contentUrl"]);
-                        },
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Stack(children: [
-                              Image.network(
-                                  videos["value"][index]["thumbnailUrl"]),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  videos["value"][index]["name"],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: videos["value"].length,
+                      itemBuilder: (context, index) {
+                        // Check if Id is in allTeam and points aint empty
+                        return Column(children: [
+                          InkWell(
+                            onTap: () {
+                              Network.launchSite(
+                                  videos["value"][index]["contentUrl"]);
+                            },
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 4,
                                 ),
-                              ),
-                            ]),
-                            Text(
-                              videos["value"][index]["thumbnailUrl"],
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.blue),
+                                Stack(children: [
+                                  Image.network(
+                                      videos["value"][index]["thumbnailUrl"]),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      videos["value"][index]["name"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ]),
+                                Text(
+                                  videos["value"][index]["thumbnailUrl"],
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.blue),
+                                ),
+                                Text(
+                                  formatDate(
+                                      videos["value"][index]["datePublished"]),
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              formatDate(
-                                  videos["value"][index]["datePublished"]),
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                        ]);
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error,
+                            size: 50,
+                          ),
+                          Text("An error occured!"),
+                        ],
                       ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                    ]);
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error,
-                        size: 50,
-                      ),
-                      Text("An error occured!"),
-                    ],
-                  ),
-                );
-              } else if (snapshot.data == null) {
-                return NoConnection();
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
+                    );
+                  } else if (snapshot.data == null) {
+                    return NoConnection();
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }));
   }
 
   Future<bool> loadData(BuildContext context) async {

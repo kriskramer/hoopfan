@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/components/teams_widgets/roster.dart';
-import 'package:hoop/services/network.dart';
-import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class PlayerList extends StatelessWidget {
@@ -18,7 +16,7 @@ class PlayerList extends StatelessWidget {
                 .getTeamRoster(teamId) ==
             null
         ? FutureBuilder<dynamic>(
-            future: Network.getJson(Urls.nbaTeamRoster(teamId)),
+            future: loadData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               Widget playerList;
 
@@ -62,5 +60,11 @@ class PlayerList extends StatelessWidget {
                 .getTeamRoster(teamId),
             teamColor: teamColor,
           );
+  }
+
+  Future<bool> loadData() async {
+    // This page was making a call to get the roster for no reason... commented it out
+    //Network.getJson(Urls.nbaTeamRoster(teamId));
+    return true;
   }
 }

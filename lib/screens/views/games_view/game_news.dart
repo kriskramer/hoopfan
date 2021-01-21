@@ -12,101 +12,108 @@ class GameNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool blocked = true;
     return Scaffold(
       appBar: AppBar(
         title: Text('Game News'),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: FutureBuilder(
-            future: loadData(context),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                var news = Provider.of<JsonFiles>(context, listen: false)
-                    .getGameNews(searchString);
+        child: blocked
+            ? Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                    'This feature is blocked for testing. It will be re-enabled once the app goes live.'),
+              )
+            : FutureBuilder(
+                future: loadData(context),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    var news = Provider.of<JsonFiles>(context, listen: false)
+                        .getGameNews(searchString);
 
-                return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: news["entries"].length,
-                  itemBuilder: (context, index) {
-                    // Check if Id is in allTeam and points aint empty
-                    return Column(children: [
-                      Card(
-                        elevation: 3,
-                        child: Container(
-                          margin: EdgeInsets.all(12),
-                          child: InkWell(
-                            onTap: () {
-                              Network.launchSite(
-                                  news["entries"][index]["link"]);
-                            },
-                            child: Column(
-                              children: [
-                                Text(
-                                  news["entries"][index]["title"],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: news["entries"].length,
+                      itemBuilder: (context, index) {
+                        // Check if Id is in allTeam and points aint empty
+                        return Column(children: [
+                          Card(
+                            elevation: 3,
+                            child: Container(
+                              margin: EdgeInsets.all(12),
+                              child: InkWell(
+                                onTap: () {
+                                  Network.launchSite(
+                                      news["entries"][index]["link"]);
+                                },
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      news["entries"][index]["title"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      news["entries"][index]["published"],
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(removeAllHtmlTags(
+                                        news["entries"][index]["summary"])),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      news["entries"][index]["link"],
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.blue),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Divider(),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  news["entries"][index]["published"],
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(removeAllHtmlTags(
-                                    news["entries"][index]["summary"])),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  news["entries"][index]["link"],
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.blue),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Divider(),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                        ]);
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error,
+                            size: 50,
+                          ),
+                          Text("An error occured!"),
+                        ],
                       ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                    ]);
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error,
-                        size: 50,
-                      ),
-                      Text("An error occured!"),
-                    ],
-                  ),
-                );
-              } else if (snapshot.data == null) {
-                return NoConnection();
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+                    );
+                  } else if (snapshot.data == null) {
+                    return NoConnection();
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
       ),
     );
   }

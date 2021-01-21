@@ -30,7 +30,9 @@ class StatsMain extends StatelessWidget {
             children: [
               SingleChildScrollView(child: StatsTeams()),
               SingleChildScrollView(
-                child: Text('PLayers'),
+                child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Text('This feature is coming soon...')),
               ),
               SingleChildScrollView(child: StatsToday())
             ],

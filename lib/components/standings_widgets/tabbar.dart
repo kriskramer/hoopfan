@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/standings_widgets/table.dart';
 import 'package:hoop/components/standings_widgets/table_div.dart';
+import 'package:hoop/models/league_standings.dart';
 
 class Bar extends StatelessWidget {
-  final dynamic confStandings;
-  final dynamic divStandings;
-  Bar({this.confStandings, this.divStandings});
+  final LeagueStandingList list;
+  // final dynamic confStandings;
+  // final dynamic divStandings;
+  Bar({this.list});
   @override
   Widget build(BuildContext context) {
     return TabBarView(
@@ -29,9 +31,7 @@ class Bar extends StatelessWidget {
                   'Eastern Conference',
                   style: TextStyle(fontSize: 18),
                 ),
-                ConfTable(
-                    json: confStandings["league"]["standard"]["conference"]
-                        ["east"]),
+                ConfTable(list: list.getConferenceStandings('East')),
                 SizedBox(
                   height: 30,
                 ),
@@ -39,9 +39,7 @@ class Bar extends StatelessWidget {
                   'Western Conference',
                   style: TextStyle(fontSize: 18),
                 ),
-                ConfTable(
-                    json: confStandings["league"]["standard"]["conference"]
-                        ["west"]),
+                ConfTable(list: list.getConferenceStandings('West')),
               ],
             ),
           ),
@@ -64,9 +62,7 @@ class Bar extends StatelessWidget {
                   'Atlantic Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["east"]["atlantic"]),
+                DivTable(list: list.getDivisionStandings("Atlantic")),
                 SizedBox(
                   height: 20,
                 ),
@@ -74,9 +70,7 @@ class Bar extends StatelessWidget {
                   'Central Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["east"]["central"]),
+                DivTable(list: list.getDivisionStandings("Central")),
                 SizedBox(
                   height: 20,
                 ),
@@ -84,9 +78,7 @@ class Bar extends StatelessWidget {
                   'Southeast Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["east"]["southeast"]),
+                DivTable(list: list.getDivisionStandings("Southeast")),
                 SizedBox(
                   height: 20,
                 ),
@@ -94,9 +86,7 @@ class Bar extends StatelessWidget {
                   'Northwest Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["west"]["northwest"]),
+                DivTable(list: list.getDivisionStandings("Northwest")),
                 SizedBox(
                   height: 20,
                 ),
@@ -104,9 +94,7 @@ class Bar extends StatelessWidget {
                   'Pacific Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["west"]["pacific"]),
+                DivTable(list: list.getDivisionStandings("Pacific")),
                 SizedBox(
                   height: 20,
                 ),
@@ -114,9 +102,7 @@ class Bar extends StatelessWidget {
                   'Southwest Division',
                   style: TextStyle(fontSize: 18),
                 ),
-                DivTable(
-                    json: divStandings["league"]["standard"]["conference"]
-                        ["west"]["southwest"]),
+                DivTable(list: list.getDivisionStandings("Southwest")),
               ],
             ),
           ),

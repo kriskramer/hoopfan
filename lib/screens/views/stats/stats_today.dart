@@ -56,157 +56,161 @@ class _StatsTodayState extends State<StatsToday> {
           List<DataRow> rowsAsts = new List<DataRow>();
           List<DataRow> rowsPM = new List<DataRow>();
 
-          list.sortByPoints(false);
+          if (list.items.length > 0) {
+            list.sortByPoints(false);
 
-          for (var p in list.items) {
-            rowsPoints.add(DataRow(cells: [
-              DataCell(TeamTricodeCardFromTeamId(
-                teamId: p.teamId,
-              )),
-              DataCell(
-                Text(p.lastName),
-              ),
-              DataCell(Text(p.points.toString())),
-              DataCell(Text(p.fga +
-                  "/" +
-                  p.fgm +
-                  "  " +
-                  p.fta +
-                  "/" +
-                  p.ftm +
-                  "  " +
-                  p.tpa +
-                  "/" +
-                  p.tpm)),
-            ]));
+            for (var p in list.items) {
+              rowsPoints.add(DataRow(cells: [
+                DataCell(TeamTricodeCardFromTeamId(
+                  teamId: p.teamId,
+                )),
+                DataCell(
+                  Text(p.lastName),
+                ),
+                DataCell(Text(p.points.toString())),
+                DataCell(Text(p.fga +
+                    "/" +
+                    p.fgm +
+                    "  " +
+                    p.fta +
+                    "/" +
+                    p.ftm +
+                    "  " +
+                    p.tpa +
+                    "/" +
+                    p.tpm)),
+              ]));
+            }
+
+            list.sortByRebounds(false);
+
+            for (var p in list.items) {
+              rowsRebs.add(DataRow(cells: [
+                DataCell(TeamTricodeCardFromTeamId(
+                  teamId: p.teamId,
+                )),
+                DataCell(
+                  Text(p.lastName),
+                ),
+                DataCell(Text(p.totReb.toString())),
+                DataCell(Text(p.offReb + " | " + p.defReb)),
+              ]));
+            }
+
+            list.sortByAssists(false);
+
+            for (var p in list.items) {
+              rowsAsts.add(DataRow(cells: [
+                DataCell(TeamTricodeCardFromTeamId(
+                  teamId: p.teamId,
+                )),
+                DataCell(
+                  Text(p.lastName),
+                ),
+                DataCell(Text(p.assists.toString()))
+              ]));
+            }
+
+            list.sortByPlusMinus(false);
+
+            for (var p in list.items) {
+              rowsPM.add(DataRow(cells: [
+                DataCell(TeamTricodeCardFromTeamId(
+                  teamId: p.teamId,
+                )),
+                DataCell(
+                  Text(p.lastName),
+                ),
+                DataCell(Text(p.plusMinus.toString()))
+              ]));
+            }
+
+            return Column(
+              children: [
+                Text(
+                  'Points',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                DataTable(
+                  columnSpacing: 12,
+                  dataRowHeight: 25,
+                  headingRowHeight: 0,
+                  columns: [
+                    DataColumn(label: Text('Team')),
+                    DataColumn(label: Text('Player')),
+                    DataColumn(label: Text('Points')),
+                    DataColumn(label: Text('%'))
+                  ],
+                  rows: [
+                    ...rowsPoints.getRange(0, 10),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Rebounds',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                DataTable(
+                  columnSpacing: 15,
+                  dataRowHeight: 25,
+                  headingRowHeight: 0,
+                  columns: [
+                    DataColumn(label: Text('Team')),
+                    DataColumn(label: Text('Player')),
+                    DataColumn(label: Text('Rebs')),
+                    DataColumn(label: Text('Totals'))
+                  ],
+                  rows: [
+                    ...rowsRebs.getRange(0, 10),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Assists',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                DataTable(
+                  columnSpacing: 15,
+                  dataRowHeight: 25,
+                  headingRowHeight: 0,
+                  columns: [
+                    DataColumn(label: Text('Team')),
+                    DataColumn(label: Text('Player')),
+                    DataColumn(label: Text('Asts'))
+                  ],
+                  rows: [
+                    ...rowsAsts.getRange(0, 10),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Plus/Minus',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                DataTable(
+                  columnSpacing: 15,
+                  dataRowHeight: 25,
+                  headingRowHeight: 0,
+                  columns: [
+                    DataColumn(label: Text('Team')),
+                    DataColumn(label: Text('Player')),
+                    DataColumn(label: Text('Asts'))
+                  ],
+                  rows: [
+                    ...rowsPM.getRange(0, 10),
+                  ],
+                )
+              ],
+            );
+          } else {
+            return Text('No data yet.');
           }
-
-          list.sortByRebounds(false);
-
-          for (var p in list.items) {
-            rowsRebs.add(DataRow(cells: [
-              DataCell(TeamTricodeCardFromTeamId(
-                teamId: p.teamId,
-              )),
-              DataCell(
-                Text(p.lastName),
-              ),
-              DataCell(Text(p.totReb.toString())),
-              DataCell(Text(p.offReb + " | " + p.defReb)),
-            ]));
-          }
-
-          list.sortByAssists(false);
-
-          for (var p in list.items) {
-            rowsAsts.add(DataRow(cells: [
-              DataCell(TeamTricodeCardFromTeamId(
-                teamId: p.teamId,
-              )),
-              DataCell(
-                Text(p.lastName),
-              ),
-              DataCell(Text(p.assists.toString()))
-            ]));
-          }
-
-          list.sortByPlusMinus(false);
-
-          for (var p in list.items) {
-            rowsPM.add(DataRow(cells: [
-              DataCell(TeamTricodeCardFromTeamId(
-                teamId: p.teamId,
-              )),
-              DataCell(
-                Text(p.lastName),
-              ),
-              DataCell(Text(p.plusMinus.toString()))
-            ]));
-          }
-
-          return Column(
-            children: [
-              Text(
-                'Points',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              DataTable(
-                columnSpacing: 12,
-                dataRowHeight: 25,
-                headingRowHeight: 0,
-                columns: [
-                  DataColumn(label: Text('Team')),
-                  DataColumn(label: Text('Player')),
-                  DataColumn(label: Text('Points')),
-                  DataColumn(label: Text('%'))
-                ],
-                rows: [
-                  ...rowsPoints.getRange(0, 10),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Rebounds',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              DataTable(
-                columnSpacing: 15,
-                dataRowHeight: 25,
-                headingRowHeight: 0,
-                columns: [
-                  DataColumn(label: Text('Team')),
-                  DataColumn(label: Text('Player')),
-                  DataColumn(label: Text('Rebs')),
-                  DataColumn(label: Text('Totals'))
-                ],
-                rows: [
-                  ...rowsRebs.getRange(0, 10),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Assists',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              DataTable(
-                columnSpacing: 15,
-                dataRowHeight: 25,
-                headingRowHeight: 0,
-                columns: [
-                  DataColumn(label: Text('Team')),
-                  DataColumn(label: Text('Player')),
-                  DataColumn(label: Text('Asts'))
-                ],
-                rows: [
-                  ...rowsAsts.getRange(0, 10),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Plus/Minus',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              DataTable(
-                columnSpacing: 15,
-                dataRowHeight: 25,
-                headingRowHeight: 0,
-                columns: [
-                  DataColumn(label: Text('Team')),
-                  DataColumn(label: Text('Player')),
-                  DataColumn(label: Text('Asts'))
-                ],
-                rows: [
-                  ...rowsPM.getRange(0, 10),
-                ],
-              )
-            ],
-          );
         } else {
           return NoConnection();
         }

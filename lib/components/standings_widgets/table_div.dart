@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/screens/views/teams_view/teaminfo.dart';
+import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/screens/views/teams_view/team_main.dart';
 
 class DivTable extends StatefulWidget {
-  final dynamic json;
-  DivTable({this.json});
+  List<LeagueStanding> list;
+//  final dynamic json;
+  DivTable({this.list});
   @override
   _DivTableState createState() => _DivTableState();
 }
@@ -11,54 +13,54 @@ class DivTable extends StatefulWidget {
 class _DivTableState extends State<DivTable> {
   List<DataRow> tableData() {
     List<DataRow> table = List(5);
-    for (int index = 0; index < widget.json.length; index++) {
-      dynamic team = widget.json[index];
+    for (int index = 0; index < widget.list.length; index++) {
+      LeagueStanding team = widget.list[index];
       table[index] = DataRow(
         cells: [
           DataCell(
               Text(
-                "${index + 1} ${team["teamSitesOnly"]["teamNickname"]}",
+                "${index + 1} ${team.teamName}",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ), onTap: () {
-            var teamId = widget.json[index]["teamId"];
+            var teamId = team.teamID;
             print(teamId);
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => TeamDetails(
                   //json: widget.json[index], //teamJson,
-                  nbaTeamId: teamId,
+                  nbaTeamId: teamId.toString(),
                 ),
               ),
             );
           }),
           DataCell(
             Text(
-              "${team["win"]}".trim(),
+              "${team.wins}".trim(),
               style: TextStyle(fontSize: 14),
             ), //
           ),
           DataCell(
             Text(
-              "${team["loss"]}",
+              "${team.losses}",
               style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
-              "${team["winPct"]}",
+              "${team.winPct}",
               style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
-              "${team["gamesBehind"]}",
+              "${team.divisionGamesBack}",
               style: TextStyle(fontSize: 14),
             ),
           ),
           DataCell(
             Text(
-              "${team["lastTenWin"]}-${team["lastTenLoss"]}",
+              "${team.l10}",
               style: TextStyle(fontSize: 14),
             ),
           ),

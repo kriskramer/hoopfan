@@ -14,8 +14,8 @@ class _LayoutState extends State<Layout> {
   int _selectedScreen = 0;
   List<Widget> views = [
     Standings(),
-    TodaysGames(),
     NewsMainScreen(),
+    TodaysGames(),
     StatsMain(),
     AccountMain(),
   ];
@@ -40,14 +40,15 @@ class _LayoutState extends State<Layout> {
               label: "Standings",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.sports_basketball_sharp),
-              label: "Games",
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.article),
               label: "News",
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.sports_basketball_sharp),
+              label: "Games",
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blueGrey,
               icon: Icon(Icons.bar_chart),
               label: "Stats",
             ),

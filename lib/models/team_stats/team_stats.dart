@@ -199,31 +199,51 @@ class TeamStatsList {
 
   void sortByPPG(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.ppg.avg.compareTo(b.ppg.avg));
-    } else {
-      items.sort((a, b) => b.ppg.avg.compareTo(a.ppg.avg));
-    }
-  }
-
-  void sortByOPPG(bool asc) {
-    if (asc) {
-      items.sort((a, b) => a.oppg.avg.compareTo(b.oppg.avg));
-    } else {
-      items.sort((a, b) => b.oppg.avg.compareTo(a.oppg.avg));
-    }
-  }
-
-  void sortByEff(bool asc) {
-    if (asc) {
       items.sort((a, b) {
-        if (double.parse(a.eff.avg) < double.parse(b.eff.avg))
+        if (double.parse(a.ppg.avg) > double.parse(b.ppg.avg))
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (double.parse(b.eff.avg) < double.parse(a.eff.avg))
+        if (double.parse(b.ppg.avg) > double.parse(a.ppg.avg))
+          return 1;
+        else
+          return -1;
+      });
+    }
+  }
+
+  void sortByOPPG(bool asc) {
+    if (asc) {
+      items.sort((a, b) {
+        if (double.parse(a.oppg.avg) > double.parse(b.oppg.avg))
+          return 1;
+        else
+          return -1;
+      });
+    } else {
+      items.sort((a, b) {
+        if (double.parse(b.oppg.avg) > double.parse(a.oppg.avg))
+          return 1;
+        else
+          return -1;
+      });
+    }
+  }
+
+  void sortByEff(bool asc) {
+    if (asc) {
+      items.sort((a, b) {
+        if (double.parse(a.eff.avg) > double.parse(b.eff.avg))
+          return 1;
+        else
+          return -1;
+      });
+    } else {
+      items.sort((a, b) {
+        if (double.parse(b.eff.avg) > double.parse(a.eff.avg))
           return 1;
         else
           return -1;
@@ -233,89 +253,199 @@ class TeamStatsList {
 
   void sortByFgp(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.fgp.avg.compareTo(b.fgp.avg));
+      items.sort((a, b) {
+        if (double.parse(a.fgp.avg) > double.parse(b.fgp.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.fgp.avg.compareTo(a.fgp.avg));
+      items.sort((a, b) {
+        if (double.parse(b.fgp.avg) > double.parse(a.fgp.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByFtp(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.ftp.avg.compareTo(b.ftp.avg));
+      items.sort((a, b) {
+        if (double.parse(a.ftp.avg) > double.parse(b.ftp.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.ftp.avg.compareTo(a.ftp.avg));
+      items.sort((a, b) {
+        if (double.parse(b.ftp.avg) > double.parse(a.ftp.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByTpp(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.tpp.avg.compareTo(b.tpp.avg));
+      items.sort((a, b) {
+        if (double.parse(a.tpp.avg) > double.parse(b.tpp.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.tpp.avg.compareTo(a.tpp.avg));
+      items.sort((a, b) {
+        if (double.parse(b.tpp.avg) > double.parse(a.tpp.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByOReb(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.orpg.avg.compareTo(b.orpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.orpg.avg) > double.parse(b.orpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.orpg.avg.compareTo(a.orpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.orpg.avg) > double.parse(a.orpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByDReb(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.drpg.avg.compareTo(b.drpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.drpg.avg) > double.parse(b.drpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.drpg.avg.compareTo(a.drpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.drpg.avg) > double.parse(a.drpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByTReb(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.trpg.avg.compareTo(b.trpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.trpg.avg) > double.parse(b.trpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.trpg.avg.compareTo(a.trpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.trpg.avg) > double.parse(a.trpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByAsts(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.apg.avg.compareTo(b.apg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.apg.avg) > double.parse(b.apg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.apg.avg.compareTo(a.apg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.apg.avg) > double.parse(a.apg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByStls(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.spg.avg.compareTo(b.spg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.spg.avg) > double.parse(b.spg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.spg.avg.compareTo(a.spg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.spg.avg) > double.parse(a.spg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByBlks(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.bpg.avg.compareTo(b.bpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.bpg.avg) > double.parse(b.bpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.bpg.avg.compareTo(a.bpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.bpg.avg) > double.parse(a.bpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByTOs(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.tpg.avg.compareTo(b.tpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.tpg.avg) > double.parse(b.tpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.tpg.avg.compareTo(a.tpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.tpg.avg) > double.parse(a.tpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 
   void sortByPFs(bool asc) {
     if (asc) {
-      items.sort((a, b) => a.pfpg.avg.compareTo(b.pfpg.avg));
+      items.sort((a, b) {
+        if (double.parse(a.pfpg.avg) > double.parse(b.pfpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     } else {
-      items.sort((a, b) => b.pfpg.avg.compareTo(a.pfpg.avg));
+      items.sort((a, b) {
+        if (double.parse(b.pfpg.avg) > double.parse(a.pfpg.avg))
+          return 1;
+        else
+          return -1;
+      });
     }
   }
 }

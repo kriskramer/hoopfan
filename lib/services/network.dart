@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:xml2json/xml2json.dart';
 
 class Network {
   /*
@@ -21,6 +22,41 @@ class Network {
         if (response.body.isNotEmpty) {
           var json = convert.jsonDecode(response.body);
           return json;
+        }
+      }
+    } catch (e) {
+      //TODO: Handle this exception
+      print(e);
+    }
+  }
+
+  static Future<dynamic> getJsonFromXml(String url) async {
+    // make request to get Json file
+    final x2j = Xml2Json();
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var xml = response.body;
+          x2j.parse(xml);
+          var json = x2j.toBadgerfish();
+          return json;
+        }
+      }
+    } catch (e) {
+      //TODO: Handle this exception
+      print(e);
+    }
+  }
+
+  static Future<dynamic> getXml(String url) async {
+    // make request to get Json file
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var xml = response.body;
+          return xml;
         }
       }
     } catch (e) {
@@ -81,6 +117,38 @@ class Network {
       );
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  static Future<dynamic> getJsonFromNbaStats(String url) async {
+    // make request to get Json file
+    try {
+      var response = await http.get(url, headers: {
+        'Host': 'stats.nba.com',
+        'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'x-nba-stats-origin': 'stats',
+        'x-nba-stats-token': 'true',
+        'Connection': 'keep-alive',
+        'Referer': 'https://stats.nba.com/',
+        'Pragma': 'no-cache',
+        'Cache-Control': 'no-cache',
+      });
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var json = convert.jsonDecode(response.body);
+          //Network.twitterStream.add(json);
+          return json;
+        }
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      //TODO: Handle this exception
+      print(e);
     }
   }
 }

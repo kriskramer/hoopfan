@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -14,10 +15,17 @@ class ScheduledGameCard extends StatelessWidget {
     bool isHomeTeam = game["isHomeTeam"];
     //bool notPlayed = game["hTeam"]["score"] == "";
 
-    final standingsJson = Provider.of<JsonFiles>(context, listen: false)
-        .getStandings()["league"]["standard"]["conference"];
+    final standings = Provider.of<JsonFiles>(context, listen: false)
+        .getLeagueStandings(); //["league"]["standard"]["conference"];
+    final LeagueStanding vTeam =
+        standings.getTeamStandings(game["vTeam"]["teamId"]);
+    final LeagueStanding hTeam =
+        standings.getTeamStandings(game["hTeam"]["teamId"]);
 
-    var oppStandings = getOppStandingsFromJson(game, standingsJson, isHomeTeam);
+    // final standingsJson = Provider.of<JsonFiles>(context, listen: false)
+    //     .getStandings()["league"]["standard"]["conference"];
+
+    // var oppStandings = getOppStandingsFromJson(game, standingsJson, isHomeTeam);
 
     //dynamic test = ConstantHelper.getTeamDetailsExtra("123123123");
 
@@ -60,7 +68,9 @@ class ScheduledGameCard extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "(${oppStandings["win"]}-${oppStandings["loss"]})",
+                  isHomeTeam
+                      ? "(${vTeam.wins}-${vTeam.losses})"
+                      : "(${hTeam.wins}-${hTeam.losses})",
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
@@ -102,32 +112,6 @@ class ScheduledGameCard extends StatelessWidget {
     d = "${dt.month}-${dt.day}-${dt.year}";
 
     return d;
-  }
-
-  dynamic getOppStandingsFromJson(dynamic game, dynamic json, bool isHomeTeam) {
-    dynamic team;
-    String oppId;
-
-    if (isHomeTeam) {
-      oppId = game["vTeam"]["teamId"];
-    } else {
-      oppId = game["hTeam"]["teamId"];
-    }
-
-    for (var t in json["east"]) {
-      if (t["teamId"] == oppId) {
-        team = t;
-        break;
-      }
-    }
-    for (var t in json["west"]) {
-      if (t["teamId"] == oppId) {
-        team = t;
-        break;
-      }
-    }
-
-    return team;
   }
 
   String getHowToWatch() {

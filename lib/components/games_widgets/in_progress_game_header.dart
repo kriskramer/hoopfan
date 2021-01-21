@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/teams_view/teaminfo.dart';
+import 'package:hoop/screens/views/teams_view/team_main.dart';
 
 class InProgressGameHeader extends StatelessWidget {
   final dynamic gameData;
@@ -11,14 +11,15 @@ class InProgressGameHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var vFullTimeouts = "0";
+    var vShortTimeouts = "0";
+    var hFullTimeouts = "0";
+    var hShortTimeouts = "0";
+
     var vScore =
         gameData["vTeam"]["score"] == "" ? "0" : gameData["vTeam"]["score"];
     var hScore =
         gameData["hTeam"]["score"] == "" ? "0" : gameData["hTeam"]["score"];
-    var vFullTimeouts = stats["vTeam"]["totals"]["full_timeout_remaining"];
-    var vShortTimeouts = stats["vTeam"]["totals"]["short_timeout_remaining"];
-    var hFullTimeouts = stats["hTeam"]["totals"]["full_timeout_remaining"];
-    var hShortTimeouts = stats["hTeam"]["totals"]["short_timeout_remaining"];
     var seriesWin = gameData["vTeam"]["seriesWin"] == ""
         ? "0"
         : gameData["vTeam"]["seriesWin"];
@@ -28,6 +29,13 @@ class InProgressGameHeader extends StatelessWidget {
 
     var gameStatus = gameData["statusNum"];
     bool isOverTime = gameData["period"]["current"] > 4 ? true : false;
+
+    if (stats != null) {
+      vFullTimeouts = stats["vTeam"]["totals"]["full_timeout_remaining"];
+      vShortTimeouts = stats["vTeam"]["totals"]["short_timeout_remaining"];
+      hFullTimeouts = stats["hTeam"]["totals"]["full_timeout_remaining"];
+      hShortTimeouts = stats["hTeam"]["totals"]["short_timeout_remaining"];
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

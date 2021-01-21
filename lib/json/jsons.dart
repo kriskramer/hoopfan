@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
 
 class JsonFiles with ChangeNotifier {
@@ -8,6 +9,8 @@ class JsonFiles with ChangeNotifier {
   var _teamStats;
   var _seasons;
   var _transactions;
+
+  LeagueStandingList _allStandings;
 
   Map _confStandings;
   Map _divStandings;
@@ -24,6 +27,13 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _gameNews = {};
   Map<String, dynamic> _pbps = {};
   Map<String, dynamic> _fullGameLeadTracker = {};
+  var _teamStatsEstimated;
+  var _teamStatsBase;
+  var _teamStatsAdvanced;
+  var _teamStatsMisc;
+  var _teamStatsFourFactors;
+  Map<String, dynamic> _teamStatsShooting = {};
+  Map<String, dynamic> _teamLineups = {};
   var _nbaNews;
   var _nbaVideos;
   var _todaysGames;
@@ -43,6 +53,10 @@ class JsonFiles with ChangeNotifier {
     String day = today.day.toString();
 
     return year + month + day;
+  }
+
+  void setLeagueStandings(LeagueStandingList list) {
+    _allStandings = list;
   }
 
   void setYear(String year) {
@@ -104,6 +118,34 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamStats(dynamic json) {
     _teamStats = json;
+  }
+
+  void setEstimatedTeamStats(dynamic json) {
+    _teamStatsEstimated = json;
+  }
+
+  void setBaseTeamStats(dynamic json) {
+    _teamStatsBase = json;
+  }
+
+  void setAdvancedTeamStats(dynamic json) {
+    _teamStatsAdvanced = json;
+  }
+
+  void setMiscTeamStats(dynamic json) {
+    _teamStatsMisc = json;
+  }
+
+  void setFourFactorsTeamStats(dynamic json) {
+    _teamStatsFourFactors = json;
+  }
+
+  void setTeamStatsShooting(String teamId, dynamic json) {
+    _teamStatsShooting[teamId] = json;
+  }
+
+  void setTeamLineups(String teamId, dynamic json) {
+    _teamLineups[teamId] = json;
   }
 
   void setTransactions(dynamic json) {
@@ -235,6 +277,7 @@ class JsonFiles with ChangeNotifier {
 
   String getSelectedDate() => _selectedDate;
 
+  LeagueStandingList getLeagueStandings() => _allStandings;
   dynamic getStandings() => _confStandings;
   dynamic getConfStandings() => _confStandings;
   dynamic getDivStandings() => _divStandings;
@@ -247,6 +290,20 @@ class JsonFiles with ChangeNotifier {
   dynamic getUpcomingGames() => _upcomingGames;
   dynamic getTodaysGames() => _todaysGames;
   dynamic getPreviousGames() => _prevGames;
+
+  dynamic getEstimatedTeamStats() => _teamStatsEstimated;
+  dynamic getBaseTeamStats() => _teamStatsBase;
+  dynamic getAdvancedTeamStats() => _teamStatsAdvanced;
+  dynamic getMiscTeamStats() => _teamStatsMisc;
+  dynamic getFourFactorsTeamStats() => _teamStatsFourFactors;
+
+  dynamic getTeamStatsShooting(String teamId) {
+    return _teamStatsShooting[teamId];
+  }
+
+  dynamic getTeamLineups(String teamId) {
+    return _teamLineups[teamId];
+  }
 
   dynamic getAllTeamStats() => _teamStats;
   dynamic getTeamStats(String teamId) {

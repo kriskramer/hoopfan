@@ -129,13 +129,23 @@ class Urls {
       "http://data.nba.net/10s//prod/v1/current/standings_division.json";
 
   static String nbaGamesToday() {
-    // DateTime today = new DateTime.now();
-    // String year = today.year.toString();
-    // String month = today.month.toString();
-    // String day = today.day.toString();
+    DateTime today = new DateTime.now();
+    if (today.hour > 12) {
+      String year = today.year.toString();
+      String month = today.month.toString().padLeft(2, '0');
+      String day = today.day.toString();
 
-    //return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
-    return "http://data.nba.net/10s/prod/v1/20210111/scoreboard.json";
+      return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    } else {
+      DateTime yesterday = new DateTime.now().subtract(new Duration(days: 1));
+
+      String year = yesterday.year.toString();
+      String month = yesterday.month.toString().padLeft(2, '0');
+      String day = yesterday.day.toString();
+
+      return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    }
+    //return "http://data.nba.net/10s/prod/v1/20210111/scoreboard.json";
   }
 
   static String nbaGamesSelectedDate(String date) {
@@ -170,5 +180,62 @@ class Urls {
     String day = prevDay.day.toString();
 
     return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+  }
+
+  // Provides injury updates -- Free to use but please mention that data is powered by FantasyBasketballNerd.com.
+  static String getInjuryReport() {
+    // NOTE: This data is returned in xml. Need to convert it.
+    return "https://www.fantasybasketballnerd.com/service/injuries/";
+  }
+
+  // Returns different types of shot pcts for a given player, including dribble shots, closest defender, shot clock, touch time and range.
+  static String getNbaStatsPlayerShotTypes(String playerId) {
+    return "https://stats.nba.com/stats/playerdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=PerGame&Period=0&PlayerID=$playerId&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=";
+  }
+
+  // Returns different types of shot pcts for a given team, including dribble shots, closest defender, shot clock, touch time and range.
+  static String getNbaStatsTeamShotTypes(String teamId) {
+    return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=Totals&Period=0&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsWinProbability(String gameId) {
+    return "https://stats.nba.com/stats/winprobabilitypbp?GameID=$gameId&RunType=each+second";
+  }
+
+  static String getNbaStatsTest() {
+    //return "https://stats.nba.com/stats/boxscorefourfactorsv2?EndPeriod=1&EndRange=0&GameID=0022000178&RangeType=0&StartPeriod=1&StartRange=0";
+    return "https://stats.nba.com/stats/leaguehustlestatsteamleaders?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&Height=&LeagueID=&Location=&Month=&OpponentTeamID=&Outcome=&PORound=&PerMode=Totals&PlayerExperience=&PlayerPosition=&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&TeamID=&VsConference=&VsDivision=&Weight=";
+  }
+
+  static String getNbaStatsEstimatedMetricsAllTeams() {
+    return "https://stats.nba.com/stats/teamestimatedmetrics?LeagueID=00&Season=2020-21&SeasonType=Regular+Season";
+  }
+
+  static String getNbaStatsTeamPerformance(String teamId) {
+    return "https://stats.nba.com/stats/teamdashboardbyteamperformance?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamStatistics_Base() {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamStatistics_Advanced() {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamStatistics_Misc() {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Misc&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamStatistics_FourFactors() {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Four Factors&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamLineups(String teamId) {
+    return "https://stats.nba.com/stats/teamdashlineups?DateFrom=&DateTo=&GameID=&GameSegment=&GroupQuantity=5&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsLeagueStandings() {
+    return "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=2020-21&SeasonType=Regular+Season&SeasonYear=";
   }
 }
