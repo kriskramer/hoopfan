@@ -33,11 +33,8 @@ class TeamNewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool blocked = true;
-    //final test = ConstantHelper.getTeamDetailsExtra(teamId);
-    // String primaryColor =
-    //     test["primaryColor"].toString().replaceFirst("#", "FF");
-    //var teamColor = int.parse(primaryColor, radix: 16);
+    bool blocked =
+        Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
 
     return Scaffold(
       body: SingleChildScrollView(

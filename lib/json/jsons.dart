@@ -42,6 +42,8 @@ class JsonFiles with ChangeNotifier {
   String _selectedDate;
   PlayerBoxScoreList _playerBoxScores;
 
+  bool _isFeatureBlocked = true;
+
   //Nba Api variables
   var _allPlayers;
   var _allTeams;
@@ -201,16 +203,6 @@ class JsonFiles with ChangeNotifier {
     _games = json;
   }
 
-  // void setEastId(dynamic json) {
-  //   _eastId = json;
-  //   notifyListeners();
-  // }
-
-  // void setWestId(dynamic json) {
-  //   _westId = json;
-  //   notifyListeners();
-  // }
-
   void setUpcomingGames(dynamic json) {
     _upcomingGames = json;
     notifyListeners();
@@ -247,6 +239,7 @@ class JsonFiles with ChangeNotifier {
     }
   }
 
+  bool getIsFeatureBlocked() => _isFeatureBlocked;
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
   dynamic getTeamVideos(String teamId) => _teamVideos[teamId];
 

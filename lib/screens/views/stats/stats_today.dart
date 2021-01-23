@@ -32,7 +32,11 @@ class _StatsTodayState extends State<StatsToday> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         SizedBox(
-          height: 20,
+          height: 10,
+        ),
+        Text('Showing previous day stats until noon CST.'),
+        SizedBox(
+          height: 10,
         ),
         showLeaders(),
         SizedBox(

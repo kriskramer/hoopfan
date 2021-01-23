@@ -6,24 +6,6 @@ class Urls {
   static final String _sioBaseUrl =
       "https://api.sportsdata.io/v3/nba/stats/json/";
 
-  // static String eastStandingsUrl(String year) =>
-  //     "$_apiBaseUrl/standings/standard/$year/conference/east/?rapidapi-key=${NbaApi.key}";
-  // static String westStandingsUrl(String year) =>
-  //     "$_apiBaseUrl/standings/standard/$year/conference/west/?rapidapi-key=${NbaApi.key}";
-
-  // static String southwestDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/southwest/?rapidapi-key=${NbaApi.key}";
-  // static String atlanticDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/atlantic/?rapidapi-key=${NbaApi.key}";
-  // static String southeastDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/southeast/?rapidapi-key=${NbaApi.key}";
-  // static String pacificDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/pacific/?rapidapi-key=${NbaApi.key}";
-  // static String northwestDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/northwest/?rapidapi-key=${NbaApi.key}";
-  // static String centralDivisionStandingsUrl =
-  //     "$_apiBaseUrl/standings/standard/2019/division/central/?rapidapi-key=${NbaApi.key}";
-
   static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
 
   static String getDivisionStandings(String division, String year) {

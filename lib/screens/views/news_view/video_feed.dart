@@ -12,7 +12,8 @@ class NbaVideoFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool blocked = true;
+    bool blocked =
+        Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: blocked

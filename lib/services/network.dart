@@ -121,7 +121,7 @@ class Network {
   }
 
   static Future<dynamic> getJsonFromNbaStats(String url) async {
-    // make request to get Json file
+    // Use this request for calls to stats.nba.com urls
     try {
       var response = await http.get(url, headers: {
         'Host': 'stats.nba.com',
