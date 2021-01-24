@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/lead_tracker_dialog.dart';
 import 'package:hoop/components/games_widgets/pbp_dialog.dart';
+import 'package:hoop/components/games_widgets/pbp_period_view.dart';
 import 'package:hoop/constant.dart';
 import '../../model/lead_tracker.dart';
 
@@ -26,7 +27,7 @@ class GameLeadChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Lead Tracker - Period ' + getPeriodText(period),
+                'Lead Tracker - P' + getPeriodText(period),
               ),
               FlatButton(
                 child: Text(
@@ -42,6 +43,23 @@ class GameLeadChart extends StatelessWidget {
                           game: game,
                         );
                       });
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  'Video',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PbpPeriodView(
+                        gameId: game["gameId"],
+                        period: period,
+                      ),
+                    ),
+                  );
                 },
               )
             ],

@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/games_widgets/game_event_video_dialog.dart';
+import 'package:hoop/components/games_widgets/team_tricode_card.dart';
+import 'package:hoop/services/network.dart';
+import 'package:hoop/services/urls.dart';
+
+class PbpPeriodView extends StatelessWidget {
+  final String gameId;
+  final String period;
+
+  PbpPeriodView({this.gameId, this.period});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Game Video'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(15),
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text('Tap the game event below to see a video of the play.'),
+              SizedBox(height: 15),
+              FutureBuilder(
+                  future: loadData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var pbp = snapshot.data["resultSets"][0]["rowSet"];
+
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: pbp.length, //plays.length,
+                          itemBuilder: (context, index) {
+                            if (pbp[index][33] == 1 &&
+                                !isEventNull(pbp[index])) {
+                              return Container(
+                                padding: EdgeInsets.all(8),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GameEventVideoDialog(
+                                          gameId: gameId,
+                                          eventNum: pbp[index][1].toString(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(pbp[index][6] + " - "),
+                                      TeamTricodeCardFromTeamId(
+                                          teamId: pbp[index][15].toString()),
+                                      Flexible(
+                                          child: Text(
+                                              getPbpDescription(pbp[index]))),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          });
+                    } else {
+                      return NoConnection();
+                    }
+                  }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> loadData() async {
+    return await Network.getJsonFromNbaStats(
+        Urls.getNbaStatsAdvancedPlayByPlay(gameId, period, period));
+  }
+
+  String getPbpDescription(dynamic pbp) {
+    String desc = '';
+
+    if (pbp[8] != null) {
+      desc = pbp[8];
+    } else if (pbp[7] != null) {
+      desc = pbp[7];
+    } else if (pbp[9] != null) {
+      desc = pbp[9];
+    }
+    return desc;
+  }
+
+  bool isEventNull(dynamic pbp) {
+    bool isNull = true;
+
+    if (pbp[8] != null) {
+      isNull = false;
+    } else if (pbp[7] != null) {
+      isNull = false;
+    } else if (pbp[9] != null) {
+      isNull = false;
+    }
+
+    return isNull;
+  }
+}
