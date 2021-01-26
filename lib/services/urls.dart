@@ -226,10 +226,27 @@ class Urls {
     return "https://stats.nba.com/stats/videoeventsasset?GameEventID=$eventNum&GameID=$gameId";
   }
 
-  // This is a different play-by-play feed than what's being used in the lead tracker. Use this one for the text play-by-play
+  // This is a different play-by-play feed than what's being used in the lead tracker. Use this one for the video play-by-play
   // view, so we can show the video flag and actually pull the pbp event video using the previous URL.
   static String getNbaStatsAdvancedPlayByPlay(String gameId,
       [String startPeriod = '1', String endPeriod = '1']) {
     return "https://stats.nba.com/stats/playbyplayv2?EndPeriod=$endPeriod&GameID=$gameId&StartPeriod=$startPeriod";
+  }
+
+  static String getNbaStatsBoxScoreSummary(String gameId) {
+    return "https://stats.nba.com/stats/boxscoresummaryv2?GameID=$gameId";
+  }
+
+  // This pulls the full game. Can eventually create a new version that pulls by quarter.
+  static String getNbaStatsBoxScoreAdvanced(String gameId) {
+    return "https://stats.nba.com/stats/boxscoreadvancedv2?EndPeriod=0&EndRange=0&GameID=$gameId&RangeType=0&StartPeriod=0&StartRange=0";
+  }
+
+  static String getNbaStatsBoxScoreDefensive(String gameId) {
+    return "https://stats.nba.com/stats/boxscoredefensive?GameID=$gameId";
+  }
+
+  static String getNbaStatsBoxScoreFourFactors(String gameId) {
+    return "https://stats.nba.com/stats/boxscorefourfactorsv2?EndPeriod=0&EndRange=0&GameID=$gameId&RangeType=0&StartPeriod=0&StartRange=0";
   }
 }

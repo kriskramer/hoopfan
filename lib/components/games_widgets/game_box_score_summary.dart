@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
 
-class GameBoxScore extends StatelessWidget {
+class GameBoxScoreSummary extends StatelessWidget {
   final dynamic game;
   final dynamic stats;
   final bool isHomeTeam;
 
-  GameBoxScore({this.game, this.stats, this.isHomeTeam});
+  GameBoxScoreSummary({this.game, this.stats, this.isHomeTeam});
 
   @override
   Widget build(BuildContext context) {
     Widget c;
-    //dynamic vTeam = stats["vTeam"]["leaders"];
-    //dynamic hTeam = stats["hTeam"]["leaders"];
     String vTeamId = game["vTeam"]["teamId"];
     String hTeamId = game["hTeam"]["teamId"];
-    //String vTeamName = ConstantHelper.getTeamName(game["vTeam"]["teamId"]);
-    //String hTeamName = ConstantHelper.getTeamName(game["hTeam"]["teamId"]);
     dynamic players = stats["activePlayers"];
     List<dynamic> vTeamPlayers = new List<dynamic>();
     List<dynamic> hTeamPlayers = new List<dynamic>();
