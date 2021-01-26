@@ -27,11 +27,16 @@ class GameLeadChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Lead Tracker - P' + getPeriodText(period),
+                'P' + getPeriodText(period),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              SizedBox(
+                width: 15,
+              ),
+              Text('Lead Tracker'),
               FlatButton(
                 child: Text(
-                  'View Play-by-Play',
+                  'Play-by-Play',
                   style: TextStyle(color: Colors.blue),
                 ),
                 onPressed: () {

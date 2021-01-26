@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/arena_card.dart';
-import 'package:hoop/components/games_widgets/game_box_score.dart';
+import 'package:hoop/components/games_widgets/game_box_score_summary.dart';
+import 'package:hoop/components/games_widgets/game_box_score_main.dart';
 import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
@@ -314,14 +315,14 @@ class _GameViewState extends State<GameView> {
                                         ]),
                                       ),
                                       Container(
-                                        child: GameBoxScore(
+                                        child: GameBoxScoreMain(
                                           game: gameData,
                                           stats: stats,
                                           isHomeTeam: false,
                                         ),
                                       ),
                                       Container(
-                                        child: GameBoxScore(
+                                        child: GameBoxScoreMain(
                                           game: gameData,
                                           stats: stats,
                                           isHomeTeam: true,

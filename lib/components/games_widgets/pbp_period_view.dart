@@ -60,6 +60,7 @@ class PbpPeriodView extends StatelessWidget {
                                       Text(pbp[index][6] + " - "),
                                       TeamTricodeCardFromTeamId(
                                           teamId: pbp[index][15].toString()),
+                                      Icon(Icons.play_arrow),
                                       Flexible(
                                           child: Text(
                                               getPbpDescription(pbp[index]))),

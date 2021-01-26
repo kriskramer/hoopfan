@@ -21,12 +21,39 @@ class GameEventVideoDialog extends StatelessWidget {
           if (snapshot.hasData) {
             var json = snapshot.data;
             var urls = json["resultSets"]["Meta"]["videoUrls"][0];
+            var desc = json["resultSets"]["playlist"][0];
 
-            print(urls);
+            //print(urls);
 
             Network.launchSite(urls["murl"]);
 
-            return Text('');
+            return Center(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Text(desc["dsc"]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(desc["va"]),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(desc["ha"]),
+                      ],
+                    ),
+                    Text(desc["gc"].toString().split("/")[0]),
+                    RaisedButton(
+                      child: Text('Play'),
+                      onPressed: () {
+                        Network.launchSite(urls["murl"]);
+                      },
+                    )
+                  ],
+                ),
+              ),
+            );
           } else {
             return NoConnection();
           }

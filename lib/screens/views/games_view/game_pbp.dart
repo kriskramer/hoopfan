@@ -33,7 +33,7 @@ class GamePlayByPlay extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(15),
             child: Text(
-                'Tap View Play-by-Play to get the play-by-play for that period. Tap a row in the lead tracker to see scoring trends up to that moment in the game.'),
+                'Tap Play-by-Play to get the play-by-play for that period. Tap Video to see a list of videos for plays in the selected period. Tap a row in the lead tracker to see scoring trends up to that moment in the game.'),
           ),
           SizedBox(
             height: 15,
