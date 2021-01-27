@@ -8,16 +8,56 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class PlayerDetail extends StatelessWidget {
+class PlayerDetail extends StatefulWidget {
   final String playerId;
 
   PlayerDetail({@required this.playerId});
 
   @override
+  _PlayerDetailState createState() => _PlayerDetailState();
+}
+
+class _PlayerDetailState extends State<PlayerDetail> {
+  bool showSummary = true;
+  bool showShooting = false;
+
+  void summaryClick() {
+    setState(() {
+      showSummary = true;
+      showShooting = false;
+    });
+  }
+
+  void shootingClick() {
+    setState(() {
+      showSummary = false;
+      showShooting = true;
+    });
+  }
+
+  // void defensiveClick() {
+  //   setState(() {
+  //     showSummary = false;
+  //     showAdvanced = false;
+  //     showDefensive = true;
+  //     showFourFactors = false;
+  //   });
+  // }
+
+  // void fourFactorsClick() {
+  //   setState(() {
+  //     showSummary = false;
+  //     showAdvanced = false;
+  //     showDefensive = false;
+  //     showFourFactors = true;
+  //   });
+  // }
+
+  @override
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
-    var player =
-        Provider.of<JsonFiles>(context, listen: false).getPlayer(playerId);
+    var player = Provider.of<JsonFiles>(context, listen: false)
+        .getPlayer(widget.playerId);
 
     var teamColor = ConstantHelper.getTeamColor(player["teamId"]);
     var teamTextColor = ConstantHelper.getTeamTextColor(player["teamId"]);
@@ -217,10 +257,82 @@ class PlayerDetail extends StatelessWidget {
                     //print(statsSummary);
                     return Column(
                       children: [
-                        Text(
-                          'Per Game Stats',
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        ButtonBar(
+                            alignment: MainAxisAlignment.center,
+                            layoutBehavior: ButtonBarLayoutBehavior.constrained,
+                            children: [
+                              FlatButton(
+                                child: Text(
+                                  'Summary',
+                                  style: TextStyle(
+                                      fontWeight: showSummary
+                                          ? FontWeight.bold
+                                          : FontWeight.normal),
+                                ),
+                                onPressed: () {
+                                  summaryClick();
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  'Shooting',
+                                  style: TextStyle(
+                                      fontWeight: showShooting
+                                          ? FontWeight.bold
+                                          : FontWeight.normal),
+                                ),
+                                onPressed: () {
+                                  shootingClick();
+                                },
+                              ),
+                              // FlatButton(
+                              //   child: Text(
+                              //     'Defense',
+                              //     style: TextStyle(
+                              //         fontWeight:
+                              //             showDefensive ? FontWeight.bold : FontWeight.normal),
+                              //   ),
+                              //   onPressed: () {
+                              //     defensiveClick();
+                              //   },
+                              // ),
+                              // FlatButton(
+                              //   child: Text(
+                              //     '4 Factors',
+                              //     style: TextStyle(
+                              //         fontWeight: showFourFactors
+                              //             ? FontWeight.bold
+                              //             : FontWeight.normal),
+                              //   ),
+                              //   onPressed: () {
+                              //     fourFactorsClick();
+                              //   },
+                              // ),
+                            ]),
+                        // showSummary
+                        //     ? GameBoxScoreSummary(
+                        //         game: widget.game,
+                        //         stats: widget.stats,
+                        //         isHomeTeam: widget.isHomeTeam)
+                        //     : SizedBox(),
+                        // showAdvanced
+                        //     ? GameBoxScoreAdvanced(
+                        //         gameId: widget.game["gameId"],
+                        //         teamId: teamId,
+                        //       )
+                        //     : SizedBox(),
+                        // showDefensive
+                        //     ? GameBoxScoreDefense(
+                        //         gameId: widget.game["gameId"],
+                        //         teamId: teamId,
+                        //       )
+                        //     : SizedBox(),
+                        // showFourFactors
+                        //     ? GameBoxScoreFourFactors(
+                        //         gameId: widget.game["gameId"],
+                        //         teamId: teamId,
+                        //       )
+                        //     : SizedBox(),
                         SizedBox(
                           height: 10,
                         ),

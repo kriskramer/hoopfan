@@ -60,9 +60,15 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
       columnSpacing: 8,
       horizontalMargin: 8,
       dataRowHeight: 30,
+      headingRowHeight: 30,
+      headingTextStyle:
+          TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+      headingRowColor:
+          MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+        return Colors.grey[300]; // Use the default value.
+      }),
       columns: [
         DataColumn(label: Text('Player')),
-        //DataColumn(label: Text('Min')),
         DataColumn(label: Text('eFG %')),
         DataColumn(label: Text('FTA Rate')),
         DataColumn(label: Text('TM TO Rate')),

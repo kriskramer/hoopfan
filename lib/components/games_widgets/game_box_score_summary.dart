@@ -92,6 +92,13 @@ class GameBoxScoreSummary extends StatelessWidget {
       columnSpacing: 1,
       horizontalMargin: 5,
       dataRowHeight: 28,
+      headingRowHeight: 30,
+      headingTextStyle:
+          TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+      headingRowColor:
+          MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+        return Colors.grey[300]; // Use the default value.
+      }),
       columns: [
         DataColumn(label: Text('Name')),
       ],
@@ -192,6 +199,13 @@ class GameBoxScoreSummary extends StatelessWidget {
           columnSpacing: 10,
           horizontalMargin: 5,
           dataRowHeight: 28,
+          headingRowHeight: 30,
+          headingTextStyle:
+              TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+          headingRowColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+            return Colors.grey[300]; // Use the default value.
+          }),
           columns: [
             DataColumn(label: Text('#')),
             //DataColumn(label: Text('Name')),

@@ -69,6 +69,13 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
       columnSpacing: 8,
       horizontalMargin: 8,
       dataRowHeight: 30,
+      headingRowHeight: 30,
+      headingTextStyle:
+          TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+      headingRowColor:
+          MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+        return Colors.grey[300]; // Use the default value.
+      }),
       columns: [
         DataColumn(label: Text('Player')),
         //DataColumn(label: Text('Min')),
