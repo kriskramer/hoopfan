@@ -249,4 +249,8 @@ class Urls {
   static String getNbaStatsBoxScoreFourFactors(String gameId) {
     return "https://stats.nba.com/stats/boxscorefourfactorsv2?EndPeriod=0&EndRange=0&GameID=$gameId&RangeType=0&StartPeriod=0&StartRange=0";
   }
+
+  static String getNbaStatsPlayerGameLog(String playerId, String season) {
+    return "https://stats.nba.com/stats/playergamelog?DateFrom=&DateTo=&LeagueID=&PlayerID=$playerId&Season=$season&SeasonType=Regular+Season";
+  }
 }

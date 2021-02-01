@@ -44,8 +44,11 @@ class TeamScheduleSmall extends StatelessWidget {
   }
 
   Widget getGameCard(dynamic game) {
+    int gameStatus = game["statusNum"];
+
     return Card(
       elevation: 2,
+      color: gameStatus == 1 ? Colors.white : Colors.brown[100],
       child: Container(
           width: 225,
           padding: EdgeInsets.all(8),
@@ -55,7 +58,7 @@ class TeamScheduleSmall extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(formatDate(game["startDateEastern"])),
-                  game["statusNum"] == 1
+                  gameStatus == 1
                       ? Text(game["startTimeEastern"])
                       : Text('Final'),
                 ],

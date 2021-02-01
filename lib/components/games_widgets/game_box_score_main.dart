@@ -122,6 +122,10 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
                 },
               ),
             ]),
+        Text('Some box scores are not populated real-time.'),
+        SizedBox(
+          height: 8,
+        ),
         showSummary
             ? GameBoxScoreSummary(
                 game: widget.game,

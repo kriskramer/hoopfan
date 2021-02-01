@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/player_widgets/player_game_log.dart';
+import 'package:hoop/components/player_widgets/player_shooting_stats_table.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
@@ -61,6 +63,9 @@ class _PlayerDetailState extends State<PlayerDetail> {
 
     var teamColor = ConstantHelper.getTeamColor(player["teamId"]);
     var teamTextColor = ConstantHelper.getTeamTextColor(player["teamId"]);
+
+    print(widget.playerId);
+    print(player["teamId"]);
 
     return Scaffold(
       appBar: AppBar(
@@ -336,7 +341,17 @@ class _PlayerDetailState extends State<PlayerDetail> {
                         SizedBox(
                           height: 10,
                         ),
-                        getStatsTable(statsSummary, statsRegSeason)
+                        showSummary
+                            ? getStatsTable(statsSummary, statsRegSeason)
+                            : SizedBox(),
+                        showShooting
+                            ? PlayerShootingStatsTable(
+                                playerId: widget.playerId,
+                              )
+                            : SizedBox(),
+                        SizedBox(
+                          height: 40,
+                        ),
                       ],
                     );
                   } else if (snapshot.hasError) {
@@ -518,7 +533,16 @@ class _PlayerDetailState extends State<PlayerDetail> {
     for (int i = 0; i < seasons["season"].length; i++) {
       var s = seasons["season"][i];
       rows.add(DataRow(cells: [
-        DataCell(Text(s["seasonYear"].toString())),
+        DataCell(Text(s["seasonYear"].toString()), onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlayerGameLogTable(
+                  playerId: widget.playerId,
+                  season: s["seasonYear"].toString()),
+            ),
+          );
+        }),
         DataCell(Text(s["total"]["min"])),
         DataCell(Text(s["total"]["ppg"])),
         DataCell(Text(s["total"]["rpg"])),
