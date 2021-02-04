@@ -20,50 +20,35 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
     return Container(
       child: Column(
         children: [
-          Text(
-            'Base Stats',
-            style: TextStyle(fontSize: 20),
-          ),
+          getSectionHeader('Base Stats'),
           TeamBaseStatsCard(
             teamId: widget.teamId,
           ),
           SizedBox(
             height: 20,
           ),
-          Text(
-            'Advanced Stats',
-            style: TextStyle(fontSize: 20),
-          ),
+          getSectionHeader('Advanced Stats'),
           TeamAdvancedStatsCard(
             teamId: widget.teamId,
           ),
           SizedBox(
             height: 20,
           ),
-          Text(
-            'Estimated Stats',
-            style: TextStyle(fontSize: 20),
-          ),
+          getSectionHeader('Estimated Stats'),
           TeamEstimatedStatsCard(
             teamId: widget.teamId,
           ),
           SizedBox(
             height: 20,
           ),
-          Text(
-            'Four Factors',
-            style: TextStyle(fontSize: 20),
-          ),
+          getSectionHeader('Four Factors'),
           TeamFourFactorsStatsCard(
             teamId: widget.teamId,
           ),
           SizedBox(
             height: 20,
           ),
-          Text(
-            'Misc Stats',
-            style: TextStyle(fontSize: 20),
-          ),
+          getSectionHeader('Misc Stats'),
           TeamMiscStatsCard(
             teamId: widget.teamId,
           ),
@@ -71,6 +56,23 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
             height: 60,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget getSectionHeader(String title) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Colors.blue[100],
+          border: Border(
+              bottom: BorderSide(color: Colors.grey),
+              top: BorderSide(color: Colors.grey))),
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }

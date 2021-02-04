@@ -940,20 +940,21 @@ class _StatsTeamsState extends State<StatsTeams> {
     ]);
   }
 
-  Widget getSectionHeader(String headerText) {
+  Widget getSectionHeader(String title) {
     return Container(
-        width: double.infinity,
-        height: 20,
-        //color: Colors.amber[100],
-        decoration: BoxDecoration(
-            color: Colors.grey[200],
-            border: Border.symmetric(
-                horizontal: BorderSide(color: Colors.grey, width: 1))),
-        child: Center(
-            child: Text(
-          headerText,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )));
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Colors.blue[100],
+          border: Border(
+              bottom: BorderSide(color: Colors.grey),
+              top: BorderSide(color: Colors.grey))),
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
   }
 
   void loadData() async {

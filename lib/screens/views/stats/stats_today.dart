@@ -60,6 +60,10 @@ class _StatsTodayState extends State<StatsToday> {
           List<DataRow> rowsAsts = new List<DataRow>();
           List<DataRow> rowsPM = new List<DataRow>();
 
+          if (list == null) {
+            return SizedBox();
+          }
+
           if (list.items.length > 0) {
             list.sortByPoints(false);
 
@@ -231,6 +235,10 @@ class _StatsTodayState extends State<StatsToday> {
               Provider.of<JsonFiles>(context, listen: false)
                   .getPlayerBoxScores();
 
+          if (list == null) {
+            return SizedBox();
+          }
+
           list.sortByRebounds(false);
           List<DataRow> rows = new List<DataRow>();
 
@@ -270,23 +278,24 @@ class _StatsTodayState extends State<StatsToday> {
     PlayerBoxScoreList listPlayers = new PlayerBoxScoreList();
     dynamic gamesToday = await Network.getJson(Urls.nbaGamesToday());
 
-    for (var g in gamesToday["games"]) {
-      var gameId = g["gameId"];
-      var gameDate = g["gameUrlCode"].toString().split("/")[0];
+    if (gamesToday != null) {
+      for (var g in gamesToday["games"]) {
+        var gameId = g["gameId"];
+        var gameDate = g["gameUrlCode"].toString().split("/")[0];
 
-      dynamic boxScore =
-          await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
+        dynamic boxScore =
+            await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
 
-      if (boxScore["stats"] != null) {
-        for (var p in boxScore["stats"]["activePlayers"]) {
-          listPlayers.items.add(PlayerBoxScore.fromJson(p));
+        if (boxScore["stats"] != null) {
+          for (var p in boxScore["stats"]["activePlayers"]) {
+            listPlayers.items.add(PlayerBoxScore.fromJson(p));
+          }
         }
       }
+
+      Provider.of<JsonFiles>(context, listen: false)
+          .setPlayerBoxScores(listPlayers);
     }
-
-    Provider.of<JsonFiles>(context, listen: false)
-        .setPlayerBoxScores(listPlayers);
-
     return true;
   }
 }

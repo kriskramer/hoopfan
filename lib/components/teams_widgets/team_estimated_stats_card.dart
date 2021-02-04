@@ -15,8 +15,7 @@ class TeamEstimatedStatsCard extends StatelessWidget {
 
     return Container(
       child: Column(children: [
-        Card(
-          elevation: 4,
+        Container(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
