@@ -15,7 +15,7 @@ class _StatsTeamsState extends State<StatsTeams> {
   LeagueStandingList listStandings;
   TeamStatsList listTeamStats = new TeamStatsList();
   bool sort = true;
-  int colIndex = 1;
+  int colIndex = 0;
 
   @override
   void initState() {
