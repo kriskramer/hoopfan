@@ -951,16 +951,17 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget getSectionHeader(String title) {
     return Container(
-      width: double.infinity,
+      width: 300,
       decoration: BoxDecoration(
-          color: Colors.blue[100],
+          //color: Colors.blue[100],
           border: Border(
-              bottom: BorderSide(color: Colors.grey),
-              top: BorderSide(color: Colors.grey))),
+        bottom: BorderSide(color: Colors.blue),
+        //top: BorderSide(color: Colors.grey)
+      )),
       child: Center(
         child: Text(
           title,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
