@@ -25,15 +25,24 @@ class TeamAdvancedStatsCard extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    getCardStat('ORtg', teamStats[8].toString()),
-                    getCardStat('DRtg', teamStats[10].toString()),
-                    getCardStat('Net', teamStats[12].toString()),
-                    getCardStat('Ast %', teamStats[13].toString()),
-                    getCardStat('Ast/TO', teamStats[14].toString()),
-                    getCardStat('Ast Ratio', teamStats[15].toString()),
-                    getCardStat('OReb %', teamStats[16].toString()),
-                    getCardStat('DReb %', teamStats[17].toString()),
-                    getCardStat('Reb %', teamStats[18].toString()),
+                    getCardStat('ORtg', teamStats[8].toString(),
+                        teamStats[32].toString()),
+                    getCardStat('DRtg', teamStats[10].toString(),
+                        teamStats[33].toString()),
+                    getCardStat('Net', teamStats[12].toString(),
+                        teamStats[34].toString()),
+                    getCardStat('Ast %', teamStats[13].toString(),
+                        teamStats[35].toString()),
+                    getCardStat('Ast/TO', teamStats[14].toString(),
+                        teamStats[36].toString()),
+                    getCardStat('Ast Ratio', teamStats[15].toString(),
+                        teamStats[37].toString()),
+                    getCardStat('OReb %', teamStats[16].toString(),
+                        teamStats[38].toString()),
+                    getCardStat('DReb %', teamStats[17].toString(),
+                        teamStats[39].toString()),
+                    getCardStat('Reb %', teamStats[18].toString(),
+                        teamStats[40].toString()),
                     SizedBox(
                       height: 10,
                     ),
@@ -44,14 +53,19 @@ class TeamAdvancedStatsCard extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    getCardStat('Tm TO %', teamStats[19].toString()),
-                    getCardStat('Eff FG %', teamStats[20].toString()),
-                    getCardStat('TS %', teamStats[21].toString()),
-                    getCardStat('Est Pace', teamStats[22].toString()),
-                    getCardStat('Pace', teamStats[23].toString()),
-                    getCardStat('Pace/40', teamStats[24].toString()),
-                    getCardStat('Poss', teamStats[25].toString()),
-                    getCardStat('Pie', teamStats[26].toString()),
+                    getCardStat('Tm TO %', teamStats[19].toString(),
+                        teamStats[41].toString()),
+                    getCardStat('Eff FG %', teamStats[20].toString(),
+                        teamStats[42].toString()),
+                    getCardStat('TS %', teamStats[21].toString(),
+                        teamStats[43].toString()),
+                    getCardStat('Est Pace', teamStats[22].toString(), ''),
+                    getCardStat('Pace', teamStats[23].toString(),
+                        teamStats[44].toString()),
+                    getCardStat('Pace/40', teamStats[24].toString(), ''),
+                    getCardStat('Poss', teamStats[25].toString(), ''),
+                    getCardStat('Pie', teamStats[26].toString(),
+                        teamStats[45].toString()),
                     SizedBox(
                       height: 10,
                     ),
@@ -74,7 +88,7 @@ class TeamAdvancedStatsCard extends StatelessWidget {
     return team;
   }
 
-  Widget getCardStat(String label, String value) {
+  Widget getCardStat(String label, String value, String rank) {
     return Row(
       children: [
         Container(
@@ -99,6 +113,13 @@ class TeamAdvancedStatsCard extends StatelessWidget {
             style: TextStyle(fontSize: 18),
           ),
         ),
+        rank == ''
+            ? Container(
+                child: Text('na'),
+              )
+            : Container(
+                child: Text("(" + rank + ")"),
+              )
       ],
     );
   }

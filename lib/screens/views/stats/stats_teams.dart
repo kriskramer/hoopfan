@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/team_stats/team_stats.dart';
@@ -25,187 +26,195 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
-        SizedBox(
-          height: 15,
-        ),
-        Container(
-            width: double.infinity,
-            child: Center(
-                child: Text(
-              'LEADERS / LOSERS',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ))),
-        SizedBox(
-          height: 15,
-        ),
-        getSectionHeader('Streaks'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showWinStreak(),
-              ],
-            ),
-            Column(
-              children: [
-                showLosingStreak(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('Wins and Losses'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostWins(),
-              ],
-            ),
-            Column(
-              children: [
-                showMostLosses(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('Points per Game'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostPoints(),
-              ],
-            ),
-            Column(
-              children: [
-                showLeastPoints(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('Opponent Points per Game'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showLeastOPPG(),
-              ],
-            ),
-            Column(
-              children: [
-                showMostOPPG(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('FG %'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostFgp(),
-              ],
-            ),
-            Column(
-              children: [
-                showLeastFgp(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('FT %'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostFtp(),
-              ],
-            ),
-            Column(
-              children: [
-                showLeastFtp(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('3P %'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostTpp(),
-              ],
-            ),
-            Column(
-              children: [
-                showLeastTpp(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        getSectionHeader('Total Rebs'),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                showMostReb(),
-              ],
-            ),
-            Column(
-              children: [
-                showLeastReb(),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        Container(
-            width: double.infinity,
-            child: Center(
-                child: Text(
-              'ALL TEAM STATS',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ))),
-        Container(
-          padding: EdgeInsets.all(15),
-          child: getAllTeamStatsDataTable(),
-        )
-      ],
-    ));
+    return FutureBuilder(
+      future: loadData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                  width: double.infinity,
+                  child: Center(
+                      child: Text(
+                    'LEADERS / LOSERS',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ))),
+              SizedBox(
+                height: 15,
+              ),
+              getSectionHeader('Streaks'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showWinStreak(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLosingStreak(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('Wins and Losses'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostWins(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showMostLosses(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('Points per Game'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostPoints(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLeastPoints(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('Opponent Points per Game'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showLeastOPPG(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showMostOPPG(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('FG %'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostFgp(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLeastFgp(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('FT %'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostFtp(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLeastFtp(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('3P %'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostTpp(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLeastTpp(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              getSectionHeader('Total Rebs'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      showMostReb(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      showLeastReb(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                  width: double.infinity,
+                  child: Center(
+                      child: Text(
+                    'ALL TEAM STATS',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ))),
+              Container(
+                padding: EdgeInsets.all(15),
+                child: getAllTeamStatsDataTable(),
+              )
+            ],
+          );
+        } else {
+          return NoConnection();
+        }
+      },
+    );
   }
 
   Widget showWinStreak() {
@@ -957,7 +966,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     );
   }
 
-  void loadData() async {
+  Future<bool> loadData() async {
     //dynamic standings;
     dynamic teamStats;
 
@@ -978,6 +987,8 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in teamStats["league"]["standard"]["regularSeason"]["teams"]) {
       listTeamStats.items.add(TeamStats.fromJson(t));
     }
+
+    return true;
   }
 
   void sortStandingsByWinStreak() {

@@ -92,6 +92,9 @@ class Roster extends StatelessWidget {
     return Row(
       children: [
         DataTable(
+          columnSpacing: 1,
+          dataRowHeight: 45,
+          horizontalMargin: 10,
           columns: [
             DataColumn(
               label: Text("Name"),
@@ -103,7 +106,9 @@ class Roster extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              columnSpacing: 15,
+              columnSpacing: 12,
+              dataRowHeight: 45,
+              horizontalMargin: 10,
               columns: [
                 DataColumn(
                   label: Text(

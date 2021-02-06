@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -8,8 +9,9 @@ import 'package:provider/provider.dart';
 class PlayerGameLogTable extends StatefulWidget {
   final String playerId;
   final String season;
+  final String teamId;
 
-  PlayerGameLogTable({this.playerId, this.season});
+  PlayerGameLogTable({this.playerId, this.season, this.teamId});
 
   @override
   _PlayerGameLogTableState createState() => _PlayerGameLogTableState();
@@ -18,9 +20,18 @@ class PlayerGameLogTable extends StatefulWidget {
 class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
   @override
   Widget build(BuildContext context) {
+    var teamColor = ConstantHelper.getTeamColor(widget.teamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(widget.teamId);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Game Log'),
+        title: Text(
+          'Game Log',
+          style: TextStyle(color: Color(teamTextColor)),
+        ),
+        backgroundColor: teamColor != null
+            ? Color(teamColor)
+            : Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

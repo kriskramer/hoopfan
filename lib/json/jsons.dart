@@ -35,6 +35,9 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _teamStatsShooting = {};
   Map<String, dynamic> _teamLineups = {};
   Map<String, dynamic> _playerShotTypes = {};
+  Map<String, dynamic> _playerClutchStats = {};
+  Map<String, dynamic> _playerSplitsGeneral = {};
+  Map<String, dynamic> _playerSplitsGame = {};
   Map<String, dynamic> _playerGameLog = {};
   var _nbaNews;
   var _nbaVideos;
@@ -106,6 +109,18 @@ class JsonFiles with ChangeNotifier {
 
   void setPlayerShotTypes(String playerId, dynamic json) {
     _playerShotTypes[playerId] = json;
+  }
+
+  void setPlayerClutchStats(String playerId, dynamic json) {
+    _playerClutchStats[playerId] = json;
+  }
+
+  void setPlayerSplitsGeneral(String playerId, dynamic json) {
+    _playerSplitsGeneral[playerId] = json;
+  }
+
+  void setPlayerSplitsGame(String playerId, dynamic json) {
+    _playerSplitsGame[playerId] = json;
   }
 
   void setPreviewArticles(String gameId, dynamic article) {
@@ -254,6 +269,10 @@ class JsonFiles with ChangeNotifier {
   dynamic getGameNews(String searchString) => _gameNews[searchString];
 
   dynamic getPlayerShotTypes(String playerId) => _playerShotTypes[playerId];
+  dynamic getPlayerClutchStats(String playerId) => _playerClutchStats[playerId];
+  dynamic getPlayerSplitsGeneral(String playerId) =>
+      _playerSplitsGeneral[playerId];
+  dynamic getPlayerSplitsGame(String playerId) => _playerSplitsGame[playerId];
 
   dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
   LeadTrackerList getFullGameLeadTracker(String gameId) =>

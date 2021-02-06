@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/player_widgets/player_clutch_stats_table.dart';
 import 'package:hoop/components/player_widgets/player_game_log.dart';
 import 'package:hoop/components/player_widgets/player_shooting_stats_table.dart';
+import 'package:hoop/components/player_widgets/player_splits_game_table.dart';
+import 'package:hoop/components/player_widgets/player_splits_general_table.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
@@ -22,11 +25,17 @@ class PlayerDetail extends StatefulWidget {
 class _PlayerDetailState extends State<PlayerDetail> {
   bool showSummary = true;
   bool showShooting = false;
+  bool showClutch = false;
+  bool showSplits = false;
+  bool showDefense = false;
 
   void summaryClick() {
     setState(() {
       showSummary = true;
       showShooting = false;
+      showClutch = false;
+      showSplits = false;
+      showDefense = false;
     });
   }
 
@@ -34,26 +43,41 @@ class _PlayerDetailState extends State<PlayerDetail> {
     setState(() {
       showSummary = false;
       showShooting = true;
+      showClutch = false;
+      showSplits = false;
+      showDefense = false;
     });
   }
 
-  // void defensiveClick() {
-  //   setState(() {
-  //     showSummary = false;
-  //     showAdvanced = false;
-  //     showDefensive = true;
-  //     showFourFactors = false;
-  //   });
-  // }
+  void clutchClick() {
+    setState(() {
+      showSummary = false;
+      showShooting = false;
+      showClutch = true;
+      showSplits = false;
+      showDefense = false;
+    });
+  }
 
-  // void fourFactorsClick() {
-  //   setState(() {
-  //     showSummary = false;
-  //     showAdvanced = false;
-  //     showDefensive = false;
-  //     showFourFactors = true;
-  //   });
-  // }
+  void splitsClick() {
+    setState(() {
+      showSummary = false;
+      showShooting = false;
+      showClutch = false;
+      showSplits = true;
+      showDefense = false;
+    });
+  }
+
+  void defenseClick() {
+    setState(() {
+      showSummary = false;
+      showShooting = false;
+      showClutch = false;
+      showSplits = false;
+      showDefense = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +85,9 @@ class _PlayerDetailState extends State<PlayerDetail> {
     var player = Provider.of<JsonFiles>(context, listen: false)
         .getPlayer(widget.playerId);
 
-    var teamColor = ConstantHelper.getTeamColor(player["teamId"]);
-    var teamTextColor = ConstantHelper.getTeamTextColor(player["teamId"]);
+    var teamId = player["teamId"];
+    var teamColor = ConstantHelper.getTeamColor(teamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
 
     print(widget.playerId);
     print(player["teamId"]);
@@ -85,16 +110,16 @@ class _PlayerDetailState extends State<PlayerDetail> {
                 CachedLogo(
                   url:
                       "https://cdn.nba.com/headshots/nba/latest/1040x760/${player["personId"]}.png",
-                  radius: 100,
+                  radius: deviceWidth * 0.22,
                 ),
                 Column(
                   children: [
                     Text(
                       player["firstName"],
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 28),
                     ),
                     Text(
-                      player["lastName"],
+                      getShortString(player["lastName"]),
                       style: TextStyle(fontSize: 24),
                     ),
                     Row(
@@ -129,7 +154,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Height',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(
                           player["heightFeet"] +
                               "\' " +
@@ -137,7 +163,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
                               "\" (" +
                               player["heightMeters"] +
                               ")",
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   ),
                   SizedBox(
@@ -146,13 +173,15 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Weight',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(
                           player["weightPounds"] +
                               " (" +
                               player["weightKilograms"] +
                               ")",
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   ),
                   SizedBox(
@@ -161,9 +190,11 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Country',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(player["country"],
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   ),
                   SizedBox(
@@ -172,9 +203,11 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Years Pro',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(player["yearsPro"],
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   )
                 ],
@@ -192,9 +225,11 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Age',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(getAge(player["dateOfBirthUTC"]),
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   ),
                   SizedBox(
@@ -203,9 +238,11 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Birthday',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(player["dateOfBirthUTC"],
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   ),
                   SizedBox(
@@ -214,15 +251,19 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('Drafted',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Row(
                         children: [
                           Text("Pick " + player["draft"]["pickNum"],
-                              style: TextStyle(color: Color(teamTextColor))),
+                              style: TextStyle(
+                                  color: Color(teamTextColor), fontSize: 12)),
                           Text(" R" + player["draft"]["roundNum"],
-                              style: TextStyle(color: Color(teamTextColor))),
+                              style: TextStyle(
+                                  color: Color(teamTextColor), fontSize: 12)),
                           Text(" " + player["draft"]["seasonYear"],
-                              style: TextStyle(color: Color(teamTextColor))),
+                              style: TextStyle(
+                                  color: Color(teamTextColor), fontSize: 12)),
                         ],
                       )
                     ],
@@ -233,9 +274,11 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Column(
                     children: [
                       Text('College',
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                       Text(getShortString(player["lastAffiliation"]),
-                          style: TextStyle(color: Color(teamTextColor))),
+                          style: TextStyle(
+                              color: Color(teamTextColor), fontSize: 12)),
                     ],
                   )
                 ],
@@ -290,63 +333,70 @@ class _PlayerDetailState extends State<PlayerDetail> {
                                   shootingClick();
                                 },
                               ),
+                              FlatButton(
+                                child: Text(
+                                  'Clutch',
+                                  style: TextStyle(
+                                      fontWeight: showClutch
+                                          ? FontWeight.bold
+                                          : FontWeight.normal),
+                                ),
+                                onPressed: () {
+                                  clutchClick();
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  'Splits',
+                                  style: TextStyle(
+                                      fontWeight: showSplits
+                                          ? FontWeight.bold
+                                          : FontWeight.normal),
+                                ),
+                                onPressed: () {
+                                  splitsClick();
+                                },
+                              ),
                               // FlatButton(
                               //   child: Text(
                               //     'Defense',
                               //     style: TextStyle(
-                              //         fontWeight:
-                              //             showDefensive ? FontWeight.bold : FontWeight.normal),
-                              //   ),
-                              //   onPressed: () {
-                              //     defensiveClick();
-                              //   },
-                              // ),
-                              // FlatButton(
-                              //   child: Text(
-                              //     '4 Factors',
-                              //     style: TextStyle(
-                              //         fontWeight: showFourFactors
+                              //         fontWeight: showDefense
                               //             ? FontWeight.bold
                               //             : FontWeight.normal),
                               //   ),
                               //   onPressed: () {
-                              //     fourFactorsClick();
+                              //     defenseClick();
                               //   },
                               // ),
                             ]),
-                        // showSummary
-                        //     ? GameBoxScoreSummary(
-                        //         game: widget.game,
-                        //         stats: widget.stats,
-                        //         isHomeTeam: widget.isHomeTeam)
-                        //     : SizedBox(),
-                        // showAdvanced
-                        //     ? GameBoxScoreAdvanced(
-                        //         gameId: widget.game["gameId"],
-                        //         teamId: teamId,
-                        //       )
-                        //     : SizedBox(),
-                        // showDefensive
-                        //     ? GameBoxScoreDefense(
-                        //         gameId: widget.game["gameId"],
-                        //         teamId: teamId,
-                        //       )
-                        //     : SizedBox(),
-                        // showFourFactors
-                        //     ? GameBoxScoreFourFactors(
-                        //         gameId: widget.game["gameId"],
-                        //         teamId: teamId,
-                        //       )
-                        //     : SizedBox(),
                         SizedBox(
                           height: 10,
                         ),
                         showSummary
-                            ? getStatsTable(statsSummary, statsRegSeason)
+                            ? getStatsTable(
+                                statsSummary, statsRegSeason, teamId)
                             : SizedBox(),
                         showShooting
                             ? PlayerShootingStatsTable(
                                 playerId: widget.playerId,
+                              )
+                            : SizedBox(),
+                        showClutch
+                            ? PlayerClutchStatsTable(
+                                playerId: widget.playerId,
+                              )
+                            : SizedBox(),
+                        showSplits
+                            ? Column(
+                                children: [
+                                  PlayerSplitsGeneralTable(
+                                    playerId: widget.playerId,
+                                  ),
+                                  PlayerSplitsGameTable(
+                                    playerId: widget.playerId,
+                                  )
+                                ],
                               )
                             : SizedBox(),
                         SizedBox(
@@ -421,7 +471,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
     );
   }
 
-  Widget getStatsTable(dynamic summary, dynamic seasons) {
+  Widget getStatsTable(dynamic summary, dynamic seasons, String teamId) {
     var table;
     List<DataRow> rows = new List<DataRow>();
 
@@ -539,7 +589,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
             MaterialPageRoute(
               builder: (context) => PlayerGameLogTable(
                   playerId: widget.playerId,
-                  season: s["seasonYear"].toString()),
+                  season: s["seasonYear"].toString(),
+                  teamId: teamId),
             ),
           );
         }),
@@ -624,8 +675,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
   }
 
   String getShortString(String value) {
-    if (value.length > 16) {
-      return value.substring(0, 15) + "...";
+    if (value.length > 14) {
+      return value.substring(0, 13) + "...";
     } else {
       return value;
     }

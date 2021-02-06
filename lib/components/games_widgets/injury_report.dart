@@ -83,7 +83,12 @@ class InjuryReport extends StatelessWidget {
                 ),
               );
             } else
-              return Text('No Current Injury Data');
+              return Container(
+                  padding: EdgeInsets.all(25),
+                  child: Text(
+                    'No Current Injury Data',
+                    style: TextStyle(fontSize: 16),
+                  ));
           }),
     );
   }

@@ -106,6 +106,13 @@ class _TodaysGamesState extends State<TodaysGames> {
                                   handleNewDate(date, context);
                                 }
                               }),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                            child: Text(
+                              count.toString() + ' Games Today',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,

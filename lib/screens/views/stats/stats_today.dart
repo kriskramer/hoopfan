@@ -61,7 +61,8 @@ class _StatsTodayState extends State<StatsToday> {
           List<DataRow> rowsPM = new List<DataRow>();
 
           if (list == null) {
-            return SizedBox();
+            return Container(
+                padding: EdgeInsets.all(25), child: Text('No data yet...'));
           }
 
           if (list.items.length > 0) {
@@ -140,7 +141,7 @@ class _StatsTodayState extends State<StatsToday> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 DataTable(
-                  columnSpacing: 12,
+                  columnSpacing: 10,
                   dataRowHeight: 25,
                   headingRowHeight: 0,
                   columns: [
@@ -161,7 +162,7 @@ class _StatsTodayState extends State<StatsToday> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 DataTable(
-                  columnSpacing: 15,
+                  columnSpacing: 12,
                   dataRowHeight: 25,
                   headingRowHeight: 0,
                   columns: [
@@ -182,7 +183,7 @@ class _StatsTodayState extends State<StatsToday> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 DataTable(
-                  columnSpacing: 15,
+                  columnSpacing: 12,
                   dataRowHeight: 25,
                   headingRowHeight: 0,
                   columns: [
@@ -202,7 +203,7 @@ class _StatsTodayState extends State<StatsToday> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 DataTable(
-                  columnSpacing: 15,
+                  columnSpacing: 12,
                   dataRowHeight: 25,
                   headingRowHeight: 0,
                   columns: [
@@ -255,7 +256,7 @@ class _StatsTodayState extends State<StatsToday> {
           }
 
           return DataTable(
-            columnSpacing: 15,
+            columnSpacing: 12,
             dataRowHeight: 25,
             headingRowHeight: 0,
             columns: [
