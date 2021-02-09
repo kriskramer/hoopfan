@@ -61,13 +61,14 @@ class InProgressGameHeader extends StatelessWidget {
           ),
           Text(
             "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           // THis shows the available timeouts
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               for (int i = 0; i < int.parse(vFullTimeouts); i++)
                 Container(
@@ -91,13 +92,13 @@ class InProgressGameHeader extends StatelessWidget {
         Column(children: [
           Text(
             "$vScore - $hScore",
-            style: TextStyle(fontSize: 36, color: Colors.red),
+            style: TextStyle(fontSize: 30, color: Colors.red),
           ),
           gameStatus == 2
               ? Text(getCurrentPeriod(gameData), style: TextStyle(fontSize: 24))
               : gameStatus == 3
                   ? Text(isOverTime ? 'Final / OT' : 'Final',
-                      style: TextStyle(fontSize: 24))
+                      style: TextStyle(fontSize: 20))
                   : Text(''),
           SizedBox(
             height: 5,
@@ -122,10 +123,10 @@ class InProgressGameHeader extends StatelessWidget {
           ),
           Text(
             "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Row(
             children: [

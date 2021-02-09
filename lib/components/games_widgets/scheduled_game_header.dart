@@ -24,7 +24,7 @@ class ScheduledGameHeader extends StatelessWidget {
         Column(children: [
           GestureDetector(
             child: CachedLogo(
-                radius: 40,
+                radius: 35,
                 url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
             onTap: () {
               Navigator.push(
@@ -39,10 +39,13 @@ class ScheduledGameHeader extends StatelessWidget {
           ),
           Text(
             "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 14),
           ),
         ]),
         Column(children: [
+          SizedBox(
+            height: 10,
+          ),
           Text(formatDate(gameData["startDateEastern"]),
               style: TextStyle(fontSize: 18)),
           Text(gameData["startTimeEastern"], style: TextStyle(fontSize: 18)),
@@ -68,7 +71,7 @@ class ScheduledGameHeader extends StatelessWidget {
         Column(children: [
           GestureDetector(
             child: CachedLogo(
-                radius: 40,
+                radius: 35,
                 url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"])),
             onTap: () {
               Navigator.push(
@@ -83,7 +86,7 @@ class ScheduledGameHeader extends StatelessWidget {
           ),
           Text(
             "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 14),
           ),
         ]),
       ],
