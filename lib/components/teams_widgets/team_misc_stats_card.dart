@@ -26,10 +26,14 @@ class TeamMiscStatsCard extends StatelessWidget {
                       height: 10,
                     ),
                     Text('Team'),
-                    getCardStat('Pts off TOs', teamStats[7].toString()),
-                    getCardStat('2nd Chance Pts', teamStats[8].toString()),
-                    getCardStat('FB Pts', teamStats[9].toString()),
-                    getCardStat('Pts in Paint', teamStats[10].toString()),
+                    getCardStat('Pts off TOs', teamStats[7].toString(),
+                        teamStats[20].toString()),
+                    getCardStat('2nd Chance Pts', teamStats[8].toString(),
+                        teamStats[21].toString()),
+                    getCardStat('FB Pts', teamStats[9].toString(),
+                        teamStats[22].toString()),
+                    getCardStat('Pts in Paint', teamStats[10].toString(),
+                        teamStats[23].toString()),
                     SizedBox(
                       height: 10,
                     ),
@@ -41,10 +45,14 @@ class TeamMiscStatsCard extends StatelessWidget {
                       height: 10,
                     ),
                     Text('Opponent'),
-                    getCardStat('Pts off TOs', teamStats[11].toString()),
-                    getCardStat('2nd Chance Pts', teamStats[12].toString()),
-                    getCardStat('FB Pts', teamStats[13].toString()),
-                    getCardStat('Pts in Paint', teamStats[14].toString()),
+                    getCardStat('Pts off TOs', teamStats[11].toString(),
+                        teamStats[24].toString()),
+                    getCardStat('2nd Chance Pts', teamStats[12].toString(),
+                        teamStats[25].toString()),
+                    getCardStat('FB Pts', teamStats[13].toString(),
+                        teamStats[26].toString()),
+                    getCardStat('Pts in Paint', teamStats[14].toString(),
+                        teamStats[27].toString()),
                     SizedBox(
                       height: 10,
                     ),
@@ -67,7 +75,7 @@ class TeamMiscStatsCard extends StatelessWidget {
     return team;
   }
 
-  Widget getCardStat(String label, String value) {
+  Widget getCardStat(String label, String value, String rank) {
     return Row(
       children: [
         Container(
@@ -92,6 +100,13 @@ class TeamMiscStatsCard extends StatelessWidget {
             style: TextStyle(fontSize: 18),
           ),
         ),
+        rank == ''
+            ? Container(
+                child: Text('na'),
+              )
+            : Container(
+                child: Text("(" + rank + ")"),
+              )
       ],
     );
   }
