@@ -8,7 +8,9 @@ import 'package:hoop/json/jsons.dart';
 
 class CompletedGameCard extends StatelessWidget {
   final dynamic game;
-  CompletedGameCard({this.game});
+  final String viewingTeam;
+
+  CompletedGameCard({this.game, this.viewingTeam});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,9 @@ class CompletedGameCard extends StatelessWidget {
     if (game["period"] != null) {
       isOvertime = game["period"]["current"] > 4 ? true : false;
     }
+
+    bool isHomeWin = isHomeTeamWinner(game);
+    bool isViewingTeamWin = getViewingTeamWinnerResult(game, viewingTeam);
 
     return Container(
       //margin: EdgeInsets.all(5),
@@ -61,15 +66,35 @@ class CompletedGameCard extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
-              Text(
-                game["vTeam"]["score"].toString() +
-                    " - " +
-                    game["hTeam"]["score"],
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              ),
+              Row(children: [
+                Text(
+                  game["vTeam"]["score"].toString(),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
+                      fontWeight:
+                          isHomeWin ? FontWeight.normal : FontWeight.bold),
+                ),
+                Text(
+                  " - ",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red),
+                ),
+                Text(
+                  game["hTeam"]["score"],
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
+                      fontWeight:
+                          isHomeWin ? FontWeight.bold : FontWeight.normal),
+                ),
+              ]),
               Text(
                 isOvertime ? "Final/OT" : "Final",
-                style: TextStyle(color: Colors.blue, fontSize: 16),
+                style: TextStyle(
+                    color: isViewingTeamWin ? Colors.blue : Colors.red,
+                    fontSize: 16),
               ),
             ]),
             Text(
@@ -158,5 +183,38 @@ class CompletedGameCard extends StatelessWidget {
     howToWatch = "$nat  $v  $h";
 
     return howToWatch;
+  }
+
+  bool isHomeTeamWinner(dynamic game) {
+    bool isWinner = false;
+
+    int vTeamScore = int.parse(game["vTeam"]["score"]);
+    int hTeamScore = int.parse(game["hTeam"]["score"]);
+
+    if (hTeamScore > vTeamScore) {
+      isWinner = true;
+    }
+
+    return isWinner;
+  }
+
+  bool getViewingTeamWinnerResult(dynamic game, String teamId) {
+    int vTeamScore = int.parse(game["vTeam"]["score"]);
+    int hTeamScore = int.parse(game["hTeam"]["score"]);
+    bool isHomeTeam = false;
+
+    if (game["hTeam"]["teamId"] == teamId) {
+      isHomeTeam = true;
+    }
+
+    if (hTeamScore > vTeamScore && isHomeTeam) {
+      return true;
+    } else if (hTeamScore > vTeamScore && !isHomeTeam) {
+      return false;
+    } else if (hTeamScore < vTeamScore && isHomeTeam) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

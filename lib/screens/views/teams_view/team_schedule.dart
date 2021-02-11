@@ -46,7 +46,10 @@ class TeamSchedule extends StatelessWidget {
                   } else if (preseasonGames[index]["statusNum"] == 2) {
                     return InProgressGameCard(game: preseasonGames[index]);
                   } else if (preseasonGames[index]["statusNum"] == 3) {
-                    return CompletedGameCard(game: preseasonGames[index]);
+                    return CompletedGameCard(
+                      game: preseasonGames[index],
+                      viewingTeam: teamId,
+                    );
                   }
                   // If I can't resolve the statusNum, just return scheduled game card
                   return ScheduledGameCard(game: preseasonGames[index]);
@@ -68,7 +71,10 @@ class TeamSchedule extends StatelessWidget {
                   } else if (regseasonGames[index]["statusNum"] == 2) {
                     return InProgressGameCard(game: regseasonGames[index]);
                   } else if (regseasonGames[index]["statusNum"] == 3) {
-                    return CompletedGameCard(game: regseasonGames[index]);
+                    return CompletedGameCard(
+                      game: regseasonGames[index],
+                      viewingTeam: teamId,
+                    );
                   }
                   // If I can't resolve the statusNum, just return scheduled game card
                   return ScheduledGameCard(game: regseasonGames[index]);

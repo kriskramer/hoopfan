@@ -176,17 +176,29 @@ class Urls {
   }
 
   // Returns different types of shot pcts for a given player, including dribble shots, closest defender, shot clock, touch time and range.
-  static String getNbaStatsPlayerClutchStats(String playerId) {
-    return "https://stats.nba.com/stats/playerdashboardbyclutch?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  static String getNbaStatsPlayerClutchStats(String playerId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/playerdashboardbyclutch?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsPlayerSplitsGeneral(String playerId) {
-    return "https://stats.nba.com/stats/playerdashboardbygeneralsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  static String getNbaStatsPlayerSplitsShooting(String playerId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/playerdashboardbyshootingsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsPlayerSplitsGame(String playerId) {
-    return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  static String getNbaStatsPlayerSplitsGeneral(String playerId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/playerdashboardbygeneralsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   }
+
+  static String getNbaStatsPlayerSplitsGame(String playerId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
+
+  // static String getNbaStatsPlayerSplitsAdvanced(String playerId) {
+  //   return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  // }
 
   // Returns different types of shot pcts for a given team, including dribble shots, closest defender, shot clock, touch time and range.
   static String getNbaStatsTeamShotTypes(String teamId) {

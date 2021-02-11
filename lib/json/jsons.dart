@@ -38,6 +38,7 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _playerClutchStats = {};
   Map<String, dynamic> _playerSplitsGeneral = {};
   Map<String, dynamic> _playerSplitsGame = {};
+  Map<String, dynamic> _playerSplitsAdvanced = {};
   Map<String, dynamic> _playerGameLog = {};
   var _nbaNews;
   var _nbaVideos;
@@ -121,6 +122,10 @@ class JsonFiles with ChangeNotifier {
 
   void setPlayerSplitsGame(String playerId, dynamic json) {
     _playerSplitsGame[playerId] = json;
+  }
+
+  void setPlayerSplitsAdvanced(String playerId, dynamic json) {
+    _playerSplitsAdvanced[playerId] = json;
   }
 
   void setPreviewArticles(String gameId, dynamic article) {
@@ -273,6 +278,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getPlayerSplitsGeneral(String playerId) =>
       _playerSplitsGeneral[playerId];
   dynamic getPlayerSplitsGame(String playerId) => _playerSplitsGame[playerId];
+  dynamic getPlayerSplitsAdvanced(String playerId) =>
+      _playerSplitsAdvanced[playerId];
 
   dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
   LeadTrackerList getFullGameLeadTracker(String gameId) =>
