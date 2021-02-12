@@ -78,13 +78,14 @@ class PlayerSplitsGeneralTable extends StatelessWidget {
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );
 
-    //   Provider.of<JsonFiles>(context, listen: false)
-    //       .setPlayerSplitsGeneral(playerId, json);
-    // } else {
-    //   json = Provider.of<JsonFiles>(context, listen: false)
-    //       .getPlayerSplitsGeneral(playerId);
-    // }
+      //   Provider.of<JsonFiles>(context, listen: false)
+      //       .setPlayerSplitsGeneral(playerId, json);
+      // } else {
+      //   json = Provider.of<JsonFiles>(context, listen: false)
+      //       .getPlayerSplitsGeneral(playerId);
+      // }
 
-    return json;
+      return json;
+    }
   }
 }
