@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/config.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:xml/xml.dart';
@@ -94,7 +95,8 @@ class InjuryReport extends StatelessWidget {
   }
 
   Future<void> loadData() async {
-    return await Network.getXml(Urls.getInjuryReport());
+    return await Network.getJson(Urls.getInjuryReport(),
+        fileFormat: FileType.xml); // this is an xml file
   }
 }
 

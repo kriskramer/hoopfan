@@ -283,7 +283,7 @@ class _StatsTodayState extends State<StatsToday> {
       for (var g in gamesToday["games"]) {
         var gameId = g["gameId"];
         var gameDate = g["gameUrlCode"].toString().split("/")[0];
-
+// TODO: fix null errors here
         dynamic boxScore =
             await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
 

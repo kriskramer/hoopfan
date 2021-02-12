@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -157,8 +158,10 @@ class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
     //   json = Provider.of<JsonFiles>(context, listen: false)
     //       .getPlayerShotTypes(playerId);
     // }
-    json = Network.getJsonFromNbaStats(
-        Urls.getNbaStatsPlayerGameLog(widget.playerId, seasonString));
+    json = Network.getJson(
+      Urls.getNbaStatsPlayerGameLog(widget.playerId, seasonString),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
 
     return json;
   }

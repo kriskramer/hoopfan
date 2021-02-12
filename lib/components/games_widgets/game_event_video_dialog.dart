@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -63,7 +64,9 @@ class GameEventVideoDialog extends StatelessWidget {
   }
 
   Future<dynamic> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaPbpEventVideo(gameId, eventNum));
+    return await Network.getJson(
+      Urls.getNbaPbpEventVideo(gameId, eventNum),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 }
