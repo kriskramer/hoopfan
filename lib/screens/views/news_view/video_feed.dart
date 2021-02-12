@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -109,8 +110,10 @@ class NbaVideoFeed extends StatelessWidget {
 
     if (n == null) {
       try {
-        var videos = await Network.getJsonWithBingHeader(
-            Urls.getBingVideoSearch(searchTerms));
+        var videos = await Network.getJson(
+          Urls.getBingVideoSearch(searchTerms),
+          requestHeaders: RequestHeaders.bingHeaders,
+        );
         Provider.of<JsonFiles>(context, listen: false).setNbaVideo(videos);
         return true;
       } catch (e) {

@@ -5,6 +5,8 @@ import 'package:hoop/components/player_widgets/datatables/player_stats_game_spli
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_base_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_misc_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_usage_datatable.dart';
+import 'package:hoop/json/jsons.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -69,10 +71,11 @@ class PlayerSplitsGameTable extends StatelessWidget {
     // if (Provider.of<JsonFiles>(context, listen: false)
     //         .getPlayerSplitsGame(playerId) ==
     //     null) {
-    json = Network.getJsonFromNbaStats(Urls.getNbaStatsPlayerSplitsGame(
-        playerId,
-        measureType: measure,
-        perMode: per));
+    json = Network.getJson(
+      Urls.getNbaStatsPlayerSplitsGame(playerId,
+          measureType: measure, perMode: per),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
 
     //   Provider.of<JsonFiles>(context, listen: false)
     //       .setPlayerSplitsGame(playerId, json);

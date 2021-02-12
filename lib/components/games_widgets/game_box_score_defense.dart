@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/models/box_scores/game_box_score_defense.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -98,7 +99,9 @@ class _GameBoxScoreDefenseState extends State<GameBoxScoreDefense> {
   }
 
   Future<dynamic> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaStatsBoxScoreDefensive(widget.gameId));
+    return await Network.getJson(
+      Urls.getNbaStatsBoxScoreDefensive(widget.gameId),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 }

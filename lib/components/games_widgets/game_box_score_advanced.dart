@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/models/box_scores/game_box_score_advanced.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -104,7 +105,9 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
   }
 
   Future<dynamic> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaStatsBoxScoreAdvanced(widget.gameId));
+    return await Network.getJson(
+      Urls.getNbaStatsBoxScoreAdvanced(widget.gameId),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 }

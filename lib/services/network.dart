@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xml2json/xml2json.dart';
+import 'package:hoop/config.dart';
 
 class Network {
   /*
@@ -14,14 +15,20 @@ class Network {
    */
 
   // make request to get Json file
-  static Future<dynamic> getJson(String url) async {
+  static Future<dynamic> getJson(String url,
+      {Map<String, String> requestHeaders,
+      FileType fileFormat = FileType.json}) async {
     // make request to get Json file
+    // pass empty map for no request headers
     try {
-      var response = await http.get(url);
+      var response = await http.get(url, headers: requestHeaders);
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          var json = convert.jsonDecode(response.body);
-          return json;
+          var data = fileFormat == FileType.json
+              ? convert.jsonDecode(response.body)
+              : response.body;
+          // check if requested format is either json or xml to return appropriate formatting
+          return data;
         }
       }
     } catch (e) {
@@ -49,63 +56,6 @@ class Network {
     }
   }
 
-  static Future<dynamic> getXml(String url) async {
-    // make request to get Json file
-    try {
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        if (response.body.isNotEmpty) {
-          var xml = response.body;
-          return xml;
-        }
-      }
-    } catch (e) {
-      //TODO: Handle this exception
-      print(e);
-    }
-  }
-
-  static Future<dynamic> getJsonWithBingHeader(String url) async {
-    // make request to get Json file
-    try {
-      var response = await http.get(url, headers: {
-        'Ocp-Apim-Subscription-Key': "235ced56b4ba4206a1e59e1785657176"
-      });
-      if (response.statusCode == 200) {
-        if (response.body.isNotEmpty) {
-          var json = convert.jsonDecode(response.body);
-          return json;
-        }
-      }
-    } catch (e) {
-      //TODO: Handle this exception
-      print(e);
-    }
-  }
-
-  static Future<dynamic> getTwitterStream() async {
-    String url = "https://api.twitter.com/2/tweets/search/stream?";
-    // make request to get Json file
-    try {
-      var response = await http.get(url, headers: {
-        'Authorization':
-            "Bearer AAAAAAAAAAAAAAAAAAAAAIr4KgEAAAAAAeA5QVwDwCoTwQTtUcLBEWkQkBU%3DuY8dkZF6DUxj63dxoszJwBlc4Awaud863H4xPeznECZvSoxTsm"
-      });
-      if (response.statusCode == 200) {
-        if (response.body.isNotEmpty) {
-          var json = convert.jsonDecode(response.body);
-          //Network.twitterStream.add(json);
-          return json;
-        }
-      } else {
-        print(response.body);
-      }
-    } catch (e) {
-      //TODO: Handle this exception
-      print(e);
-    }
-  }
-
   static Future<void> launchSite(String url) async {
     if (await canLaunch(url)) {
       await launch(
@@ -117,38 +67,6 @@ class Network {
       );
     } else {
       throw 'Could not launch $url';
-    }
-  }
-
-  static Future<dynamic> getJsonFromNbaStats(String url) async {
-    // Use this request for calls to stats.nba.com urls
-    try {
-      var response = await http.get(url, headers: {
-        'Host': 'stats.nba.com',
-        'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'x-nba-stats-origin': 'stats',
-        'x-nba-stats-token': 'true',
-        'Connection': 'keep-alive',
-        'Referer': 'https://stats.nba.com/',
-        'Pragma': 'no-cache',
-        'Cache-Control': 'no-cache',
-      });
-      if (response.statusCode == 200) {
-        if (response.body.isNotEmpty) {
-          var json = convert.jsonDecode(response.body);
-          //Network.twitterStream.add(json);
-          return json;
-        }
-      } else {
-        print(response.body);
-      }
-    } catch (e) {
-      //TODO: Handle this exception
-      print(e);
     }
   }
 }

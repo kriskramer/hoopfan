@@ -5,6 +5,7 @@ import 'package:hoop/components/player_widgets/datatables/player_stats_base_data
 import 'package:hoop/components/player_widgets/datatables/player_stats_misc_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_scoring_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_usage_datatable.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -68,10 +69,11 @@ class PlayerClutchStatsTable extends StatelessWidget {
     // if (Provider.of<JsonFiles>(context, listen: false)
     //         .getPlayerClutchStats(playerId) ==
     //     null) {
-    json = Network.getJsonFromNbaStats(Urls.getNbaStatsPlayerClutchStats(
-        playerId,
-        measureType: measure,
-        perMode: per));
+    json = Network.getJson(
+      Urls.getNbaStatsPlayerClutchStats(playerId,
+          measureType: measure, perMode: per),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
 
     //   Provider.of<JsonFiles>(context, listen: false)
     //       .setPlayerClutchStats(playerId, json);
