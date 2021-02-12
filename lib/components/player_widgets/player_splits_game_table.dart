@@ -5,10 +5,8 @@ import 'package:hoop/components/player_widgets/datatables/player_stats_game_spli
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_base_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_misc_datatable.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_game_splits_usage_datatable.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
 
 class PlayerSplitsGameTable extends StatelessWidget {
   final String playerId;

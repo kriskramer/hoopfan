@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/player_widgets/datatables/player_stats_shooting_splits_datatable.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-import 'datatables/player_stats_game_split_scoring_datatable.dart';
-import 'datatables/player_stats_game_splits_advanced_datatable.dart';
-import 'datatables/player_stats_game_splits_base_datatable.dart';
-import 'datatables/player_stats_game_splits_misc_datatable.dart';
-import 'datatables/player_stats_game_splits_usage_datatable.dart';
-
-class PlayerSplitsGeneralTable extends StatelessWidget {
+class PlayerSplitsShootingTable extends StatelessWidget {
   final String playerId;
   final String measure;
   final String per;
 
-  PlayerSplitsGeneralTable({this.playerId, this.measure, this.per});
+  PlayerSplitsShootingTable({this.playerId, this.measure, this.per});
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +42,22 @@ class PlayerSplitsGeneralTable extends StatelessWidget {
   }
 
   Widget getStatsTable(dynamic json) {
-    if (measure == "Base") {
-      return PlayerStatsGameSplitsBaseDataTable(json: json);
-    } else if (measure == "Advanced") {
-      return PlayerStatsGameSplitsAdvancedDataTable(json: json);
-    } else if (measure == "Misc") {
-      return PlayerStatsGameSplitsMiscDataTable(json: json);
-    } else if (measure == "Four Factors") {
-      return Text('No data');
-    } else if (measure == "Scoring") {
-      return PlayerStatsGameSplitsScoringDataTable(json: json);
-    } else if (measure == "Opponent") {
-      return Text('No data');
-    } else if (measure == "Usage") {
-      return PlayerStatsGameSplitsUsageDataTable(json: json);
-    }
-    return null;
+    //if (measure == "Base") {
+    return PlayerStatsShootingSplitsDataTable(json: json);
+    // } else if (measure == "Advanced") {
+    //   return PlayerStatsGameSplitsAdvancedDataTable(json: json);
+    // } else if (measure == "Misc") {
+    //   return PlayerStatsGameSplitsMiscDataTable(json: json);
+    // } else if (measure == "Four Factors") {
+    //   return Text('No data');
+    // } else if (measure == "Scoring") {
+    //   return PlayerStatsGameSplitsScoringDataTable(json: json);
+    // } else if (measure == "Opponent") {
+    //   return Text('No data');
+    // } else if (measure == "Usage") {
+    //   return PlayerStatsGameSplitsUsageDataTable(json: json);
+    // }
+    // return null;
   }
 
   Future<dynamic> loadData(BuildContext context) async {
