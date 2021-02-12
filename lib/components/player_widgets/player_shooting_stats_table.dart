@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -168,8 +169,10 @@ class PlayerShootingStatsTable extends StatelessWidget {
     if (Provider.of<JsonFiles>(context, listen: false)
             .getPlayerShotTypes(playerId) ==
         null) {
-      json = Network.getJsonFromNbaStats(
-          Urls.getNbaStatsPlayerShotTypes(playerId));
+      json = Network.getJson(
+        Urls.getNbaStatsPlayerShotTypes(playerId),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setPlayerShotTypes(playerId, json);

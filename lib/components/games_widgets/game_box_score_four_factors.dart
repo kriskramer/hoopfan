@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/models/box_scores/game_box_score_four_factors.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -85,7 +86,9 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
   }
 
   Future<dynamic> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaStatsBoxScoreFourFactors(widget.gameId));
+    return await Network.getJson(
+      Urls.getNbaStatsBoxScoreFourFactors(widget.gameId),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 }

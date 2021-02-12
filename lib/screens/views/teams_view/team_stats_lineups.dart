@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/team_lineup.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -188,8 +189,10 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
       if (Provider.of<JsonFiles>(context, listen: false)
               .getTeamLineups(widget.teamId) ==
           null) {
-        lineups = await Network.getJsonFromNbaStats(
-            Urls.getNbaStatsTeamLineups(widget.teamId));
+        lineups = await Network.getJson(
+          Urls.getNbaStatsTeamLineups(widget.teamId),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
 
         Provider.of<JsonFiles>(context, listen: false)
             .setTeamLineups(widget.teamId, lineups);

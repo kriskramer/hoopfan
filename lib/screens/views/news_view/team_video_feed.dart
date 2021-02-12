@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -112,8 +113,10 @@ class TeamVideoFeed extends StatelessWidget {
 
     if (n == null) {
       try {
-        var videos = await Network.getJsonWithBingHeader(
-            Urls.getBingVideoSearch(teamName));
+        var videos = await Network.getJson(
+          Urls.getBingVideoSearch(teamName),
+          requestHeaders: RequestHeaders.bingHeaders,
+        );
         Provider.of<JsonFiles>(context, listen: false)
             .setTeamVideos(teamId, videos);
         return true;

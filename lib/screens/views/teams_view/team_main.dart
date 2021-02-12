@@ -12,6 +12,7 @@ import 'package:hoop/screens/views/teams_view/team_info_page.dart';
 import 'package:hoop/screens/views/teams_view/team_media_page.dart';
 import 'package:hoop/screens/views/teams_view/team_schedule.dart';
 import 'package:hoop/screens/views/teams_view/team_stats.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/connection.dart';
@@ -443,8 +444,10 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false)
             .getEstimatedTeamStats() ==
         null) {
-      dynamic estimatedTeamStats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsEstimatedMetricsAllTeams());
+      dynamic estimatedTeamStats = await Network.getJson(
+        Urls.getNbaStatsEstimatedMetricsAllTeams(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setEstimatedTeamStats(estimatedTeamStats);
@@ -452,8 +455,10 @@ class _TeamDetailsState extends State<TeamDetails> {
 
     if (Provider.of<JsonFiles>(context, listen: false).getAdvancedTeamStats() ==
         null) {
-      dynamic advancedTeamStats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsTeamStatistics_Advanced());
+      dynamic advancedTeamStats = await Network.getJson(
+        Urls.getNbaStatsTeamStatistics_Advanced(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setAdvancedTeamStats(advancedTeamStats);
@@ -461,8 +466,10 @@ class _TeamDetailsState extends State<TeamDetails> {
 
     if (Provider.of<JsonFiles>(context, listen: false).getBaseTeamStats() ==
         null) {
-      dynamic baseTeamStats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsTeamStatistics_Base());
+      dynamic baseTeamStats = await Network.getJson(
+        Urls.getNbaStatsTeamStatistics_Base(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setBaseTeamStats(baseTeamStats);
@@ -470,8 +477,10 @@ class _TeamDetailsState extends State<TeamDetails> {
 
     if (Provider.of<JsonFiles>(context, listen: false).getMiscTeamStats() ==
         null) {
-      dynamic miscTeamStats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsTeamStatistics_Misc());
+      dynamic miscTeamStats = await Network.getJson(
+        Urls.getNbaStatsTeamStatistics_Misc(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setMiscTeamStats(miscTeamStats);
@@ -480,8 +489,10 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false)
             .getFourFactorsTeamStats() ==
         null) {
-      dynamic stats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsTeamStatistics_FourFactors());
+      dynamic stats = await Network.getJson(
+        Urls.getNbaStatsTeamStatistics_FourFactors(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setFourFactorsTeamStats(stats);
@@ -490,8 +501,10 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false)
             .getTeamStatsShooting(widget.nbaTeamId) ==
         null) {
-      dynamic stats = await Network.getJsonFromNbaStats(
-          Urls.getNbaStatsTeamShotTypes(widget.nbaTeamId));
+      dynamic stats = await Network.getJson(
+        Urls.getNbaStatsTeamShotTypes(widget.nbaTeamId),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
 
       Provider.of<JsonFiles>(context, listen: false)
           .setTeamStatsShooting(widget.nbaTeamId, stats);

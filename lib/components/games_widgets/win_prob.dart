@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -61,7 +62,9 @@ class WinProbability extends StatelessWidget {
   }
 
   Future<void> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaStatsWinProbability(gameId));
+    return await Network.getJson(
+      Urls.getNbaStatsWinProbability(gameId),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 }

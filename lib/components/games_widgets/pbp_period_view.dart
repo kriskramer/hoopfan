@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/games_widgets/game_event_video_dialog.dart';
 import 'package:hoop/components/games_widgets/team_tricode_card.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -84,8 +85,10 @@ class PbpPeriodView extends StatelessWidget {
   }
 
   Future<dynamic> loadData() async {
-    return await Network.getJsonFromNbaStats(
-        Urls.getNbaStatsAdvancedPlayByPlay(gameId, period, period));
+    return await Network.getJson(
+      Urls.getNbaStatsAdvancedPlayByPlay(gameId, period, period),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
   }
 
   String getPbpDescription(dynamic pbp) {

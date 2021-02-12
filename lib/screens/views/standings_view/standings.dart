@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,10 @@ class _StandingsState extends State<Standings> {
 
     if (standingsList == null) {
       try {
-        var newStandings = await Network.getJsonFromNbaStats(
-            Urls.getNbaStatsLeagueStandings());
+        var newStandings = await Network.getJson(
+          Urls.getNbaStatsLeagueStandings(),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
         var players = await Network.getJson(Urls.nbaAllPlayers());
         var teams = await Network.getJson(Urls.nbaAllTeams());
 
