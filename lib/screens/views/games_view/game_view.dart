@@ -71,85 +71,61 @@ class _GameViewState extends State<GameView> {
     if (vTeamScore == null) vTeamScore = widget.game["vTeam"]["score"];
     if (hTeamScore == null) hTeamScore = widget.game["hTeam"]["score"];
 
-    return Scaffold(
-        // appBar: AppBar(
-        //   title: Text("Game  " + vTeamScore + "-" + hTeamScore),
-        //   actions: <Widget>[
-        //     IconButton(
-        //       icon: Icon(Icons.refresh),
-        //       onPressed: () {
-        //         refreshGameData();
-        //       },
-        //     )
-        //   ],
-        // ),
-        body: FutureBuilder(
-            future: _gameData,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                //print('reloading game_view data');
-                var gameData = snapshot.data["basicGameData"];
-                var stats = snapshot.data["stats"];
+    return FutureBuilder(
+        future: _gameData,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            //print('reloading game_view data');
+            var gameData = snapshot.data["basicGameData"];
+            var stats = snapshot.data["stats"];
 
-                bool preview = gameData["isPreviewArticleAvail"];
-                bool recap = gameData["isRecapArticleAvail"];
+            bool preview = gameData["isPreviewArticleAvail"];
+            bool recap = gameData["isRecapArticleAvail"];
 
-                var gameStatus = gameData["statusNum"];
-                var gameActivated = gameData["isGameActivated"];
+            var gameStatus = gameData["statusNum"];
+            var gameActivated = gameData["isGameActivated"];
 
-                var gameId = gameData["gameId"];
-                var date = gameData["gameUrlCode"].toString().split("/")[0];
-                // var currentPeriod = gameData["period"]["current"];
+            var gameId = gameData["gameId"];
+            var date = gameData["gameUrlCode"].toString().split("/")[0];
+            // var currentPeriod = gameData["period"]["current"];
 
-                var newsSearchString = getNewsSearchString(gameData);
+            var newsSearchString = getNewsSearchString(gameData);
 
-                vTeamScore = gameData["vTeam"]["score"];
-                hTeamScore = gameData["hTeam"]["score"];
+            vTeamScore = gameData["vTeam"]["score"];
+            hTeamScore = gameData["hTeam"]["score"];
 
-                if (gameData["isGameActivated"]) {
-                  timerDuration = 45;
-                } else {
-                  _timer.cancel();
-                }
+            if (gameData["isGameActivated"]) {
+              timerDuration = 45;
+            } else {
+              _timer.cancel();
+            }
 
-                return CustomScrollView(slivers: [
-                  SliverAppBar(
-                    iconTheme: IconThemeData(color: Colors.blue),
-                    //title: Text('Floating app bar'),
-                    pinned: true,
-                    elevation: 10,
-                    collapsedHeight: 120,
+            return Scaffold(
+              bottomNavigationBar: GameLeadersFeed(
+                stats: stats,
+                game: gameData,
+              ),
+              body: CustomScrollView(slivers: [
+                SliverAppBar(
+                  iconTheme: IconThemeData(color: Colors.blue),
+                  //title: Text('Floating app bar'),
+                  pinned: true,
+                  elevation: 10,
+                  collapsedHeight: 120,
 
-                    backgroundColor: Colors.white,
-                    flexibleSpace: Container(
-                      padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
-                      child: gameStatus > 1 || gameActivated
-                          ? InProgressGameHeader(
-                              gameData: gameData, stats: stats)
-                          : ScheduledGameHeader(gameData: gameData),
-                    ),
-                    expandedHeight: 120,
+                  backgroundColor: Colors.white,
+                  flexibleSpace: Container(
+                    padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
+                    child: gameStatus > 1 || gameActivated
+                        ? InProgressGameHeader(gameData: gameData, stats: stats)
+                        : ScheduledGameHeader(gameData: gameData),
                   ),
-                  SliverList(
-                      delegate: SliverChildListDelegate([
+                  expandedHeight: 120,
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
                     Column(
                       children: [
-                        // Container(
-                        //   decoration: BoxDecoration(color: Colors.grey[300]),
-                        //   padding: EdgeInsets.all(4),
-                        //   width: double.infinity,
-                        //   child: Center(
-                        //     child: Text(
-                        //       gameData["seasonStageId"] == 1
-                        //           ? "Pre Season"
-                        //           : "Regular Season",
-                        //       style: TextStyle(fontSize: 20),
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: 15,
-                        // ),
                         ButtonBar(
                           alignment: MainAxisAlignment.spaceEvenly,
                           layoutBehavior: ButtonBarLayoutBehavior.constrained,
@@ -316,22 +292,23 @@ class _GameViewState extends State<GameView> {
                                             alignment: Alignment.topLeft,
                                             child: Column(children: [
                                               Container(
-                                                padding: EdgeInsets.all(15),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    15, 10, 15, 5),
                                                 child: OnCourtCard(
                                                   stats: stats,
                                                   game: gameData,
                                                 ),
                                               ),
-                                              QuarterScores(
-                                                game: gameData,
-                                              ),
-                                              GameLeadersFeed(
-                                                stats: stats,
-                                                game: gameData,
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
+                                              // QuarterScores(
+                                              //   game: gameData,
+                                              // ),
+                                              // GameLeadersFeed(
+                                              //   stats: stats,
+                                              //   game: gameData,
+                                              // ),
+                                              // SizedBox(
+                                              //   height: 8,
+                                              // ),
                                               GamePbpFeed(
                                                 gameData: gameData,
                                               ),
@@ -386,13 +363,15 @@ class _GameViewState extends State<GameView> {
                             : Text(''),
                         gameStatus < 3 ? getTicketsCard() : Text('')
                       ],
-                    )
-                  ]))
-                ]);
-              } else {
-                return NoConnection();
-              }
-            }));
+                    ),
+                  ]),
+                ),
+              ]),
+            );
+          } else {
+            return NoConnection();
+          }
+        });
   }
 
   Future<dynamic> loadGameData() async {

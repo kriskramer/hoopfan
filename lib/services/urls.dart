@@ -171,8 +171,9 @@ class Urls {
   }
 
   // Returns different types of shot pcts for a given player, including dribble shots, closest defender, shot clock, touch time and range.
-  static String getNbaStatsPlayerShotTypes(String playerId) {
-    return "https://stats.nba.com/stats/playerdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=PerGame&Period=0&PlayerID=$playerId&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=";
+  static String getNbaStatsPlayerShotTypes(String playerId,
+      {String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/playerdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=$perMode&Period=0&PlayerID=$playerId&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=";
   }
 
   // Returns different types of shot pcts for a given player, including dribble shots, closest defender, shot clock, touch time and range.

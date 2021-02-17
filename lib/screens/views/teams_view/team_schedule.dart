@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/completed_game_card.dart';
+//import 'package:hoop/components/games_widgets/completed_game_card.dart';
+import 'package:hoop/components/games_widgets/completed_game_card_viewing_team.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
 import 'package:hoop/components/teams_widgets/scheduled_game_card.dart';
 import 'package:hoop/services/network.dart';
@@ -46,7 +47,7 @@ class TeamSchedule extends StatelessWidget {
                   } else if (preseasonGames[index]["statusNum"] == 2) {
                     return InProgressGameCard(game: preseasonGames[index]);
                   } else if (preseasonGames[index]["statusNum"] == 3) {
-                    return CompletedGameCard(
+                    return CompletedGameCardViewingTeam(
                       game: preseasonGames[index],
                       viewingTeam: teamId,
                     );
@@ -71,7 +72,7 @@ class TeamSchedule extends StatelessWidget {
                   } else if (regseasonGames[index]["statusNum"] == 2) {
                     return InProgressGameCard(game: regseasonGames[index]);
                   } else if (regseasonGames[index]["statusNum"] == 3) {
-                    return CompletedGameCard(
+                    return CompletedGameCardViewingTeam(
                       game: regseasonGames[index],
                       viewingTeam: teamId,
                     );

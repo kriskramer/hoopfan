@@ -6,10 +6,11 @@ import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-class CompletedGameCard extends StatelessWidget {
+class CompletedGameCardViewingTeam extends StatelessWidget {
   final dynamic game;
+  final String viewingTeam;
 
-  CompletedGameCard({this.game});
+  CompletedGameCardViewingTeam({this.game, this.viewingTeam});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class CompletedGameCard extends StatelessWidget {
     }
 
     bool isHomeWin = isHomeTeamWinner(game);
+    bool isViewingTeamWin = getViewingTeamWinnerResult(game, viewingTeam);
 
     return Container(
       //margin: EdgeInsets.all(5),
@@ -69,26 +71,30 @@ class CompletedGameCard extends StatelessWidget {
                   game["vTeam"]["score"].toString(),
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.blue,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
                       fontWeight:
                           isHomeWin ? FontWeight.normal : FontWeight.bold),
                 ),
                 Text(
                   " - ",
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red),
                 ),
                 Text(
                   game["hTeam"]["score"],
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.blue,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
                       fontWeight:
                           isHomeWin ? FontWeight.bold : FontWeight.normal),
                 ),
               ]),
               Text(
                 isOvertime ? "Final/OT" : "Final",
-                style: TextStyle(color: Colors.blue, fontSize: 16),
+                style: TextStyle(
+                    color: isViewingTeamWin ? Colors.blue : Colors.red,
+                    fontSize: 16),
               ),
             ]),
             Text(

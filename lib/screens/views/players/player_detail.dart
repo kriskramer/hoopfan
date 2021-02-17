@@ -566,6 +566,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
                         showShooting
                             ? PlayerShootingStatsTable(
                                 playerId: widget.playerId,
+                                perMode: per,
                               )
                             : SizedBox(),
                         showClutch

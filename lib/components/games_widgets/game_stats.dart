@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
+import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/model/advanced_stats.dart';
 
@@ -21,6 +22,12 @@ class GameStats extends StatelessWidget {
     return Container(
       child: Column(
         children: [
+          SizedBox(
+            height: 15,
+          ),
+          QuarterScores(
+            game: gameData,
+          ),
           SizedBox(
             height: 15,
           ),
