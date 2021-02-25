@@ -32,6 +32,7 @@ class JsonFiles with ChangeNotifier {
   var _teamStatsAdvanced;
   var _teamStatsMisc;
   var _teamStatsFourFactors;
+  Map<String, dynamic> _playerSummaryStats = {};
   Map<String, dynamic> _teamStatsShooting = {};
   Map<String, dynamic> _teamLineups = {};
   Map<String, dynamic> _playerShotTypes = {};
@@ -106,6 +107,10 @@ class JsonFiles with ChangeNotifier {
 
   void setGameNews(String searchString, dynamic news) {
     _gameNews[searchString] = news;
+  }
+
+  void setPlayerSummaryStats(String playerKey, dynamic json) {
+    _playerSummaryStats[playerKey] = json;
   }
 
   void setPlayerShotTypes(String playerId, dynamic json) {
@@ -273,6 +278,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
   dynamic getGameNews(String searchString) => _gameNews[searchString];
 
+  dynamic getPlayerSummaryStats(String playerKey) =>
+      _playerSummaryStats[playerKey];
   dynamic getPlayerShotTypes(String playerId) => _playerShotTypes[playerId];
   dynamic getPlayerClutchStats(String playerId) => _playerClutchStats[playerId];
   dynamic getPlayerSplitsGeneral(String playerId) =>

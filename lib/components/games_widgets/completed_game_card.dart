@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/screens/views/games_view/game_recap_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -20,8 +21,9 @@ class CompletedGameCard extends StatelessWidget {
     final LeagueStanding hTeam =
         standings.getTeamStandings(game["hTeam"]["teamId"]);
 
-    // dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
-    // dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
+    bool recap = game["isRecapArticleAvail"];
+    var gameId = game["gameId"];
+    var date = game["gameUrlCode"].toString().split("/")[0];
 
     bool isOvertime = false;
     if (game["period"] != null) {
@@ -31,7 +33,7 @@ class CompletedGameCard extends StatelessWidget {
     bool isHomeWin = isHomeTeamWinner(game);
 
     return Container(
-      //margin: EdgeInsets.all(5),
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -47,57 +49,64 @@ class CompletedGameCard extends StatelessWidget {
             ),
           );
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
-            Text(
-              "(${vTeam.wins}-${vTeam.losses})",
-              style: TextStyle(color: Colors.grey[700], fontSize: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+                Text(
+                  "(${vTeam.wins}-${vTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                ),
+                Column(children: [
+                  Text(
+                    formatDate(game["startDateEastern"].toString()),
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  Row(children: [
+                    Text(
+                      game["vTeam"]["score"].toString(),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight:
+                              isHomeWin ? FontWeight.normal : FontWeight.bold),
+                    ),
+                    Text(
+                      " - ",
+                      style: TextStyle(fontSize: 14, color: Colors.blue),
+                    ),
+                    Text(
+                      game["hTeam"]["score"],
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight:
+                              isHomeWin ? FontWeight.bold : FontWeight.normal),
+                    ),
+                  ]),
+                  Text(
+                    isOvertime ? "Final/OT" : "Final",
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  ),
+                ]),
+                Text(
+                  "(${hTeam.wins}-${hTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                ),
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+              ],
             ),
-            Column(children: [
-              Text(
-                formatDate(game["startDateEastern"].toString()),
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-              Row(children: [
-                Text(
-                  game["vTeam"]["score"].toString(),
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
-                      fontWeight:
-                          isHomeWin ? FontWeight.normal : FontWeight.bold),
-                ),
-                Text(
-                  " - ",
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
-                ),
-                Text(
-                  game["hTeam"]["score"],
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
-                      fontWeight:
-                          isHomeWin ? FontWeight.bold : FontWeight.normal),
-                ),
-              ]),
-              Text(
-                isOvertime ? "Final/OT" : "Final",
-                style: TextStyle(color: Colors.blue, fontSize: 16),
-              ),
-            ]),
-            Text(
-              "(${hTeam.wins}-${hTeam.losses})",
-              style: TextStyle(color: Colors.grey[700], fontSize: 16),
-            ),
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+            recap
+                ? GameRecapArticleHeader(gameId: gameId, gameDate: date)
+                : SizedBox(),
           ],
         ),
       ),

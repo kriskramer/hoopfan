@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/screens/views/games_view/game_preview_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -24,8 +25,12 @@ class InProgressGameCard extends StatelessWidget {
     String hTeamScore =
         game["hTeam"]["score"] == "" ? "0" : game["hTeam"]["score"];
 
+    bool preview = game["isPreviewArticleAvail"];
+    var gameId = game["gameId"];
+    var date = game["gameUrlCode"].toString().split("/")[0];
+
     return Container(
-      //margin: EdgeInsets.all(5),
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -41,36 +46,43 @@ class InProgressGameCard extends StatelessWidget {
             ),
           );
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
-            Text(
-              "(${vTeam.wins}-${vTeam.losses})",
-              style: TextStyle(color: Colors.grey[700]),
+            preview
+                ? GamePreviewArticleHeader(gameId: gameId, gameDate: date)
+                : SizedBox(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+                Text(
+                  "(${vTeam.wins}-${vTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+                Column(children: [
+                  Text(
+                    vTeamScore + " - " + hTeamScore,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.red[600],
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    getCurrentPeriod(game),
+                    style: TextStyle(fontSize: 16, color: Colors.green[800]),
+                  ),
+                ]),
+                Text(
+                  "(${hTeam.wins}-${hTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+              ],
             ),
-            Column(children: [
-              Text(
-                vTeamScore + " - " + hTeamScore,
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.red[600],
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                getCurrentPeriod(game),
-                style: TextStyle(fontSize: 16, color: Colors.green[800]),
-              ),
-            ]),
-            Text(
-              "(${hTeam.wins}-${hTeam.losses})",
-              style: TextStyle(color: Colors.grey[700]),
-            ),
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
           ],
         ),
       ),

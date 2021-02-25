@@ -107,10 +107,13 @@ class _TodaysGamesState extends State<TodaysGames> {
                                 }
                               }),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                            child: Text(
-                              count.toString() + ' Games Today',
-                              style: TextStyle(fontSize: 16),
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            width: double.infinity,
+                            child: Center(
+                              child: Text(
+                                count.toString() + ' Games Today',
+                                style: TextStyle(fontSize: 14),
+                              ),
                             ),
                           ),
                           ListView.builder(
@@ -122,9 +125,11 @@ class _TodaysGamesState extends State<TodaysGames> {
                                   game: gamesInProgress[index],
                                 );
                               }),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          gamesInProgress.length > 0
+                              ? SizedBox(
+                                  height: 10,
+                                )
+                              : SizedBox(),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -134,9 +139,11 @@ class _TodaysGamesState extends State<TodaysGames> {
                                   game: gamesCompleted[index],
                                 );
                               }),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          gamesCompleted.length > 0
+                              ? SizedBox(
+                                  height: 10,
+                                )
+                              : SizedBox(),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
