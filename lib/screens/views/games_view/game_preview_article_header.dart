@@ -30,7 +30,9 @@ class GamePreviewArticleHeader extends StatelessWidget {
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  Divider(),
+                  Divider(
+                    color: Colors.blueGrey,
+                  ),
                 ],
               ),
             );
