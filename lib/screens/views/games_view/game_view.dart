@@ -312,9 +312,9 @@ class _GameViewState extends State<GameView> {
                                                   //   stats: stats,
                                                   //   game: gameData,
                                                   // ),
-                                                  // SizedBox(
-                                                  //   height: 8,
-                                                  // ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
                                                   GamePbpFeed(
                                                     gameData: gameData,
                                                   ),

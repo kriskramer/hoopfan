@@ -38,17 +38,21 @@ class GameLeadChartSmall extends StatelessWidget {
       rows.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(width: 40, child: Text(t.clock.replaceAll("00:", ""))),
+          Container(
+              width: 40,
+              child: Text(t.clock.replaceAll("00:", ""),
+                  style: TextStyle(fontSize: 10))),
           Container(
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(color: Colors.grey[200], width: 1))),
               alignment: Alignment.centerRight,
               width: 125,
-              height: 15,
+              height: 12,
               child: t.isVisitorLead()
                   ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      Text(t.getLead().toString()),
+                      Text(t.getLead().toString(),
+                          style: TextStyle(fontSize: 10)),
                       SizedBox(
                         width: 4,
                       ),
@@ -66,7 +70,7 @@ class GameLeadChartSmall extends StatelessWidget {
                   border: Border(
                       bottom: BorderSide(color: Colors.grey[200], width: 1))),
               width: 125,
-              height: 15,
+              height: 12,
               child: t.isHomeLead()
                   ? Row(children: [
                       Container(
@@ -76,15 +80,14 @@ class GameLeadChartSmall extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(
-                        t.getLead().toString(),
-                      ),
+                      Text(t.getLead().toString(),
+                          style: TextStyle(fontSize: 10)),
                     ])
                   : Text('')),
         ],
       ));
     }
-    return rows.length > 9 ? rows.sublist(rows.length - 10) : rows;
+    return rows.length > 14 ? rows.sublist(rows.length - 15) : rows;
   }
 
   double getLeadWidth(int lead) {

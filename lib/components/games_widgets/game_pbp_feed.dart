@@ -69,24 +69,29 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                 ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5, //plays.length,
+                    itemCount: 7, //plays.length,
                     itemBuilder: (context, index) {
-                      int idx = index + plays.length - 5;
+                      int idx = index + plays.length - 7;
                       if (idx < 0) {
                         idx = 0;
                       }
                       return Container(
-                        padding: EdgeInsets.fromLTRB(25, 4, 25, 4),
+                        padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(plays[idx]["clock"] + " - "),
+                            Text(
+                              plays[idx]["clock"] + "  ",
+                              style: TextStyle(fontSize: 14),
+                            ),
                             getTeamCard(
                                 plays[idx]["description"], widget.gameData),
                             Flexible(
-                                child: Text(getPbPDescriptionFormatted(
-                                    plays[idx]["description"],
-                                    widget.gameData)))
+                                child: Text(
+                              getPbPDescriptionFormatted(
+                                  plays[idx]["description"], widget.gameData),
+                              style: TextStyle(fontSize: 14),
+                            ))
                           ],
                         ),
                       );
@@ -161,7 +166,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
         padding: EdgeInsets.all(2),
         child: Text(
           tricode,
-          style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+          style: TextStyle(color: Color(teamTextColor), fontSize: 10),
         ),
       ),
     );
