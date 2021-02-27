@@ -5,11 +5,9 @@ import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
-//import 'package:hoop/components/standings_widgets/tabbar.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/standings_widgets/table.dart';
 import 'package:hoop/components/standings_widgets/table_div.dart';
-import 'package:hoop/models/league_standings.dart';
 
 class Standings extends StatefulWidget {
   @override
