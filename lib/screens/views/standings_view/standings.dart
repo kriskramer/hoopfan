@@ -6,8 +6,7 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/components/connection.dart';
-import 'package:hoop/components/standings_widgets/table.dart';
-import 'package:hoop/components/standings_widgets/table_div.dart';
+import 'package:hoop/components/standings_widgets/table_standings.dart';
 
 class Standings extends StatefulWidget {
   @override
@@ -16,6 +15,9 @@ class Standings extends StatefulWidget {
 
 class _StandingsState extends State<Standings> {
   LeagueStandingList standingsList;
+  bool confSelected = true;
+  bool divSelected = false;
+  bool leagueSelected = false;
 
   // This is the first screen to load up so I'm using this as the default 'load everything' method
   Future<bool> loadData() async {
@@ -57,6 +59,30 @@ class _StandingsState extends State<Standings> {
     return complete;
   }
 
+  leagueClick() {
+    setState(() {
+      confSelected = false;
+      divSelected = false;
+      leagueSelected = true;
+    });
+  }
+
+  conferenceClick() {
+    setState(() {
+      confSelected = true;
+      divSelected = false;
+      leagueSelected = false;
+    });
+  }
+
+  divisionClick() {
+    setState(() {
+      confSelected = false;
+      divSelected = true;
+      leagueSelected = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -81,101 +107,202 @@ class _StandingsState extends State<Standings> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                      width: double.infinity,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          border: Border.symmetric(
-                              horizontal: BorderSide(color: Colors.grey[400]))),
-                      child: Center(
-                        child: Text(
-                          'Conference Standings',
-                          style: TextStyle(fontSize: 20),
+                  ButtonBar(
+                      alignment: MainAxisAlignment.center,
+                      layoutBehavior: ButtonBarLayoutBehavior.constrained,
+                      children: [
+                        RaisedButton(
+                          child: Text(
+                            'League',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: leagueSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          color: leagueSelected ? Colors.blue : Colors.grey,
+                          onPressed: () {
+                            leagueClick();
+                          },
                         ),
-                      )),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'East',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  ConfTable(list: standingsList.getConferenceStandings('East')),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    'West',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  ConfTable(list: standingsList.getConferenceStandings('West')),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                      width: double.infinity,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          border: Border.symmetric(
-                              horizontal: BorderSide(color: Colors.grey[400]))),
-                      child: Center(
-                        child: Text(
-                          'Division Standings',
-                          style: TextStyle(fontSize: 20),
+                        RaisedButton(
+                          child: Text(
+                            'Conference',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: confSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          color: confSelected ? Colors.blue : Colors.grey,
+                          onPressed: () {
+                            conferenceClick();
+                          },
                         ),
-                      )),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Atlantic',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(
-                      list: standingsList.getDivisionStandings("Atlantic")),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Central',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(list: standingsList.getDivisionStandings("Central")),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Southeast',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(
-                      list: standingsList.getDivisionStandings("Southeast")),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Northwest',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(
-                      list: standingsList.getDivisionStandings("Northwest")),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Pacific',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(list: standingsList.getDivisionStandings("Pacific")),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Southwest',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  DivTable(
-                      list: standingsList.getDivisionStandings("Southwest")),
+                        RaisedButton(
+                          child: Text(
+                            'Division',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: divSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          color: divSelected ? Colors.blue : Colors.grey,
+                          onPressed: () {
+                            divisionClick();
+                          },
+                        ),
+                      ]),
+                  // Container(
+                  //     width: double.infinity,
+                  //     height: 30,
+                  //     child: Center(
+                  //       child: Text(
+                  //         'Conference Standings',
+                  //         style: TextStyle(fontSize: 20),
+                  //       ),
+                  //     )),
+                  confSelected
+                      ? Container(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'East',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getConferenceStandings('East'),
+                                teamCount: 15,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'West',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getConferenceStandings('West'),
+                                teamCount: 15,
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
+                  divSelected
+                      ? Container(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Atlantic',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Atlantic"),
+                                teamCount: 5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Central',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Central"),
+                                teamCount: 5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Southeast',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Southeast"),
+                                teamCount: 5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Northwest',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Northwest"),
+                                teamCount: 5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Pacific',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Pacific"),
+                                teamCount: 5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Southwest',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList
+                                    .getDivisionStandings("Southwest"),
+                                teamCount: 5,
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
+                  leagueSelected
+                      ? Container(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'League',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              StandingsTable(
+                                list: standingsList.getLeagueStandings(),
+                                teamCount: 30,
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
@@ -183,9 +310,7 @@ class _StandingsState extends State<Standings> {
         } else if (snapshot.data == false) {
           return NoConnection();
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return NoConnection();
         }
       },
     );
