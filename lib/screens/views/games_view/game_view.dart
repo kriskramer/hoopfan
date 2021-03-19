@@ -12,7 +12,6 @@ import 'package:hoop/components/games_widgets/game_stats.dart';
 import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
-import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
 import 'package:hoop/constant.dart';
@@ -65,24 +64,16 @@ class _GameViewState extends State<GameView> {
 
   @override
   Widget build(BuildContext context) {
-    // String gameId = widget.game["gameId"];
-    // String gameUrlCode = widget.game["gameUrlCode"];
-    // String gameDate = gameUrlCode.split("/")[0];
     if (vTeamScore == null) vTeamScore = widget.game["vTeam"]["score"];
     if (hTeamScore == null) hTeamScore = widget.game["hTeam"]["score"];
+    var gameStatus = widget.game["statusNum"];
 
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text("Game  " + vTeamScore + "-" + hTeamScore),
-        //   actions: <Widget>[
-        //     IconButton(
-        //       icon: Icon(Icons.refresh),
-        //       onPressed: () {
-        //         refreshGameData();
-        //       },
-        //     )
-        //   ],
-        // ),
+        bottomNavigationBar: gameStatus > 1
+            ? GameLeadersFeed(
+                game: widget.game,
+              )
+            : SizedBox(),
         body: FutureBuilder(
             future: _gameData,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -94,7 +85,7 @@ class _GameViewState extends State<GameView> {
                 bool preview = gameData["isPreviewArticleAvail"];
                 bool recap = gameData["isRecapArticleAvail"];
 
-                var gameStatus = gameData["statusNum"];
+                //var gameStatus = gameData["statusNum"];
                 var gameActivated = gameData["isGameActivated"];
 
                 var gameId = gameData["gameId"];
@@ -111,284 +102,279 @@ class _GameViewState extends State<GameView> {
                 } else {
                   _timer.cancel();
                 }
-
-                return CustomScrollView(slivers: [
-                  SliverAppBar(
-                    iconTheme: IconThemeData(color: Colors.blue),
-                    //title: Text('Floating app bar'),
-                    pinned: true,
-                    elevation: 10,
-                    collapsedHeight: 120,
-
-                    backgroundColor: Colors.white,
-                    flexibleSpace: Container(
-                      padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
-                      child: gameStatus > 1 || gameActivated
-                          ? InProgressGameHeader(
-                              gameData: gameData, stats: stats)
-                          : ScheduledGameHeader(gameData: gameData),
+                return SafeArea(
+                  child: CustomScrollView(slivers: [
+                    SliverAppBar(
+                      iconTheme: IconThemeData(color: Colors.blue),
+                      pinned: true,
+                      elevation: 10,
+                      collapsedHeight: 120,
+                      backgroundColor: Colors.white,
+                      flexibleSpace: Container(
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: gameStatus > 1 || gameActivated
+                            ? InProgressGameHeader(
+                                gameData: gameData, stats: stats)
+                            : ScheduledGameHeader(gameData: gameData),
+                      ),
+                      expandedHeight: 120,
                     ),
-                    expandedHeight: 120,
-                  ),
-                  SliverList(
+                    SliverList(
                       delegate: SliverChildListDelegate([
-                    Column(
-                      children: [
-                        // Container(
-                        //   decoration: BoxDecoration(color: Colors.grey[300]),
-                        //   padding: EdgeInsets.all(4),
-                        //   width: double.infinity,
-                        //   child: Center(
-                        //     child: Text(
-                        //       gameData["seasonStageId"] == 1
-                        //           ? "Pre Season"
-                        //           : "Regular Season",
-                        //       style: TextStyle(fontSize: 20),
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: 15,
-                        // ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.spaceEvenly,
-                          layoutBehavior: ButtonBarLayoutBehavior.constrained,
+                        Column(
                           children: [
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: preview
-                                        ? Colors.teal[200]
-                                        : Colors.grey,
-                                    radius: 20,
-                                    child: Icon(
-                                      Icons.article,
-                                      color: Colors.grey[100],
-                                    ),
-                                  ),
-                                  Text(
-                                    'Preview',
-                                    style: TextStyle(color: Colors.blueGrey),
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                if (preview) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GamePreviewArticle(
-                                        gameDate: date,
-                                        gameId: gameId,
+                            ButtonBar(
+                              alignment: MainAxisAlignment.spaceEvenly,
+                              layoutBehavior:
+                                  ButtonBarLayoutBehavior.constrained,
+                              children: [
+                                GestureDetector(
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: preview
+                                            ? Colors.teal[200]
+                                            : Colors.grey,
+                                        radius: 20,
+                                        child: Icon(
+                                          Icons.article,
+                                          color: Colors.grey[100],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.teal[200],
-                                    radius: 20,
-                                    child: Icon(
-                                      Icons.article,
-                                      color: Colors.grey[100],
-                                    ),
+                                      Text(
+                                        'Preview',
+                                        style:
+                                            TextStyle(color: Colors.blueGrey),
+                                      )
+                                    ],
                                   ),
-                                  Text(
-                                    'News',
-                                    style: TextStyle(color: Colors.blueGrey),
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameNews(
-                                      searchString: newsSearchString,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.teal[200],
-                                    radius: 20,
-                                    child: Icon(
-                                      Icons.chat_bubble_outline,
-                                      color: Colors.grey[100],
-                                    ),
-                                  ),
-                                  Text(
-                                    'Chat',
-                                    style: TextStyle(color: Colors.blueGrey),
-                                  )
-                                ],
-                              ),
-                              onTap: () {},
-                            ),
-                            GestureDetector(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        recap ? Colors.teal[200] : Colors.grey,
-                                    radius: 20,
-                                    child: Icon(
-                                      Icons.article,
-                                      color: Colors.grey[100],
-                                    ),
-                                  ),
-                                  Text(
-                                    'Recap',
-                                    style: TextStyle(color: Colors.blueGrey),
-                                  )
-                                ],
-                              ),
-                              onTap: () {
-                                if (recap) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GameRecapArticle(
-                                        gameDate: date,
-                                        gameId: gameId,
+                                  onTap: () {
+                                    if (preview) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GamePreviewArticle(
+                                            gameDate: date,
+                                            gameId: gameId,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Colors.teal[200],
+                                        radius: 20,
+                                        child: Icon(
+                                          Icons.article,
+                                          color: Colors.grey[100],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        WinProbability(
-                          gameId: gameId,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        gameStatus == 1
-                            ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
-                            : DefaultTabController(
-                                length: 5, // length of tabs
-                                initialIndex: 0,
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    Container(
-                                      child: TabBar(
-                                        labelColor: Colors.green,
-                                        unselectedLabelColor: Colors.black,
-                                        tabs: [
-                                          Tab(text: 'Game'),
-                                          Tab(
-                                              text: gameData["vTeam"]
-                                                  ["triCode"]),
-                                          Tab(
-                                              text: gameData["hTeam"]
-                                                  ["triCode"]),
-                                          Tab(text: 'Stats'),
-                                          Tab(text: 'Odds'),
-                                        ],
+                                      Text(
+                                        'News',
+                                        style:
+                                            TextStyle(color: Colors.blueGrey),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => GameNews(
+                                          searchString: newsSearchString,
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      height: 1200, //height of TabBarView
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0.5))),
-                                      child: TabBarView(
-                                        children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.topLeft,
-                                            child: Column(children: [
+                                    );
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Colors.teal[200],
+                                        radius: 20,
+                                        child: Icon(
+                                          Icons.chat_bubble_outline,
+                                          color: Colors.grey[100],
+                                        ),
+                                      ),
+                                      Text(
+                                        'Chat',
+                                        style:
+                                            TextStyle(color: Colors.blueGrey),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {},
+                                ),
+                                GestureDetector(
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: recap
+                                            ? Colors.teal[200]
+                                            : Colors.grey,
+                                        radius: 20,
+                                        child: Icon(
+                                          Icons.article,
+                                          color: Colors.grey[100],
+                                        ),
+                                      ),
+                                      Text(
+                                        'Recap',
+                                        style:
+                                            TextStyle(color: Colors.blueGrey),
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    if (recap) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GameRecapArticle(
+                                            gameDate: date,
+                                            gameId: gameId,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            WinProbability(
+                              gameId: gameId,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            gameStatus == 1
+                                ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
+                                : DefaultTabController(
+                                    length: 5, // length of tabs
+                                    initialIndex: 0,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: <Widget>[
+                                        Container(
+                                          child: TabBar(
+                                            labelColor: Colors.green,
+                                            unselectedLabelColor: Colors.black,
+                                            tabs: [
+                                              Tab(text: 'Game'),
+                                              Tab(
+                                                  text: gameData["vTeam"]
+                                                      ["triCode"]),
+                                              Tab(
+                                                  text: gameData["hTeam"]
+                                                      ["triCode"]),
+                                              Tab(text: 'Stats'),
+                                              Tab(text: 'Odds'),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 1200, //height of TabBarView
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0.5))),
+                                          child: TabBarView(
+                                            children: <Widget>[
                                               Container(
-                                                padding: EdgeInsets.all(15),
-                                                child: OnCourtCard(
-                                                  stats: stats,
+                                                alignment: Alignment.topLeft,
+                                                child: Column(children: [
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            15, 10, 15, 5),
+                                                    child: OnCourtCard(
+                                                      stats: stats,
+                                                      game: gameData,
+                                                    ),
+                                                  ),
+                                                  // QuarterScores(
+                                                  //   game: gameData,
+                                                  // ),
+                                                  // GameLeadersFeed(
+                                                  //   stats: stats,
+                                                  //   game: gameData,
+                                                  // ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  GamePbpFeed(
+                                                    gameData: gameData,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  GameFoulTroubleFeed(
+                                                      game: gameData,
+                                                      stats: stats),
+                                                ]),
+                                              ),
+                                              Container(
+                                                child: GameBoxScoreMain(
                                                   game: gameData,
+                                                  stats: stats,
+                                                  isHomeTeam: false,
                                                 ),
                                               ),
-                                              QuarterScores(
-                                                game: gameData,
+                                              Container(
+                                                child: GameBoxScoreMain(
+                                                  game: gameData,
+                                                  stats: stats,
+                                                  isHomeTeam: true,
+                                                ),
                                               ),
-                                              GameLeadersFeed(
-                                                stats: stats,
-                                                game: gameData,
+                                              Container(
+                                                child: GameStats(
+                                                  stats: stats,
+                                                  gameData: gameData,
+                                                ),
                                               ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              GamePbpFeed(
-                                                gameData: gameData,
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              GameFoulTroubleFeed(
-                                                  game: gameData, stats: stats),
-                                            ]),
+                                              Container(
+                                                  padding: EdgeInsets.all(20),
+                                                  child: Text(
+                                                      'This feature is not yet fully implemented.')),
+                                            ],
                                           ),
-                                          Container(
-                                            child: GameBoxScoreMain(
-                                              game: gameData,
-                                              stats: stats,
-                                              isHomeTeam: false,
-                                            ),
-                                          ),
-                                          Container(
-                                            child: GameBoxScoreMain(
-                                              game: gameData,
-                                              stats: stats,
-                                              isHomeTeam: true,
-                                            ),
-                                          ),
-                                          Container(
-                                            child: GameStats(
-                                              stats: stats,
-                                              gameData: gameData,
-                                            ),
-                                          ),
-                                          Container(
-                                              padding: EdgeInsets.all(20),
-                                              child: Text(
-                                                  'This feature is not yet fully implemented.')),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                        SizedBox(
-                          height: 5,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ArenaCard(
+                              gameData: gameData,
+                            ),
+                            GameOfficials(
+                              game: gameData,
+                            ),
+                            gameStatus < 3
+                                ? HowToWatchCard(game: widget.game)
+                                : Text(''),
+                            gameStatus < 3 ? getTicketsCard() : Text('')
+                          ],
                         ),
-                        ArenaCard(
-                          gameData: gameData,
-                        ),
-                        GameOfficials(
-                          game: gameData,
-                        ),
-                        gameStatus < 3
-                            ? HowToWatchCard(game: widget.game)
-                            : Text(''),
-                        gameStatus < 3 ? getTicketsCard() : Text('')
-                      ],
-                    )
-                  ]))
-                ]);
+                      ]),
+                    ),
+                  ]),
+                );
               } else {
                 return NoConnection();
               }

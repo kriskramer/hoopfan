@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
-import 'package:hoop/screens/views/games_view/game_recap_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-class CompletedGameCard extends StatelessWidget {
+class CompletedGameCardViewingTeam extends StatelessWidget {
   final dynamic game;
+  final String viewingTeam;
 
-  CompletedGameCard({this.game});
+  CompletedGameCardViewingTeam({this.game, this.viewingTeam});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,8 @@ class CompletedGameCard extends StatelessWidget {
     final LeagueStanding hTeam =
         standings.getTeamStandings(game["hTeam"]["teamId"]);
 
-    bool recap = game["isRecapArticleAvail"];
-    var gameId = game["gameId"];
-    var date = game["gameUrlCode"].toString().split("/")[0];
+    // dynamic vTeam = getVTeamStandingsFromJson(game, standingsJson);
+    // dynamic hTeam = getHTeamStandingsFromJson(game, standingsJson);
 
     bool isOvertime = false;
     if (game["period"] != null) {
@@ -31,9 +30,10 @@ class CompletedGameCard extends StatelessWidget {
     }
 
     bool isHomeWin = isHomeTeamWinner(game);
+    bool isViewingTeamWin = getViewingTeamWinnerResult(game, viewingTeam);
 
     return Container(
-      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      //margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -49,64 +49,61 @@ class CompletedGameCard extends StatelessWidget {
             ),
           );
         },
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CachedLogo(
-                    radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
-                Text(
-                  "(${vTeam.wins}-${vTeam.losses})",
-                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
-                ),
-                Column(children: [
-                  Text(
-                    formatDate(game["startDateEastern"].toString()),
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  Row(children: [
-                    Text(
-                      game["vTeam"]["score"].toString(),
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight:
-                              isHomeWin ? FontWeight.normal : FontWeight.bold),
-                    ),
-                    Text(
-                      " - ",
-                      style: TextStyle(fontSize: 14, color: Colors.blue),
-                    ),
-                    Text(
-                      game["hTeam"]["score"],
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight:
-                              isHomeWin ? FontWeight.bold : FontWeight.normal),
-                    ),
-                  ]),
-                  Text(
-                    isOvertime ? "Final/OT" : "Final",
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
-                  ),
-                ]),
-                Text(
-                  "(${hTeam.wins}-${hTeam.losses})",
-                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
-                ),
-                CachedLogo(
-                    radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
-              ],
+            CachedLogo(
+                radius: 35,
+                url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+            Text(
+              "(${vTeam.wins}-${vTeam.losses})",
+              style: TextStyle(color: Colors.grey[700], fontSize: 16),
             ),
-            recap
-                ? GameRecapArticleHeader(gameId: gameId, gameDate: date)
-                : SizedBox(),
+            Column(children: [
+              Text(
+                formatDate(game["startDateEastern"].toString()),
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+              Row(children: [
+                Text(
+                  game["vTeam"]["score"].toString(),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
+                      fontWeight:
+                          isHomeWin ? FontWeight.normal : FontWeight.bold),
+                ),
+                Text(
+                  " - ",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red),
+                ),
+                Text(
+                  game["hTeam"]["score"],
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: isViewingTeamWin ? Colors.blue : Colors.red,
+                      fontWeight:
+                          isHomeWin ? FontWeight.bold : FontWeight.normal),
+                ),
+              ]),
+              Text(
+                isOvertime ? "Final/OT" : "Final",
+                style: TextStyle(
+                    color: isViewingTeamWin ? Colors.blue : Colors.red,
+                    fontSize: 16),
+              ),
+            ]),
+            Text(
+              "(${hTeam.wins}-${hTeam.losses})",
+              style: TextStyle(color: Colors.grey[700], fontSize: 16),
+            ),
+            CachedLogo(
+                radius: 35,
+                url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
           ],
         ),
       ),

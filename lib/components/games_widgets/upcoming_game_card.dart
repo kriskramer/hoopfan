@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/screens/views/games_view/game_preview_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -19,9 +20,12 @@ class UpcomingGameCard extends StatelessWidget {
     final LeagueStanding hTeam =
         standings.getTeamStandings(game["hTeam"]["teamId"]);
     var countdown = getStartCountdown(game);
+    bool preview = game["isPreviewArticleAvail"];
+    var gameId = game["gameId"];
+    var date = game["gameUrlCode"].toString().split("/")[0];
 
     return Container(
-      //margin: EdgeInsets.all(5),
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -35,48 +39,56 @@ class UpcomingGameCard extends StatelessWidget {
                         game: game,
                       )));
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
-            Text(
-              "(${vTeam.wins}-${vTeam.losses})",
-              style: TextStyle(color: Colors.grey[700], fontSize: 14),
-            ),
-            Column(children: [
-              Text(
-                formatDate(game["startDateEastern"].toString()),
-                style: TextStyle(
-                  fontSize: 14,
+            preview
+                ? GamePreviewArticleHeader(gameId: gameId, gameDate: date)
+                : SizedBox(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+                Text(
+                  "(${vTeam.wins}-${vTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700], fontSize: 14),
                 ),
-              ),
-              Text(
-                game["startTimeEastern"].toString(),
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              countdown != ""
-                  ? Container(
-                      padding: EdgeInsets.all(4),
-                      child: Text(
-                        countdown,
-                        style: TextStyle(
-                            color: Colors.purple, fontWeight: FontWeight.bold),
-                      ))
-                  : SizedBox(
-                      height: 1,
+                Column(children: [
+                  Text(
+                    formatDate(game["startDateEastern"].toString()),
+                    style: TextStyle(
+                      fontSize: 14,
                     ),
-            ]),
-            Text(
-              "(${hTeam.wins}-${hTeam.losses})",
-              style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                  ),
+                  Text(
+                    game["startTimeEastern"].toString(),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  countdown != ""
+                      ? Container(
+                          padding: EdgeInsets.all(4),
+                          child: Text(
+                            countdown,
+                            style: TextStyle(
+                                color: Colors.purple,
+                                fontWeight: FontWeight.bold),
+                          ))
+                      : SizedBox(
+                          height: 1,
+                        ),
+                ]),
+                Text(
+                  "(${hTeam.wins}-${hTeam.losses})",
+                  style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                ),
+                CachedLogo(
+                    radius: 35,
+                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+              ],
             ),
-            CachedLogo(
-                radius: 35,
-                url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
           ],
         ),
       ),

@@ -30,8 +30,8 @@ class GameLeaderCard extends StatelessWidget {
             margin: EdgeInsets.all(2),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                border: Border(
-                    bottom: BorderSide(width: 5, color: Color(teamColor)))),
+                border:
+                    Border(top: BorderSide(width: 3, color: Color(teamColor)))),
             child: GestureDetector(
               onTap: () {
                 //dynamic teamsJson;
@@ -47,7 +47,7 @@ class GameLeaderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Card(
-                      elevation: 1,
+                      elevation: 5,
                       child: Container(
                         color: Color(teamColor),
                         padding: EdgeInsets.all(10),
@@ -67,10 +67,12 @@ class GameLeaderCard extends StatelessWidget {
                   SizedBox(
                     width: 20,
                   ),
-                  Column(children: [
-                    Text(player["firstName"]),
-                    Text(player["lastName"])
-                  ]),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(player["firstName"]),
+                        Text(player["lastName"])
+                      ]),
                   SizedBox(
                     width: 20,
                   ),

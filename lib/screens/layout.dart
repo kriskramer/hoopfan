@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/games_view/today_games.dart';
+import 'package:hoop/screens/views/league/league.dart';
 import 'package:hoop/screens/views/news_view/news_main.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
 import 'package:hoop/screens/views/stats/stats_main.dart';
@@ -13,7 +14,8 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   int _selectedScreen = 0;
   List<Widget> views = [
-    Standings(),
+    //Standings(),
+    LeagueMainView(),
     NewsMainScreen(),
     TodaysGames(),
     StatsMain(),
@@ -37,7 +39,7 @@ class _LayoutState extends State<Layout> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.table_chart_outlined),
-              label: "Standings",
+              label: "League",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.article),

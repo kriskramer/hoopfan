@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/teams_view/team_main.dart';
 
-class DivTable extends StatefulWidget {
+class StandingsTable extends StatefulWidget {
   List<LeagueStanding> list;
+  int teamCount;
 //  final dynamic json;
-  DivTable({this.list});
+  StandingsTable({this.list, this.teamCount});
   @override
-  _DivTableState createState() => _DivTableState();
+  _StandingsTableState createState() => _StandingsTableState();
 }
 
-class _DivTableState extends State<DivTable> {
+class _StandingsTableState extends State<StandingsTable> {
   List<DataRow> tableData() {
-    List<DataRow> table = List(5);
+    List<DataRow> table = List(widget.teamCount);
     for (int index = 0; index < widget.list.length; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(

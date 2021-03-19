@@ -222,4 +222,22 @@ class LeagueStandingList {
 
     return list;
   }
+
+  List<LeagueStanding> getLeagueStandings() {
+    List<LeagueStanding> list = List<LeagueStanding>();
+
+    for (var t in items) {
+      list.add(t);
+    }
+
+    list.sort((a, b) {
+      if (a.leagueRank > b.leagueRank) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+
+    return list;
+  }
 }

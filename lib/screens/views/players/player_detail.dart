@@ -10,6 +10,8 @@ import 'package:hoop/components/player_widgets/player_splits_advanced_table.dart
 import 'package:hoop/components/player_widgets/player_splits_game_table.dart';
 import 'package:hoop/components/player_widgets/player_splits_general_table.dart';
 import 'package:hoop/components/player_widgets/player_splits_shooting_table.dart';
+import 'package:hoop/components/player_widgets/player_year_over_year_advanced_table.dart';
+import 'package:hoop/components/player_widgets/player_year_over_year_base_table.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
@@ -185,6 +187,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
     print(player["teamId"]);
 
     return Scaffold(
+      //backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text(
           'Player Details',
@@ -194,7 +197,14 @@ class _PlayerDetailState extends State<PlayerDetail> {
             ? Color(teamColor)
             : Theme.of(context).primaryColor,
       ),
-      body: SingleChildScrollView(
+      body: newMethod(player, deviceWidth, teamColor, teamTextColor),
+    );
+  }
+
+  SafeArea newMethod(
+      player, double deviceWidth, int teamColor, int teamTextColor) {
+    return SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           children: [
             Row(
@@ -380,261 +390,227 @@ class _PlayerDetailState extends State<PlayerDetail> {
               height: 15,
             ),
             // Use a FutureBuilder to get the player data and then build out a data table or some other widget
-            FutureBuilder(
-                future: Network.getJson(
-                    Urls.nbaPlayerStats("2020", player["personId"])),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData) {
-                    //print(snapshot.data);
-                    var statsSummary = snapshot.data["league"]["standard"]
-                        ["stats"]["careerSummary"];
-                    var statsLatest =
-                        snapshot.data["league"]["standard"]["stats"]["latest"];
-                    var statsRegSeason = snapshot.data["league"]["standard"]
-                        ["stats"]["regularSeason"];
-
-                    //print(statsSummary);
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('View: '),
-                            SizedBox(
-                              width: 40,
-                            ),
-                            DropdownButton(
-                                value: _valueType,
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text("Summary"),
-                                    value: 1,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Shooting"),
-                                    value: 2,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Clutch"),
-                                    value: 3,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Splits - Game"),
-                                    value: 4,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Splits - General"),
-                                    value: 5,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Splits - Shooting"),
-                                    value: 6,
-                                  )
-                                ],
-                                onChanged: (value) {
-                                  if (value == 1) {
-                                    _valueType = 1;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    summaryClick();
-                                  } else if (value == 2) {
-                                    _valueType = 2;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    shootingClick();
-                                  } else if (value == 3) {
-                                    _valueType = 3;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    clutchClick();
-                                  } else if (value == 4) {
-                                    _valueType = 4;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    splitsGameClick();
-                                  } else if (value == 5) {
-                                    _valueType = 5;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    splitsGeneralClick();
-                                  } else if (value == 6) {
-                                    _valueType = 6;
-                                    _valueMeasure = 1;
-                                    _valuePer = 1;
-                                    splitsShootingClick();
-                                  }
-                                }),
-                          ],
-                        ),
-                        showMeasureRow()
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Measure: '),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  DropdownButton(
-                                      value: _valueMeasure,
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text("Base"),
-                                          value: 1,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Advanced"),
-                                          value: 2,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Misc"),
-                                          value: 3,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Four Factors"),
-                                          value: 4,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Scoring"),
-                                          value: 5,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Opponent"),
-                                          value: 6,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("Usage"),
-                                          value: 7,
-                                        )
-                                      ],
-                                      onChanged: (value) {
-                                        setState(() {
-                                          updateMeasure(value);
-                                        });
-                                      }),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  showTotalsDropDown()
-                                      ? DropdownButton(
-                                          value: _valuePer,
-                                          items: [
-                                            DropdownMenuItem(
-                                              child: Text("Totals"),
-                                              value: 1,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("PerGame"),
-                                              value: 2,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("Per48"),
-                                              value: 3,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("Per36"),
-                                              value: 4,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("PerPoss"),
-                                              value: 5,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("Per100Poss"),
-                                              value: 6,
-                                            ),
-                                          ],
-                                          onChanged: (value) {
-                                            setState(() {
-                                              updatePer(value);
-                                            });
-                                          })
-                                      : SizedBox(),
-                                ],
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        showSummary
-                            ? PlayerStatsSummaryDataTable(
-                                seasons: statsRegSeason,
-                                teamId: teamId,
-                                playerId: widget.playerId,
-                                summary: statsSummary)
-                            : SizedBox(),
-                        showShooting
-                            ? PlayerShootingStatsTable(
-                                playerId: widget.playerId,
-                              )
-                            : SizedBox(),
-                        showClutch
-                            ? PlayerClutchStatsTable(
-                                playerId: widget.playerId,
-                                measure: measure,
-                                per: per,
-                              )
-                            : SizedBox(),
-                        showSplitsGame
-                            ? Column(
-                                children: [
-                                  PlayerSplitsGameTable(
-                                    playerId: widget.playerId,
-                                    measure: measure,
-                                    per: per,
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
-                        showSplitsGeneral
-                            ? Column(
-                                children: [
-                                  PlayerSplitsGeneralTable(
-                                    playerId: widget.playerId,
-                                    measure: measure,
-                                    per: per,
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
-                        showSplitsShooting
-                            ? Column(
-                                children: [
-                                  PlayerSplitsShootingTable(
-                                    playerId: widget.playerId,
-                                    measure: measure,
-                                    per: per,
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.error,
-                            size: 50,
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton(
+                        value: _valueType,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text("Summary"),
+                            value: 1,
                           ),
-                          Text("An error occured!"),
+                          DropdownMenuItem(
+                            child: Text("Shooting"),
+                            value: 2,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Clutch"),
+                            value: 3,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - Game"),
+                            value: 4,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - General"),
+                            value: 5,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - Shooting"),
+                            value: 6,
+                          )
                         ],
-                      ),
-                    );
-                  } else if (snapshot.data == null) {
-                    return NoConnection();
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  //return Text('data');
-                }),
+                        onChanged: (value) {
+                          if (value == 1) {
+                            _valueType = 1;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            summaryClick();
+                          } else if (value == 2) {
+                            _valueType = 2;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            shootingClick();
+                          } else if (value == 3) {
+                            _valueType = 3;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            clutchClick();
+                          } else if (value == 4) {
+                            _valueType = 4;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsGameClick();
+                          } else if (value == 5) {
+                            _valueType = 5;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsGeneralClick();
+                          } else if (value == 6) {
+                            _valueType = 6;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsShootingClick();
+                          }
+                        }),
+                    showMeasureDropdown()
+                        ? DropdownButton(
+                            value: _valueMeasure,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Base"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Advanced"),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Misc"),
+                                value: 3,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Four Factors"),
+                                value: 4,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Scoring"),
+                                value: 5,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Opponent"),
+                                value: 6,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Usage"),
+                                value: 7,
+                              )
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updateMeasure(value);
+                              });
+                            })
+                        : SizedBox(),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    showPerModeDropdown()
+                        ? DropdownButton(
+                            elevation: 5,
+                            value: _valuePer,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Totals"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("PerGame"),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per48"),
+                                value: 3,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per36"),
+                                value: 4,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("PerPoss"),
+                                value: 5,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per100Poss"),
+                                value: 6,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updatePer(value);
+                              });
+                            })
+                        : SizedBox(),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                showSummary
+                    ? Column(
+                        children: [
+                          Text('Base', style: TextStyle(fontSize: 18)),
+                          PlayerYearOverYearBaseTable(
+                            playerId: widget.playerId,
+                            measure: 'Base',
+                            per: per,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Advanced', style: TextStyle(fontSize: 18)),
+                          PlayerYearOverYearAdvancedTable(
+                            playerId: widget.playerId,
+                            measure: 'Advanced',
+                            per: per,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                showShooting
+                    ? PlayerShootingStatsTable(
+                        playerId: widget.playerId,
+                        perMode: per,
+                      )
+                    : SizedBox(),
+                showClutch
+                    ? PlayerClutchStatsTable(
+                        playerId: widget.playerId,
+                        measure: measure,
+                        per: per,
+                      )
+                    : SizedBox(),
+                showSplitsGame
+                    ? Column(
+                        children: [
+                          PlayerSplitsGameTable(
+                            playerId: widget.playerId,
+                            measure: measure,
+                            per: per,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                showSplitsGeneral
+                    ? Column(
+                        children: [
+                          PlayerSplitsGeneralTable(
+                            playerId: widget.playerId,
+                            measure: measure,
+                            per: per,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                showSplitsShooting
+                    ? Column(
+                        children: [
+                          PlayerSplitsShootingTable(
+                            playerId: widget.playerId,
+                            measure: measure,
+                            per: per,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  height: 40,
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -657,7 +633,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
     }
   }
 
-  bool showMeasureRow() {
+  bool showMeasureDropdown() {
     if (_valueType > 1 && _valueType != 6) {
       return true;
     }
@@ -665,8 +641,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
     return false;
   }
 
-  bool showTotalsDropDown() {
-    if (_valueType == 2) {
+  bool showPerModeDropdown() {
+    if (_valueType <= 2) {
       return true;
     } else if (_valueType >= 4) {
       return true;

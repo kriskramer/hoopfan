@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 
 class PlayerShootingStatsTable extends StatelessWidget {
   final String playerId;
+  final String perMode;
 
-  PlayerShootingStatsTable({this.playerId});
+  PlayerShootingStatsTable({this.playerId, this.perMode});
 
   @override
   Widget build(BuildContext context) {
@@ -166,20 +167,20 @@ class PlayerShootingStatsTable extends StatelessWidget {
   Future<dynamic> loadData(BuildContext context) async {
     dynamic json;
 
-    if (Provider.of<JsonFiles>(context, listen: false)
-            .getPlayerShotTypes(playerId) ==
-        null) {
-      json = Network.getJson(
-        Urls.getNbaStatsPlayerShotTypes(playerId),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
+    // if (Provider.of<JsonFiles>(context, listen: false)
+    //         .getPlayerShotTypes(playerId) ==
+    //     null) {
+    json = Network.getJson(
+      Urls.getNbaStatsPlayerShotTypes(playerId, perMode: perMode),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
 
-      Provider.of<JsonFiles>(context, listen: false)
-          .setPlayerShotTypes(playerId, json);
-    } else {
-      json = Provider.of<JsonFiles>(context, listen: false)
-          .getPlayerShotTypes(playerId);
-    }
+    //   Provider.of<JsonFiles>(context, listen: false)
+    //       .setPlayerShotTypes(playerId, json);
+    // } else {
+    //   json = Provider.of<JsonFiles>(context, listen: false)
+    //       .getPlayerShotTypes(playerId);
+    // }
 
     return json;
   }
