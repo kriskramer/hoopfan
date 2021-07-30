@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
+import 'package:hoop/components/games_widgets/scoring_trends_inline_pbp.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/games_view/game_pbp.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:provider/provider.dart';
 
 class GamePbpFeed extends StatefulWidget {
   final dynamic gameData;
@@ -105,12 +108,18 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                   hTeamId: widget.gameData["hTeam"]["teamId"],
                   period: period,
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                ScoringTrendsInlinePbp(
+                  game: widget.gameData,
+                )
               ]);
             }
             return Text('');
           },
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.push(
                 context,
@@ -122,7 +131,23 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
           },
           child:
               Text('Full Play by Play', style: TextStyle(color: Colors.blue)),
-        )
+        ),
+        loadPbpData(date, widget.gameData, "1", context),
+        widget.gameData["period"]["current"] >= 2
+            ? loadPbpData(date, widget.gameData, "2", context)
+            : SizedBox(),
+        widget.gameData["period"]["current"] >= 3
+            ? loadPbpData(date, widget.gameData, "3", context)
+            : SizedBox(),
+        widget.gameData["period"]["current"] >= 4
+            ? loadPbpData(date, widget.gameData, "4", context)
+            : SizedBox(),
+        widget.gameData["period"]["current"] >= 5
+            ? loadPbpData(date, widget.gameData, "5", context)
+            : SizedBox(),
+        widget.gameData["period"]["current"] >= 6
+            ? loadPbpData(date, widget.gameData, "6", context)
+            : SizedBox(),
       ]),
     );
   }
@@ -181,5 +206,29 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
 
     return desc;
+  }
+
+  Widget loadPbpData(
+      String date, dynamic gameData, String period, BuildContext context) {
+    String date = gameData["startDateEastern"];
+    String gameId = gameData["gameId"];
+    Future<dynamic> _pbpFeed;
+
+    _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
+
+    return FutureBuilder(
+        future:
+            _pbpFeed, //Network.getJson(Urls.nbaPlayByPlay(date, gameId, period)),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            var plays = snapshot.data["plays"];
+
+            Provider.of<JsonFiles>(context, listen: false)
+                .setGamePbp(gameId + "-" + period, plays);
+
+            return SizedBox();
+          }
+          return SizedBox();
+        });
   }
 }

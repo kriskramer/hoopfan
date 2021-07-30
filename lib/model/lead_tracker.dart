@@ -1,3 +1,6 @@
+import 'package:hoop/json/jsons.dart';
+import 'package:provider/provider.dart';
+
 class LeadTrackerItem {
   String clock;
   int period;
@@ -49,7 +52,7 @@ class LeadTrackerItem {
 }
 
 class LeadTrackerList {
-  List<LeadTrackerItem> items = new List<LeadTrackerItem>();
+  List<LeadTrackerItem> items = <LeadTrackerItem>[];
 
   void importPbp(dynamic pbp, int period) {
     if (pbp != null) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/lead_tracker_dialog.dart';
+import 'package:hoop/components/games_widgets/scoring_trends_dialog.dart';
 import 'package:hoop/components/games_widgets/pbp_dialog.dart';
 import 'package:hoop/components/games_widgets/pbp_period_view.dart';
 import 'package:hoop/constant.dart';
@@ -34,7 +34,7 @@ class GameLeadChart extends StatelessWidget {
                 width: 15,
               ),
               Text('Lead Tracker'),
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Play-by-Play',
                   style: TextStyle(color: Colors.blue),
@@ -50,7 +50,7 @@ class GameLeadChart extends StatelessWidget {
                       });
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Video',
                   style: TextStyle(color: Colors.blue),
@@ -81,7 +81,7 @@ class GameLeadChart extends StatelessWidget {
     var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
     var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
 
-    List<Widget> rows = new List<Widget>();
+    List<Widget> rows = <Widget>[];
 
     for (var lti in list.items) {
       rows.add(GestureDetector(
@@ -89,7 +89,7 @@ class GameLeadChart extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                return LeadTrackerDialog(
+                return ScoringTrendsDialog(
                   leadTrackerItem: lti,
                   game: game,
                 );

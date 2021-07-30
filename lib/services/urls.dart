@@ -6,28 +6,28 @@ class Urls {
   static final String _sioBaseUrl =
       "https://api.sportsdata.io/v3/nba/stats/json/";
 
-  static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
+  // static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
 
-  static String getDivisionStandings(String division, String year) {
-    return "$_apiBaseUrl/standings/standard/$year/division/$division/?rapidapi-key=${NbaApi.key}";
-  }
+//   static String getDivisionStandings(String division, String year) {
+//     return "$_apiBaseUrl/standings/standard/$year/division/$division/?rapidapi-key=${NbaApi.key}";
+//   }
 
-  static String eastTeamsUrl =
-      "$_apiBaseUrl/teams/confName/east/?rapidapi-key=${NbaApi.key}";
-  static String westTeamsUrl =
-      "$_apiBaseUrl/teams/confName/west/?rapidapi-key=${NbaApi.key}";
-  static String seasonGames =
-      "$_apiBaseUrl/games/league/standard/2019/?rapidapi-key=${NbaApi.key}";
-  static String teamPlayersUrl(String id) =>
-      "$_apiBaseUrl/players/teamId/$id/?rapidapi-key=${NbaApi.key}";
+//   static String eastTeamsUrl =
+//       "$_apiBaseUrl/teams/confName/east/?rapidapi-key=${NbaApi.key}";
+//   static String westTeamsUrl =
+//       "$_apiBaseUrl/teams/confName/west/?rapidapi-key=${NbaApi.key}";
+//   static String seasonGames =
+//       "$_apiBaseUrl/games/league/standard/2019/?rapidapi-key=${NbaApi.key}";
+//   static String teamPlayersUrl(String id) =>
+//       "$_apiBaseUrl/players/teamId/$id/?rapidapi-key=${NbaApi.key}";
   static String link(String team) => _teamBaseUrl + team + "/";
 
   static String teamGoogleNewsSearch(String team) =>
       //"https://bing-news-search1.p.rapidapi.com/news/search?q=$team&freshness=Day&textFormat=Raw&safeSearch=Off?rapidapi-key=${NbaApi.key}";
       "https://google-search3.p.rapidapi.com/api/v1/news/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
-  static String teamGoogleImageSearch(String team) =>
-      "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
+//   static String teamGoogleImageSearch(String team) =>
+//       "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
   static String getBingVideoSearch(String team) {
     return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";

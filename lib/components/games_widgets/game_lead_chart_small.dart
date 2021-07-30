@@ -32,7 +32,7 @@ class GameLeadChartSmall extends StatelessWidget {
       LeadTrackerList list, String vTeamId, String hTeamId) {
     var vTeamColor = ConstantHelper.getTeamColor(vTeamId);
     var hTeamColor = ConstantHelper.getTeamColor(hTeamId);
-    List<Widget> rows = new List<Widget>();
+    List<Widget> rows = <Widget>[];
 
     for (var t in list.items) {
       rows.add(Row(
