@@ -22,75 +22,128 @@ class GameLeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic player =
-        Provider.of<JsonFiles>(context, listen: false).getPlayer(playerId);
+    if (playerId != "") {
+      dynamic player =
+          Provider.of<JsonFiles>(context, listen: false).getPlayer(playerId);
 
-    return playerId != ""
-        ? Container(
-            margin: EdgeInsets.all(2),
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border:
-                    Border(top: BorderSide(width: 3, color: Color(teamColor)))),
-            child: GestureDetector(
-              onTap: () {
-                //dynamic teamsJson;
+      return (player != null)
+          ? Container(
+              margin: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border(
+                      top: BorderSide(width: 3, color: Color(teamColor)))),
+              child: GestureDetector(
+                onTap: () {
+                  //dynamic teamsJson;
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          PlayerDetail(playerId: player["personId"])),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Card(
-                      elevation: 5,
-                      child: Container(
-                        color: Color(teamColor),
-                        padding: EdgeInsets.all(10),
-                        child: Text(triCode,
-                            style: TextStyle(
-                              color: Color(teamTextColor),
-                            )),
-                      )),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CachedLogo(
-                    url:
-                        "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                    radius: 25,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(player["firstName"]),
-                        Text(player["lastName"])
-                      ]),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    description,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            PlayerDetail(playerId: player["personId"])),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Card(
+                        elevation: 5,
+                        child: Container(
+                          color: Color(teamColor),
+                          padding: EdgeInsets.all(10),
+                          child: Text(triCode,
+                              style: TextStyle(
+                                color: Color(teamTextColor),
+                              )),
+                        )),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    CachedLogo(
+                      url:
+                          "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
+                      radius: 25,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(player["firstName"] == null
+                              ? ""
+                              : player["firstName"]),
+                          Text(player["lastName"] == null
+                              ? ""
+                              : player["lastName"])
+                        ]),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      value,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      description,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        : Text('');
+            )
+          : Container(
+              margin: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border(
+                      top: BorderSide(width: 3, color: Color(teamColor)))),
+              child: GestureDetector(
+                onTap: () {
+                  //dynamic teamsJson;
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            PlayerDetail(playerId: player["personId"])),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Card(
+                        elevation: 5,
+                        child: Container(
+                          color: Color(teamColor),
+                          padding: EdgeInsets.all(10),
+                          child: Text(triCode,
+                              style: TextStyle(
+                                color: Color(teamTextColor),
+                              )),
+                        )),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      value,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      description,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            );
+    }
   }
 }

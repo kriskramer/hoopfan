@@ -19,7 +19,7 @@ class GameLeadersFeed extends StatefulWidget {
 class _GameLeadersFeedState extends State<GameLeadersFeed> {
   Timer _timer;
   int _currentIndex = 0;
-  List<Widget> leaders = new List<Widget>();
+  List<Widget> leaders = [];
   Future<dynamic> _gameData;
   dynamic stats;
 
@@ -50,6 +50,7 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
         future: _gameData,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
+            leaders.clear();
             //print('reloading game_view data');
             var gameData = snapshot.data["basicGameData"];
             var stats = snapshot.data["stats"];

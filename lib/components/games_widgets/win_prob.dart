@@ -24,6 +24,14 @@ class WinProbability extends StatelessWidget {
             vp = wp["rowSet"][maxIndex][3];
           }
 
+          // Sometimes these values are set to null in the JSON, which throws an error
+          if (hp == null) {
+            hp = 0.0;
+          }
+          if (vp == null) {
+            vp = 0.0;
+          }
+
           vp *= 100;
           hp *= 100;
 
