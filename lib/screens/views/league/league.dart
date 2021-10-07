@@ -18,11 +18,11 @@ class LeagueMainView extends StatelessWidget {
                   text: "Standings",
                 ),
                 Tab(
-                  text: "Search",
+                  text: "2021-22",
                 ),
                 Tab(
-                  text: "Season",
-                )
+                  text: "Search",
+                ),
               ],
             ),
           ),
@@ -32,14 +32,14 @@ class LeagueMainView extends StatelessWidget {
               SingleChildScrollView(
                 child: Container(
                     padding: EdgeInsets.all(20),
-                    child:
-                        Text('Player Search. This feature is coming soon...')),
+                    child: Text(
+                        'Set season to view. This feature is coming soon...')),
               ),
               SingleChildScrollView(
                 child: Container(
                     padding: EdgeInsets.all(20),
-                    child: Text(
-                        'Set season to view. This feature is coming soon...')),
+                    child:
+                        Text('Player Search. This feature is coming soon...')),
               ),
             ],
           )),
