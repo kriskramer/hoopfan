@@ -20,8 +20,9 @@ class Network {
       FileType fileFormat = FileType.json}) async {
     // make request to get Json file
     // pass empty map for no request headers
+    Uri uri = Uri.parse(url);
     try {
-      var response = await http.get(url, headers: requestHeaders);
+      var response = await http.get(uri, headers: requestHeaders);
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
           var data = fileFormat == FileType.json
@@ -40,8 +41,9 @@ class Network {
   static Future<dynamic> getJsonFromXml(String url) async {
     // make request to get Json file
     final x2j = Xml2Json();
+    Uri uri = Uri.parse(url);
     try {
-      var response = await http.get(url);
+      var response = await http.get(uri);
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
           var xml = response.body;
