@@ -252,8 +252,8 @@ class Urls {
     return "https://stats.nba.com/stats/teamdashlineups?DateFrom=&DateTo=&GameID=&GameSegment=&GroupQuantity=5&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsLeagueStandings() {
-    return "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=$_season&SeasonType=Regular+Season&SeasonYear=";
+  static String getNbaStatsLeagueStandings({String season}) {
+    return "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=$season&SeasonType=Regular+Season&SeasonYear=";
   }
 
   // THe video urls need to be parsed from the returned JSON
