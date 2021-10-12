@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
+import 'package:hoop/models/season_model.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -14,29 +15,26 @@ class Standings extends StatefulWidget {
 }
 
 class _StandingsState extends State<Standings> {
-  LeagueStandingList standingsList;
-  bool confSelected = true;
-  bool divSelected = false;
-  bool leagueSelected = false;
-
   // This is the first screen to load up so I'm using this as the default 'load everything' method
   Future<bool> loadData() async {
     bool complete = false;
-    standingsList =
-        Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
+    // standingsList =
+    //     Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
 
-    if (standingsList == null) {
+    if (Provider.of<JsonFiles>(context, listen: false).getLeagueStandings() ==
+        null) {
       try {
         var newStandings = await Network.getJson(
-          Urls.getNbaStatsLeagueStandings(),
+          Urls.getNbaStatsLeagueStandings(
+              season: Provider.of<SeasonProv>(context, listen: false).season),
           requestHeaders: RequestHeaders.nbaStatsHeaders,
         );
         var players = await Network.getJson(Urls.nbaAllPlayers());
         var teams = await Network.getJson(Urls.nbaAllTeams());
 
-        standingsList = LeagueStandingList(newStandings);
+        //  standingsList = LeagueStandingList(newStandings);
         Provider.of<JsonFiles>(context, listen: false)
-            .setLeagueStandings(standingsList);
+            .setLeagueStandings(LeagueStandingList(newStandings));
 
         Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
         Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
@@ -60,27 +58,27 @@ class _StandingsState extends State<Standings> {
   }
 
   leagueClick() {
-    setState(() {
-      confSelected = false;
-      divSelected = false;
-      leagueSelected = true;
-    });
+    Provider.of<SeasonProv>(context, listen: false).setView(
+      league: true,
+      conference: false,
+      division: false,
+    );
   }
 
   conferenceClick() {
-    setState(() {
-      confSelected = true;
-      divSelected = false;
-      leagueSelected = false;
-    });
+    Provider.of<SeasonProv>(context, listen: false).setView(
+      league: false,
+      conference: true,
+      division: false,
+    );
   }
 
   divisionClick() {
-    setState(() {
-      confSelected = false;
-      divSelected = true;
-      leagueSelected = false;
-    });
+    Provider.of<SeasonProv>(context, listen: false).setView(
+      league: false,
+      conference: false,
+      division: true,
+    );
   }
 
   @override
@@ -89,20 +87,10 @@ class _StandingsState extends State<Standings> {
       future: loadData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.data == true) {
-          standingsList = Provider.of<JsonFiles>(context, listen: false)
-              .getLeagueStandings();
-
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-              // decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         colorFilter: new ColorFilter.mode(
-              //             Colors.black.withOpacity(0.15), BlendMode.dstATop),
-              //         image: AssetImage("images/bball1.jpg"),
-              //         fit: BoxFit.fitHeight)),
-              child: //Container(height: 1800, color: Color.fromRGBO(255, 255, 255, 0.8)),
-                  Column(
+              child: Column(
                 children: [
                   SizedBox(
                     height: 10,
@@ -111,68 +99,77 @@ class _StandingsState extends State<Standings> {
                       alignment: MainAxisAlignment.center,
                       layoutBehavior: ButtonBarLayoutBehavior.constrained,
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             'League',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: leagueSelected
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                              color: Colors.white,
+                              fontWeight:
+                                  Provider.of<SeasonProv>(context).leagueView
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            primary: Provider.of<SeasonProv>(context).leagueView
+                                ? Colors.blue
+                                : Colors.grey,
                           ),
-                          color: leagueSelected ? Colors.blue : Colors.grey,
                           onPressed: () {
                             leagueClick();
                           },
                         ),
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             'Conference',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: confSelected
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                              color: Colors.white,
+                              fontWeight:
+                                  Provider.of<SeasonProv>(context).confView
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            primary: Provider.of<SeasonProv>(context).confView
+                                ? Colors.blue
+                                : Colors.grey,
                           ),
-                          color: confSelected ? Colors.blue : Colors.grey,
                           onPressed: () {
                             conferenceClick();
                           },
                         ),
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             'Division',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: divSelected
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                              color: Colors.white,
+                              fontWeight:
+                                  Provider.of<SeasonProv>(context).divView
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            primary: Provider.of<SeasonProv>(context).divView
+                                ? Colors.blue
+                                : Colors.grey,
                           ),
-                          color: divSelected ? Colors.blue : Colors.grey,
                           onPressed: () {
                             divisionClick();
                           },
                         ),
                       ]),
-                  // Container(
-                  //     width: double.infinity,
-                  //     height: 30,
-                  //     child: Center(
-                  //       child: Text(
-                  //         'Conference Standings',
-                  //         style: TextStyle(fontSize: 20),
-                  //       ),
-                  //     )),
-                  confSelected
+                  Provider.of<SeasonProv>(context).confView
                       ? Container(
                           child: Column(
                             children: [
@@ -184,7 +181,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getConferenceStandings('East'),
                                 teamCount: 15,
                               ),
@@ -196,7 +194,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getConferenceStandings('West'),
                                 teamCount: 15,
                               ),
@@ -204,7 +203,7 @@ class _StandingsState extends State<Standings> {
                           ),
                         )
                       : SizedBox(),
-                  divSelected
+                  Provider.of<SeasonProv>(context).divView
                       ? Container(
                           child: Column(
                             children: [
@@ -216,7 +215,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Atlantic"),
                                 teamCount: 5,
                               ),
@@ -228,7 +228,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Central"),
                                 teamCount: 5,
                               ),
@@ -240,7 +241,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Southeast"),
                                 teamCount: 5,
                               ),
@@ -252,7 +254,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Northwest"),
                                 teamCount: 5,
                               ),
@@ -264,7 +267,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Pacific"),
                                 teamCount: 5,
                               ),
@@ -276,7 +280,8 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
                                     .getDivisionStandings("Southwest"),
                                 teamCount: 5,
                               ),
@@ -284,7 +289,7 @@ class _StandingsState extends State<Standings> {
                           ),
                         )
                       : SizedBox(),
-                  leagueSelected
+                  Provider.of<SeasonProv>(context).leagueView
                       ? Container(
                           child: Column(
                             children: [
@@ -296,7 +301,9 @@ class _StandingsState extends State<Standings> {
                                 style: TextStyle(fontSize: 18),
                               ),
                               StandingsTable(
-                                list: standingsList.getLeagueStandings(),
+                                list: Provider.of<JsonFiles>(context)
+                                    .getLeagueStandings()
+                                    .getLeagueStandings(),
                                 teamCount: 30,
                               ),
                             ],

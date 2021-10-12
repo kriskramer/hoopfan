@@ -232,19 +232,19 @@ class Urls {
     return "https://stats.nba.com/stats/teamdashboardbyteamperformance?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsTeamStatistics_Base() {
+  static String getNbaStatsTeamStatisticsBase() {
     return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsTeamStatistics_Advanced() {
+  static String getNbaStatsTeamStatisticsAdvanced() {
     return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsTeamStatistics_Misc() {
+  static String getNbaStatsTeamStatisticsMisc() {
     return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Misc&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsTeamStatistics_FourFactors() {
+  static String getNbaStatsTeamStatisticsFourFactors() {
     return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Four Factors&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }
 
@@ -252,8 +252,8 @@ class Urls {
     return "https://stats.nba.com/stats/teamdashlineups?DateFrom=&DateTo=&GameID=&GameSegment=&GroupQuantity=5&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
-  static String getNbaStatsLeagueStandings() {
-    return "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=$_season&SeasonType=Regular+Season&SeasonYear=";
+  static String getNbaStatsLeagueStandings({String season}) {
+    return "https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season=$season&SeasonType=Regular+Season&SeasonYear=";
   }
 
   // THe video urls need to be parsed from the returned JSON
