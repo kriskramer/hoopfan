@@ -25,6 +25,10 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
         child: FutureBuilder(
       future: loadData(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            !snapshot.hasData) {
+          return Column(children: [SizedBox(height: 20), Text('No data')]);
+        }
         if (snapshot.hasData) {
           var json = snapshot.data["resultSets"][0]["rowSet"];
           list = new GameBoxScoreFourFactorsList(json, widget.teamId);

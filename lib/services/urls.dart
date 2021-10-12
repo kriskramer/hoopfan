@@ -7,6 +7,7 @@ class Urls {
       "https://api.sportsdata.io/v3/nba/stats/json/";
 
   static final String _season = "2021-22";
+  static final String _seasonShort = "2021";
 
   // static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
 
@@ -53,7 +54,7 @@ class Urls {
 
   // Returns a list of All teams
   static String nbaAllTeams() =>
-      "http://data.nba.net/10s/prod/v2/2020/teams.json";
+      "http://data.nba.net/10s/prod/v2/$_seasonShort/teams.json";
 
   // Returns basic data on a team
   static String nbaTeamProfile(String teamId) =>
@@ -61,11 +62,11 @@ class Urls {
 
   // Returns a list of ALL players in the league
   static String nbaAllPlayers() =>
-      "http://data.nba.net/10s/prod/v1/2020/players.json";
+      "http://data.nba.net/10s/prod/v1/$_seasonShort/players.json";
 
   // Returns the team roster for the specified team
   static String nbaTeamRoster(String teamUrlCode) =>
-      "http://data.nba.net/10s/prod/v1/2020/teams/$teamUrlCode/roster.json";
+      "http://data.nba.net/10s/prod/v1/$_seasonShort/teams/$teamUrlCode/roster.json";
 
   // Returns team stats for all teams
   static String nbaTeamStats(String year) =>
