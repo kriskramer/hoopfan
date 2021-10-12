@@ -24,17 +24,17 @@ class GameBoxScoreFourFactors {
     TEAM_CITY = json[3];
     PLAYER_ID = json[4].toString();
     PLAYER_NAME = json[5];
-    START_POSITION = json[6];
-    COMMENT = json[7];
-    MIN = json[8] == null ? "0" : json[8];
-    EFG_PCT = json[9] == null ? 0.0 : json[9];
-    FTA_RATE = json[10] == null ? 0.0 : json[10];
-    TM_TOV_PCT = json[11] == null ? 0.0 : json[11];
-    OREB_PCT = json[12] == null ? 0.0 : json[12];
-    OPP_EFG_PCT = json[13] == null ? 0.0 : json[13];
-    OPP_FTA_RATE = json[14] == null ? 0.0 : json[14];
-    OPP_TM_TOV_PCT = json[15] == null ? 0.0 : json[15];
-    OPP_OREB_PCT = json[16] == null ? 0.0 : json[16];
+    START_POSITION = json[7];
+    COMMENT = json[8];
+    MIN = json[9] == null ? "0" : json[9];
+    EFG_PCT = json[10] == null ? 0.0 : json[10];
+    FTA_RATE = json[11] == null ? 0.0 : json[11];
+    TM_TOV_PCT = json[12] == null ? 0.0 : json[12];
+    OREB_PCT = json[13] == null ? 0.0 : json[13];
+    OPP_EFG_PCT = json[14] == null ? 0.0 : json[14];
+    OPP_FTA_RATE = json[15] == null ? 0.0 : json[15];
+    OPP_TM_TOV_PCT = json[16] == null ? 0.0 : json[16];
+    OPP_OREB_PCT = json[17] == null ? 0.0 : json[17];
   }
 }
 

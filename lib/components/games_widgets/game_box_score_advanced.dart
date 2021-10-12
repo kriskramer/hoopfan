@@ -24,6 +24,10 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
         child: FutureBuilder(
       future: loadData(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            !snapshot.hasData) {
+          return Column(children: [SizedBox(height: 20), Text('No data')]);
+        }
         if (snapshot.hasData) {
           var json = snapshot.data["resultSets"][0]["rowSet"];
           list = new GameBoxScoreAdvancedList(json, widget.teamId);
