@@ -14,12 +14,12 @@ class TeamSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FutureBuilder(
-      future: Network.getJson(Urls.nbaTeamSchedule(teamId, "2020")),
+      future: Network.getJson(Urls.nbaTeamSchedule(teamId, "2021")),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           List<dynamic> games = snapshot.data["league"]["standard"];
-          List<dynamic> preseasonGames = new List<dynamic>();
-          List<dynamic> regseasonGames = new List<dynamic>();
+          List<dynamic> preseasonGames = [];
+          List<dynamic> regseasonGames = [];
 
           for (var g in games) {
             if (g["seasonStageId"] == 1) {
