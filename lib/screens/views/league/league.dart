@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/standings_widgets/custom_picker.dart';
+import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
+import 'package:hoop/services/headers.dart';
+import 'package:hoop/services/network.dart';
+import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class LeagueMainView extends StatelessWidget {
@@ -22,10 +27,30 @@ class LeagueMainView extends StatelessWidget {
             return Center(
               child: customPicker(
                   context, data.seasonList, Color(0XFF1F6BA3), data.season,
-                  (value) {
+                  (value) async {
                 data.changeSeason(
                   value,
                 );
+                // TODO: Add a spinner while screen fetches data
+                // TODO: Add flutter_toast package to show usefule message when fetch request fails
+                try {
+                  print("Getting data for $value");
+                  var standings = await Network.getJson(
+                    Urls.getNbaStatsLeagueStandings(season: value),
+                    requestHeaders: RequestHeaders.nbaStatsHeaders,
+                  );
+                  Provider.of<JsonFiles>(context, listen: false)
+                      .setLeagueStandings(
+                    LeagueStandingList(standings),
+                  );
+                  Provider.of<SeasonProv>(context, listen: false).setView(
+                    league: false,
+                    conference: true,
+                    division: false,
+                  );
+                } catch (e) {
+                  print(e);
+                }
               }),
             );
           }),

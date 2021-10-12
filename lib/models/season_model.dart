@@ -18,11 +18,25 @@ class SeasonProv with ChangeNotifier {
     // "2010-11",
   ];
 
+  bool _confSelected = true;
+  bool _divSelected = false;
+  bool _leagueSelected = false;
+
   void changeSeason(String value) {
     _seasonVal = value;
     notifyListeners();
   }
 
+  void setView({bool league, bool conference, bool division}) {
+    _leagueSelected = league;
+    _divSelected = division;
+    _confSelected = conference;
+    notifyListeners();
+  }
+
   String get season => _seasonVal;
   List<String> get seasonList => _seasonList;
+  bool get confView => _confSelected;
+  bool get divView => _divSelected;
+  bool get leagueView => _leagueSelected;
 }
