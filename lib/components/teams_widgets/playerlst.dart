@@ -11,7 +11,7 @@ class PlayerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map> teamRoster = new List<Map>();
+    List<Map> teamRoster = [];
     return Provider.of<JsonFiles>(context, listen: false)
                 .getTeamRoster(teamId) ==
             null

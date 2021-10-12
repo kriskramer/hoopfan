@@ -11,7 +11,7 @@ class LeagueMainView extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Color(0XFF1F6BA3),
             automaticallyImplyLeading: false, // hides back arrow button
-            toolbarHeight: 50,
+            toolbarHeight: 25,
             bottom: TabBar(
               tabs: [
                 Tab(
