@@ -31,9 +31,6 @@ class LeagueMainView extends StatelessWidget {
               child: customPicker(
                   context, data.seasonList, Color(0XFF1F6BA3), data.season,
                   (value) async {
-                data.changeSeason(
-                  value,
-                );
                 try {
                   Provider.of<ProgressProv>(context, listen: false).spinHud();
                   print("Getting data for $value");
@@ -51,6 +48,9 @@ class LeagueMainView extends StatelessWidget {
                     division: false,
                   );
                   Provider.of<ProgressProv>(context, listen: false).spinHud();
+                  data.changeSeason(
+                    value,
+                  );
                   toaster("$value standings retrieved");
                 } catch (e) {
                   Provider.of<ProgressProv>(context, listen: false).spinHud();
