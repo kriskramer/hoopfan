@@ -288,7 +288,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                           ])),
                       SizedBox(height: 20),
                       Center(
-                          child: Text("Team Schedule",
+                          child: Text("Last Game",
                               style: TextStyle(fontSize: 24))),
                       TeamScheduleSmall(teamId: widget.nbaTeamId),
                       SizedBox(
