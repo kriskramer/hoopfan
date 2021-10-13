@@ -168,6 +168,11 @@ class TeamScheduleSmall extends StatelessWidget {
                                 ? FontWeight.normal
                                 : FontWeight.bold),
                       ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text(
                         ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
                         style: TextStyle(

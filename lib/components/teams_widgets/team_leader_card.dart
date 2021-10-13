@@ -13,31 +13,31 @@ class TeamLeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      child: Container(
-        padding: EdgeInsets.all(6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CachedLogo(
-                  url:
-                      "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                  radius: 35,
-                ),
-                Text(
-                  getPlayerName(playerId, context),
-                  style: TextStyle(fontSize: 18),
-                )
-              ],
-            ),
-            Text(
-              value + "  ",
-              style: TextStyle(fontSize: 24),
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CachedLogo(
+                url:
+                    "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
+                radius: 35,
+              ),
+              Text(
+                value + "  ",
+                style: TextStyle(fontSize: 24),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                getPlayerName(playerId, context),
+                style: TextStyle(fontSize: 18),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
