@@ -12,19 +12,38 @@ class TeamScheduleSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FutureBuilder(
-      future: Network.getJson(Urls.nbaTeamSchedule(teamId, "2020")),
+      future: Network.getJson(Urls.nbaTeamSchedule(teamId, "2021")),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           List<dynamic> games = snapshot.data["league"]["standard"];
-          List<Widget> list = List<Widget>();
+          List<Widget> list = [];
+          List<dynamic> listPrevious = [];
+          List<dynamic> listUpcoming = [];
 
           for (var g in games) {
-            list.add(getGameCard(g, context));
+            if (g["statusNum"] == 3) {
+              listPrevious.add(g);
+            }
+            if (g["statusNum"] == 1 || g["statusNum"] == 2) {
+              listUpcoming.add(g);
+            }
+          }
+
+          if (listPrevious[listPrevious.length - 1] != null) {
+            list.add(
+                getGameCard(listPrevious[listPrevious.length - 1], context));
+          }
+          list.add(SizedBox(height: 20));
+          list.add(Text("Next 3 Games", style: TextStyle(fontSize: 24)));
+          for (int i = 0; i < 3; i++) {
+            if (listUpcoming[i] != null) {
+              list.add(getGameCard(listUpcoming[i], context));
+            }
           }
 
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
+            child: Column(
               children: [...list],
             ),
           );
@@ -49,8 +68,9 @@ class TeamScheduleSmall extends StatelessWidget {
     int teamColor = ConstantHelper.getTeamColor(teamId);
 
     if (gameStatus == 1) {
+      // Upcoming game
       return Card(
-        elevation: 2,
+        //elevation: 2,
         color: Colors.white,
         child: InkWell(
           onTap: () {
@@ -63,7 +83,7 @@ class TeamScheduleSmall extends StatelessWidget {
                         )));
           },
           child: Container(
-              width: 225,
+              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(8),
               child: Column(
                 children: [
@@ -71,6 +91,7 @@ class TeamScheduleSmall extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(formatDate(game["startDateEastern"])),
+                      SizedBox(width: 5),
                       Text(game["startTimeEastern"])
                     ],
                   ),
@@ -85,11 +106,7 @@ class TeamScheduleSmall extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(game["vTeam"]["score"]),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                      SizedBox(width: 10),
                       Text(
                         ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -102,12 +119,13 @@ class TeamScheduleSmall extends StatelessWidget {
         ),
       );
     } else {
+      // In progress or completed game
       bool isHomeWin = isHomeTeamWinner(game);
-      bool isViewingTeamWin = getViewingTeamWinnerResult(game, teamId);
+      //bool isViewingTeamWin = getViewingTeamWinnerResult(game, teamId);
 
       return Card(
         elevation: 2,
-        color: Color(teamColor).withAlpha(50),
+        color: Colors.grey[70],
         child: InkWell(
           onTap: () {
             //Network.launchSite(games[index]["url"]);
@@ -119,7 +137,7 @@ class TeamScheduleSmall extends StatelessWidget {
                         )));
           },
           child: Container(
-              width: 225,
+              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(8),
               child: Column(
                 children: [

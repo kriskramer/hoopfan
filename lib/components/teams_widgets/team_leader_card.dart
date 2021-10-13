@@ -11,35 +11,32 @@ class TeamLeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[300]),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Card(
+      elevation: 2,
+      child: Column(
         children: [
-          Container(
-            width: 200,
-            child: Column(
-              children: [
-                CachedLogo(
-                  url:
-                      "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                  radius: 35,
-                ),
-                Text(
-                  getPlayerName(playerId, context),
-                  style: TextStyle(fontSize: 18),
-                )
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CachedLogo(
+                url:
+                    "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
+                radius: 35,
+              ),
+              Text(
+                value + "  ",
+                style: TextStyle(fontSize: 24),
+              ),
+            ],
           ),
-          Text(
-            value,
-            style: TextStyle(fontSize: 24),
-          ),
+          Row(
+            children: [
+              Text(
+                getPlayerName(playerId, context),
+                style: TextStyle(fontSize: 18),
+              )
+            ],
+          )
         ],
       ),
     );
