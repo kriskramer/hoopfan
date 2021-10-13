@@ -456,7 +456,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false).getAdvancedTeamStats() ==
         null) {
       dynamic advancedTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatistics_Advanced(),
+        Urls.getNbaStatsTeamStatisticsAdvanced(),
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );
 
@@ -467,7 +467,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false).getBaseTeamStats() ==
         null) {
       dynamic baseTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatistics_Base(),
+        Urls.getNbaStatsTeamStatisticsBase(),
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );
 
@@ -478,7 +478,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     if (Provider.of<JsonFiles>(context, listen: false).getMiscTeamStats() ==
         null) {
       dynamic miscTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatistics_Misc(),
+        Urls.getNbaStatsTeamStatisticsMisc(),
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );
 
@@ -490,7 +490,7 @@ class _TeamDetailsState extends State<TeamDetails> {
             .getFourFactorsTeamStats() ==
         null) {
       dynamic stats = await Network.getJson(
-        Urls.getNbaStatsTeamStatistics_FourFactors(),
+        Urls.getNbaStatsTeamStatisticsFourFactors(),
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );
 
