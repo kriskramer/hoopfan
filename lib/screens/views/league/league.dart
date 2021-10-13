@@ -37,6 +37,8 @@ class LeagueMainView extends StatelessWidget {
                   var standings = await Network.getJson(
                     Urls.getNbaStatsLeagueStandings(season: value),
                     requestHeaders: RequestHeaders.nbaStatsHeaders,
+                  ).timeout(
+                    Duration(seconds: 10),
                   );
                   Provider.of<JsonFiles>(context, listen: false)
                       .setLeagueStandings(
