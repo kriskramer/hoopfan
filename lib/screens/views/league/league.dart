@@ -45,7 +45,7 @@ class LeagueMainView extends StatelessWidget {
                       .setLeagueStandings(
                     LeagueStandingList(standings),
                   );
-                  Provider.of<SeasonProv>(context, listen: false).setView(
+                  data.setView(
                     league: false,
                     conference: true,
                     division: false,
@@ -54,7 +54,8 @@ class LeagueMainView extends StatelessWidget {
                   toaster("$value standings retrieved");
                 } catch (e) {
                   Provider.of<ProgressProv>(context, listen: false).spinHud();
-                  toaster(e); // log the exception to the screen
+                  toaster("Network error, check your connection");
+                  print("Failed to fetch data reason:\n$e");
                 }
               }),
             );
