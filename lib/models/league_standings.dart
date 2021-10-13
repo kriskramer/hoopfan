@@ -165,7 +165,7 @@ class LeagueStanding {
 }
 
 class LeagueStandingList {
-  List<LeagueStanding> items = List<LeagueStanding>();
+  List<LeagueStanding> items = [];
 
   LeagueStandingList(dynamic json) {
     for (var s in json["resultSets"][0]["rowSet"]) {
@@ -184,7 +184,7 @@ class LeagueStandingList {
   }
 
   List<LeagueStanding> getConferenceStandings(String conf) {
-    List<LeagueStanding> list = List<LeagueStanding>();
+    List<LeagueStanding> list = [];
 
     for (var t in items) {
       if (t.conference == conf) {
@@ -204,7 +204,7 @@ class LeagueStandingList {
   }
 
   List<LeagueStanding> getDivisionStandings(String division) {
-    List<LeagueStanding> list = List<LeagueStanding>();
+    List<LeagueStanding> list = [];
 
     for (var t in items) {
       if (t.division == division) {
@@ -224,13 +224,18 @@ class LeagueStandingList {
   }
 
   List<LeagueStanding> getLeagueStandings() {
-    List<LeagueStanding> list = List<LeagueStanding>();
+    List<LeagueStanding> list = [];
 
     for (var t in items) {
       list.add(t);
     }
 
     list.sort((a, b) {
+      // add null check
+      if (a.leagueRank == null || b.leagueRank == null) {
+        a.leagueRank = 0;
+        b.leagueRank = 0;
+      }
       if (a.leagueRank > b.leagueRank) {
         return 1;
       } else {
