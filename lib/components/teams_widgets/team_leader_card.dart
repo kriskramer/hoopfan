@@ -11,18 +11,15 @@ class TeamLeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[300]),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 200,
-            child: Column(
+    return Card(
+      elevation: 2,
+      child: Container(
+        padding: EdgeInsets.all(6),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CachedLogo(
                   url:
@@ -35,12 +32,12 @@ class TeamLeaderCard extends StatelessWidget {
                 )
               ],
             ),
-          ),
-          Text(
-            value,
-            style: TextStyle(fontSize: 24),
-          ),
-        ],
+            Text(
+              value + "  ",
+              style: TextStyle(fontSize: 24),
+            ),
+          ],
+        ),
       ),
     );
   }
