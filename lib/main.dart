@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/models/season_model.dart';
+import 'package:hoop/providers/progress.dart';
 import 'package:hoop/screens/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SeasonProv>(
           create: (_) => SeasonProv(),
+        ),
+        ChangeNotifierProvider<ProgressProv>(
+          create: (_) => ProgressProv(),
         ),
       ],
       child: MaterialApp(
