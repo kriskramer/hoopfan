@@ -7,7 +7,7 @@ class PlayerStatsUsageDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (int i = 0; i < json.length; i++) {
       if (json[i]["rowSet"].length > 0) {
