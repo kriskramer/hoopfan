@@ -10,33 +10,35 @@ class PlayerStatsUsageDataTable extends StatelessWidget {
     List<DataRow> rows = List<DataRow>();
 
     for (int i = 0; i < json.length; i++) {
-      rows.add(DataRow(cells: [
-        DataCell(Text(json[i]["rowSet"][0][0].toString())),
-        DataCell(Text(json[i]["rowSet"][0][2].toString())),
-        DataCell(Text(json[i]["rowSet"][0][3].toString())),
-        DataCell(Text(json[i]["rowSet"][0][4].toString())),
-        DataCell(Text(json[i]["rowSet"][0][5].toString())),
-        DataCell(Text(double.parse(json[i]["rowSet"][0][6].toString())
-            .toStringAsFixed(2))),
-        DataCell(Text(json[i]["rowSet"][0][7].toString())),
-        DataCell(Text(json[i]["rowSet"][0][8].toString())),
-        DataCell(Text(json[i]["rowSet"][0][9].toString())),
-        DataCell(Text(json[i]["rowSet"][0][10].toString())),
-        DataCell(Text(json[i]["rowSet"][0][11].toString())),
-        DataCell(Text(json[i]["rowSet"][0][12].toString())),
-        DataCell(Text(json[i]["rowSet"][0][13].toString())),
-        DataCell(Text(json[i]["rowSet"][0][14].toString())),
-        DataCell(Text(json[i]["rowSet"][0][15].toString())),
-        DataCell(Text(json[i]["rowSet"][0][16].toString())),
-        DataCell(Text(json[i]["rowSet"][0][17].toString())),
-        DataCell(Text(json[i]["rowSet"][0][18].toString())),
-        DataCell(Text(json[i]["rowSet"][0][19].toString())),
-        DataCell(Text(json[i]["rowSet"][0][20].toString())),
-        DataCell(Text(json[i]["rowSet"][0][21].toString())),
-        DataCell(Text(json[i]["rowSet"][0][22].toString())),
-        DataCell(Text(json[i]["rowSet"][0][23].toString())),
-        DataCell(Text(json[i]["rowSet"][0][24].toString())),
-      ]));
+      if (json[i]["rowSet"].length > 0) {
+        rows.add(DataRow(cells: [
+          DataCell(Text(json[i]["rowSet"][0][0].toString())),
+          DataCell(Text(json[i]["rowSet"][0][2].toString())),
+          DataCell(Text(json[i]["rowSet"][0][3].toString())),
+          DataCell(Text(json[i]["rowSet"][0][4].toString())),
+          DataCell(Text(json[i]["rowSet"][0][5].toString())),
+          DataCell(Text(double.parse(json[i]["rowSet"][0][6].toString())
+              .toStringAsFixed(2))),
+          DataCell(Text(json[i]["rowSet"][0][7].toString())),
+          DataCell(Text(json[i]["rowSet"][0][8].toString())),
+          DataCell(Text(json[i]["rowSet"][0][9].toString())),
+          DataCell(Text(json[i]["rowSet"][0][10].toString())),
+          DataCell(Text(json[i]["rowSet"][0][11].toString())),
+          DataCell(Text(json[i]["rowSet"][0][12].toString())),
+          DataCell(Text(json[i]["rowSet"][0][13].toString())),
+          DataCell(Text(json[i]["rowSet"][0][14].toString())),
+          DataCell(Text(json[i]["rowSet"][0][15].toString())),
+          DataCell(Text(json[i]["rowSet"][0][16].toString())),
+          DataCell(Text(json[i]["rowSet"][0][17].toString())),
+          DataCell(Text(json[i]["rowSet"][0][18].toString())),
+          DataCell(Text(json[i]["rowSet"][0][19].toString())),
+          DataCell(Text(json[i]["rowSet"][0][20].toString())),
+          DataCell(Text(json[i]["rowSet"][0][21].toString())),
+          DataCell(Text(json[i]["rowSet"][0][22].toString())),
+          DataCell(Text(json[i]["rowSet"][0][23].toString())),
+          DataCell(Text(json[i]["rowSet"][0][24].toString())),
+        ]));
+      }
     }
 
     return DataTable(
