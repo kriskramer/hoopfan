@@ -124,7 +124,7 @@ class TeamScheduleSmall extends StatelessWidget {
       //bool isViewingTeamWin = getViewingTeamWinnerResult(game, teamId);
 
       return Card(
-        elevation: 2,
+        //elevation: 2,
         color: Colors.grey[70],
         child: InkWell(
           onTap: () {
