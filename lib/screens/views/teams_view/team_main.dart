@@ -36,7 +36,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     loadData();
   }
 
-  String year = "2020";
+  String year = "2021";
   @override
   Widget build(BuildContext context) {
     final ta = ConstantHelper.getTeamDetailsBasic(widget.nbaTeamId);
@@ -181,11 +181,14 @@ class _TeamDetailsState extends State<TeamDetails> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      FlatButton(
+                                      TextButton(
                                         child: Text('Media',
                                             style: TextStyle(
                                                 color: Color(teamTextColor))),
-                                        color: Color(teamColor),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(teamColor))),
                                         onPressed: () {
                                           Navigator.push(
                                             context,
@@ -198,12 +201,23 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         },
                                       ),
                                       dataLoaded
-                                          ? FlatButton(
+                                          ? SizedBox(
+                                              width: 10,
+                                            )
+                                          : SizedBox(
+                                              width: 1,
+                                            ),
+                                      dataLoaded
+                                          ? TextButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                              Color>(
+                                                          Color(teamColor))),
                                               child: Text('Stats',
                                                   style: TextStyle(
                                                       color: Color(
                                                           teamTextColor))),
-                                              color: Color(teamColor),
                                               onPressed: () {
                                                 Navigator.push(
                                                     context,
@@ -219,11 +233,17 @@ class _TeamDetailsState extends State<TeamDetails> {
                                           : SizedBox(
                                               width: 1,
                                             ),
-                                      FlatButton(
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      TextButton(
                                         child: Text('Info',
                                             style: TextStyle(
                                                 color: Color(teamTextColor))),
-                                        color: Color(teamColor),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(teamColor))),
                                         onPressed: () {
                                           Navigator.push(
                                               context,
@@ -245,47 +265,40 @@ class _TeamDetailsState extends State<TeamDetails> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Container(
-                          width: deviceWidth - 80,
-                          padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: Colors.grey[300], width: 1),
+                      Card(
+                          child: Container(
+                        padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
+                        child: Column(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              standing(teamStandings.wins.toString(), "Win"),
+                              standing(teamStandings.losses.toString(), "Loss"),
+                              standing(
+                                  teamStandings.winPct.toString(), "Win %"),
+                              standing(
+                                  teamStandings.conferenceGamesBack.toString(),
+                                  "GB"),
+                              standing(
+                                  teamStandings.strCurrentStreak.toString(),
+                                  "Streak"),
+                            ],
                           ),
-                          child: Column(children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                standing(teamStandings.wins.toString(), "Win"),
-                                standing(
-                                    teamStandings.losses.toString(), "Loss"),
-                                standing(
-                                    teamStandings.winPct.toString(), "Win %"),
-                                standing(
-                                    teamStandings.conferenceGamesBack
-                                        .toString(),
-                                    "GB"),
-                                standing(
-                                    teamStandings.strCurrentStreak.toString(),
-                                    "Streak"),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                standing("${teamStandings.l10}", "Last 10"),
-                                standing("${teamStandings.conferenceRecord}",
-                                    "Conf"),
-                                standing(
-                                    "${teamStandings.divisionRecord}", "Div"),
-                                standing("${teamStandings.home}", "Home"),
-                                standing("${teamStandings.road}", "Away"),
-                              ],
-                            ),
-                          ])),
+                          SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              standing("${teamStandings.l10}", "Last 10"),
+                              standing(
+                                  "${teamStandings.conferenceRecord}", "Conf"),
+                              standing(
+                                  "${teamStandings.divisionRecord}", "Div"),
+                              standing("${teamStandings.home}", "Home"),
+                              standing("${teamStandings.road}", "Away"),
+                            ],
+                          ),
+                        ]),
+                      )),
                       SizedBox(height: 20),
                       Center(
                           child: Text("Last Game",

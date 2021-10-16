@@ -265,6 +265,10 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
   }
 
   DataCell getDataCell(dynamic stats, int typeNum, int setNum, int valueNum) {
+    if (stats["resultSets"][typeNum]["rowSet"].length == 0) {
+      return DataCell(Text('0.0'));
+    }
+
     return DataCell(Text(
         stats["resultSets"][typeNum]["rowSet"][setNum][valueNum].toString()));
   }
