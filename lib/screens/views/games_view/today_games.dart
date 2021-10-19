@@ -8,6 +8,7 @@ import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 
 class TodaysGames extends StatefulWidget {
@@ -59,9 +60,6 @@ class _TodaysGamesState extends State<TodaysGames> {
             //Provider.of<JsonFiles>(context, listen: false).getTodaysGames();
 
             int count = games["numGames"];
-            print(games["numGames"]);
-            print(games);
-
             var gamesCompleted = getGamesCompleted(games);
             var gamesInProgress = getGamesInProgress(games);
             var gamesWaiting = getGamesWaiting(games);
@@ -84,9 +82,11 @@ class _TodaysGamesState extends State<TodaysGames> {
             int month = int.parse(selectedDate.substring(4, 6));
             int day = int.parse(selectedDate.substring(6, 8));
             DateTime parseDate = DateTime(year, month, day);
-            print(parseDate);
-            print(MediaQuery.of(context).size.height);
             DateTime todaysDate = DateTime.now();
+            String dateInfo = parseDate.day == todaysDate.day
+                ? "$count games Today"
+                : "$count games on ${formatDate(parseDate.toString())}";
+
             return count == 0
                 ? Column(
                     //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,15 +120,15 @@ class _TodaysGamesState extends State<TodaysGames> {
                             if (date != null) {
                               handleNewDate(date, context);
                             }
-                            print("THis $date");
                           }),
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            count.toString() + ' Games Today',
-                            style: TextStyle(fontSize: 14),
+                            dateInfo,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -182,15 +182,25 @@ class _TodaysGamesState extends State<TodaysGames> {
                     handleNewDate(date, context);
                     print("THis $date");
                   }),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2,
+              ),
               Center(
-                child: Text('No games listed'),
+                child: Text('Unable to get data'),
               )
             ]);
           } else {
             return Center(
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-                  child: CircularProgressIndicator()),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Getting games data..."),
+                ],
+              ),
             );
           }
         });
@@ -198,6 +208,7 @@ class _TodaysGamesState extends State<TodaysGames> {
 
   void handleNewDate(String date, BuildContext context) {
     DateTime dt = DateTime.parse(date);
+    print("Handle date function: $dt");
     Provider.of<JsonFiles>(context, listen: false).setSelectedDate(dt);
     refreshGames();
   }
