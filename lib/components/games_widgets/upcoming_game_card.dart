@@ -6,6 +6,7 @@ import 'package:hoop/screens/views/games_view/game_preview_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/utils/formatdate.dart';
 
 class UpcomingGameCard extends StatelessWidget {
   final dynamic game;
@@ -93,15 +94,6 @@ class UpcomingGameCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
   }
 
   // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {

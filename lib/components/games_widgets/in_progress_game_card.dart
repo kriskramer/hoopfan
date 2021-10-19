@@ -117,15 +117,6 @@ class InProgressGameCard extends StatelessWidget {
     return clockString;
   }
 
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
-  }
-
   // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
   //   dynamic team;
   //   String teamId = game["vTeam"]["teamId"];
