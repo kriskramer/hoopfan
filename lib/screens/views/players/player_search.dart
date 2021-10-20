@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hoop/components/player_widgets/player_search_item.dart';
 import 'package:hoop/json/jsons.dart';
@@ -13,22 +11,6 @@ class PlayerSearch extends StatefulWidget {
 }
 
 class _PlayerSearchState extends State<PlayerSearch> {
-  // _SearchListExampleState() {
-  //   _controller.addListener(() {
-  //     if (_controller.text.isEmpty) {
-  //       setState(() {
-  //         _isSearching = false;
-  //         _searchText = "";
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _isSearching = true;
-  //         _searchText = _controller.text;
-  //       });
-  //     }
-  //   });
-  // }
-
   final TextEditingController _controller = new TextEditingController();
   Widget appBarTitle = new TextField(
       style: new TextStyle(
