@@ -5,6 +5,7 @@ import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
 import 'package:hoop/providers/progress.dart';
+import 'package:hoop/screens/views/players/player_search.dart';
 import 'package:hoop/screens/views/standings_view/standings.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
@@ -21,51 +22,66 @@ class LeagueMainView extends StatelessWidget {
         automaticallyImplyLeading: false, // hides back arrow button
         toolbarHeight: 70,
         centerTitle: true,
-        title: Text(
-          "Standings",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PlayerSearch()));
+                },
+                icon: Icon(Icons.search)),
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              "Standings",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+            ),
+            //  ],
+            //),
+            //actions: [
+            Consumer<SeasonProv>(builder: (context, data, child) {
+              return Center(
+                child: customPicker(
+                    context, data.seasonList, Color(0XFF1F6BA3), data.season,
+                    (value) async {
+                  try {
+                    Provider.of<ProgressProv>(context, listen: false).spinHud();
+                    print("Getting data for $value");
+                    var standings = await Network.getJson(
+                      Urls.getNbaStatsLeagueStandings(season: value),
+                      requestHeaders: RequestHeaders.nbaStatsHeaders,
+                    ).timeout(
+                      Duration(seconds: 10),
+                    );
+                    Provider.of<JsonFiles>(context, listen: false)
+                        .setLeagueStandings(
+                      LeagueStandingList(standings),
+                    );
+                    data.setView(
+                      league: false,
+                      conference: true,
+                      division: false,
+                    );
+                    Provider.of<ProgressProv>(context, listen: false).spinHud();
+                    data.changeSeason(
+                      value,
+                    );
+                    toaster("$value standings retrieved");
+                  } catch (e) {
+                    Provider.of<ProgressProv>(context, listen: false).spinHud();
+                    toaster("Network error, check your connection");
+                    print("Failed to fetch data reason:\n$e");
+                  }
+                }),
+              );
+            }),
+            SizedBox(
+              width: 3,
+            )
+          ],
         ),
-        actions: [
-          Consumer<SeasonProv>(builder: (context, data, child) {
-            return Center(
-              child: customPicker(
-                  context, data.seasonList, Color(0XFF1F6BA3), data.season,
-                  (value) async {
-                try {
-                  Provider.of<ProgressProv>(context, listen: false).spinHud();
-                  print("Getting data for $value");
-                  var standings = await Network.getJson(
-                    Urls.getNbaStatsLeagueStandings(season: value),
-                    requestHeaders: RequestHeaders.nbaStatsHeaders,
-                  ).timeout(
-                    Duration(seconds: 10),
-                  );
-                  Provider.of<JsonFiles>(context, listen: false)
-                      .setLeagueStandings(
-                    LeagueStandingList(standings),
-                  );
-                  data.setView(
-                    league: false,
-                    conference: true,
-                    division: false,
-                  );
-                  Provider.of<ProgressProv>(context, listen: false).spinHud();
-                  data.changeSeason(
-                    value,
-                  );
-                  toaster("$value standings retrieved");
-                } catch (e) {
-                  Provider.of<ProgressProv>(context, listen: false).spinHud();
-                  toaster("Network error, check your connection");
-                  print("Failed to fetch data reason:\n$e");
-                }
-              }),
-            );
-          }),
-          SizedBox(
-            width: 3,
-          )
-        ],
       ),
       body: ModalProgressHUD(
         inAsyncCall: Provider.of<ProgressProv>(context).spinnerVal,
