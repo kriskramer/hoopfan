@@ -14,8 +14,8 @@ class GameBoxScoreSummary extends StatelessWidget {
     String vTeamId = game["vTeam"]["teamId"];
     String hTeamId = game["hTeam"]["teamId"];
     dynamic players = stats["activePlayers"];
-    List<dynamic> vTeamPlayers = new List<dynamic>();
-    List<dynamic> hTeamPlayers = new List<dynamic>();
+    List<dynamic> vTeamPlayers = [];
+    List<dynamic> hTeamPlayers = [];
 
     if (isHomeTeam) {
       // Loop through players and assign to teams
@@ -69,7 +69,7 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   Widget getPlayerNamesDataTable(List<dynamic> players, BuildContext ctx) {
-    List<DataRow> rows = new List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var p in players) {
       rows.add(
