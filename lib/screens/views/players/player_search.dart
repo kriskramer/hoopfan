@@ -91,18 +91,24 @@ class _PlayerSearchState extends State<PlayerSearch> {
   }
 
   void doSearch(String searchText) {
-    searchresult.clear();
-    if (_isSearching != null) {
-      for (var player in _playerList["league"]["standard"]) {
-        String fullName = player["firstName"] + " " + player["lastName"];
-        if (fullName.toLowerCase().contains(searchText.toLowerCase())) {
-          setState(() {
-            searchresult.add(PlayerSearchItem(
-              player: player,
-            ));
-          });
+    if (searchText == "") {
+      setState(() {
+        searchresult.clear();
+      });
+    } else {
+      setState(() {
+        searchresult.clear();
+        if (_isSearching != null) {
+          for (var player in _playerList["league"]["standard"]) {
+            String fullName = player["firstName"] + " " + player["lastName"];
+            if (fullName.toLowerCase().contains(searchText.toLowerCase())) {
+              searchresult.add(PlayerSearchItem(
+                player: player,
+              ));
+            }
+          }
         }
-      }
+      });
     }
   }
 }

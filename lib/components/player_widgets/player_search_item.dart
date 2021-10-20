@@ -19,7 +19,7 @@ class PlayerSearchItem extends StatelessWidget {
           );
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(30, 7, 5, 7),
+          padding: EdgeInsets.fromLTRB(30, 10, 5, 10),
           child: Row(
             children: [
               Container(
