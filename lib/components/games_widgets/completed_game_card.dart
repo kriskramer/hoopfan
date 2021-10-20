@@ -4,6 +4,7 @@ import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games_view/game_recap_article_header.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
+import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
@@ -111,15 +112,6 @@ class CompletedGameCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
   }
 
   // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {

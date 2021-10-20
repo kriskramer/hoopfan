@@ -23,12 +23,10 @@ class GamePreviewArticleHeader extends StatelessWidget {
               padding: EdgeInsets.all(4),
               child: Column(
                 children: [
-                  Center(
-                    child: Text(
-                      article["title"],
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
+                  Text(
+                    article["title"],
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
                   ),
                   Divider(
                     color: Colors.blueGrey,
