@@ -219,7 +219,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showWinStreak() {
     sortStandingsByWinStreak();
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
@@ -243,7 +243,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLosingStreak() {
     sortStandingsByLosingStreak();
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
@@ -267,7 +267,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostWins() {
     sortStandingsByWins();
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
@@ -291,7 +291,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostLosses() {
     sortStandingsByLosses();
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
@@ -315,7 +315,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostPoints() {
     listTeamStats.sortByPPG(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -342,7 +342,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastPoints() {
     listTeamStats.sortByPPG(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -370,7 +370,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostOPPG() {
     listTeamStats.sortByOPPG(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -398,7 +398,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastOPPG() {
     listTeamStats.sortByOPPG(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -426,7 +426,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostFgp() {
     listTeamStats.sortByFgp(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -454,7 +454,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastFgp() {
     listTeamStats.sortByFgp(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -482,7 +482,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostFtp() {
     listTeamStats.sortByFtp(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -510,7 +510,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastFtp() {
     listTeamStats.sortByFtp(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -538,7 +538,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostTpp() {
     listTeamStats.sortByTpp(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -563,7 +563,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastTpp() {
     listTeamStats.sortByTpp(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -588,7 +588,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showMostReb() {
     listTeamStats.sortByTReb(false);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -616,7 +616,7 @@ class _StatsTeamsState extends State<StatsTeams> {
 
   Widget showLeastReb() {
     listTeamStats.sortByTReb(true);
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
 
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
@@ -749,8 +749,8 @@ class _StatsTeamsState extends State<StatsTeams> {
       }
     }
 
-    List<DataRow> list = new List<DataRow>();
-    List<DataRow> list2 = new List<DataRow>();
+    List<DataRow> list = [];
+    List<DataRow> list2 = [];
 
     for (var t in listTeamStats.items) {
       list2.add(DataRow(cells: [

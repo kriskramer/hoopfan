@@ -173,6 +173,12 @@ class Urls {
     return "https://www.fantasybasketballnerd.com/service/injuries/";
   }
 
+  // Returns all players sorted by perMode stat
+  static String getNbaStatsLeagueLeaders(
+      {String perMode = "PerGame", String stat = "PTS"}) {
+    return "https://stats.nba.com/stats/leagueleaders?ActiveFlag=&LeagueID=00&PerMode=$perMode&Scope=S&Season=$_season&SeasonType=Regular+Season&StatCategory=$stat";
+  }
+
   // Returns different types of shot pcts for a given player, including dribble shots, closest defender, shot clock, touch time and range.
   static String getNbaStatsPlayerShotTypes(String playerId,
       {String perMode = "Totals"}) {
