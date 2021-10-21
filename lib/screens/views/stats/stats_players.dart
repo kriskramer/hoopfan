@@ -38,17 +38,42 @@ class _StatsPlayersState extends State<StatsPlayers> {
                 height: 15,
               ),
               getSectionHeader('Points'),
-              showPoints(true),
+              showPoints(),
               SizedBox(
                 height: 30,
               ),
               getSectionHeader('Rebounds'),
-              showRebounds(true),
+              showRebounds(),
               SizedBox(
                 height: 30,
               ),
               getSectionHeader('Assists'),
-              showAssists(true),
+              showAssists(),
+              SizedBox(
+                height: 30,
+              ),
+              getSectionHeader('Field Goal %'),
+              showFGPct(),
+              SizedBox(
+                height: 30,
+              ),
+              getSectionHeader('3-Point %'),
+              showFG3Pct(),
+              SizedBox(
+                height: 30,
+              ),
+              getSectionHeader('Free Throw %'),
+              showFTPct(),
+              SizedBox(
+                height: 30,
+              ),
+              getSectionHeader('Blocks'),
+              showBlocks(),
+              SizedBox(
+                height: 30,
+              ),
+              getSectionHeader('Steals'),
+              showSteals(),
               SizedBox(
                 height: 30,
               ),
@@ -75,7 +100,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     return leadersList;
   }
 
-  Widget showPoints(bool leaders) {
+  Widget showPoints() {
     List<DataRow> list = [];
 
     sortByPointsDesc();
@@ -123,7 +148,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     });
   }
 
-  Widget showRebounds(bool leaders) {
+  Widget showRebounds() {
     List<DataRow> list = [];
 
     sortByRebsDesc();
@@ -171,7 +196,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     });
   }
 
-  Widget showAssists(bool leaders) {
+  Widget showAssists() {
     List<DataRow> list = [];
 
     sortByAstsDesc();
@@ -213,6 +238,246 @@ class _StatsPlayersState extends State<StatsPlayers> {
     // Sort by most points
     leadersList.items.sort((a, b) {
       if (a.ast < b.ast)
+        return 1;
+      else
+        return -1;
+    });
+  }
+
+  Widget showFGPct() {
+    List<DataRow> list = [];
+
+    sortByFGPDesc();
+
+    for (var s in leadersList.items) {
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(s.team),
+        ),
+        DataCell(
+          Text(s.player),
+        ),
+        DataCell(Text(s.fgpct.toString()))
+      ]));
+    }
+
+    return DataTable(
+      columnSpacing: 15,
+      dataRowHeight: 25,
+      headingRowHeight: 25,
+      columns: [
+        DataColumn(label: Text('Team')),
+        DataColumn(label: Text('Player')),
+        DataColumn(label: Text('FG %'))
+      ],
+      rows: [
+        ...list.getRange(0, 10),
+        DataRow(cells: [
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+        ]),
+        ...list.getRange(list.length - 5, list.length)
+      ],
+    );
+  }
+
+  void sortByFGPDesc() {
+    // Sort by most points
+    leadersList.items.sort((a, b) {
+      if (a.fgpct < b.fgpct)
+        return 1;
+      else
+        return -1;
+    });
+  }
+
+  Widget showFG3Pct() {
+    List<DataRow> list = [];
+
+    sortByFG3PDesc();
+
+    for (var s in leadersList.items) {
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(s.team),
+        ),
+        DataCell(
+          Text(s.player),
+        ),
+        DataCell(Text(s.fg3pct.toString()))
+      ]));
+    }
+
+    return DataTable(
+      columnSpacing: 15,
+      dataRowHeight: 25,
+      headingRowHeight: 25,
+      columns: [
+        DataColumn(label: Text('Team')),
+        DataColumn(label: Text('Player')),
+        DataColumn(label: Text('3P %'))
+      ],
+      rows: [
+        ...list.getRange(0, 10),
+        DataRow(cells: [
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+        ]),
+        ...list.getRange(list.length - 5, list.length)
+      ],
+    );
+  }
+
+  void sortByFG3PDesc() {
+    // Sort by most points
+    leadersList.items.sort((a, b) {
+      if (a.fg3pct < b.fg3pct)
+        return 1;
+      else
+        return -1;
+    });
+  }
+
+  Widget showFTPct() {
+    List<DataRow> list = [];
+
+    sortByFTPDesc();
+
+    for (var s in leadersList.items) {
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(s.team),
+        ),
+        DataCell(
+          Text(s.player),
+        ),
+        DataCell(Text(s.ftpct.toString()))
+      ]));
+    }
+
+    return DataTable(
+      columnSpacing: 15,
+      dataRowHeight: 25,
+      headingRowHeight: 25,
+      columns: [
+        DataColumn(label: Text('Team')),
+        DataColumn(label: Text('Player')),
+        DataColumn(label: Text('FT %'))
+      ],
+      rows: [
+        ...list.getRange(0, 10),
+        DataRow(cells: [
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+        ]),
+        ...list.getRange(list.length - 5, list.length)
+      ],
+    );
+  }
+
+  void sortByFTPDesc() {
+    // Sort by most points
+    leadersList.items.sort((a, b) {
+      if (a.ftpct < b.ftpct)
+        return 1;
+      else
+        return -1;
+    });
+  }
+
+  Widget showBlocks() {
+    List<DataRow> list = [];
+
+    sortByBlkDesc();
+
+    for (var s in leadersList.items) {
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(s.team),
+        ),
+        DataCell(
+          Text(s.player),
+        ),
+        DataCell(Text(s.blk.toString()))
+      ]));
+    }
+
+    return DataTable(
+      columnSpacing: 15,
+      dataRowHeight: 25,
+      headingRowHeight: 25,
+      columns: [
+        DataColumn(label: Text('Team')),
+        DataColumn(label: Text('Player')),
+        DataColumn(label: Text('Blks'))
+      ],
+      rows: [
+        ...list.getRange(0, 10),
+        DataRow(cells: [
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+        ]),
+        ...list.getRange(list.length - 5, list.length)
+      ],
+    );
+  }
+
+  void sortByBlkDesc() {
+    // Sort by most points
+    leadersList.items.sort((a, b) {
+      if (a.blk < b.blk)
+        return 1;
+      else
+        return -1;
+    });
+  }
+
+  Widget showSteals() {
+    List<DataRow> list = [];
+
+    sortByStlDesc();
+
+    for (var s in leadersList.items) {
+      list.add(DataRow(cells: [
+        DataCell(
+          Text(s.team),
+        ),
+        DataCell(
+          Text(s.player),
+        ),
+        DataCell(Text(s.stl.toString()))
+      ]));
+    }
+
+    return DataTable(
+      columnSpacing: 15,
+      dataRowHeight: 25,
+      headingRowHeight: 25,
+      columns: [
+        DataColumn(label: Text('Team')),
+        DataColumn(label: Text('Player')),
+        DataColumn(label: Text('Stls'))
+      ],
+      rows: [
+        ...list.getRange(0, 10),
+        DataRow(cells: [
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+          DataCell(Text('...')),
+        ]),
+        ...list.getRange(list.length - 5, list.length)
+      ],
+    );
+  }
+
+  void sortByStlDesc() {
+    // Sort by most points
+    leadersList.items.sort((a, b) {
+      if (a.stl < b.stl)
         return 1;
       else
         return -1;
