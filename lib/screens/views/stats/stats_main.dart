@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/screens/views/stats/stats_players.dart';
 import 'package:hoop/screens/views/stats/stats_teams.dart';
 import 'package:hoop/screens/views/stats/stats_today.dart';
 
@@ -29,11 +30,7 @@ class StatsMain extends StatelessWidget {
           body: TabBarView(
             children: [
               SingleChildScrollView(child: StatsTeams()),
-              SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.all(20),
-                    child: Text('This feature is coming soon...')),
-              ),
+              SingleChildScrollView(child: StatsPlayers()),
               SingleChildScrollView(child: StatsToday())
             ],
           )),

@@ -32,6 +32,7 @@ class JsonFiles with ChangeNotifier {
   var _teamStatsAdvanced;
   var _teamStatsMisc;
   var _teamStatsFourFactors;
+  var _leagueLeaders;
   Map<String, dynamic> _playerSummaryStats = {};
   Map<String, dynamic> _teamStatsShooting = {};
   Map<String, dynamic> _teamLineups = {};
@@ -75,6 +76,11 @@ class JsonFiles with ChangeNotifier {
 
   void setSeasonStage(String stage) {
     _seasonStage = stage;
+    notifyListeners();
+  }
+
+  void setLeagueLeaders(dynamic json) {
+    _leagueLeaders = json;
     notifyListeners();
   }
 
@@ -287,6 +293,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getPlayerSplitsGame(String playerId) => _playerSplitsGame[playerId];
   dynamic getPlayerSplitsAdvanced(String playerId) =>
       _playerSplitsAdvanced[playerId];
+
+  dynamic getLeagueLeaders() => _leagueLeaders;
 
   dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
   LeadTrackerList getFullGameLeadTracker(String gameId) =>
