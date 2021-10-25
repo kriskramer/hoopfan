@@ -985,6 +985,8 @@ class _StatsTeamsState extends State<StatsTeams> {
           Provider.of<JsonFiles>(context, listen: false).getAllTeamStats();
     }
 
+    listTeamStats.items.clear();
+
     for (var t in teamStats["league"]["standard"]["regularSeason"]["teams"]) {
       listTeamStats.items.add(TeamStats.fromJson(t));
     }
