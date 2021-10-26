@@ -35,51 +35,55 @@ class ScoringTrendsInlinePbp extends StatelessWidget {
     list.importPbp(pbp5, 5);
     list.importPbp(pbp6, 6);
 
-    var lastItemIndex = list.items.length - 1;
-    lastItem = list.items[lastItemIndex];
+    if (list.items.length == 0) {
+      return Text("No play-by-play data. Try reloading the screen...");
+    } else {
+      var lastItemIndex = list.items.length - 1;
+      lastItem = list.items[lastItemIndex];
 
-    RecentPoints rp =
-        list.getRecentPoints(lastItem.clock, lastItem.period.toString());
+      RecentPoints rp =
+          list.getRecentPoints(lastItem.clock, lastItem.period.toString());
 
-    String vTeamId = game["vTeam"]["teamId"];
-    String hTeamId = game["hTeam"]["teamId"];
+      String vTeamId = game["vTeam"]["teamId"];
+      String hTeamId = game["hTeam"]["teamId"];
 
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            "Scoring last 5 minutes:",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  child: Text(game["vTeam"]["triCode"] + "  "), width: 35),
-              Container(child: Text(rp.vTeamLast5Min.toString()), width: 22),
-              Container(
-                  child: Text(''),
-                  width: rp.vTeamLast5Min * 1.9,
-                  height: 10,
-                  color: Color(ConstantHelper.getTeamColor(vTeamId))),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                  child: Text(game["hTeam"]["triCode"] + "  "), width: 35),
-              Container(child: Text(rp.hTeamLast5Min.toString()), width: 22),
-              Container(
-                  child: Text(''),
-                  width: rp.hTeamLast5Min * 1.9,
-                  height: 10,
-                  color: Color(ConstantHelper.getTeamColor(hTeamId))),
-            ],
-          ),
-        ],
-      ),
-    );
+      return Container(
+        child: Column(
+          children: [
+            Text(
+              "Scoring last 5 minutes:",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    child: Text(game["vTeam"]["triCode"] + "  "), width: 35),
+                Container(child: Text(rp.vTeamLast5Min.toString()), width: 22),
+                Container(
+                    child: Text(''),
+                    width: rp.vTeamLast5Min * 1.9,
+                    height: 10,
+                    color: Color(ConstantHelper.getTeamColor(vTeamId))),
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                    child: Text(game["hTeam"]["triCode"] + "  "), width: 35),
+                Container(child: Text(rp.hTeamLast5Min.toString()), width: 22),
+                Container(
+                    child: Text(''),
+                    width: rp.hTeamLast5Min * 1.9,
+                    height: 10,
+                    color: Color(ConstantHelper.getTeamColor(hTeamId))),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

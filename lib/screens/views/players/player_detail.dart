@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_summary_datatable.dart';
+import 'package:hoop/components/player_widgets/player_base_stats_displays.dart';
 import 'package:hoop/components/player_widgets/player_clutch_stats_table.dart';
 import 'package:hoop/components/player_widgets/player_game_log.dart';
 import 'package:hoop/components/player_widgets/player_shooting_stats_table.dart';
@@ -389,6 +390,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
             SizedBox(
               height: 15,
             ),
+            PlayerBaseStatsDisplay(widget.playerId),
             // Use a FutureBuilder to get the player data and then build out a data table or some other widget
             Column(
               children: [
