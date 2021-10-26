@@ -54,7 +54,7 @@ class PlayerYearOverYearBaseTable extends StatelessWidget {
         .getPlayerSummaryStats(key);
 
     if (json == null) {
-      json = Network.getJson(
+      json = await Network.getJson(
         Urls.getNbaStatsPlayerYearOverYear(playerId,
             measureType: measure, perMode: per),
         requestHeaders: RequestHeaders.nbaStatsHeaders,

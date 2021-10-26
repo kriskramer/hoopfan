@@ -216,6 +216,11 @@ class Urls {
   //   return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   // }
 
+  static String getNbaStatsAllPlayerStats(
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=&Weight=";
+  }
+
   // Returns different types of shot pcts for a given team, including dribble shots, closest defender, shot clock, touch time and range.
   static String getNbaStatsTeamShotTypes(String teamId) {
     return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=Totals&Period=0&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
