@@ -42,7 +42,9 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _playerSplitsGame = {};
   Map<String, dynamic> _playerSplitsAdvanced = {};
   Map<String, dynamic> _playerGameLog = {};
-  var _allPlayerStats;
+  var _allBasePlayerStats;
+  var _allAdvancedPlayerStats;
+  var _allDefensePlayerStats;
   var _nbaNews;
   var _nbaVideos;
   var _todaysGames;
@@ -160,8 +162,16 @@ class JsonFiles with ChangeNotifier {
     _teamStats = json;
   }
 
-  void setAllPlayerStats(dynamic json) {
-    _allPlayerStats = json;
+  void setAllBasePlayerStats(dynamic json) {
+    _allBasePlayerStats = json;
+  }
+
+  void setAllAdvancedPlayerStats(dynamic json) {
+    _allAdvancedPlayerStats = json;
+  }
+
+  void setAllDefensePlayerStats(dynamic json) {
+    _allDefensePlayerStats = json;
   }
 
   void setEstimatedTeamStats(dynamic json) {
@@ -299,7 +309,9 @@ class JsonFiles with ChangeNotifier {
   dynamic getPlayerSplitsAdvanced(String playerId) =>
       _playerSplitsAdvanced[playerId];
 
-  dynamic getAllPlayerStats() => _allPlayerStats;
+  dynamic getAllBasePlayerStats() => _allBasePlayerStats;
+  dynamic getAllAdvancedPlayerStats() => _allAdvancedPlayerStats;
+  dynamic getAllDefensePlayerStats() => _allDefensePlayerStats;
 
   dynamic getLeagueLeaders() => _leagueLeaders;
 

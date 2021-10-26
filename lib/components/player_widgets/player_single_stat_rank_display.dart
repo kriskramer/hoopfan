@@ -11,11 +11,12 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var rankMeter = (total - rank) / total;
-    return Card(
+    return Container(
+      padding: EdgeInsets.fromLTRB(12, 3, 12, 3),
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
+            padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -44,11 +45,12 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: MediaQuery.of(context).size.width - 20,
-                //padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width - 40,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: LinearProgressIndicator(
-                  color: Colors.green,
-                  minHeight: 10,
+                  color: getProgressBarColor(rankMeter),
+                  backgroundColor: Colors.grey[50], //Colors.green,
+                  minHeight: 8,
                   value: rankMeter,
                   semanticsValue: rankMeter.toString(),
                 ),
@@ -58,5 +60,23 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color getProgressBarColor(double value) {
+    if (value < .15) {
+      return Colors.red;
+    } else if (value < .3) {
+      return Colors.deepOrange;
+    } else if (value < .45) {
+      return Colors.orange;
+    } else if (value < .6) {
+      return Colors.amber;
+    } else if (value < .75) {
+      return Colors.yellow;
+    } else if (value < .9) {
+      return Colors.green;
+    }
+
+    return Colors.lightBlue;
   }
 }
