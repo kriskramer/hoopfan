@@ -77,15 +77,15 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
 
   Color getProgressBarColor(double value) {
     if (value < .15) {
-      return Colors.red;
+      return Colors.purple;
     } else if (value < .3) {
-      return Colors.deepOrange;
+      return Colors.red;
     } else if (value < .45) {
-      return Colors.orange;
+      return Colors.deepOrange;
     } else if (value < .6) {
-      return Colors.amber;
+      return Colors.orange;
     } else if (value < .75) {
-      return Colors.yellow;
+      return Colors.amber;
     } else if (value < .9) {
       return Colors.green;
     }

@@ -78,38 +78,75 @@ class TeamFourFactorsStatsCard extends StatelessWidget {
   }
 
   Widget getCardStat(String label, String value, String rank) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.all(5),
-          width: 75,
-          child: Text(
-            label,
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.red[900]),
+    if (rank.trim() == "") rank = "30";
+    var rankMeter = (30 - double.parse(rank)) / 30;
+    return Column(children: [
+      Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(5),
+            width: 75,
+            child: Text(
+              label,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red[900]),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Container(
-          padding: EdgeInsets.all(5),
-          width: 75,
-          child: Text(
-            value,
-            style: TextStyle(fontSize: 18),
+          SizedBox(
+            width: 5,
           ),
-        ),
-        rank == ''
-            ? Container(
-                child: Text('na'),
-              )
-            : Container(
-                child: Text("(" + rank + ")"),
-              )
-      ],
-    );
+          Container(
+            padding: EdgeInsets.all(5),
+            width: 75,
+            child: Text(
+              value,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          rank == ''
+              ? Container(
+                  child: Text('na'),
+                )
+              : Container(
+                  child: Text("(" + rank + ")"),
+                )
+        ],
+      ),
+      Row(
+        children: [
+          Container(
+            width: 150,
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            child: LinearProgressIndicator(
+              color: getProgressBarColor(rankMeter),
+              backgroundColor: Colors.grey[50], //Colors.green,
+              minHeight: 2,
+              value: rankMeter,
+              semanticsValue: rank.toString(),
+            ),
+          )
+        ],
+      )
+    ]);
+  }
+
+  Color getProgressBarColor(double value) {
+    if (value < .15) {
+      return Colors.purple;
+    } else if (value < .3) {
+      return Colors.red;
+    } else if (value < .45) {
+      return Colors.deepOrange;
+    } else if (value < .6) {
+      return Colors.orange;
+    } else if (value < .75) {
+      return Colors.amber;
+    } else if (value < .9) {
+      return Colors.green;
+    }
+
+    return Colors.lightBlue;
   }
 }
