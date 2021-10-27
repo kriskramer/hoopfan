@@ -230,9 +230,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                     ));
                                               },
                                             )
-                                          : SizedBox(
-                                              width: 1,
-                                            ),
+                                          : NoConnection(),
                                       SizedBox(
                                         width: 10,
                                       ),
