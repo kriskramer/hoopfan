@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/player_widgets/player_rank_list.dart';
 
 class PlayerSingleStatRankDisplay extends StatelessWidget {
   final String stat;
   final String statName;
   final int rank;
   final int total;
-  const PlayerSingleStatRankDisplay(
-      this.stat, this.statName, this.rank, this.total);
+  final String measure;
+  final String playerId;
+  const PlayerSingleStatRankDisplay(this.stat, this.statName, this.rank,
+      this.total, this.measure, this.playerId);
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,20 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: 20),
-                Text(
-                  "Rank: " + rank.toString(),
-                  style: TextStyle(fontSize: 16),
-                )
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PlayerRankList(measure, statName, playerId),
+                        ));
+                  },
+                  child: Text(
+                    "Rank: " + rank.toString(),
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
               ],
             ),
           ),
