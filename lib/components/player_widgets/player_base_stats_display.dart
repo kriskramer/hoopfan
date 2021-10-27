@@ -31,49 +31,58 @@ class PlayerBaseStatsDisplay extends StatelessWidget {
               }
             }
 
-            return Column(
-              children: [
-                Text("Base Stats",
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                Divider(
-                  height: 2,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                PlayerSingleStatRankDisplay(player.pts.toString(), "PTS",
-                    player.ptsRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.reb.toString(), "REB",
-                    player.rebRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.oReb.toString(), "OREB",
-                    player.oRebRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.dReb.toString(), "DREB",
-                    player.dRebRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.ast.toString(), "AST",
-                    player.astRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.stl.toString(), "STL",
-                    player.stlRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.blk.toString(), "BLK",
-                    player.blkRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.fgPct.toString(), "FG %",
-                    player.fgPctRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.ftPct.toString(), "FT %",
-                    player.ftPctRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.fg3Pct.toString(), "3P %",
-                    player.fg3PctRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.pf.toString(), "PF",
-                    player.pfRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.plusMinus.toString(), "+/-",
-                    player.plusMinusRank, list.items.length, "BASE", playerId),
-                PlayerSingleStatRankDisplay(player.minutes.toString(), "MIN",
-                    player.minutesRank, list.items.length, "BASE", playerId),
-                SizedBox(
-                  height: 15,
-                ),
-              ],
-            );
+            if (player == null) {
+              return Text("Data is not currently available for this player...");
+            } else {
+              return Column(
+                children: [
+                  Text("Base Stats",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Divider(
+                    height: 2,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  PlayerSingleStatRankDisplay(player.pts.toString(), "PTS",
+                      player.ptsRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.reb.toString(), "REB",
+                      player.rebRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.oReb.toString(), "OREB",
+                      player.oRebRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.dReb.toString(), "DREB",
+                      player.dRebRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.ast.toString(), "AST",
+                      player.astRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.stl.toString(), "STL",
+                      player.stlRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.blk.toString(), "BLK",
+                      player.blkRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.fgPct.toString(), "FG %",
+                      player.fgPctRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.ftPct.toString(), "FT %",
+                      player.ftPctRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.fg3Pct.toString(), "3P %",
+                      player.fg3PctRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(player.pf.toString(), "PF",
+                      player.pfRank, list.items.length, "BASE", playerId),
+                  PlayerSingleStatRankDisplay(
+                      player.plusMinus.toString(),
+                      "+/-",
+                      player.plusMinusRank,
+                      list.items.length,
+                      "BASE",
+                      playerId),
+                  PlayerSingleStatRankDisplay(player.minutes.toString(), "MIN",
+                      player.minutesRank, list.items.length, "BASE", playerId),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              );
+            }
           } else {
             return NoConnection();
           }
