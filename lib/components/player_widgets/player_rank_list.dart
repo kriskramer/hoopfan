@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/services/network.dart';
 import 'package:provider/provider.dart';
 
 class PlayerRankList extends StatelessWidget {

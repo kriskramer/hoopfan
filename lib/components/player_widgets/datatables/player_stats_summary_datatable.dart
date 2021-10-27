@@ -14,7 +14,7 @@ class PlayerStatsSummaryDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var table;
-    List<DataRow> rows = new List<DataRow>();
+    List<DataRow> rows = [];
 
     // Generate summary row
     rows.add(DataRow(cells: [

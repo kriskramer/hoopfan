@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/services/network.dart';
-import 'package:hoop/services/urls.dart';
 
 class AccountMain extends StatefulWidget {
   @override

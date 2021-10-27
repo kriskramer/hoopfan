@@ -7,7 +7,7 @@ class PlayerStatsYearOverYearBaseDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (int i = 1; i < json.length; i++) {
       for (int j = 0; j < json[i]["rowSet"].length; j++) {

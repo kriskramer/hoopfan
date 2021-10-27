@@ -13,8 +13,8 @@ class InjuryReport extends StatelessWidget {
           future: loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<InjuryReportItem> list = List<InjuryReportItem>();
-              List<Widget> rows = List<Widget>();
+              List<InjuryReportItem> list = [];
+              List<Widget> rows = [];
 
               var xml = XmlDocument.parse(snapshot.data);
 

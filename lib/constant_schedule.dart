@@ -17,7 +17,7 @@ class ScheduleHelper {
     String todayString = "${year + month + day}";
 
     var sched = current_season_schedule["league"]["standard"];
-    List<dynamic> upcomingGames = new List<dynamic>();
+    List<dynamic> upcomingGames = [];
 
     for (var g in sched) {
       print(g);

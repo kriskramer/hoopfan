@@ -43,10 +43,10 @@ class GameFoulTroubleFeed extends StatelessWidget {
     String vTeamTriCode = game["vTeam"]["triCode"];
     String hTeamTriCode = game["hTeam"]["triCode"];
     int period = game["period"]["current"];
-    List<Widget> rows = new List<Widget>();
+    List<Widget> rows = [];
     //List<Widget> list2 = new List<Widget>();
-    List<dynamic> vTeamPlayers = new List<dynamic>();
-    List<dynamic> hTeamPlayers = new List<dynamic>();
+    List<dynamic> vTeamPlayers = [];
+    List<dynamic> hTeamPlayers = [];
     dynamic players = stats["activePlayers"];
 
     // Loop through players and assign to teams
@@ -147,9 +147,9 @@ class GameFoulTroubleFeed extends StatelessWidget {
         ConstantHelper.getTeamTextColor(game["hTeam"]["teamId"]);
     String vTeamTriCode = game["vTeam"]["triCode"];
     String hTeamTriCode = game["hTeam"]["triCode"];
-    List<Widget> rows = new List<Widget>();
-    List<dynamic> vTeamPlayers = new List<dynamic>();
-    List<dynamic> hTeamPlayers = new List<dynamic>();
+    List<Widget> rows = [];
+    List<dynamic> vTeamPlayers = [];
+    List<dynamic> hTeamPlayers = [];
     dynamic players = stats["activePlayers"];
 
     // Loop through players and assign to teams

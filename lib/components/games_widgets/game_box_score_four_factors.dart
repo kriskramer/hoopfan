@@ -45,7 +45,7 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
   }
 
   DataTable getDataTable(GameBoxScoreFourFactorsList list) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var p in list.items) {
       rows.add(DataRow(cells: [

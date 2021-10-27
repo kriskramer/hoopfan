@@ -31,7 +31,7 @@ class _TransactionsState extends State<Transactions> {
       child: FutureBuilder(
           future: loadData(context),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            List<Widget> list = new List<Widget>();
+            List<Widget> list = [];
 
             if (!snapshot.hasData) {
               return NoConnection();

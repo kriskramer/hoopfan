@@ -44,7 +44,7 @@ class _GameBoxScoreDefenseState extends State<GameBoxScoreDefense> {
   }
 
   DataTable getDataTable(GameBoxScoreDefenseList list) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var p in list.items) {
       rows.add(DataRow(cells: [

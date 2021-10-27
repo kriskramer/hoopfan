@@ -1,6 +1,3 @@
-import 'package:hoop/json/jsons.dart';
-import 'package:provider/provider.dart';
-
 class LeadTrackerItem {
   String clock;
   int period;

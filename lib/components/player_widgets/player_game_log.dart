@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
 
 class PlayerGameLogTable extends StatefulWidget {
   final String playerId;
@@ -65,7 +63,7 @@ class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
   }
 
   DataTable getGameLogTable(dynamic json) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var s in json) {
       rows.add(DataRow(cells: [

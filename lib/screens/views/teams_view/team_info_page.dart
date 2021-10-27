@@ -43,7 +43,7 @@ class TeamInfoPage extends StatelessWidget {
 
   List<Widget> teamSummary(
       dynamic json, String teamId, int teamColor, int teamTextColor) {
-    List<Widget> list = new List<Widget>();
+    List<Widget> list = [];
     list.add(Container(
         color: Color(ConstantHelper.getTeamColor(teamId)),
         margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -169,7 +169,7 @@ class TeamInfoPage extends StatelessWidget {
 
   List<Widget> awardsList(
       dynamic json, String teamId, int teamColor, int teamTextColor) {
-    List<Widget> list = new List<Widget>();
+    List<Widget> list = [];
 
     dynamic champs = json[0]["Championships"];
     dynamic conf = json[1]["ConferenceTitles"];
@@ -266,7 +266,7 @@ class TeamInfoPage extends StatelessWidget {
 
   List<Widget> retiredList(
       dynamic json, String teamId, int teamColor, int teamTextColor) {
-    List<Widget> list = new List<Widget>();
+    List<Widget> list = [];
 
     list.add(Container(
         color: Color(teamColor),
@@ -315,7 +315,7 @@ class TeamInfoPage extends StatelessWidget {
 
   List<Widget> hofList(
       dynamic json, String teamId, int teamColor, int teamTextColor) {
-    List<Widget> list = new List<Widget>();
+    List<Widget> list = [];
 
     list.add(Container(
         color: Color(teamColor),
