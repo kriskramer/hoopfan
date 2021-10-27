@@ -107,7 +107,7 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   Widget getDataTable(List<dynamic> players, BuildContext ctx) {
-    List<DataRow> rows = new List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var p in players) {
       rows.add(

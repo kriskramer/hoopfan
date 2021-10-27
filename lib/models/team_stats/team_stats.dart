@@ -187,7 +187,7 @@ class TeamStats {
 }
 
 class TeamStatsList {
-  List<TeamStats> items = List<TeamStats>();
+  List<TeamStats> items = [];
 
   void sortByName(bool asc) {
     if (asc) {

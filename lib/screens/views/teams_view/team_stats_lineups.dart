@@ -30,7 +30,7 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
       var allPlayers =
           Provider.of<JsonFiles>(context, listen: false).getAllPlayers();
 
-      List<Map> teamRoster = new List<Map>();
+      List<Map> teamRoster = [];
       for (var ap in allPlayers["league"]["standard"]) {
         if (ap["teamId"] == widget.teamId) {
           teamRoster.add(ap);
@@ -99,7 +99,7 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == true) {
-                    List<DataRow> rows = List<DataRow>();
+                    List<DataRow> rows = [];
 
                     for (var l in list.items) {
                       rows.add(DataRow(cells: [

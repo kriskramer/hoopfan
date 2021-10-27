@@ -44,7 +44,7 @@ class PlayerSplitsAdvancedTable extends StatelessWidget {
   }
 
   DataTable getStatsTable(dynamic json) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (int i = 0; i < json.length; i++) {
       for (int j = 0; j < json[i]["rowSet"].length; j++) {

@@ -31,7 +31,7 @@ class QuarterScores extends StatelessWidget {
   }
 
   List<DataRow> getQuarters(dynamic game) {
-    List<DataRow> list = new List<DataRow>();
+    List<DataRow> list = [];
     DataRow vList =
         new DataRow(cells: [DataCell(Text(game["vTeam"]["triCode"]))]);
     DataRow hList =

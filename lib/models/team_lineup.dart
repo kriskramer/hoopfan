@@ -87,9 +87,9 @@ class TeamLineup {
 }
 
 class TeamLineupList {
-  List<TeamLineup> items = List<TeamLineup>();
+  List<TeamLineup> items = [];
   dynamic originalJson;
-  List<String> filteredPlayers = List<String>();
+  List<String> filteredPlayers = [];
 
   TeamLineupList(dynamic json) {
     originalJson = json;
@@ -115,7 +115,7 @@ class TeamLineupList {
 
   void filterByPlayers() {
     loadJson();
-    List<TeamLineup> newList = List<TeamLineup>();
+    List<TeamLineup> newList = [];
     String player1Id = "-";
     String player2Id = "-";
     String player3Id = "-";

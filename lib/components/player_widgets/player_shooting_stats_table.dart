@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
 
 class PlayerShootingStatsTable extends StatelessWidget {
   final String playerId;
@@ -108,7 +106,7 @@ class PlayerShootingStatsTable extends StatelessWidget {
   }
 
   DataTable getGeneralShootingTable(dynamic json) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var s in json) {
       rows.add(DataRow(cells: [

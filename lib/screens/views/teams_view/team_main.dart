@@ -338,7 +338,7 @@ class _TeamDetailsState extends State<TeamDetails> {
   }
 
   List<Widget> socialList(dynamic json, int teamColor) {
-    List<Widget> buttons = new List<Widget>();
+    List<Widget> buttons = [];
 
     for (var r in json) {
       String account = r["AccountType"];

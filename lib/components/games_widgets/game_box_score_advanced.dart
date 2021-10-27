@@ -44,7 +44,7 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
   }
 
   DataTable getDataTable(GameBoxScoreAdvancedList list) {
-    List<DataRow> rows = List<DataRow>();
+    List<DataRow> rows = [];
 
     for (var p in list.items) {
       rows.add(DataRow(cells: [

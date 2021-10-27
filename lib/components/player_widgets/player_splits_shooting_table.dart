@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/player_widgets/datatables/player_stats_shooting_splits_datatable.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
 
 class PlayerSplitsShootingTable extends StatelessWidget {
   final String playerId;

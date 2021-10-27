@@ -55,10 +55,10 @@ class _StatsTodayState extends State<StatsToday> {
               Provider.of<JsonFiles>(context, listen: false)
                   .getPlayerBoxScores();
 
-          List<DataRow> rowsPoints = new List<DataRow>();
-          List<DataRow> rowsRebs = new List<DataRow>();
-          List<DataRow> rowsAsts = new List<DataRow>();
-          List<DataRow> rowsPM = new List<DataRow>();
+          List<DataRow> rowsPoints = [];
+          List<DataRow> rowsRebs = [];
+          List<DataRow> rowsAsts = [];
+          List<DataRow> rowsPM = [];
 
           if (list == null) {
             return Container(
@@ -241,7 +241,7 @@ class _StatsTodayState extends State<StatsToday> {
           }
 
           list.sortByRebounds(false);
-          List<DataRow> rows = new List<DataRow>();
+          List<DataRow> rows = [];
 
           for (var p in list.items) {
             rows.add(DataRow(cells: [
