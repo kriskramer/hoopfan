@@ -13,60 +13,49 @@ class TeamEstimatedStatsCard extends StatelessWidget {
         Provider.of<JsonFiles>(context, listen: false).getEstimatedTeamStats();
     var teamStats = getTeamEstimatedStats(teamId, estimatedStats);
 
+    var width = MediaQuery.of(context).size.width - 35;
+
     return teamStats == null
         ? Text('No stats available')
         : Container(
             child: Column(children: [
               Container(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(children: [
+                  Column(
                     children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          getCardStat('W', teamStats[3].toString(),
-                              teamStats[17].toString()),
-                          getCardStat('L', teamStats[4].toString(),
-                              teamStats[18].toString()),
-                          getCardStat('Win %', teamStats[5].toString(),
-                              teamStats[19].toString()),
-                          getCardStat('ORtg', teamStats[7].toString(),
-                              teamStats[20].toString()),
-                          getCardStat('DRtg', teamStats[8].toString(),
-                              teamStats[21].toString()),
-                          getCardStat('Net', teamStats[9].toString(),
-                              teamStats[22].toString()),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                      SizedBox(
+                        height: 10,
                       ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          getCardStat('Pace', teamStats[10].toString(),
-                              teamStats[23].toString()),
-                          getCardStat('Ast Ratio', teamStats[11].toString(),
-                              teamStats[24].toString()),
-                          getCardStat('TO %', teamStats[15].toString(),
-                              teamStats[25].toString()),
-                          getCardStat('OReb %', teamStats[12].toString(),
-                              teamStats[26].toString()),
-                          getCardStat('DReb %', teamStats[13].toString(),
-                              teamStats[27].toString()),
-                          getCardStat('Reb %', teamStats[14].toString(),
-                              teamStats[28].toString()),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      )
-                    ]),
+                      getCardStat('W', teamStats[3].toString(),
+                          teamStats[17].toString(), width),
+                      getCardStat('L', teamStats[4].toString(),
+                          teamStats[18].toString(), width),
+                      getCardStat('Win %', teamStats[5].toString(),
+                          teamStats[19].toString(), width),
+                      getCardStat('ORtg', teamStats[7].toString(),
+                          teamStats[20].toString(), width),
+                      getCardStat('DRtg', teamStats[8].toString(),
+                          teamStats[21].toString(), width),
+                      getCardStat('Net', teamStats[9].toString(),
+                          teamStats[22].toString(), width),
+                      getCardStat('Pace', teamStats[10].toString(),
+                          teamStats[23].toString(), width),
+                      getCardStat('Ast Ratio', teamStats[11].toString(),
+                          teamStats[24].toString(), width),
+                      getCardStat('TO %', teamStats[15].toString(),
+                          teamStats[25].toString(), width),
+                      getCardStat('OReb %', teamStats[12].toString(),
+                          teamStats[26].toString(), width),
+                      getCardStat('DReb %', teamStats[13].toString(),
+                          teamStats[27].toString(), width),
+                      getCardStat('Reb %', teamStats[14].toString(),
+                          teamStats[28].toString(), width),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  )
+                ]),
               ),
             ]),
           );
@@ -83,76 +72,71 @@ class TeamEstimatedStatsCard extends StatelessWidget {
     return team;
   }
 
-  Widget getCardStat(String label, String value, String rank) {
+  Widget getCardStat(String label, String value, String rank, double width) {
     if (rank.trim() == "") rank = "30";
     var rankMeter = (30 - double.parse(rank)) / 30;
-    return Column(children: [
-      Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(5),
-            width: 75,
-            child: Text(
-              label,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red[900]),
-            ),
+    return Container(
+      height: 25,
+      child: Stack(children: [
+        Container(
+          width: width,
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: LinearProgressIndicator(
+            color: getProgressBarColor(rankMeter),
+            backgroundColor: Colors.grey[50], //Colors.green,
+            minHeight: 22,
+            value: rankMeter,
+            semanticsValue: rank.toString(),
           ),
-          SizedBox(
-            width: 5,
+        ),
+        Container(
+          width: width,
+          padding: EdgeInsets.symmetric(horizontal: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                Container(
+                  width: 65,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 14,
+                      //color: Colors.red[900]
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  value,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ]),
+              rank == '' ? Text("na") : Text("(" + rank + ")"),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.all(5),
-            width: 75,
-            child: Text(
-              value,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          rank == ''
-              ? Container(
-                  child: Text('na'),
-                )
-              : Container(
-                  child: Text("(" + rank + ")"),
-                )
-        ],
-      ),
-      Row(
-        children: [
-          Container(
-            width: 150,
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: LinearProgressIndicator(
-              color: getProgressBarColor(rankMeter),
-              backgroundColor: Colors.grey[50], //Colors.green,
-              minHeight: 2,
-              value: rankMeter,
-              semanticsValue: rank.toString(),
-            ),
-          )
-        ],
-      )
-    ]);
+        )
+      ]),
+    );
   }
 
   Color getProgressBarColor(double value) {
     if (value < .15) {
-      return Colors.purple;
+      return Colors.purple.withAlpha(125);
     } else if (value < .3) {
-      return Colors.red;
+      return Colors.red.withAlpha(125);
     } else if (value < .45) {
-      return Colors.deepOrange;
+      return Colors.deepOrange.withAlpha(125);
     } else if (value < .6) {
-      return Colors.orange;
+      return Colors.orange.withAlpha(125);
     } else if (value < .75) {
-      return Colors.amber;
+      return Colors.amber.withAlpha(125);
     } else if (value < .9) {
-      return Colors.green;
+      return Colors.green.withAlpha(125);
     }
 
-    return Colors.lightBlue;
+    return Colors.lightBlue.withAlpha(125);
   }
 }
