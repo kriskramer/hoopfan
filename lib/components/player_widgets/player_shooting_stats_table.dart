@@ -168,7 +168,7 @@ class PlayerShootingStatsTable extends StatelessWidget {
     // if (Provider.of<JsonFiles>(context, listen: false)
     //         .getPlayerShotTypes(playerId) ==
     //     null) {
-    json = Network.getJson(
+    json = await Network.getJson(
       Urls.getNbaStatsPlayerShotTypes(playerId, perMode: perMode),
       requestHeaders: RequestHeaders.nbaStatsHeaders,
     );

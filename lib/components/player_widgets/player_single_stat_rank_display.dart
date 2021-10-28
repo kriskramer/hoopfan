@@ -15,11 +15,21 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     var rankMeter = (total - rank) / total;
     return Container(
-      padding: EdgeInsets.fromLTRB(12, 3, 12, 3),
-      child: Column(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      child: Stack(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+            width: MediaQuery.of(context).size.width - 35,
+            child: LinearProgressIndicator(
+              color: getProgressBarColor(rankMeter),
+              backgroundColor: Colors.grey[50],
+              minHeight: 32,
+              value: rankMeter,
+              semanticsValue: rankMeter.toString(),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -37,39 +47,26 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PlayerRankList(measure, statName, playerId),
-                        ));
-                  },
-                  child: Text(
-                    "Rank: " + rank.toString(),
-                    style: TextStyle(fontSize: 16),
+                SizedBox(
+                  height: 35,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerRankList(measure, statName, playerId),
+                          ));
+                    },
+                    child: Text(
+                      "Rank: " + rank.toString(),
+                      style: TextStyle(fontSize: 16, color: Colors.blue[700]),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Row(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 40,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: LinearProgressIndicator(
-                  color: getProgressBarColor(rankMeter),
-                  backgroundColor: Colors.grey[50], //Colors.green,
-                  minHeight: 8,
-                  value: rankMeter,
-                  semanticsValue: rankMeter.toString(),
-                ),
-              )
-            ],
-          )
         ],
       ),
     );
@@ -77,19 +74,19 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
 
   Color getProgressBarColor(double value) {
     if (value < .15) {
-      return Colors.red;
+      return Colors.purple.withAlpha(125);
     } else if (value < .3) {
-      return Colors.deepOrange;
+      return Colors.red.withAlpha(125);
     } else if (value < .45) {
-      return Colors.orange;
+      return Colors.deepOrange.withAlpha(125);
     } else if (value < .6) {
-      return Colors.amber;
+      return Colors.orange.withAlpha(125);
     } else if (value < .75) {
-      return Colors.yellow;
+      return Colors.amber.withAlpha(125);
     } else if (value < .9) {
-      return Colors.green;
+      return Colors.green.withAlpha(125);
     }
 
-    return Colors.lightBlue;
+    return Colors.lightBlue.withAlpha(125);
   }
 }

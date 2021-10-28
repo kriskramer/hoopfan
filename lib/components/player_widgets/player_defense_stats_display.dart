@@ -33,7 +33,8 @@ class PlayerDefenseStatsDisplay extends StatelessWidget {
             }
 
             if (player == null) {
-              return Text("Data is not currently available for this player...");
+              return Text(
+                  "Defense data is not currently available for this player...");
             } else {
               return Column(
                 children: [

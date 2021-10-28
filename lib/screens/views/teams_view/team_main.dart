@@ -230,9 +230,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                     ));
                                               },
                                             )
-                                          : SizedBox(
-                                              width: 1,
-                                            ),
+                                          : CircularProgressIndicator(),
                                       SizedBox(
                                         width: 10,
                                       ),
