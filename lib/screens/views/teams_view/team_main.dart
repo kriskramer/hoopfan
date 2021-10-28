@@ -230,7 +230,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                     ));
                                               },
                                             )
-                                          : NoConnection(),
+                                          : CircularProgressIndicator(),
                                       SizedBox(
                                         width: 10,
                                       ),
