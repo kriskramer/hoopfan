@@ -18,7 +18,7 @@ class _LayoutState extends State<Layout> {
     NewsMainScreen(),
     TodaysGames(),
     StatsMain(),
-    AccountMain(),
+    //  AccountMain(),
   ];
 
   void onTapChangeView(int index) {
@@ -53,10 +53,10 @@ class _LayoutState extends State<Layout> {
               icon: Icon(Icons.bar_chart),
               label: "Stats",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "User",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.person),
+            //   label: "User",
+            // ),
           ],
           currentIndex: _selectedScreen,
           onTap: onTapChangeView,
