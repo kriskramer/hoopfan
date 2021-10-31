@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hoop/components/player_widgets/player_rank_list.dart';
 
-class PlayerSingleStatRankDisplay extends StatelessWidget {
+class PlayerSingleStatRankDisplay extends StatefulWidget {
   final String stat;
   final String statName;
   final int rank;
@@ -12,8 +14,43 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
       this.total, this.measure, this.playerId);
 
   @override
+  State<PlayerSingleStatRankDisplay> createState() =>
+      _PlayerSingleStatRankDisplayState();
+}
+
+class _PlayerSingleStatRankDisplayState
+    extends State<PlayerSingleStatRankDisplay> {
+  var progressValue = 0.0;
+  Timer _timer;
+  var rankMeter;
+
+  @override
+  void initState() {
+    const oneSec = const Duration(milliseconds: 50);
+    rankMeter = (widget.total - widget.rank) / widget.total;
+    _timer = Timer.periodic(oneSec, (Timer t) {
+      setState(() {
+        progressValue += 0.05;
+        if (progressValue >= rankMeter) {
+          progressValue = rankMeter;
+          t.cancel();
+          return;
+        }
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var rankMeter = (total - rank) / total;
+    //var rankMeter = (widget.total - widget.rank) / widget.total;
+    //print(rankMeter);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: Stack(
@@ -24,7 +61,7 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
               color: getProgressBarColor(rankMeter),
               backgroundColor: Colors.grey[50],
               minHeight: 32,
-              value: rankMeter,
+              value: progressValue,
               semanticsValue: rankMeter.toString(),
             ),
           ),
@@ -36,12 +73,12 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      statName,
-                      style: TextStyle(fontSize: 20),
+                      widget.statName,
+                      style: TextStyle(fontSize: 18),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 20),
                     Text(
-                      stat,
+                      widget.stat,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -54,12 +91,12 @@ class PlayerSingleStatRankDisplay extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                PlayerRankList(measure, statName, playerId),
+                            builder: (context) => PlayerRankList(widget.measure,
+                                widget.statName, widget.playerId),
                           ));
                     },
                     child: Text(
-                      "Rank: " + rank.toString(),
+                      "Rank: " + widget.rank.toString(),
                       style: TextStyle(fontSize: 16, color: Colors.blue[700]),
                     ),
                   ),
