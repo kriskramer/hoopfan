@@ -39,6 +39,7 @@ class PbpPeriodView extends StatelessWidget {
                           itemCount: pbp.length, //plays.length,
                           itemBuilder: (context, index) {
                             if (pbp[index][33] == 1 &&
+                                pbp[index][13] != 0 &&
                                 !isEventNull(pbp[index])) {
                               return Container(
                                 padding: EdgeInsets.all(8),
@@ -114,6 +115,10 @@ class PbpPeriodView extends StatelessWidget {
     } else if (pbp[9] != null) {
       isNull = false;
     }
+
+    // if (pbp[8].toString().startsWith("Instant Replay")) {
+    //   return true;
+    // }
 
     return isNull;
   }

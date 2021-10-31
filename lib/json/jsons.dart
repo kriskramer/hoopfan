@@ -52,6 +52,7 @@ class JsonFiles with ChangeNotifier {
   var _upcomingGames;
   String _selectedDate;
   PlayerBoxScoreList _playerBoxScores;
+  Map<String, dynamic> _playerShotChart = {};
 
   bool _isFeatureBlocked = true;
 
@@ -140,6 +141,10 @@ class JsonFiles with ChangeNotifier {
 
   void setPlayerSplitsAdvanced(String playerId, dynamic json) {
     _playerSplitsAdvanced[playerId] = json;
+  }
+
+  void setPlayerShotChart(String playerId, dynamic json) {
+    _playerShotChart[playerId] = json;
   }
 
   void setPreviewArticles(String gameId, dynamic article) {
@@ -308,6 +313,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getPlayerSplitsGame(String playerId) => _playerSplitsGame[playerId];
   dynamic getPlayerSplitsAdvanced(String playerId) =>
       _playerSplitsAdvanced[playerId];
+
+  dynamic getPlayerShotChart(String playerId) => _playerShotChart[playerId];
 
   dynamic getAllBasePlayerStats() => _allBasePlayerStats;
   dynamic getAllAdvancedPlayerStats() => _allAdvancedPlayerStats;

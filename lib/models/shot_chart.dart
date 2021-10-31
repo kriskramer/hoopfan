@@ -56,7 +56,7 @@ class PlayerShotChartList {
   List<PlayerShotChart> items = [];
 
   PlayerShotChartList(dynamic json) {
-    for (var s in json["resultSets"]["rowSet"]) {
+    for (var s in json) {
       items.add(PlayerShotChart(s));
     }
   }

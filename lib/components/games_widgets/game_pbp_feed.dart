@@ -119,19 +119,32 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
             return Text('');
           },
         ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GamePlayByPlay(
-                    gameData: widget.gameData,
-                  ),
-                ));
-          },
-          child:
-              Text('Full Play by Play', style: TextStyle(color: Colors.blue)),
-        ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GamePlayByPlay(
+                      gameData: widget.gameData,
+                    ),
+                  ));
+            },
+            child: Text('Full PbP Feed', style: TextStyle(color: Colors.white)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GamePlayByPlay(
+                      gameData: widget.gameData,
+                    ),
+                  ));
+            },
+            child: Text('Video Feed', style: TextStyle(color: Colors.white)),
+          ),
+        ]),
         loadPbpData(date, widget.gameData, "1", context),
         widget.gameData["period"]["current"] >= 2
             ? loadPbpData(date, widget.gameData, "2", context)

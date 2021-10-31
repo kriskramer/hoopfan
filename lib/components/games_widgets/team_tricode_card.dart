@@ -69,19 +69,21 @@ class TeamTricodeCardFromTeamId extends StatelessWidget {
     var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
     var triCode = ConstantHelper.getTeamTriCode(teamId);
 
-    return Card(
-      elevation: 2,
-      color: Color(teamColor),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Text(
-          triCode,
-          style: TextStyle(color: Color(teamTextColor), fontSize: 12),
-        ),
-      ),
-    );
+    return teamId == null
+        ? SizedBox()
+        : Card(
+            elevation: 2,
+            color: Color(teamColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(2),
+              child: Text(
+                triCode,
+                style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+              ),
+            ),
+          );
   }
 }

@@ -280,7 +280,7 @@ class _GameViewState extends State<GameView> {
                                                   text: gameData["hTeam"]
                                                       ["triCode"]),
                                               Tab(text: 'Stats'),
-                                              Tab(text: 'Odds'),
+                                              Tab(text: 'Video'),
                                             ],
                                           ),
                                         ),
@@ -319,7 +319,7 @@ class _GameViewState extends State<GameView> {
                                                     gameData: gameData,
                                                   ),
                                                   SizedBox(
-                                                    height: 8,
+                                                    height: 12,
                                                   ),
                                                   GameFoulTroubleFeed(
                                                       game: gameData,

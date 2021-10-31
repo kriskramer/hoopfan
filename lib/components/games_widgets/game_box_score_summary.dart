@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
@@ -78,9 +79,9 @@ class GameBoxScoreSummary extends StatelessWidget {
             Navigator.push(
               ctx,
               MaterialPageRoute(
-                builder: (context) => PlayerDetail(
-                  playerId: p["personId"],
-                ),
+                //
+                builder: (context) => GamePlayerShotChart(
+                    p["personId"], p["teamId"], game["gameId"]),
               ),
             );
           }),

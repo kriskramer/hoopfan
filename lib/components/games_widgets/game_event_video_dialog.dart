@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/games_widgets/game_event_video_player.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -26,7 +27,7 @@ class GameEventVideoDialog extends StatelessWidget {
 
             //print(urls);
 
-            Network.launchSite(urls["murl"]);
+            //Network.launchSite(urls["murl"]);
 
             return Center(
               child: Container(
@@ -45,12 +46,13 @@ class GameEventVideoDialog extends StatelessWidget {
                       ],
                     ),
                     Text(desc["gc"].toString().split("/")[0]),
-                    RaisedButton(
-                      child: Text('Play'),
-                      onPressed: () {
-                        Network.launchSite(urls["murl"]);
-                      },
-                    )
+                    GameEventVideoPlayer(urls["murl"]),
+                    // ElevatedButton(
+                    //   child: Text('Play'),
+                    //   onPressed: () {
+                    //     Network.launchSite(urls["murl"]);
+                    //   },
+                    // )
                   ],
                 ),
               ),
