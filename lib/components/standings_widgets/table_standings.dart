@@ -3,8 +3,8 @@ import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/teams_view/team_main.dart';
 
 class StandingsTable extends StatefulWidget {
-  List<LeagueStanding> list;
-  int teamCount;
+  final List<LeagueStanding> list;
+  final int teamCount;
 //  final dynamic json;
   StandingsTable({this.list, this.teamCount});
   @override
@@ -13,7 +13,7 @@ class StandingsTable extends StatefulWidget {
 
 class _StandingsTableState extends State<StandingsTable> {
   List<DataRow> tableData() {
-    List<DataRow> table = List(widget.teamCount);
+    List<DataRow> table = List.filled(widget.teamCount, null);
     for (int index = 0; index < widget.list.length; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
