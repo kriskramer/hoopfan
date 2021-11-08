@@ -21,38 +21,38 @@ class _StandingsState extends State<Standings> {
     // standingsList =
     //     Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
 
-    if (Provider.of<JsonFiles>(context, listen: false).getLeagueStandings() ==
-        null) {
-      try {
-        var newStandings = await Network.getJson(
-          Urls.getNbaStatsLeagueStandings(
-              season: Provider.of<SeasonProv>(context, listen: false).season),
-          requestHeaders: RequestHeaders.nbaStatsHeaders,
-        );
-        var players = await Network.getJson(Urls.nbaAllPlayers());
-        var teams = await Network.getJson(Urls.nbaAllTeams());
+    // if (Provider.of<JsonFiles>(context, listen: false).getLeagueStandings() ==
+    //     null) {
+    //   try {
+    //     var newStandings = await Network.getJson(
+    //       Urls.getNbaStatsLeagueStandings(
+    //           season: Provider.of<SeasonProv>(context, listen: false).season),
+    //       requestHeaders: RequestHeaders.nbaStatsHeaders,
+    //     );
+    //     var players = await Network.getJson(Urls.nbaAllPlayers());
+    //     var teams = await Network.getJson(Urls.nbaAllTeams());
 
-        //  standingsList = LeagueStandingList(newStandings);
-        Provider.of<JsonFiles>(context, listen: false)
-            .setLeagueStandings(LeagueStandingList(newStandings));
+    //     //  standingsList = LeagueStandingList(newStandings);
+    //     Provider.of<JsonFiles>(context, listen: false)
+    //         .setLeagueStandings(LeagueStandingList(newStandings));
 
-        Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
-        Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
+    //     Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
+    //     Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
 
-        Provider.of<JsonFiles>(context, listen: false)
-            .setSelectedDate(DateTime.now());
+    //     Provider.of<JsonFiles>(context, listen: false)
+    //         .setSelectedDate(DateTime.now());
 
-        if (Provider.of<JsonFiles>(context, listen: false)
-                .getLeagueStandings() !=
-            null) {
-          complete = true; // data gotten
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      complete = true;
-    }
+    //     if (Provider.of<JsonFiles>(context, listen: false)
+    //             .getLeagueStandings() !=
+    //         null) {
+    //       complete = true; // data gotten
+    //     }
+    //   } catch (e) {
+    //     print(e);
+    //   }
+    // } else {
+    complete = true;
+    // }
 
     return complete;
   }
