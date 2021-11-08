@@ -31,7 +31,7 @@ class GameEventVideoDialog extends StatelessWidget {
 
             return Center(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Column(
                   children: [
                     Text(desc["dsc"]),

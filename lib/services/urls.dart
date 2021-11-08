@@ -222,8 +222,9 @@ class Urls {
   }
 
   // Returns different types of shot pcts for a given team, including dribble shots, closest defender, shot clock, touch time and range.
-  static String getNbaStatsTeamShotTypes(String teamId) {
-    return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=Totals&Period=0&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
+  static String getNbaStatsTeamShotTypes(String teamId,
+      {String perMode = "Totals", String lastNGames = "0"}) {
+    return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=$lastNGames&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=$perMode&Period=0&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
   static String getNbaStatsWinProbability(String gameId) {

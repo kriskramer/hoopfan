@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
+import 'package:hoop/components/games_widgets/game_video_feed.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_inline_pbp.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
@@ -35,7 +36,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
 
     getData(date, gameId, period);
 
-    _timer = new Timer.periodic(Duration(seconds: 30), (t) {
+    _timer = new Timer.periodic(Duration(seconds: 20), (t) {
       refreshData(date, gameId, period);
     });
   }
@@ -130,16 +131,27 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                     ),
                   ));
             },
-            child: Text('Full PbP Feed', style: TextStyle(color: Colors.white)),
+            child: Text('Full Play by Play',
+                style: TextStyle(color: Colors.white)),
           ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => GamePlayByPlay(
+          //             gameData: widget.gameData,
+          //           ),
+          //         ));
+          //   },
+          //   child: Text('Lead Tracker', style: TextStyle(color: Colors.white)),
+          // ),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => GamePlayByPlay(
-                      gameData: widget.gameData,
-                    ),
+                    builder: (context) => GameVideoFeed(gameId),
                   ));
             },
             child: Text('Video Feed', style: TextStyle(color: Colors.white)),

@@ -509,17 +509,17 @@ class _TeamDetailsState extends State<TeamDetails> {
           .setFourFactorsTeamStats(stats);
     }
 
-    if (Provider.of<JsonFiles>(context, listen: false)
-            .getTeamStatsShooting(widget.nbaTeamId) ==
-        null) {
-      dynamic stats = await Network.getJson(
-        Urls.getNbaStatsTeamShotTypes(widget.nbaTeamId),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
+    // if (Provider.of<JsonFiles>(context, listen: false)
+    //         .getTeamStatsShooting(widget.nbaTeamId) ==
+    //     null) {
+    //   dynamic stats = await Network.getJson(
+    //     Urls.getNbaStatsTeamShotTypes(widget.nbaTeamId),
+    //     requestHeaders: RequestHeaders.nbaStatsHeaders,
+    //   );
 
-      Provider.of<JsonFiles>(context, listen: false)
-          .setTeamStatsShooting(widget.nbaTeamId, stats);
-    }
+    //   Provider.of<JsonFiles>(context, listen: false)
+    //       .setTeamStatsShooting(widget.nbaTeamId, stats);
+    // }
 
     setState(() {
       dataLoaded = true;

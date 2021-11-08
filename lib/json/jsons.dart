@@ -4,7 +4,7 @@ import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
 
 class JsonFiles with ChangeNotifier {
-  String _year = "2020";
+  String _year = "2021";
   String _seasonStage = "2";
   var _teamStats;
   var _seasons;
@@ -54,7 +54,7 @@ class JsonFiles with ChangeNotifier {
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
 
-  bool _isFeatureBlocked = true;
+  bool _isFeatureBlocked = false;
 
   //Nba Api variables
   var _allPlayers;
