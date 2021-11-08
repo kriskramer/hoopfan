@@ -3,6 +3,7 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games_view/game_view.dart';
+import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
@@ -45,73 +46,74 @@ class ScheduledGameCard extends StatelessWidget {
                         )));
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(isHomeTeam ? "vs" : "at"),
               SizedBox(
                 width: 5,
               ),
-              CachedLogo(
-                radius: 30,
-                url: isHomeTeam
-                    ? ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])
-                    : ConstantHelper.getTeamLogo(game["hTeam"]["teamId"]),
+              Expanded(
+                child: CachedLogo(
+                  radius: 30,
+                  url: isHomeTeam
+                      ? ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])
+                      : ConstantHelper.getTeamLogo(game["hTeam"]["teamId"]),
+                ),
               ),
-              SizedBox(
-                width: 10,
+              // SizedBox(
+              //   width: 10,
+              // ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      isHomeTeam
+                          ? ConstantHelper.getTeamName(game["vTeam"]["teamId"])
+                          : ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      isHomeTeam
+                          ? "(${vTeam.wins}-${vTeam.losses})"
+                          : "(${hTeam.wins}-${hTeam.losses})",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      getHowToWatch(),
+                      style: TextStyle(fontSize: 10, color: Colors.green[600]),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-              Column(children: [
-                Text(
-                  isHomeTeam
-                      ? ConstantHelper.getTeamName(game["vTeam"]["teamId"])
-                      : ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  isHomeTeam
-                      ? "(${vTeam.wins}-${vTeam.losses})"
-                      : "(${hTeam.wins}-${hTeam.losses})",
-                  style: TextStyle(color: Colors.grey),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  getHowToWatch(),
-                  style: TextStyle(fontSize: 10, color: Colors.green[600]),
-                ),
-              ]),
-              SizedBox(
-                width: 10,
-              ),
-              Column(children: [
-                Text(
-                  formatDate(game["startDateEastern"].toString()),
-                  style: TextStyle(
-                    fontSize: 12,
+              // SizedBox(
+              //   width: 10,
+              // ),
+              Expanded(
+                child: Column(children: [
+                  Text(
+                    formatDate(game["startDateEastern"].toString()),
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-                Text(
-                  game["startTimeEastern"].toString(),
-                  style: TextStyle(
-                    fontSize: 12,
+                  Text(
+                    game["startTimeEastern"].toString(),
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
   }
 
   String getHowToWatch() {
@@ -135,7 +137,7 @@ class ScheduledGameCard extends StatelessWidget {
       v = "";
     }
 
-    howToWatch = "$nat  $v  $h";
+    howToWatch = nat.isEmpty ? "$v, $h" : "$nat, $v, $h";
 
     return howToWatch;
   }

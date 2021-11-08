@@ -26,7 +26,7 @@ class _LayoutState extends State<Layout> {
     NewsMainScreen(),
     TodaysGames(),
     StatsMain(),
-    AccountMain(),
+    //  AccountMain(),
   ];
 
   void onTapChangeView(int index) {
