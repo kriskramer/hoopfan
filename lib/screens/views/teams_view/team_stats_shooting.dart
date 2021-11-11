@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/chart_widgets/shot_clock_shooting_bar_chart.dart';
 import 'package:hoop/components/connection.dart';
-import 'package:hoop/json/jsons.dart';
-import 'package:hoop/screens/views/teams_view/team_stats_shooting_charts.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_closest_defender_charts.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_dribble_charts.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_general_charts.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_shot_clock_charts.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_touch_time_charts.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class TeamStatsShootingView extends StatefulWidget {
@@ -154,6 +155,19 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                     ),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamStatsShootingGeneralCharts([stats]),
+                            ));
+                      },
+                      child: Text("Charts")),
+                  SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -207,7 +221,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  TeamStatsShootingCharts([stats]),
+                                  TeamStatsShootingShotClockCharts([stats]),
                             ));
                       },
                       child: Text("Charts")),
@@ -256,6 +270,19 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                     ),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamStatsShootingDribbleCharts([stats]),
+                            ));
+                      },
+                      child: Text("Charts")),
+                  SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -299,6 +326,20 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                     ),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamStatsShootingClosestDefenderCharts(
+                                      [stats]),
+                            ));
+                      },
+                      child: Text("Charts")),
+                  SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -340,6 +381,19 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamStatsShootingTouchTimeCharts([stats]),
+                            ));
+                      },
+                      child: Text("Charts")),
                   SizedBox(
                     height: 50,
                   )

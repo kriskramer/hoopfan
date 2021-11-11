@@ -1,142 +1,139 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class TeamStatsShootingCharts extends StatefulWidget {
+class TeamStatsShootingDribbleCharts extends StatefulWidget {
   final dynamic data;
-  const TeamStatsShootingCharts(this.data);
+  const TeamStatsShootingDribbleCharts(this.data);
 
   @override
-  _TeamStatsShootingChartsState createState() =>
-      _TeamStatsShootingChartsState();
+  _TeamStatsShootingDribbleChartsState createState() =>
+      _TeamStatsShootingDribbleChartsState();
 }
 
-class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
+class _TeamStatsShootingDribbleChartsState
+    extends State<TeamStatsShootingDribbleCharts> {
   @override
   Widget build(BuildContext context) {
-    List<TeamStatsShootingShotClockShooting> dataList = [];
+    List<TeamStatsShootingDribbleShooting> dataList = [];
 
-    for (var s in widget.data[0]["resultSets"][1]["rowSet"]) {
-      dataList.add(TeamStatsShootingShotClockShooting(s));
+    for (var s in widget.data[0]["resultSets"][2]["rowSet"]) {
+      dataList.add(TeamStatsShootingDribbleShooting(s));
     }
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
         seriesFreqFga = [
       charts.Series(
           id: "freqFga",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fga,
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fga,
           // Set a label accessor to control the text of the arc label.
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
               '${series.range.toString()}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lightBlue))
     ];
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
         seriesFreqFgm = [
       charts.Series(
           id: "freqFgm",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fgm,
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fgm,
           // Set a label accessor to control the text of the arc label.
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
               '${series.range.toString()}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.amber))
     ];
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
         seriesStackedAll = [
       charts.Series(
           id: "fga",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fga,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fga.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fga,
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fga.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fgm,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fgm.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fgm,
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fgm.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
         seriesStacked2P = [
       charts.Series(
           id: "fga2",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
               series.fga2,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fga2.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fga2.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm2",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
               series.fgm2,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fgm3.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fgm3.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
         seriesStacked3P = [
       charts.Series(
           id: "fga2",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
               series.fga3,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fga3.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fga3.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm2",
           data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
+              series.range.toString(),
+          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
               series.fgm3,
-          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              '${series.fgm3.toString().split(".")[0]}',
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
+              '${series.fgm3.toString()}',
+          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Shot Clock Shooting Charts"),
+          title: Text("General Shooting Charts"),
         ),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-              padding: EdgeInsets.all(25),
+              padding: EdgeInsets.all(20),
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(9.0),
@@ -157,7 +154,7 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
                                     arcRendererDecorators: [
                                       new charts.ArcLabelDecorator(
                                           labelPosition:
-                                              charts.ArcLabelPosition.outside)
+                                              charts.ArcLabelPosition.auto)
                                     ]),
                               ),
                             ),
@@ -182,7 +179,7 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
                                     arcRendererDecorators: [
                                       new charts.ArcLabelDecorator(
                                           labelPosition:
-                                              charts.ArcLabelPosition.outside)
+                                              charts.ArcLabelPosition.auto)
                                     ]),
                               ),
                             ),
@@ -276,7 +273,7 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
   }
 }
 
-class TeamStatsShootingShotClockShooting {
+class TeamStatsShootingDribbleShooting {
   var range;
   var fgaFrequency;
   var fgm;
@@ -294,7 +291,7 @@ class TeamStatsShootingShotClockShooting {
 
   //var barColor;
 
-  TeamStatsShootingShotClockShooting(dynamic json) {
+  TeamStatsShootingDribbleShooting(dynamic json) {
     range = json[4].toString();
     fgaFrequency = getDoubleFromJson(json[5]);
     fgm = getDoubleFromJson(json[6]);
@@ -323,12 +320,12 @@ class TeamStatsShootingShotClockShooting {
   }
 }
 
-class TeamStatsShootingShotClockShootingList {
-  List<TeamStatsShootingShotClockShooting> items = [];
+class TeamStatsShootingDribbleShootingList {
+  List<TeamStatsShootingDribbleShooting> items = [];
 
-  TeamStatsShootingShotClockShootingList(dynamic json) {
+  TeamStatsShootingDribbleShootingList(dynamic json) {
     for (var s in json) {
-      items.add(TeamStatsShootingShotClockShooting(s));
+      items.add(TeamStatsShootingDribbleShooting(s));
     }
   }
 }
