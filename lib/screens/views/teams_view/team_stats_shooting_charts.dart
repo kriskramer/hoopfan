@@ -19,31 +19,37 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
       dataList.add(TeamStatsShootingShotClockShooting(s));
     }
 
-    // List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFga =
-    //     [
-    //   charts.Series(
-    //       id: "fga",
-    //       data: dataList,
-    //       domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           series.range.toString().split(" ")[0],
-    //       measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           series.fga,
-    //       colorFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           charts.ColorUtil.fromDartColor(Colors.lime))
-    // ];
+    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+        seriesFreqFga = [
+      charts.Series(
+          id: "freqFga",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fga,
+          // Set a label accessor to control the text of the arc label.
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.range.toString()}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.lightBlue))
+    ];
 
-    // List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFgm =
-    //     [
-    //   charts.Series(
-    //       id: "fgm",
-    //       data: dataList,
-    //       domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           series.range.toString().split(" ")[0],
-    //       measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           series.fgm,
-    //       colorFn: (TeamStatsShootingShotClockShooting series, _) =>
-    //           charts.ColorUtil.fromDartColor(Colors.orange))
-    // ];
+    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+        seriesFreqFgm = [
+      charts.Series(
+          id: "freqFgm",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fgm,
+          // Set a label accessor to control the text of the arc label.
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.range.toString()}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.amber))
+    ];
 
     List<charts.Series<TeamStatsShootingShotClockShooting, String>>
         seriesStackedAll = [
@@ -135,45 +141,56 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
                 child: Padding(
                   padding: const EdgeInsets.all(9.0),
                   child: Column(children: <Widget>[
-                    // Container(
-                    //     height: 250,
-                    //     child: Column(
-                    //       children: [
-                    //         Text(
-                    //           "Field Goals Attempted",
-                    //           //style: Theme.of(context).textTheme.body2,
-                    //         ),
-                    //         Expanded(
-                    //           child: charts.BarChart(
-                    //             seriesFga,
-                    //             animate: true,
-                    //             vertical: false,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     )),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Container(
-                    //   height: 250,
-                    //   child: Column(children: [
-                    //     Text(
-                    //       "Field Goals Made",
-                    //       //style: Theme.of(context).textTheme.body2,
-                    //     ),
-                    //     Expanded(
-                    //       child: charts.BarChart(
-                    //         seriesFgm,
-                    //         animate: true,
-                    //         vertical: false,
-                    //       ),
-                    //     )
-                    //   ]),
-                    // ),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
+                    Container(
+                        height: 250,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Field Goals Attempted",
+                              //style: Theme.of(context).textTheme.body2,
+                            ),
+                            Expanded(
+                              child: charts.PieChart(
+                                seriesFreqFga,
+                                animate: true,
+                                defaultRenderer: new charts.ArcRendererConfig(
+                                    arcRendererDecorators: [
+                                      new charts.ArcLabelDecorator(
+                                          labelPosition:
+                                              charts.ArcLabelPosition.outside)
+                                    ]),
+                              ),
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                        height: 250,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Field Goals Made",
+                              //style: Theme.of(context).textTheme.body2,
+                            ),
+                            Expanded(
+                              child: charts.PieChart(
+                                seriesFreqFgm,
+                                animate: true,
+                                defaultRenderer: new charts.ArcRendererConfig(
+                                    arcRendererDecorators: [
+                                      new charts.ArcLabelDecorator(
+                                          labelPosition:
+                                              charts.ArcLabelPosition.outside)
+                                    ]),
+                              ),
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       height: 250,
                       child: Column(children: [
