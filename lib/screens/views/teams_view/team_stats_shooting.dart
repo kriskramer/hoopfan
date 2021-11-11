@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/chart_widgets/shot_clock_shooting_bar_chart.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_shooting_charts.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -198,9 +199,21 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                     ),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamStatsShootingCharts([stats]),
+                            ));
+                      },
+                      child: Text("Charts")),
+                  SizedBox(
                     height: 20,
                   ),
-                  //ShotClockShootingBarChart(getShotClockShoot),
                   Text(
                     'Dribble Shooting',
                     style: TextStyle(fontSize: 20),

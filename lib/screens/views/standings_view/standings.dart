@@ -17,44 +17,7 @@ class Standings extends StatefulWidget {
 class _StandingsState extends State<Standings> {
   // This is the first screen to load up so I'm using this as the default 'load everything' method
   Future<bool> loadData() async {
-    bool complete = false;
-    // standingsList =
-    //     Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
-
-    // if (Provider.of<JsonFiles>(context, listen: false).getLeagueStandings() ==
-    //     null) {
-    //   try {
-    //     var newStandings = await Network.getJson(
-    //       Urls.getNbaStatsLeagueStandings(
-    //           season: Provider.of<SeasonProv>(context, listen: false).season),
-    //       requestHeaders: RequestHeaders.nbaStatsHeaders,
-    //     );
-    //     var players = await Network.getJson(Urls.nbaAllPlayers());
-    //     var teams = await Network.getJson(Urls.nbaAllTeams());
-
-    //     //  standingsList = LeagueStandingList(newStandings);
-    //     Provider.of<JsonFiles>(context, listen: false)
-    //         .setLeagueStandings(LeagueStandingList(newStandings));
-
-    //     Provider.of<JsonFiles>(context, listen: false).setAllPlayers(players);
-    //     Provider.of<JsonFiles>(context, listen: false).setAllTeams(teams);
-
-    //     Provider.of<JsonFiles>(context, listen: false)
-    //         .setSelectedDate(DateTime.now());
-
-    //     if (Provider.of<JsonFiles>(context, listen: false)
-    //             .getLeagueStandings() !=
-    //         null) {
-    //       complete = true; // data gotten
-    //     }
-    //   } catch (e) {
-    //     print(e);
-    //   }
-    // } else {
-    complete = true;
-    // }
-
-    return complete;
+    return true;
   }
 
   leagueClick() {
@@ -83,243 +46,240 @@ class _StandingsState extends State<Standings> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: loadData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == true) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      layoutBehavior: ButtonBarLayoutBehavior.constrained,
-                      children: [
-                        ElevatedButton(
-                          child: Text(
-                            'League',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight:
-                                  Provider.of<SeasonProv>(context).leagueView
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            primary: Provider.of<SeasonProv>(context).leagueView
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                          onPressed: () {
-                            leagueClick();
-                          },
-                        ),
-                        ElevatedButton(
-                          child: Text(
-                            'Conference',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight:
-                                  Provider.of<SeasonProv>(context).confView
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            primary: Provider.of<SeasonProv>(context).confView
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                          onPressed: () {
-                            conferenceClick();
-                          },
-                        ),
-                        ElevatedButton(
-                          child: Text(
-                            'Division',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight:
-                                  Provider.of<SeasonProv>(context).divView
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            primary: Provider.of<SeasonProv>(context).divView
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                          onPressed: () {
-                            divisionClick();
-                          },
-                        ),
-                      ]),
-                  Provider.of<SeasonProv>(context).confView
-                      ? Container(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'East',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getConferenceStandings('East'),
-                                teamCount: 15,
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Text(
-                                'West',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getConferenceStandings('West'),
-                                teamCount: 15,
-                              ),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                  Provider.of<SeasonProv>(context).divView
-                      ? Container(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Atlantic',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Atlantic"),
-                                teamCount: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Central',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Central"),
-                                teamCount: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Southeast',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Southeast"),
-                                teamCount: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Northwest',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Northwest"),
-                                teamCount: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Pacific',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Pacific"),
-                                teamCount: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Southwest',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getDivisionStandings("Southwest"),
-                                teamCount: 5,
-                              ),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                  Provider.of<SeasonProv>(context).leagueView
-                      ? Container(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'League',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              StandingsTable(
-                                list: Provider.of<JsonFiles>(context)
-                                    .getLeagueStandings()
-                                    .getLeagueStandings(),
-                                teamCount: 30,
-                              ),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
+    // return FutureBuilder(
+    //   future: loadData(),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.data == true) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
             ),
-          );
-        } else if (snapshot.data == false) {
-          return NoConnection();
-        } else {
-          return NoConnection();
-        }
-      },
+            ButtonBar(
+                alignment: MainAxisAlignment.center,
+                layoutBehavior: ButtonBarLayoutBehavior.constrained,
+                children: [
+                  ElevatedButton(
+                    child: Text(
+                      'League',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: Provider.of<SeasonProv>(context).leagueView
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: Provider.of<SeasonProv>(context).leagueView
+                          ? Colors.blue
+                          : Colors.grey,
+                    ),
+                    onPressed: () {
+                      leagueClick();
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text(
+                      'Conference',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: Provider.of<SeasonProv>(context).confView
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: Provider.of<SeasonProv>(context).confView
+                          ? Colors.blue
+                          : Colors.grey,
+                    ),
+                    onPressed: () {
+                      conferenceClick();
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text(
+                      'Division',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: Provider.of<SeasonProv>(context).divView
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: Provider.of<SeasonProv>(context).divView
+                          ? Colors.blue
+                          : Colors.grey,
+                    ),
+                    onPressed: () {
+                      divisionClick();
+                    },
+                  ),
+                ]),
+            Provider.of<SeasonProv>(context).confView
+                ? Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'East',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getConferenceStandings('East'),
+                          teamCount: 15,
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'West',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getConferenceStandings('West'),
+                          teamCount: 15,
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox(),
+            Provider.of<SeasonProv>(context).divView
+                ? Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Atlantic',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Atlantic"),
+                          teamCount: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Central',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Central"),
+                          teamCount: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Southeast',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Southeast"),
+                          teamCount: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Northwest',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Northwest"),
+                          teamCount: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Pacific',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Pacific"),
+                          teamCount: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Southwest',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getDivisionStandings("Southwest"),
+                          teamCount: 5,
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox(),
+            Provider.of<SeasonProv>(context).leagueView
+                ? Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'League',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        StandingsTable(
+                          list: Provider.of<JsonFiles>(context)
+                              .getLeagueStandings()
+                              .getLeagueStandings(),
+                          teamCount: 30,
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        ),
+      ),
     );
+    //     } else if (snapshot.data == false) {
+    //       return NoConnection();
+    //     } else {
+    //       return NoConnection();
+    //     }
+    //   },
+    // );
   }
 }

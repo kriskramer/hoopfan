@@ -21,12 +21,11 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   int _selectedScreen = 0;
   List<Widget> views = [
-    //Standings(),
     LeagueMainView(),
     NewsMainScreen(),
     TodaysGames(),
     StatsMain(),
-    //  AccountMain(),
+    AccountMain(),
   ];
 
   void onTapChangeView(int index) {
