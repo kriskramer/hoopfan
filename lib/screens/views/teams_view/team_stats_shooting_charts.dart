@@ -19,34 +19,34 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
       dataList.add(TeamStatsShootingShotClockShooting(s));
     }
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFga =
-        [
-      charts.Series(
-          id: "fga",
-          data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fga,
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              charts.ColorUtil.fromDartColor(Colors.lime))
-    ];
+    // List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFga =
+    //     [
+    //   charts.Series(
+    //       id: "fga",
+    //       data: dataList,
+    //       domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           series.range.toString().split(" ")[0],
+    //       measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           series.fga,
+    //       colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           charts.ColorUtil.fromDartColor(Colors.lime))
+    // ];
 
-    List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFgm =
-        [
-      charts.Series(
-          id: "fgm",
-          data: dataList,
-          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.range.toString().split(" ")[0],
-          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
-              series.fgm,
-          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
-              charts.ColorUtil.fromDartColor(Colors.orange))
-    ];
+    // List<charts.Series<TeamStatsShootingShotClockShooting, String>> seriesFgm =
+    //     [
+    //   charts.Series(
+    //       id: "fgm",
+    //       data: dataList,
+    //       domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           series.range.toString().split(" ")[0],
+    //       measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           series.fgm,
+    //       colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+    //           charts.ColorUtil.fromDartColor(Colors.orange))
+    // ];
 
     List<charts.Series<TeamStatsShootingShotClockShooting, String>>
-        seriesStacked = [
+        seriesStackedAll = [
       charts.Series(
           id: "fga",
           data: dataList,
@@ -54,6 +54,8 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
               series.range.toString().split(" ")[0],
           measureFn: (TeamStatsShootingShotClockShooting series, _) =>
               series.fga,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fga.toString().split(".")[0]}',
           colorFn: (TeamStatsShootingShotClockShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
@@ -63,13 +65,67 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
               series.range.toString().split(" ")[0],
           measureFn: (TeamStatsShootingShotClockShooting series, _) =>
               series.fgm,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fgm.toString().split(".")[0]}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.orange))
+    ];
+
+    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+        seriesStacked2P = [
+      charts.Series(
+          id: "fga2",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fga2,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fga2.toString().split(".")[0]}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.lime)),
+      charts.Series(
+          id: "fgm2",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fgm2,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fgm3.toString().split(".")[0]}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.orange))
+    ];
+
+    List<charts.Series<TeamStatsShootingShotClockShooting, String>>
+        seriesStacked3P = [
+      charts.Series(
+          id: "fga2",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fga3,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fga3.toString().split(".")[0]}',
+          colorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              charts.ColorUtil.fromDartColor(Colors.lime)),
+      charts.Series(
+          id: "fgm2",
+          data: dataList,
+          domainFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.range.toString().split(" ")[0],
+          measureFn: (TeamStatsShootingShotClockShooting series, _) =>
+              series.fgm3,
+          labelAccessorFn: (TeamStatsShootingShotClockShooting series, _) =>
+              '${series.fgm3.toString().split(".")[0]}',
           colorFn: (TeamStatsShootingShotClockShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Charts"),
+          title: Text("Shot Clock Shooting Charts"),
         ),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -79,37 +135,63 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
                 child: Padding(
                   padding: const EdgeInsets.all(9.0),
                   child: Column(children: <Widget>[
-                    Container(
-                        height: 250,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Field Goals Attempted",
-                              //style: Theme.of(context).textTheme.body2,
-                            ),
-                            Expanded(
-                              child: charts.BarChart(
-                                seriesFga,
-                                animate: true,
-                                vertical: false,
-                              ),
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    // Container(
+                    //     height: 250,
+                    //     child: Column(
+                    //       children: [
+                    //         Text(
+                    //           "Field Goals Attempted",
+                    //           //style: Theme.of(context).textTheme.body2,
+                    //         ),
+                    //         Expanded(
+                    //           child: charts.BarChart(
+                    //             seriesFga,
+                    //             animate: true,
+                    //             vertical: false,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     )),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Container(
+                    //   height: 250,
+                    //   child: Column(children: [
+                    //     Text(
+                    //       "Field Goals Made",
+                    //       //style: Theme.of(context).textTheme.body2,
+                    //     ),
+                    //     Expanded(
+                    //       child: charts.BarChart(
+                    //         seriesFgm,
+                    //         animate: true,
+                    //         vertical: false,
+                    //       ),
+                    //     )
+                    //   ]),
+                    // ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
                     Container(
                       height: 250,
                       child: Column(children: [
                         Text(
-                          "Field Goals Made",
+                          "Field Goals - Total",
                           //style: Theme.of(context).textTheme.body2,
                         ),
                         Expanded(
                           child: charts.BarChart(
-                            seriesFgm,
+                            seriesStackedAll,
                             animate: true,
+                            barGroupingType: charts.BarGroupingType.grouped,
+                            behaviors: [new charts.SeriesLegend()],
+                            barRendererDecorator:
+                                new charts.BarLabelDecorator<String>(),
+                            // Hide domain axis.
+                            // domainAxis: new charts.OrdinalAxisSpec(
+                            //     renderSpec: new charts.NoneRenderSpec()),
                             vertical: false,
                           ),
                         )
@@ -122,18 +204,53 @@ class _TeamStatsShootingChartsState extends State<TeamStatsShootingCharts> {
                       height: 250,
                       child: Column(children: [
                         Text(
-                          "Field Goals Made",
+                          "Field Goals - 2P",
                           //style: Theme.of(context).textTheme.body2,
                         ),
                         Expanded(
                           child: charts.BarChart(
-                            seriesStacked,
+                            seriesStacked2P,
                             animate: true,
                             barGroupingType: charts.BarGroupingType.grouped,
-                            //vertical: false,
+                            behaviors: [new charts.SeriesLegend()],
+                            barRendererDecorator:
+                                new charts.BarLabelDecorator<String>(),
+                            // Hide domain axis.
+                            // domainAxis: new charts.OrdinalAxisSpec(
+                            //     renderSpec: new charts.NoneRenderSpec()),
+                            vertical: false,
                           ),
                         )
                       ]),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 250,
+                      child: Column(children: [
+                        Text(
+                          "Field Goals - 3P",
+                          //style: Theme.of(context).textTheme.body2,
+                        ),
+                        Expanded(
+                          child: charts.BarChart(
+                            seriesStacked3P,
+                            animate: true,
+                            barGroupingType: charts.BarGroupingType.grouped,
+                            behaviors: [new charts.SeriesLegend()],
+                            barRendererDecorator:
+                                new charts.BarLabelDecorator<String>(),
+                            // Hide domain axis.
+                            // domainAxis: new charts.OrdinalAxisSpec(
+                            //     renderSpec: new charts.NoneRenderSpec()),
+                            vertical: false,
+                          ),
+                        )
+                      ]),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                   ]),
                 ),
@@ -162,20 +279,30 @@ class TeamStatsShootingShotClockShooting {
 
   TeamStatsShootingShotClockShooting(dynamic json) {
     range = json[4].toString();
-    fgaFrequency = double.parse(json[5].toString());
-    fgm = int.parse(json[6].toString());
-    fga = int.parse(json[7].toString());
-    fgPct = json[8].toString();
-    eFgPct = json[9].toString();
-    fga2Frequency = json[10].toString();
-    fgm2 = json[11].toString();
-    fga2 = json[12].toString();
-    fgPct2 = json[13].toString();
-    fga3Frequency = json[14].toString();
-    fgm3 = json[15].toString();
-    fga3 = json[16].toString();
-    fgPct3 = json[17].toString();
-    //barColor = charts.ColorUtil.fromDartColor(Colors.orange);
+    fgaFrequency = getDoubleFromJson(json[5]);
+    fgm = getDoubleFromJson(json[6]);
+    fga = getDoubleFromJson(json[7]);
+    fgPct = getDoubleFromJson(json[8]);
+    eFgPct = getDoubleFromJson(json[9]);
+    fga2Frequency = getDoubleFromJson(json[10]);
+    fgm2 = getDoubleFromJson(json[11]);
+    fga2 = getDoubleFromJson(json[12]);
+    fgPct2 = getDoubleFromJson(json[13]);
+    fga3Frequency = getDoubleFromJson(json[14]);
+    fgm3 = getDoubleFromJson(json[15]);
+    fga3 = getDoubleFromJson(json[16]);
+    fgPct3 = getDoubleFromJson(json[17]);
+  }
+
+  double getDoubleFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d;
+    }
   }
 }
 
