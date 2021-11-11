@@ -1,5 +1,3 @@
-//import 'dart:math';
-
 import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/teams_widgets/team_leader_card.dart';
@@ -12,7 +10,6 @@ import 'package:hoop/screens/views/teams_view/team_info_page.dart';
 import 'package:hoop/screens/views/teams_view/team_media_page.dart';
 import 'package:hoop/screens/views/teams_view/team_schedule.dart';
 import 'package:hoop/screens/views/teams_view/team_stats.dart';
-import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/connection.dart';
@@ -33,7 +30,7 @@ class _TeamDetailsState extends State<TeamDetails> {
   @override
   initState() {
     super.initState();
-    loadData();
+    //loadData();
   }
 
   String year = "2021";
@@ -200,37 +197,29 @@ class _TeamDetailsState extends State<TeamDetails> {
                                           );
                                         },
                                       ),
-                                      dataLoaded
-                                          ? SizedBox(
-                                              width: 10,
-                                            )
-                                          : SizedBox(
-                                              width: 1,
-                                            ),
-                                      dataLoaded
-                                          ? TextButton(
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                              Color>(
-                                                          Color(teamColor))),
-                                              child: Text('Stats',
-                                                  style: TextStyle(
-                                                      color: Color(
-                                                          teamTextColor))),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TeamStatsView(
-                                                        teamId:
-                                                            widget.nbaTeamId,
-                                                      ),
-                                                    ));
-                                              },
-                                            )
-                                          : CircularProgressIndicator(),
+
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      TextButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(teamColor))),
+                                        child: Text('Stats',
+                                            style: TextStyle(
+                                                color: Color(teamTextColor))),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeamStatsView(
+                                                  teamId: widget.nbaTeamId,
+                                                ),
+                                              ));
+                                        },
+                                      ),
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -449,80 +438,5 @@ class _TeamDetailsState extends State<TeamDetails> {
     }
 
     return team;
-  }
-
-  void loadData() async {
-    if (Provider.of<JsonFiles>(context, listen: false)
-            .getEstimatedTeamStats() ==
-        null) {
-      dynamic estimatedTeamStats = await Network.getJson(
-        Urls.getNbaStatsEstimatedMetricsAllTeams(),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
-
-      Provider.of<JsonFiles>(context, listen: false)
-          .setEstimatedTeamStats(estimatedTeamStats);
-    }
-
-    if (Provider.of<JsonFiles>(context, listen: false).getAdvancedTeamStats() ==
-        null) {
-      dynamic advancedTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatisticsAdvanced(),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
-
-      Provider.of<JsonFiles>(context, listen: false)
-          .setAdvancedTeamStats(advancedTeamStats);
-    }
-
-    if (Provider.of<JsonFiles>(context, listen: false).getBaseTeamStats() ==
-        null) {
-      dynamic baseTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatisticsBase(),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
-
-      Provider.of<JsonFiles>(context, listen: false)
-          .setBaseTeamStats(baseTeamStats);
-    }
-
-    if (Provider.of<JsonFiles>(context, listen: false).getMiscTeamStats() ==
-        null) {
-      dynamic miscTeamStats = await Network.getJson(
-        Urls.getNbaStatsTeamStatisticsMisc(),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
-
-      Provider.of<JsonFiles>(context, listen: false)
-          .setMiscTeamStats(miscTeamStats);
-    }
-
-    if (Provider.of<JsonFiles>(context, listen: false)
-            .getFourFactorsTeamStats() ==
-        null) {
-      dynamic stats = await Network.getJson(
-        Urls.getNbaStatsTeamStatisticsFourFactors(),
-        requestHeaders: RequestHeaders.nbaStatsHeaders,
-      );
-
-      Provider.of<JsonFiles>(context, listen: false)
-          .setFourFactorsTeamStats(stats);
-    }
-
-    // if (Provider.of<JsonFiles>(context, listen: false)
-    //         .getTeamStatsShooting(widget.nbaTeamId) ==
-    //     null) {
-    //   dynamic stats = await Network.getJson(
-    //     Urls.getNbaStatsTeamShotTypes(widget.nbaTeamId),
-    //     requestHeaders: RequestHeaders.nbaStatsHeaders,
-    //   );
-
-    //   Provider.of<JsonFiles>(context, listen: false)
-    //       .setTeamStatsShooting(widget.nbaTeamId, stats);
-    // }
-
-    setState(() {
-      dataLoaded = true;
-    });
   }
 }
