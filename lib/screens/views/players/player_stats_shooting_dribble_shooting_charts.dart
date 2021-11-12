@@ -1,128 +1,140 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class TeamStatsShootingDribbleCharts extends StatefulWidget {
+class PlayerStatsShootingDribbleShootingCharts extends StatefulWidget {
   final dynamic data;
-  const TeamStatsShootingDribbleCharts(this.data);
+  const PlayerStatsShootingDribbleShootingCharts(this.data);
 
   @override
-  _TeamStatsShootingDribbleChartsState createState() =>
-      _TeamStatsShootingDribbleChartsState();
+  _PlayerStatsShootingDribbleShootingChartsState createState() =>
+      _PlayerStatsShootingDribbleShootingChartsState();
 }
 
-class _TeamStatsShootingDribbleChartsState
-    extends State<TeamStatsShootingDribbleCharts> {
+class _PlayerStatsShootingDribbleShootingChartsState
+    extends State<PlayerStatsShootingDribbleShootingCharts> {
   @override
   Widget build(BuildContext context) {
-    List<TeamStatsShootingDribbleShooting> dataList = [];
+    List<PlayerStatsShootingDribbleShootingShooting> dataList = [];
 
-    for (var s in widget.data[0]["resultSets"][2]["rowSet"]) {
-      dataList.add(TeamStatsShootingDribbleShooting(s));
+    for (var s in widget.data[0][3]["rowSet"]) {
+      dataList.add(PlayerStatsShootingDribbleShootingShooting(s));
     }
 
-    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
+    List<charts.Series<PlayerStatsShootingDribbleShootingShooting, String>>
         seriesFreqFga = [
       charts.Series(
           id: "freqFga",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fga,
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.fga,
           // Set a label accessor to control the text of the arc label.
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.range.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.type.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lightBlue))
     ];
 
-    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
+    List<charts.Series<PlayerStatsShootingDribbleShootingShooting, String>>
         seriesFreqFgm = [
       charts.Series(
           id: "freqFgm",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fgm,
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.fgm,
           // Set a label accessor to control the text of the arc label.
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.range.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.type.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.amber))
     ];
 
-    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
+    List<charts.Series<PlayerStatsShootingDribbleShootingShooting, String>>
         seriesStackedAll = [
       charts.Series(
           id: "fga",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fga,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fga.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.fga,
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fga.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) => series.fgm,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fgm.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.fgm,
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fgm.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
-    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
+    List<charts.Series<PlayerStatsShootingDribbleShootingShooting, String>>
         seriesStacked2P = [
       charts.Series(
           id: "fga2",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               series.fga2,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fga2.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fga2.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm2",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               series.fgm2,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fgm3.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fgm3.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
-    List<charts.Series<TeamStatsShootingDribbleShooting, String>>
+    List<charts.Series<PlayerStatsShootingDribbleShootingShooting, String>>
         seriesStacked3P = [
       charts.Series(
           id: "fga2",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               series.fga3,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fga3.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fga3.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.lime)),
       charts.Series(
           id: "fgm2",
           data: dataList,
-          domainFn: (TeamStatsShootingDribbleShooting series, _) =>
-              series.range.toString(),
-          measureFn: (TeamStatsShootingDribbleShooting series, _) =>
+          domainFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
+              series.type.toString(),
+          measureFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               series.fgm3,
-          labelAccessorFn: (TeamStatsShootingDribbleShooting series, _) =>
-              '${series.fgm3.toString()}',
-          colorFn: (TeamStatsShootingDribbleShooting series, _) =>
+          labelAccessorFn:
+              (PlayerStatsShootingDribbleShootingShooting series, _) =>
+                  '${series.fgm3.toString()}',
+          colorFn: (PlayerStatsShootingDribbleShootingShooting series, _) =>
               charts.ColorUtil.fromDartColor(Colors.orange))
     ];
 
@@ -273,8 +285,8 @@ class _TeamStatsShootingDribbleChartsState
   }
 }
 
-class TeamStatsShootingDribbleShooting {
-  var range;
+class PlayerStatsShootingDribbleShootingShooting {
+  var type;
   var fgaFrequency;
   var fgm;
   var fga;
@@ -291,21 +303,21 @@ class TeamStatsShootingDribbleShooting {
 
   //var barColor;
 
-  TeamStatsShootingDribbleShooting(dynamic json) {
-    range = json[4].toString();
-    fgaFrequency = getDoubleFromJson(json[5]);
-    fgm = getDoubleFromJson(json[6]);
-    fga = getDoubleFromJson(json[7]);
-    fgPct = getDoubleFromJson(json[8]);
-    eFgPct = getDoubleFromJson(json[9]);
-    fga2Frequency = getDoubleFromJson(json[10]);
-    fgm2 = getDoubleFromJson(json[11]);
-    fga2 = getDoubleFromJson(json[12]);
-    fgPct2 = getDoubleFromJson(json[13]);
-    fga3Frequency = getDoubleFromJson(json[14]);
-    fgm3 = getDoubleFromJson(json[15]);
-    fga3 = getDoubleFromJson(json[16]);
-    fgPct3 = getDoubleFromJson(json[17]);
+  PlayerStatsShootingDribbleShootingShooting(dynamic json) {
+    type = json[5].toString();
+    fgaFrequency = getDoubleFromJson(json[6]);
+    fgm = getDoubleFromJson(json[7]);
+    fga = getDoubleFromJson(json[8]);
+    fgPct = getDoubleFromJson(json[9]);
+    eFgPct = getDoubleFromJson(json[10]);
+    fga2Frequency = getDoubleFromJson(json[11]);
+    fgm2 = getDoubleFromJson(json[12]);
+    fga2 = getDoubleFromJson(json[13]);
+    fgPct2 = getDoubleFromJson(json[14]);
+    fga3Frequency = getDoubleFromJson(json[15]);
+    fgm3 = getDoubleFromJson(json[16]);
+    fga3 = getDoubleFromJson(json[17]);
+    fgPct3 = getDoubleFromJson(json[18]);
   }
 
   double getDoubleFromJson(var value) {
@@ -320,12 +332,12 @@ class TeamStatsShootingDribbleShooting {
   }
 }
 
-class TeamStatsShootingDribbleShootingList {
-  List<TeamStatsShootingDribbleShooting> items = [];
+class PlayerStatsShootingDribbleShootingShootingList {
+  List<PlayerStatsShootingDribbleShootingShooting> items = [];
 
-  TeamStatsShootingDribbleShootingList(dynamic json) {
+  PlayerStatsShootingDribbleShootingShootingList(dynamic json) {
     for (var s in json) {
-      items.add(TeamStatsShootingDribbleShooting(s));
+      items.add(PlayerStatsShootingDribbleShootingShooting(s));
     }
   }
 }

@@ -140,7 +140,7 @@ class _TeamStatsShootingClosestDefenderChartsState
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("General Shooting Charts"),
+          title: Text("Closest Defender Charts"),
         ),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,

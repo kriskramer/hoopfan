@@ -39,77 +39,79 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
           if (snapshot.hasData) {
             dynamic stats = snapshot.data;
 
-            List<charts.Series<dynamic, String>> seriesList;
+            //List<charts.Series<dynamic, String>> seriesList;
 
             return Container(
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DropdownButton(
-                          elevation: 5,
-                          value: _valuePer,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("Totals"),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("PerGame"),
-                              value: 2,
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              updatePer(value);
-                            });
-                          }),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text('Last N Games: '),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      DropdownButton(
-                          elevation: 5,
-                          value: _lastNGames,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("All"),
-                              value: 0,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("1"),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("2"),
-                              value: 2,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("3"),
-                              value: 3,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("4"),
-                              value: 4,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("5"),
-                              value: 5,
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              updateLastNGames(value);
-                            });
-                          }),
-                    ],
+                  Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DropdownButton(
+                            elevation: 5,
+                            value: _valuePer,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Totals"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("PerGame"),
+                                value: 2,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updatePer(value);
+                              });
+                            }),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text('Last N Games: '),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        DropdownButton(
+                            elevation: 5,
+                            value: _lastNGames,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("All"),
+                                value: 0,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("1"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("2"),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("3"),
+                                value: 3,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("4"),
+                                value: 4,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("5"),
+                                value: 5,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updateLastNGames(value);
+                              });
+                            }),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -168,7 +170,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                       },
                       child: Text("Charts")),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Shot Clock Shooting',
@@ -226,7 +228,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                       },
                       child: Text("Charts")),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Dribble Shooting',
@@ -283,7 +285,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                       },
                       child: Text("Charts")),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Closest Defender Shooting',
@@ -340,7 +342,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                       },
                       child: Text("Charts")),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Touch Time Shooting',

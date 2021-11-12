@@ -164,7 +164,7 @@ class _PlayerDetailedStatsState extends State<PlayerDetailedStats> {
   }
 
   bool showMeasureDropdown() {
-    if (_valueType > 1 && _valueType != 6) {
+    if (_valueType > 2 && _valueType != 6) {
       return true;
     }
 
@@ -196,8 +196,7 @@ class _PlayerDetailedStatsState extends State<PlayerDetailedStats> {
                   padding: EdgeInsets.all(15),
                   child:
                       Text(widget.playerName, style: TextStyle(fontSize: 20))),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+              Card(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
