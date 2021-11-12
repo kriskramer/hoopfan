@@ -164,7 +164,7 @@ class _PlayerDetailedStatsState extends State<PlayerDetailedStats> {
   }
 
   bool showMeasureDropdown() {
-    if (_valueType > 1 && _valueType != 6) {
+    if (_valueType > 2 && _valueType != 6) {
       return true;
     }
 
@@ -196,149 +196,151 @@ class _PlayerDetailedStatsState extends State<PlayerDetailedStats> {
                   padding: EdgeInsets.all(15),
                   child:
                       Text(widget.playerName, style: TextStyle(fontSize: 20))),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DropdownButton(
-                      value: _valueType,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text("Summary"),
-                          value: 1,
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Shooting"),
-                          value: 2,
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Clutch"),
-                          value: 3,
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Splits - Game"),
-                          value: 4,
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Splits - General"),
-                          value: 5,
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Splits - Shooting"),
-                          value: 6,
-                        )
-                      ],
-                      onChanged: (value) {
-                        if (value == 1) {
-                          _valueType = 1;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          summaryClick();
-                        } else if (value == 2) {
-                          _valueType = 2;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          shootingClick();
-                        } else if (value == 3) {
-                          _valueType = 3;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          clutchClick();
-                        } else if (value == 4) {
-                          _valueType = 4;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          splitsGameClick();
-                        } else if (value == 5) {
-                          _valueType = 5;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          splitsGeneralClick();
-                        } else if (value == 6) {
-                          _valueType = 6;
-                          _valueMeasure = 1;
-                          _valuePer = 1;
-                          splitsShootingClick();
-                        }
-                      }),
-                  showMeasureDropdown()
-                      ? DropdownButton(
-                          value: _valueMeasure,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("Base"),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Advanced"),
-                              value: 2,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Misc"),
-                              value: 3,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Four Factors"),
-                              value: 4,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Scoring"),
-                              value: 5,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Opponent"),
-                              value: 6,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Usage"),
-                              value: 7,
-                            )
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              updateMeasure(value);
-                            });
-                          })
-                      : SizedBox(),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  showPerModeDropdown()
-                      ? DropdownButton(
-                          elevation: 5,
-                          value: _valuePer,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("Totals"),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("PerGame"),
-                              value: 2,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Per48"),
-                              value: 3,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Per36"),
-                              value: 4,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("PerPoss"),
-                              value: 5,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Per100Poss"),
-                              value: 6,
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              updatePer(value);
-                            });
-                          })
-                      : SizedBox(),
-                ],
+              Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton(
+                        value: _valueType,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text("Summary"),
+                            value: 1,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Shooting"),
+                            value: 2,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Clutch"),
+                            value: 3,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - Game"),
+                            value: 4,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - General"),
+                            value: 5,
+                          ),
+                          DropdownMenuItem(
+                            child: Text("Splits - Shooting"),
+                            value: 6,
+                          )
+                        ],
+                        onChanged: (value) {
+                          if (value == 1) {
+                            _valueType = 1;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            summaryClick();
+                          } else if (value == 2) {
+                            _valueType = 2;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            shootingClick();
+                          } else if (value == 3) {
+                            _valueType = 3;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            clutchClick();
+                          } else if (value == 4) {
+                            _valueType = 4;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsGameClick();
+                          } else if (value == 5) {
+                            _valueType = 5;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsGeneralClick();
+                          } else if (value == 6) {
+                            _valueType = 6;
+                            _valueMeasure = 1;
+                            _valuePer = 1;
+                            splitsShootingClick();
+                          }
+                        }),
+                    showMeasureDropdown()
+                        ? DropdownButton(
+                            value: _valueMeasure,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Base"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Advanced"),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Misc"),
+                                value: 3,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Four Factors"),
+                                value: 4,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Scoring"),
+                                value: 5,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Opponent"),
+                                value: 6,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Usage"),
+                                value: 7,
+                              )
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updateMeasure(value);
+                              });
+                            })
+                        : SizedBox(),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    showPerModeDropdown()
+                        ? DropdownButton(
+                            elevation: 5,
+                            value: _valuePer,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Totals"),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("PerGame"),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per48"),
+                                value: 3,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per36"),
+                                value: 4,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("PerPoss"),
+                                value: 5,
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Per100Poss"),
+                                value: 6,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                updatePer(value);
+                              });
+                            })
+                        : SizedBox(),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 10,

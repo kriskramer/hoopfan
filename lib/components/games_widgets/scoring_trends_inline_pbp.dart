@@ -48,6 +48,8 @@ class ScoringTrendsInlinePbp extends StatelessWidget {
       String hTeamId = game["hTeam"]["teamId"];
 
       return Container(
+        decoration: BoxDecoration(color: Colors.blueGrey[100]),
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
             Text(

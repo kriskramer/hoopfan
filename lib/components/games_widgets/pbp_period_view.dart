@@ -14,72 +14,68 @@ class PbpPeriodView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Game Video'),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text('Tap the game event below to see a video of the play.'),
-              SizedBox(height: 15),
-              FutureBuilder(
-                  future: loadData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var pbp = snapshot.data["resultSets"][0]["rowSet"];
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text('Tap the game event below to see a video of the play.'),
+          SizedBox(height: 15),
+          FutureBuilder(
+              future: loadData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var pbp = snapshot.data["resultSets"][0]["rowSet"];
 
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: pbp.length, //plays.length,
-                          itemBuilder: (context, index) {
-                            if (pbp[index][33] == 1 &&
-                                !isEventNull(pbp[index])) {
-                              return Container(
-                                padding: EdgeInsets.all(8),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GameEventVideoDialog(
-                                          gameId: gameId,
-                                          eventNum: pbp[index][1].toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(pbp[index][6] + " - "),
-                                      TeamTricodeCardFromTeamId(
-                                          teamId: pbp[index][15].toString()),
-                                      Icon(Icons.play_arrow),
-                                      Flexible(
-                                          child: Text(
-                                              getPbpDescription(pbp[index]))),
-                                    ],
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: pbp.length, //plays.length,
+                      itemBuilder: (context, index) {
+                        var teamId = pbp[index][15];
+
+                        if (pbp[index][33] == 1 &&
+                            pbp[index][13] != 0 &&
+                            !isEventNull(pbp[index])) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GameEventVideoDialog(
+                                      gameId: gameId,
+                                      eventNum: pbp[index][1].toString(),
+                                    ),
                                   ),
-                                ),
-                              );
-                            } else {
-                              return SizedBox();
-                            }
-                          });
-                    } else {
-                      return NoConnection();
-                    }
-                  }),
-            ],
-          ),
-        ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(pbp[index][6] + " - "),
+                                  (teamId == null)
+                                      ? Text('')
+                                      : TeamTricodeCardFromTeamId(
+                                          teamId: teamId.toString()),
+                                  Icon(Icons.play_arrow),
+                                  Flexible(
+                                      child:
+                                          Text(getPbpDescription(pbp[index]))),
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      });
+                } else {
+                  return NoConnection();
+                }
+              }),
+        ],
       ),
     );
   }
@@ -114,6 +110,10 @@ class PbpPeriodView extends StatelessWidget {
     } else if (pbp[9] != null) {
       isNull = false;
     }
+
+    // if (pbp[8].toString().startsWith("Instant Replay")) {
+    //   return true;
+    // }
 
     return isNull;
   }

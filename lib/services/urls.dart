@@ -222,8 +222,9 @@ class Urls {
   }
 
   // Returns different types of shot pcts for a given team, including dribble shots, closest defender, shot clock, touch time and range.
-  static String getNbaStatsTeamShotTypes(String teamId) {
-    return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=Totals&Period=0&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
+  static String getNbaStatsTeamShotTypes(String teamId,
+      {String perMode = "Totals", String lastNGames = "0"}) {
+    return "https://stats.nba.com/stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=$lastNGames&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&PerMode=$perMode&Period=0&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
   static String getNbaStatsWinProbability(String gameId) {
@@ -298,5 +299,11 @@ class Urls {
 
   static String getNbaStatsPlayerGameLog(String playerId, String season) {
     return "https://stats.nba.com/stats/playergamelog?DateFrom=&DateTo=&LeagueID=&PlayerID=$playerId&Season=$season&SeasonType=Regular+Season";
+  }
+
+  static String getNbaStatsPlayerShotChart(
+      String playerId, String teamId, String gameId) {
+    // Must include at a minimum teamId and playerId. GameId is optional.
+    return "https://stats.nba.com/stats/shotchartdetail?AheadBehind=&ClutchTime=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&EndPeriod=&EndRange=&GameID=$gameId&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&PlayerID=$playerId&PlayerPosition=&PointDiff=&Position=&RangeType=&RookieYear=&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&StartPeriod=&StartRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 }

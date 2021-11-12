@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/teams_view/team_main.dart';
 
@@ -17,7 +18,17 @@ class _StandingsTableState extends State<StandingsTable> {
     for (int index = 0; index < widget.list.length; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
+        // color: MaterialStateProperty.all<Color>(
+        //     Color(ConstantHelper.getTeamColor(team.teamID.toString()))
+        //         .withOpacity(0.5)),
         cells: [
+          DataCell(
+            Container(
+                width: 15,
+                height: 15,
+                color:
+                    Color(ConstantHelper.getTeamColor(team.teamID.toString()))),
+          ),
           DataCell(
               Text(
                 "${index + 1} ${team.teamName}",
@@ -76,6 +87,11 @@ class _StandingsTableState extends State<StandingsTable> {
     return DataTable(
       columnSpacing: 8,
       columns: [
+        DataColumn(
+          label: Text(
+            '',
+          ),
+        ),
         DataColumn(
           label: Text(
             'Team',

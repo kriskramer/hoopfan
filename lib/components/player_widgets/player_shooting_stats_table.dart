@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/screens/views/players/player_stats_shooting_closest_defender_charts.dart';
+import 'package:hoop/screens/views/players/player_stats_shooting_dribble_shooting_charts.dart';
+import 'package:hoop/screens/views/players/player_stats_shooting_general_charts.dart';
+import 'package:hoop/screens/views/players/player_stats_shooting_shot_clock_charts.dart';
+import 'package:hoop/screens/views/players/player_stats_shooting_touch_time_charts.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -29,7 +34,7 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[0]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   'General Shooting',
@@ -40,7 +45,20 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[1]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerStatsShootingGeneralCharts([json]),
+                          ));
+                    },
+                    child: Text("Charts")),
+                SizedBox(
+                  height: 20,
                 ),
                 Text(
                   'Shot Clock Shooting',
@@ -51,7 +69,20 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[2]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerStatsShootingShotClockCharts([json]),
+                          ));
+                    },
+                    child: Text("Charts")),
+                SizedBox(
+                  height: 20,
                 ),
                 Text(
                   'Dribble Shooting',
@@ -62,7 +93,21 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[3]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerStatsShootingDribbleShootingCharts(
+                                    [json]),
+                          ));
+                    },
+                    child: Text("Charts")),
+                SizedBox(
+                  height: 20,
                 ),
                 Text(
                   'Closest Defender Shooting',
@@ -73,7 +118,21 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[4]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerStatsShootingClosestDefenderCharts(
+                                    [json]),
+                          ));
+                    },
+                    child: Text("Charts")),
+                SizedBox(
+                  height: 20,
                 ),
                 Text(
                   'Closest Defender 10ft Plus Shooting',
@@ -84,7 +143,7 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[5]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   'Touch Time Shooting',
@@ -95,7 +154,20 @@ class PlayerShootingStatsTable extends StatelessWidget {
                   child: getGeneralShootingTable(json[6]["rowSet"]),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlayerStatsShootingTouchTImeCharts([json]),
+                          ));
+                    },
+                    child: Text("Charts")),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             );

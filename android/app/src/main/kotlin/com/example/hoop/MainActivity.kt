@@ -1,4 +1,4 @@
-package com.example.hoop
+package com.statfan.hoop
 
 import io.flutter.embedding.android.FlutterActivity
 
