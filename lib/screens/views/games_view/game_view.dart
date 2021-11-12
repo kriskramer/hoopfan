@@ -33,7 +33,7 @@ class GameView extends StatefulWidget {
 class _GameViewState extends State<GameView> {
   Future<dynamic> _gameData;
   Timer _timer;
-  int timerDuration = 45;
+  int timerDuration = 30;
   String vTeamScore;
   String hTeamScore;
   String period;
@@ -98,7 +98,7 @@ class _GameViewState extends State<GameView> {
                 hTeamScore = gameData["hTeam"]["score"];
 
                 if (gameData["isGameActivated"]) {
-                  timerDuration = 45;
+                  timerDuration = 30;
                 } else {
                   _timer.cancel();
                 }
@@ -280,7 +280,7 @@ class _GameViewState extends State<GameView> {
                                                   text: gameData["hTeam"]
                                                       ["triCode"]),
                                               Tab(text: 'Stats'),
-                                              Tab(text: 'Odds'),
+                                              Tab(text: 'Video'),
                                             ],
                                           ),
                                         ),
@@ -319,7 +319,7 @@ class _GameViewState extends State<GameView> {
                                                     gameData: gameData,
                                                   ),
                                                   SizedBox(
-                                                    height: 8,
+                                                    height: 12,
                                                   ),
                                                   GameFoulTroubleFeed(
                                                       game: gameData,

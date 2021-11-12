@@ -50,23 +50,23 @@ class GameLeadChart extends StatelessWidget {
                       });
                 },
               ),
-              TextButton(
-                child: Text(
-                  'Video',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PbpPeriodView(
-                        gameId: game["gameId"],
-                        period: period,
-                      ),
-                    ),
-                  );
-                },
-              )
+              // TextButton(
+              //   child: Text(
+              //     'Video',
+              //     style: TextStyle(color: Colors.blue),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => PbpPeriodView(
+              //           gameId: game["gameId"],
+              //           period: period,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // )
             ],
           ),
           SizedBox(

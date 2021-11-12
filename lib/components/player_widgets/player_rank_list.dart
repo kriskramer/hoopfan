@@ -33,36 +33,43 @@ class PlayerRankList extends StatelessWidget {
                   rows.add(Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            l.rank.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: samePlayer ? Colors.red : Colors.black),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            l.teamAbbreviation,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: samePlayer ? Colors.red : Colors.black),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            l.playerName,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: samePlayer ? Colors.red : Colors.black),
-                          ),
-                        ],
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Text(
+                              l.rank.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color:
+                                      samePlayer ? Colors.red : Colors.black),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              l.teamAbbreviation,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color:
+                                      samePlayer ? Colors.red : Colors.black),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                l.playerName,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color:
+                                        samePlayer ? Colors.red : Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         width: 10,
@@ -83,19 +90,14 @@ class PlayerRankList extends StatelessWidget {
 
                 return Container(
                   padding: EdgeInsets.all(20),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            statName + ' Rank',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        ...rows
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        statName + ' Rank',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ...rows
+                    ],
                   ),
                 );
               } else

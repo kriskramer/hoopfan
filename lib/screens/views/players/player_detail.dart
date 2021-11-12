@@ -91,147 +91,153 @@ class _PlayerDetailState extends State<PlayerDetail> {
                 )
               ],
             ),
-            Container(
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              width: deviceWidth,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  color: Color(teamColor)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text('Height',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(
-                          player["heightFeet"] +
-                              "\' " +
-                              player["heightInches"] +
-                              "\" (" +
-                              player["heightMeters"] +
-                              ")",
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('Weight',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(
-                          player["weightPounds"] +
-                              " (" +
-                              player["weightKilograms"] +
-                              ")",
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('Country',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(player["country"],
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('Years Pro',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(player["yearsPro"],
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  )
-                ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                margin: EdgeInsets.all(0),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                //width: deviceWidth,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white),
+                    color: Color(teamColor)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text('Height',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(
+                            player["heightFeet"] +
+                                "\' " +
+                                player["heightInches"] +
+                                "\" (" +
+                                player["heightMeters"] +
+                                ")",
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('Weight',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(
+                            player["weightPounds"] +
+                                " (" +
+                                player["weightKilograms"] +
+                                ")",
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('Country',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(player["country"],
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('Years Pro',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(player["yearsPro"],
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              width: deviceWidth,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  color: Color(teamColor)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text('Age',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(getAge(player["dateOfBirthUTC"]),
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('Birthday',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(player["dateOfBirthUTC"],
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('Drafted',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Row(
-                        children: [
-                          Text("Pick " + player["draft"]["pickNum"],
-                              style: TextStyle(
-                                  color: Color(teamTextColor), fontSize: 12)),
-                          Text(" R" + player["draft"]["roundNum"],
-                              style: TextStyle(
-                                  color: Color(teamTextColor), fontSize: 12)),
-                          Text(" " + player["draft"]["seasonYear"],
-                              style: TextStyle(
-                                  color: Color(teamTextColor), fontSize: 12)),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    children: [
-                      Text('College',
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                      Text(getShortString(player["lastAffiliation"]),
-                          style: TextStyle(
-                              color: Color(teamTextColor), fontSize: 12)),
-                    ],
-                  )
-                ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                //width: deviceWidth,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white),
+                    color: Color(teamColor)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text('Age',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(getAge(player["dateOfBirthUTC"]),
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('Birthday',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(player["dateOfBirthUTC"],
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('Drafted',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Row(
+                          children: [
+                            Text("Pick " + player["draft"]["pickNum"],
+                                style: TextStyle(
+                                    color: Color(teamTextColor), fontSize: 14)),
+                            Text(" R" + player["draft"]["roundNum"],
+                                style: TextStyle(
+                                    color: Color(teamTextColor), fontSize: 14)),
+                            Text(" " + player["draft"]["seasonYear"],
+                                style: TextStyle(
+                                    color: Color(teamTextColor), fontSize: 14)),
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      children: [
+                        Text('College',
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                        Text(getShortString(player["lastAffiliation"]),
+                            style: TextStyle(
+                                color: Color(teamTextColor), fontSize: 14)),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
