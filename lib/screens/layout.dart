@@ -6,7 +6,7 @@ import 'package:hoop/models/season_model.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/games_view/today_games.dart';
 import 'package:hoop/screens/views/league/league.dart';
-import 'package:hoop/screens/views/news_view/news_main.dart';
+import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/stats/stats_main.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
