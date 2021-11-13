@@ -85,7 +85,7 @@ class _TodaysGamesState extends State<TodaysGames> {
             DateTime todaysDate = DateTime.now();
             String dateInfo = parseDate.day == todaysDate.day
                 ? "$count games Today"
-                : "$count games on ${formatDate(parseDate.toString())}";
+                : "$count games on ${formatDate(parseDate.toString())[0]}";
 
             return count == 0
                 ? Column(

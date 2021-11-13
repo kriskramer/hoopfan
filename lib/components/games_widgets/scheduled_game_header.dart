@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/teams_view/team_main.dart';
+import 'package:hoop/utils/formatdate.dart';
 
 class ScheduledGameHeader extends StatelessWidget {
   final dynamic gameData;
@@ -46,9 +47,14 @@ class ScheduledGameHeader extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Text(formatDate(gameData["startDateEastern"]),
-              style: TextStyle(fontSize: 18)),
-          Text(gameData["startTimeEastern"], style: TextStyle(fontSize: 18)),
+          Text(
+            formatDate(gameData["startTimeUTC"].toString())[0],
+            style: TextStyle(fontSize: 18),
+          ),
+          Text(
+            formatDate(gameData["startTimeUTC"].toString())[1],
+            style: TextStyle(fontSize: 18),
+          ),
           SizedBox(
             height: 5,
           ),
@@ -91,15 +97,6 @@ class ScheduledGameHeader extends StatelessWidget {
         ]),
       ],
     );
-  }
-
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
   }
 
   String getStartCountdown(dynamic game) {
