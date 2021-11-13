@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/injury_report.dart';
-import 'package:hoop/screens/views/news_view/news_feed.dart';
-import 'package:hoop/screens/views/news_view/transactions_view.dart';
-import 'package:hoop/screens/views/news_view/video_feed.dart';
+import 'package:hoop/screens/views/news/news_feed.dart';
+import 'package:hoop/screens/views/news/transactions_view.dart';
+import 'package:hoop/screens/views/news/video_feed.dart';
 
 class NewsMainScreen extends StatefulWidget {
   @override

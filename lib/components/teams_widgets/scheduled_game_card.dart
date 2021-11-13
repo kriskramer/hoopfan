@@ -96,7 +96,7 @@ class ScheduledGameCard extends StatelessWidget {
               Expanded(
                 child: Column(children: [
                   Text(
-                    formatDate(game["startDateEastern"].toString()),
+                    formatDate(game["startDateEastern"].toString())[0],
                     style: TextStyle(
                       fontSize: 12,
                     ),
