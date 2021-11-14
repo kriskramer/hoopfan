@@ -25,6 +25,13 @@ class UpcomingGameCard extends StatelessWidget {
     var gameId = game["gameId"];
     var date = game["gameUrlCode"].toString().split("/")[0];
 
+    DateTime time = DateTime.parse(game["startTimeUTC"]);
+    DateTime newTime = time.toLocal();
+    print(newTime);
+    // print("UTC time: $time");
+    // print("TIme now: ${DateTime.now()}");
+    // print(DateTime.now().difference(time));
+
     return Container(
       margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       padding: EdgeInsets.all(5),
@@ -57,13 +64,13 @@ class UpcomingGameCard extends StatelessWidget {
                 ),
                 Column(children: [
                   Text(
-                    formatDate(game["startDateEastern"].toString()),
+                    formatDate(game["startTimeUTC"].toString())[0],
                     style: TextStyle(
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    game["startTimeEastern"].toString(),
+                    formatDate(game["startTimeUTC"].toString())[1],
                     style: TextStyle(
                       fontSize: 14,
                     ),

@@ -25,6 +25,12 @@ class NbaNewsFeed extends StatelessWidget {
                     var news = Provider.of<JsonFiles>(context, listen: false)
                         .getNbaNews();
 
+                    if (news == null) {
+                      return Container(
+                          padding: EdgeInsets.all(30),
+                          child: Center(child: Text("No data returned")));
+                    }
+
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
