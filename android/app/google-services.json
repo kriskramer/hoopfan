@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "505467317877",
+    "project_id": "hoopfan-26b24",
+    "storage_bucket": "hoopfan-26b24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505467317877:android:a1cd822930aa026063923c",
+        "android_client_info": {
+          "package_name": "com.statfan.hoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505467317877-cmhngrpvmhohnffiv4pp326a5o7m5qvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXG_aLDC3BDJppEW2U1Hx-x6FG7jo_0SU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505467317877-cmhngrpvmhohnffiv4pp326a5o7m5qvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

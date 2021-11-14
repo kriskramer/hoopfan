@@ -30,54 +30,40 @@ class NbaVideoFeed extends StatelessWidget {
                     var videos = Provider.of<JsonFiles>(context, listen: false)
                         .getNbaVideos();
 
-                    return ListView.builder(
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 350,
+                        childAspectRatio: 4 / 3.1,
+                        //crossAxisSpacing: 5,
+                        //mainAxisSpacing: 5
+                      ),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: videos["value"].length,
                       itemBuilder: (context, index) {
                         // Check if Id is in allTeam and points aint empty
                         return Column(children: [
-                          InkWell(
-                            onTap: () {
-                              Network.launchSite(
-                                  videos["value"][index]["contentUrl"]);
-                            },
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Stack(children: [
-                                  Image.network(
-                                      videos["value"][index]["thumbnailUrl"]),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      videos["value"][index]["name"],
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                ]),
+                          Container(
+                            padding: EdgeInsets.all(2),
+                            color: Colors.black,
+                            child: InkWell(
+                              onTap: () {
+                                Network.launchSite(
+                                    videos["value"][index]["contentUrl"]);
+                              },
+                              child: Stack(children: [
+                                Image.network(
+                                    videos["value"][index]["thumbnailUrl"]),
                                 Text(
-                                  videos["value"][index]["thumbnailUrl"],
+                                  videos["value"][index]["name"],
                                   style: TextStyle(
-                                      fontSize: 10, color: Colors.blue),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                Text(
-                                  formatDate(
-                                      videos["value"][index]["datePublished"]),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
+                              ]),
                             ),
-                          ),
-                          SizedBox(
-                            height: 4,
                           ),
                         ]);
                       },

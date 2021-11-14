@@ -54,7 +54,7 @@ class JsonFiles with ChangeNotifier {
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
 
-  bool _isFeatureBlocked = true;
+  bool _isFeatureBlocked = false;
 
   //Nba Api variables
   var _allPlayers;

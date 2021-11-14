@@ -59,16 +59,17 @@ class Network {
   }
 
   static Future<void> launchSite(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        enableJavaScript: true,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
+    print(url);
+    //if (await canLaunch(url)) {
+    await launch(
+      url,
+      forceSafariVC: true,
+      forceWebView: true,
+      enableJavaScript: true,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    );
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   }
 }
