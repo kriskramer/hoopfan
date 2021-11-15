@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/components/player_widgets/player_rank_list.dart';
+import 'package:hoop/screens/views/players/player_rank_list.dart';
 
 class PlayerSingleStatRankDisplay extends StatefulWidget {
   final String stat;

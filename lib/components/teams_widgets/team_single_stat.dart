@@ -1,14 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hoop/screens/views/teams_view/team_rank_list.dart';
 
 class TeamSingleStat extends StatefulWidget {
   final label;
   final value;
   final rank;
   final width;
+  final teamId;
+  final measure;
+  final statName;
 
-  const TeamSingleStat(this.label, this.value, this.rank, this.width);
+  const TeamSingleStat(this.label, this.value, this.rank, this.width,
+      this.teamId, this.measure, this.statName);
 
   @override
   _TeamSingleStatState createState() => _TeamSingleStatState();
@@ -49,7 +54,13 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
 
   @override
   Widget build(BuildContext context) {
-    String rank = widget.rank == "" ? "--" : widget.rank;
+
+    var noRank = false;
+
+    if (widget.rank.toString().trim() == "") {
+      noRank = true;
+    }
+
     return Container(
       height: 35,
       child: Stack(children: [
@@ -92,7 +103,26 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ]),
-              Text("( $rank )"),
+
+              noRank
+                  ? SizedBox(
+                      width: 1,
+                    )
+                  : InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TeamRankList(widget.measure,
+                                  widget.label, widget.statName, widget.teamId),
+                            ));
+                      },
+                      child: Text(
+                        "Rank: " + widget.rank.toString(),
+                        style: TextStyle(fontSize: 16, color: Colors.blue[700]),
+                      ),
+                    ),
+
             ],
           ),
         )
