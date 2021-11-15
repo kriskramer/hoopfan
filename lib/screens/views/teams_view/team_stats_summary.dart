@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/standings_widgets/custom_picker.dart';
 import 'package:hoop/components/teams_widgets/team_advanced_stats_card.dart';
 import 'package:hoop/components/teams_widgets/team_base_stats_card.dart';
 import 'package:hoop/components/teams_widgets/team_estimated_stats_card.dart';
@@ -20,6 +21,38 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
     return Container(
       child: Column(
         children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0XFFced6e0),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: ListTile(
+                leading: Text(
+                  "Filter by:",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                trailing: customPicker(
+                  context,
+                  [" Last 5 games", " Last 10 games"],
+                  Color(0XFFced6e0),
+                  " Last 5 games",
+                  (todo) {
+                    print("Do something");
+                  },
+                  dropDownColor: Color(0XFFced6e0),
+                  textColour: Colors.black,
+                ),
+              ),
+            ),
+          ),
           getSectionHeader('Base Stats'),
           TeamBaseStatsCard(
             teamId: widget.teamId,

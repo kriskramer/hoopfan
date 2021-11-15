@@ -14,7 +14,7 @@ class TeamEstimatedStatsCard extends StatelessWidget {
         Provider.of<JsonFiles>(context, listen: false).getEstimatedTeamStats();
     var teamStats = getTeamEstimatedStats(teamId, estimatedStats);
 
-    var width = MediaQuery.of(context).size.width - 35;
+    var width = MediaQuery.of(context).size.width - 20;
 
     return teamStats == null
         ? Text('No stats available')
