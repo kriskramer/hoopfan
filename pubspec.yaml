@@ -30,12 +30,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-<<<<<<< HEAD
-  flutter_native_splash: ^1.2.4
-  test: ^1.17.10
-=======
 #   flutter_native_splash: ^1.2.4
->>>>>>> b5958818efbf4080534c61261ebab0ee44f98338
 
 # flutter_native_splash:
 #   color: "#FFFFFF"
