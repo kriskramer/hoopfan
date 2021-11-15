@@ -23,7 +23,8 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
   @override
   void initState() {
     rankCalculation = (widget.rank.trim() == "") ? "30" : widget.rank;
-    rankMeter = (30 - double.parse(rankCalculation)) / 30;
+
+    rankMeter = (31 - double.parse(rankCalculation)) / 30;
 
     const oneSec = const Duration(milliseconds: 50);
     _timer = Timer.periodic(oneSec, (Timer t) {
@@ -36,6 +37,7 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
         }
       });
     });
+
     super.initState();
   }
 
@@ -47,18 +49,22 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
 
   @override
   Widget build(BuildContext context) {
+    String rank = widget.rank == "" ? "--" : widget.rank;
     return Container(
-      height: 25,
+      height: 35,
       child: Stack(children: [
         Container(
           width: widget.width,
           padding: EdgeInsets.symmetric(horizontal: 15),
-          child: LinearProgressIndicator(
-            color: getProgressBarColor(rankMeter),
-            backgroundColor: Colors.grey[50], //Colors.green,
-            minHeight: 22,
-            value: progressValue,
-            semanticsValue: widget.rank.toString(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            child: LinearProgressIndicator(
+              color: getProgressBarColor(rankMeter),
+              backgroundColor: Color(0xffD6D6D6), //Colors.green,
+              minHeight: 22,
+              value: progressValue,
+              semanticsValue: widget.rank.toString(),
+            ),
           ),
         ),
         Container(
@@ -86,7 +92,7 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ]),
-              Text("(" + widget.rank + ")"),
+              Text("( $rank )"),
             ],
           ),
         )

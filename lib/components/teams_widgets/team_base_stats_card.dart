@@ -15,7 +15,7 @@ class TeamBaseStatsCard extends StatelessWidget {
     var teamStats = getTeamStats(teamId, baseStats);
     //print(teamId);
 
-    var width = MediaQuery.of(context).size.width - 35;
+    var width = MediaQuery.of(context).size.width - 20;
 
     return teamStats == null
         ? Text('No stats available')
