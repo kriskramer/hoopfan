@@ -231,6 +231,13 @@ class Urls {
     return "https://stats.nba.com/stats/teamdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   }
 
+  static String getNbaStatsTeamLastNGames(String teamId,
+      {String measureType = "Base",
+      String perMode = "Totals",
+      int lastNGames}) {
+    return "https://stats.nba.com/stats/teamdashboardbylastngames?DateFrom=&DateTo=&GameSegment=&LastNGames=$lastNGames&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
+
   static String getNbaStatsAllPlayerStats(
       {String measureType = "Base", String perMode = "Totals"}) {
     return "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=&Weight=";
