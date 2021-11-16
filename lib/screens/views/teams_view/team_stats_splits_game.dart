@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TeamStatsSplitsGeneral extends StatelessWidget {
+class TeamStatsSplitsGame extends StatelessWidget {
   final dynamic stats;
   final String measure;
 
-  const TeamStatsSplitsGeneral({this.stats, this.measure});
+  const TeamStatsSplitsGame({this.stats, this.measure});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'General Splits',
+            'Game Splits',
             style: TextStyle(fontSize: 20),
           ),
           getDataGrid(stats, 0, measure),
@@ -34,7 +34,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
             height: 25,
           ),
           Text(
-            'Location Splits',
+            'Splits By Half',
             style: TextStyle(fontSize: 20),
           ),
 
@@ -56,7 +56,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
             height: 25,
           ),
           Text(
-            'W/L Splits',
+            'Splits By Period',
             style: TextStyle(fontSize: 20),
           ),
 
@@ -78,7 +78,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
             height: 25,
           ),
           Text(
-            'Month Splits',
+            'Splits By Score Margin',
             style: TextStyle(fontSize: 20),
           ),
 
@@ -100,33 +100,11 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
             height: 25,
           ),
           Text(
-            'All Star Splits',
+            'Splits By Actual Margin',
             style: TextStyle(fontSize: 20),
           ),
 
           getDataGrid(stats, 4, measure),
-          SizedBox(
-            height: 10,
-          ),
-          // ElevatedButton(
-          //     onPressed: () {
-          //       Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //             builder: (context) =>
-          //                 TeamStatsShootingGeneralCharts([stats]),
-          //           ));
-          //     },
-          //     child: Text("Charts")),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            'Days Rest Splits',
-            style: TextStyle(fontSize: 20),
-          ),
-
-          getDataGrid(stats, 5, measure),
           SizedBox(
             height: 10,
           ),
@@ -200,7 +178,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
@@ -226,7 +204,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 25),
       getDataCell(stats, typeNum, setNum, 26),
       getDataCell(stats, typeNum, setNum, 27),
-      getDataCell(stats, typeNum, setNum, 28),
     ]);
   }
 
@@ -234,17 +211,17 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
       getDataCell(stats, typeNum, setNum, 6),
-      getDataCell(stats, typeNum, setNum, 7),
-      //getDataCell(stats, typeNum, setNum, 8),
-      getDataCell(stats, typeNum, setNum, 9),
-      //getDataCell(stats, typeNum, setNum, 10),
-      getDataCell(stats, typeNum, setNum, 11),
-      //getDataCell(stats, typeNum, setNum, 12),
+      //getDataCell(stats, typeNum, setNum, 7),
+      getDataCell(stats, typeNum, setNum, 8),
+      //getDataCell(stats, typeNum, setNum, 9),
+      getDataCell(stats, typeNum, setNum, 10),
+      //getDataCell(stats, typeNum, setNum, 11),
+      getDataCell(stats, typeNum, setNum, 12),
       getDataCell(stats, typeNum, setNum, 13),
       getDataCell(stats, typeNum, setNum, 14),
       getDataCell(stats, typeNum, setNum, 15),
@@ -254,12 +231,11 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 19),
       getDataCell(stats, typeNum, setNum, 20),
       getDataCell(stats, typeNum, setNum, 21),
-      getDataCell(stats, typeNum, setNum, 22),
-      //getDataCell(stats, typeNum, setNum, 23),
+      //getDataCell(stats, typeNum, setNum, 22),
+      getDataCell(stats, typeNum, setNum, 23),
       getDataCell(stats, typeNum, setNum, 24),
       getDataCell(stats, typeNum, setNum, 25),
       getDataCell(stats, typeNum, setNum, 26),
-      getDataCell(stats, typeNum, setNum, 27),
     ]);
   }
 
@@ -267,7 +243,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
@@ -280,7 +256,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 12),
       getDataCell(stats, typeNum, setNum, 13),
       getDataCell(stats, typeNum, setNum, 14),
-      getDataCell(stats, typeNum, setNum, 15),
     ]);
   }
 
@@ -288,7 +263,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
@@ -301,7 +276,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 12),
       getDataCell(stats, typeNum, setNum, 13),
       getDataCell(stats, typeNum, setNum, 14),
-      getDataCell(stats, typeNum, setNum, 15),
     ]);
   }
 
@@ -309,7 +283,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
@@ -329,7 +303,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 19),
       getDataCell(stats, typeNum, setNum, 20),
       getDataCell(stats, typeNum, setNum, 21),
-      getDataCell(stats, typeNum, setNum, 22),
     ]);
   }
 
@@ -337,7 +310,7 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
     return DataRow(cells: [
       getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
-      //getDataCell(stats, typeNum, setNum, 2),
+      getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
       getDataCell(stats, typeNum, setNum, 4),
       getDataCell(stats, typeNum, setNum, 5),
@@ -363,7 +336,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
       getDataCell(stats, typeNum, setNum, 25),
       getDataCell(stats, typeNum, setNum, 26),
       getDataCell(stats, typeNum, setNum, 27),
-      getDataCell(stats, typeNum, setNum, 28),
     ]);
   }
 
@@ -381,7 +353,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));
@@ -417,7 +388,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));
@@ -448,7 +418,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));
@@ -471,7 +440,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));
@@ -494,7 +462,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));
@@ -524,7 +491,6 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
     list.add(DataColumn(label: Text('GP')));
     list.add(DataColumn(label: Text('W')));
     list.add(DataColumn(label: Text('L')));

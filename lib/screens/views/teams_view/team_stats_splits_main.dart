@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_splits_game.dart';
 import 'package:hoop/screens/views/teams_view/team_stats_splits_general.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_splits_shooting.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -168,24 +170,42 @@ class _TeamStatsSplitsViewState extends State<TeamStatsSplitsView> {
                           SizedBox(
                             width: 20,
                           ),
-                          DropdownButton(
-                              elevation: 5,
-                              value: _valueMeasure,
-                              items: [
-                                DropdownMenuItem(
-                                  child: Text("Base"),
-                                  value: 1,
-                                ),
-                                DropdownMenuItem(
-                                  child: Text("Advanced"),
-                                  value: 2,
-                                ),
-                              ],
-                              onChanged: (value) {
-                                setState(() {
-                                  updateMeasure(value);
-                                });
-                              }),
+                          showShooting
+                              ? SizedBox()
+                              : DropdownButton(
+                                  elevation: 5,
+                                  value: _valueMeasure,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text("Base"),
+                                      value: 1,
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Advanced"),
+                                      value: 2,
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Misc"),
+                                      value: 3,
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Four Factors"),
+                                      value: 4,
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Scoring"),
+                                      value: 5,
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Opponent"),
+                                      value: 6,
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateMeasure(value);
+                                    });
+                                  }),
                         ],
                       ),
                     ),
@@ -197,20 +217,15 @@ class _TeamStatsSplitsViewState extends State<TeamStatsSplitsView> {
                       child: Column(
                         children: [
                           showGame
-                              ? Text("Game Splits")
-                              // ? TeamStatsSplitsGeneral(
-                              //     stats: generalStats,
-                              //   )
+                              ? TeamStatsSplitsGame(
+                                  stats: gameStats, measure: measure)
                               : SizedBox(),
                           showShooting
-                              ? Text("Shooting Splits")
-                              //? TeamStatsShootingView(teamId: widget.teamId)
+                              ? TeamStatsSplitsShooting(stats: shootingStats)
                               : SizedBox(),
                           showGeneral
-                              //? Text("General Splits")
                               ? TeamStatsSplitsGeneral(
-                                  stats: generalStats,
-                                )
+                                  stats: generalStats, measure: measure)
                               : SizedBox(),
                         ],
                       ),
@@ -264,6 +279,18 @@ class _TeamStatsSplitsViewState extends State<TeamStatsSplitsView> {
     } else if (value == 2) {
       _valueMeasure = 2;
       measure = "Advanced";
+    } else if (value == 3) {
+      _valueMeasure = 3;
+      measure = "Misc";
+    } else if (value == 4) {
+      _valueMeasure = 4;
+      measure = "Four Factors";
+    } else if (value == 5) {
+      _valueMeasure = 5;
+      measure = "Scoring";
+    } else if (value == 6) {
+      _valueMeasure = 6;
+      measure = "Opponent";
     }
   }
 }
