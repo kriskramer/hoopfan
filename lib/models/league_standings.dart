@@ -236,7 +236,7 @@ class LeagueStandingList {
         a.leagueRank = 0;
         b.leagueRank = 0;
       }
-      if (a.leagueRank > b.leagueRank) {
+      if (a.winPct < b.winPct) {
         return 1;
       } else {
         return -1;
