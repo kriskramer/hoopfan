@@ -26,386 +26,399 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: loadData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return NoConnection();
-          }
-          if (snapshot.connectionState == ConnectionState.done &&
-              !snapshot.hasData) {
-            return Column(children: [SizedBox(height: 20), Text('No data')]);
-          }
-          if (snapshot.hasData) {
-            dynamic stats = snapshot.data;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: FutureBuilder(
+          future: loadData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return NoConnection();
+            }
+            if (snapshot.connectionState == ConnectionState.done &&
+                !snapshot.hasData) {
+              return Column(children: [SizedBox(height: 20), Text('No data')]);
+            }
+            if (snapshot.hasData) {
+              dynamic stats = snapshot.data;
 
-            //List<charts.Series<dynamic, String>> seriesList;
+              //List<charts.Series<dynamic, String>> seriesList;
 
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DropdownButton(
-                            elevation: 5,
-                            value: _valuePer,
-                            items: [
-                              DropdownMenuItem(
-                                child: Text("Totals"),
-                                value: 1,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("PerGame"),
-                                value: 2,
-                              ),
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                updatePer(value);
-                              });
-                            }),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text('Last N Games: '),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        DropdownButton(
-                            elevation: 5,
-                            value: _lastNGames,
-                            items: [
-                              DropdownMenuItem(
-                                child: Text("All"),
-                                value: 0,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("1"),
-                                value: 1,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("2"),
-                                value: 2,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("3"),
-                                value: 3,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("4"),
-                                value: 4,
-                              ),
-                              DropdownMenuItem(
-                                child: Text("5"),
-                                value: 5,
-                              ),
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                updateLastNGames(value);
-                              });
-                            }),
-                      ],
+              return Container(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'General Shooting',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columnSpacing: 15,
-                      headingRowHeight: 25,
-                      dataRowHeight: 25,
-                      headingTextStyle: TextStyle(
-                          color: Colors.red[900], fontWeight: FontWeight.bold),
-                      headingRowColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        return Colors.grey[300];
-                      }),
-                      columns: [
-                        DataColumn(label: Text('Shot Type')),
-                        DataColumn(label: Text('FGA Freq')),
-                        DataColumn(label: Text('FGM')),
-                        DataColumn(label: Text('FGA')),
-                        DataColumn(label: Text('FG %')),
-                        DataColumn(label: Text('eFG %')),
-                        DataColumn(label: Text('2P Freq')),
-                        DataColumn(label: Text('2PM')),
-                        DataColumn(label: Text('2PA')),
-                        DataColumn(label: Text('2P %')),
-                        DataColumn(label: Text('3P Freq')),
-                        DataColumn(label: Text('3PM')),
-                        DataColumn(label: Text('3PA')),
-                        DataColumn(label: Text('3P %')),
-                      ],
-                      rows: [
-                        getDataRow(stats, 0, 0),
-                        getDataRow(stats, 0, 1),
-                        getDataRow(stats, 0, 2),
-                        getDataRow(stats, 0, 3),
-                      ],
+                    Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DropdownButton(
+                              elevation: 5,
+                              value: _valuePer,
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text("Totals"),
+                                  value: 1,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("PerGame"),
+                                  value: 2,
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  updatePer(value);
+                                });
+                              }),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text('Last N Games: '),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          DropdownButton(
+                              elevation: 5,
+                              value: _lastNGames,
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text("All"),
+                                  value: 0,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("1"),
+                                  value: 1,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("2"),
+                                  value: 2,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("3"),
+                                  value: 3,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("4"),
+                                  value: 4,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("5"),
+                                  value: 5,
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  updateLastNGames(value);
+                                });
+                              }),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamStatsShootingGeneralCharts([stats]),
-                            ));
-                      },
-                      child: Text("Charts")),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'Shot Clock Shooting',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columnSpacing: 15,
-                      headingRowHeight: 25,
-                      dataRowHeight: 25,
-                      headingTextStyle: TextStyle(
-                          color: Colors.red[900], fontWeight: FontWeight.bold),
-                      headingRowColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        return Colors.grey[300];
-                      }),
-                      columns: [
-                        DataColumn(label: Text('Shot Clock Range')),
-                        DataColumn(label: Text('FGA Freq')),
-                        DataColumn(label: Text('FGM')),
-                        DataColumn(label: Text('FGA')),
-                        DataColumn(label: Text('FG %')),
-                        DataColumn(label: Text('eFG %')),
-                        DataColumn(label: Text('2P Freq')),
-                        DataColumn(label: Text('2PM')),
-                        DataColumn(label: Text('2PA')),
-                        DataColumn(label: Text('2P %')),
-                        DataColumn(label: Text('3P Freq')),
-                        DataColumn(label: Text('3PM')),
-                        DataColumn(label: Text('3PA')),
-                        DataColumn(label: Text('3P %')),
-                      ],
-                      rows: [
-                        getDataRow(stats, 1, 0),
-                        getDataRow(stats, 1, 1),
-                        getDataRow(stats, 1, 2),
-                        getDataRow(stats, 1, 3),
-                        getDataRow(stats, 1, 4),
-                        getDataRow(stats, 1, 5),
-                      ],
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamStatsShootingShotClockCharts([stats]),
-                            ));
-                      },
-                      child: Text("Charts")),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'Dribble Shooting',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columnSpacing: 15,
-                      headingRowHeight: 25,
-                      dataRowHeight: 25,
-                      headingTextStyle: TextStyle(
-                          color: Colors.red[900], fontWeight: FontWeight.bold),
-                      headingRowColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        return Colors.grey[300];
-                      }),
-                      columns: [
-                        DataColumn(label: Text('Dribble Range')),
-                        DataColumn(label: Text('FGA Freq')),
-                        DataColumn(label: Text('FGM')),
-                        DataColumn(label: Text('FGA')),
-                        DataColumn(label: Text('FG %')),
-                        DataColumn(label: Text('eFG %')),
-                        DataColumn(label: Text('2P Freq')),
-                        DataColumn(label: Text('2PM')),
-                        DataColumn(label: Text('2PA')),
-                        DataColumn(label: Text('2P %')),
-                        DataColumn(label: Text('3P Freq')),
-                        DataColumn(label: Text('3PM')),
-                        DataColumn(label: Text('3PA')),
-                        DataColumn(label: Text('3P %')),
-                      ],
-                      rows: [
-                        getDataRow(stats, 2, 0),
-                        getDataRow(stats, 2, 1),
-                        getDataRow(stats, 2, 2),
-                        getDataRow(stats, 2, 3),
-                        getDataRow(stats, 2, 4),
-                      ],
+                    Text(
+                      'General Shooting',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamStatsShootingDribbleCharts([stats]),
-                            ));
-                      },
-                      child: Text("Charts")),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'Closest Defender Shooting',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columnSpacing: 15,
-                      headingRowHeight: 25,
-                      dataRowHeight: 25,
-                      headingTextStyle: TextStyle(
-                          color: Colors.red[900], fontWeight: FontWeight.bold),
-                      headingRowColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        return Colors.grey[300];
-                      }),
-                      columns: [
-                        DataColumn(label: Text('Def Dist')),
-                        DataColumn(label: Text('FGA Freq')),
-                        DataColumn(label: Text('FGM')),
-                        DataColumn(label: Text('FGA')),
-                        DataColumn(label: Text('FG %')),
-                        DataColumn(label: Text('eFG %')),
-                        DataColumn(label: Text('2P Freq')),
-                        DataColumn(label: Text('2PM')),
-                        DataColumn(label: Text('2PA')),
-                        DataColumn(label: Text('2P %')),
-                        DataColumn(label: Text('3P Freq')),
-                        DataColumn(label: Text('3PM')),
-                        DataColumn(label: Text('3PA')),
-                        DataColumn(label: Text('3P %')),
-                      ],
-                      rows: [
-                        getDataRow(stats, 3, 0),
-                        getDataRow(stats, 3, 1),
-                        getDataRow(stats, 3, 2),
-                        getDataRow(stats, 3, 3),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 15,
+                        headingRowHeight: 25,
+                        dataRowHeight: 25,
+                        headingTextStyle: TextStyle(
+                            color: Colors.red[900],
+                            fontWeight: FontWeight.bold),
+                        headingRowColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                          return Colors.grey[300];
+                        }),
+                        columns: [
+                          DataColumn(label: Text('Shot Type')),
+                          DataColumn(label: Text('FGA Freq')),
+                          DataColumn(label: Text('FGM')),
+                          DataColumn(label: Text('FGA')),
+                          DataColumn(label: Text('FG %')),
+                          DataColumn(label: Text('eFG %')),
+                          DataColumn(label: Text('2P Freq')),
+                          DataColumn(label: Text('2PM')),
+                          DataColumn(label: Text('2PA')),
+                          DataColumn(label: Text('2P %')),
+                          DataColumn(label: Text('3P Freq')),
+                          DataColumn(label: Text('3PM')),
+                          DataColumn(label: Text('3PA')),
+                          DataColumn(label: Text('3P %')),
+                        ],
+                        rows: [
+                          getDataRow(stats, 0, 0),
+                          getDataRow(stats, 0, 1),
+                          getDataRow(stats, 0, 2),
+                          getDataRow(stats, 0, 3),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamStatsShootingClosestDefenderCharts(
-                                      [stats]),
-                            ));
-                      },
-                      child: Text("Charts")),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'Touch Time Shooting',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columnSpacing: 15,
-                      headingRowHeight: 25,
-                      dataRowHeight: 25,
-                      headingTextStyle: TextStyle(
-                          color: Colors.red[900], fontWeight: FontWeight.bold),
-                      headingRowColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        return Colors.grey[300];
-                      }),
-                      columns: [
-                        DataColumn(label: Text('Touch Time Range')),
-                        DataColumn(label: Text('FGA Freq')),
-                        DataColumn(label: Text('FGM')),
-                        DataColumn(label: Text('FGA')),
-                        DataColumn(label: Text('FG %')),
-                        DataColumn(label: Text('eFG %')),
-                        DataColumn(label: Text('2P Freq')),
-                        DataColumn(label: Text('2PM')),
-                        DataColumn(label: Text('2PA')),
-                        DataColumn(label: Text('2P %')),
-                        DataColumn(label: Text('3P Freq')),
-                        DataColumn(label: Text('3PM')),
-                        DataColumn(label: Text('3PA')),
-                        DataColumn(label: Text('3P %')),
-                      ],
-                      rows: [
-                        getDataRow(stats, 5, 0),
-                        getDataRow(stats, 5, 1),
-                        getDataRow(stats, 5, 2),
-                      ],
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamStatsShootingTouchTimeCharts([stats]),
-                            ));
-                      },
-                      child: Text("Charts")),
-                  SizedBox(
-                    height: 50,
-                  )
-                ],
-              ),
-            );
-          } else {
-            return NoConnection();
-          }
-        });
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamStatsShootingGeneralCharts([stats]),
+                              ));
+                        },
+                        child: Text("Charts")),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Shot Clock Shooting',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 15,
+                        headingRowHeight: 25,
+                        dataRowHeight: 25,
+                        headingTextStyle: TextStyle(
+                            color: Colors.red[900],
+                            fontWeight: FontWeight.bold),
+                        headingRowColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                          return Colors.grey[300];
+                        }),
+                        columns: [
+                          DataColumn(label: Text('Shot Clock Range')),
+                          DataColumn(label: Text('FGA Freq')),
+                          DataColumn(label: Text('FGM')),
+                          DataColumn(label: Text('FGA')),
+                          DataColumn(label: Text('FG %')),
+                          DataColumn(label: Text('eFG %')),
+                          DataColumn(label: Text('2P Freq')),
+                          DataColumn(label: Text('2PM')),
+                          DataColumn(label: Text('2PA')),
+                          DataColumn(label: Text('2P %')),
+                          DataColumn(label: Text('3P Freq')),
+                          DataColumn(label: Text('3PM')),
+                          DataColumn(label: Text('3PA')),
+                          DataColumn(label: Text('3P %')),
+                        ],
+                        rows: [
+                          getDataRow(stats, 1, 0),
+                          getDataRow(stats, 1, 1),
+                          getDataRow(stats, 1, 2),
+                          getDataRow(stats, 1, 3),
+                          getDataRow(stats, 1, 4),
+                          getDataRow(stats, 1, 5),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamStatsShootingShotClockCharts([stats]),
+                              ));
+                        },
+                        child: Text("Charts")),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Dribble Shooting',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 15,
+                        headingRowHeight: 25,
+                        dataRowHeight: 25,
+                        headingTextStyle: TextStyle(
+                            color: Colors.red[900],
+                            fontWeight: FontWeight.bold),
+                        headingRowColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                          return Colors.grey[300];
+                        }),
+                        columns: [
+                          DataColumn(label: Text('Dribble Range')),
+                          DataColumn(label: Text('FGA Freq')),
+                          DataColumn(label: Text('FGM')),
+                          DataColumn(label: Text('FGA')),
+                          DataColumn(label: Text('FG %')),
+                          DataColumn(label: Text('eFG %')),
+                          DataColumn(label: Text('2P Freq')),
+                          DataColumn(label: Text('2PM')),
+                          DataColumn(label: Text('2PA')),
+                          DataColumn(label: Text('2P %')),
+                          DataColumn(label: Text('3P Freq')),
+                          DataColumn(label: Text('3PM')),
+                          DataColumn(label: Text('3PA')),
+                          DataColumn(label: Text('3P %')),
+                        ],
+                        rows: [
+                          getDataRow(stats, 2, 0),
+                          getDataRow(stats, 2, 1),
+                          getDataRow(stats, 2, 2),
+                          getDataRow(stats, 2, 3),
+                          getDataRow(stats, 2, 4),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamStatsShootingDribbleCharts([stats]),
+                              ));
+                        },
+                        child: Text("Charts")),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Closest Defender Shooting',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 15,
+                        headingRowHeight: 25,
+                        dataRowHeight: 25,
+                        headingTextStyle: TextStyle(
+                            color: Colors.red[900],
+                            fontWeight: FontWeight.bold),
+                        headingRowColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                          return Colors.grey[300];
+                        }),
+                        columns: [
+                          DataColumn(label: Text('Def Dist')),
+                          DataColumn(label: Text('FGA Freq')),
+                          DataColumn(label: Text('FGM')),
+                          DataColumn(label: Text('FGA')),
+                          DataColumn(label: Text('FG %')),
+                          DataColumn(label: Text('eFG %')),
+                          DataColumn(label: Text('2P Freq')),
+                          DataColumn(label: Text('2PM')),
+                          DataColumn(label: Text('2PA')),
+                          DataColumn(label: Text('2P %')),
+                          DataColumn(label: Text('3P Freq')),
+                          DataColumn(label: Text('3PM')),
+                          DataColumn(label: Text('3PA')),
+                          DataColumn(label: Text('3P %')),
+                        ],
+                        rows: [
+                          getDataRow(stats, 3, 0),
+                          getDataRow(stats, 3, 1),
+                          getDataRow(stats, 3, 2),
+                          getDataRow(stats, 3, 3),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamStatsShootingClosestDefenderCharts(
+                                        [stats]),
+                              ));
+                        },
+                        child: Text("Charts")),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Touch Time Shooting',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columnSpacing: 15,
+                        headingRowHeight: 25,
+                        dataRowHeight: 25,
+                        headingTextStyle: TextStyle(
+                            color: Colors.red[900],
+                            fontWeight: FontWeight.bold),
+                        headingRowColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                          return Colors.grey[300];
+                        }),
+                        columns: [
+                          DataColumn(label: Text('Touch Time Range')),
+                          DataColumn(label: Text('FGA Freq')),
+                          DataColumn(label: Text('FGM')),
+                          DataColumn(label: Text('FGA')),
+                          DataColumn(label: Text('FG %')),
+                          DataColumn(label: Text('eFG %')),
+                          DataColumn(label: Text('2P Freq')),
+                          DataColumn(label: Text('2PM')),
+                          DataColumn(label: Text('2PA')),
+                          DataColumn(label: Text('2P %')),
+                          DataColumn(label: Text('3P Freq')),
+                          DataColumn(label: Text('3PM')),
+                          DataColumn(label: Text('3PA')),
+                          DataColumn(label: Text('3P %')),
+                        ],
+                        rows: [
+                          getDataRow(stats, 5, 0),
+                          getDataRow(stats, 5, 1),
+                          getDataRow(stats, 5, 2),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamStatsShootingTouchTimeCharts([stats]),
+                              ));
+                        },
+                        child: Text("Charts")),
+                    SizedBox(
+                      height: 50,
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return NoConnection();
+            }
+          }),
+    );
   }
 
   Future<dynamic> loadData() async {

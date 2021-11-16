@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_last_n_games.dart';
 import 'package:hoop/screens/views/teams_view/team_stats_lineups.dart';
 import 'package:hoop/screens/views/teams_view/team_stats_shooting.dart';
+import 'package:hoop/screens/views/teams_view/team_stats_splits_main.dart';
 import 'package:hoop/screens/views/teams_view/team_stats_summary.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
@@ -20,142 +22,107 @@ class TeamStatsView extends StatefulWidget {
 }
 
 class _TeamStatsViewState extends State<TeamStatsView> {
-  bool showSummary = true;
-  bool showShooting = false;
-  bool showLineups = false;
+  // bool showSummary = true;
+  // bool showShooting = false;
+  // bool showLineups = false;
+  // bool showSplits = false;
 
-  void summaryClick() {
-    setState(() {
-      showSummary = true;
-      showShooting = false;
-      showLineups = false;
-    });
-  }
+  // void summaryClick() {
+  //   setState(() {
+  //     showSummary = true;
+  //     showShooting = false;
+  //     showLineups = false;
+  //     showSplits = false;
+  //   });
+  // }
 
-  void shootingClick() {
-    setState(() {
-      showSummary = false;
-      showShooting = true;
-      showLineups = false;
-    });
-  }
+  // void shootingClick() {
+  //   setState(() {
+  //     showSummary = false;
+  //     showShooting = true;
+  //     showLineups = false;
+  //     showSplits = false;
+  //   });
+  // }
 
-  void lineupsClick() {
-    setState(() {
-      showSummary = false;
-      showShooting = false;
-      showLineups = true;
-    });
-  }
+  // void splitsClick() {
+  //   setState(() {
+  //     showSummary = false;
+  //     showShooting = false;
+  //     showLineups = false;
+  //     showSplits = true;
+  //   });
+  // }
+
+  // void lineupsClick() {
+  //   setState(() {
+  //     showSummary = false;
+  //     showShooting = false;
+  //     showLineups = true;
+  //     showSplits = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     final teamColor = ConstantHelper.getTeamColor(widget.teamId);
     final teamTextColor = ConstantHelper.getTeamTextColor(widget.teamId);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: teamColor != null
-            ? Color(teamColor)
-            : Theme.of(context).primaryColor,
-        title: Text('Team Stats'),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: FutureBuilder(
-            future: loadData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  !snapshot.hasData) {
-                return Column(
-                    children: [SizedBox(height: 20), Text('No data')]);
-              }
-              if (snapshot.hasData) {
-                return Container(
-                  child: Column(children: [
-                    ButtonBar(
-                        alignment: MainAxisAlignment.center,
-                        layoutBehavior: ButtonBarLayoutBehavior.constrained,
-                        children: [
-                          ElevatedButton(
-                            child: Text(
-                              'Summary',
-                              style: TextStyle(
-                                  color: showSummary
-                                      ? Colors.black
-                                      : Color(teamTextColor)),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              primary: showSummary
-                                  ? Colors.grey[400]
-                                  : Color(teamColor),
-                            ),
-                            onPressed: () {
-                              summaryClick();
-                            },
-                          ),
-                          ElevatedButton(
-                            child: Text(
-                              'Shooting',
-                              style: TextStyle(
-                                  color: showShooting
-                                      ? Colors.black
-                                      : Color(teamTextColor)),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              primary: showShooting
-                                  ? Colors.grey[400]
-                                  : Color(teamColor),
-                            ),
-                            onPressed: () {
-                              shootingClick();
-                            },
-                          ),
-                          ElevatedButton(
-                            child: Text(
-                              'Lineups',
-                              style: TextStyle(
-                                  color: showLineups
-                                      ? Colors.black
-                                      : Color(teamTextColor)),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              primary: showLineups
-                                  ? Colors.grey[400]
-                                  : Color(teamColor),
-                            ),
-                            onPressed: () {
-                              lineupsClick();
-                            },
-                          ),
-                        ]),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    showSummary
-                        ? TeamStatsSummaryView(teamId: widget.teamId)
-                        : SizedBox(),
-                    showShooting
-                        ? TeamStatsShootingView(teamId: widget.teamId)
-                        : SizedBox(),
-                    showLineups
-                        ? TeamStatsLineupsView(teamId: widget.teamId)
-                        : SizedBox(),
-                  ]),
-                );
-              } else {
-                return NoConnection();
-              }
-            }),
+    return DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: teamColor != null
+              ? Color(teamColor)
+              : Theme.of(context).primaryColor,
+          title: Text('Team Stats'),
+          bottom: TabBar(
+            isScrollable: true,
+            tabs: [
+              Tab(
+                child: Text("Summary",
+                    style: TextStyle(color: Color(teamTextColor))),
+              ),
+              Tab(
+                child: Text("Last N",
+                    style: TextStyle(color: Color(teamTextColor))),
+              ),
+              Tab(
+                child: Text("Shooting",
+                    style: TextStyle(color: Color(teamTextColor))),
+              ),
+              Tab(
+                child: Text("Splits",
+                    style: TextStyle(color: Color(teamTextColor))),
+              ),
+              Tab(
+                child: Text("Lineups",
+                    style: TextStyle(color: Color(teamTextColor))),
+              )
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          FutureBuilder(
+              future: loadData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    !snapshot.hasData) {
+                  return Column(
+                      children: [SizedBox(height: 20), Text('No data')]);
+                }
+
+                if (snapshot.hasData) {
+                  return TeamStatsSummaryView(teamId: widget.teamId);
+                } else {
+                  return NoConnection();
+                }
+              }),
+          TeamStatsLastNGames(teamId: widget.teamId),
+          TeamStatsShootingView(teamId: widget.teamId),
+          TeamStatsSplitsView(teamId: widget.teamId),
+          TeamStatsLineupsView(teamId: widget.teamId),
+        ]),
       ),
     );
   }
