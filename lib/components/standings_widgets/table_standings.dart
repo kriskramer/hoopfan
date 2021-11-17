@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
-import 'package:hoop/screens/views/teams_view/team_main.dart';
+import 'package:hoop/screens/views/teams/team_main.dart';
 
 class StandingsTable extends StatefulWidget {
   final List<LeagueStanding> list;

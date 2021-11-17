@@ -4,7 +4,7 @@ import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
-import 'package:hoop/screens/views/games_view/today_games.dart';
+import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/league/league.dart';
 import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/stats/stats_main.dart';

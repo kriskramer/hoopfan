@@ -6,7 +6,7 @@ import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
 import 'package:hoop/providers/progress.dart';
 import 'package:hoop/screens/views/players/player_search.dart';
-import 'package:hoop/screens/views/standings_view/standings.dart';
+import 'package:hoop/screens/views/standings/standings.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

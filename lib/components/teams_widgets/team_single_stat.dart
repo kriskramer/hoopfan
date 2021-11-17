@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/screens/views/teams_view/team_rank_list.dart';
+import 'package:hoop/screens/views/teams/team_rank_list.dart';
 
 class TeamSingleStat extends StatefulWidget {
   final label;
@@ -54,7 +54,6 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
 
   @override
   Widget build(BuildContext context) {
-
     var noRank = false;
 
     if (widget.rank.toString().trim() == "") {
@@ -103,7 +102,6 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ]),
-
               noRank
                   ? SizedBox(
                       width: 1,
@@ -122,7 +120,6 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                         style: TextStyle(fontSize: 16, color: Colors.blue[700]),
                       ),
                     ),
-
             ],
           ),
         )
