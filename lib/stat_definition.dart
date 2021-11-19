@@ -1,3 +1,4 @@
+// Pulled from https://www.nba.com/stats/help/glossary/
 Map allStats = {
   "%3PA": {
     "Name": "Percent of Team's 3 Point Field Goals Attempted",
@@ -45,13 +46,13 @@ Map allStats = {
     "Name": "Percent of Field Goals Attempted (2 Pointers)",
     "Definition":
         "The percentage of field goals attempted by a player or team that are 2 pointers",
-    "Labels": ["%FGA 2PT", "% FGA 2PT"]
+    "Labels": ["%FGA 2PT", "% FGA 2PT", "% FGA 2P"]
   },
   "%FGA 3PT": {
     "Name": "Percent of Field Goals Attempted (3 Pointers)",
     "Definition":
         "The percentage of field goals attempted by a player or team that are 3 pointers",
-    "Labels": ["%FGA 3PT", "% FGA 3PT"]
+    "Labels": ["%FGA 3PT", "% FGA 3PT", "% FGA 3P"]
   },
   "%FGM": {
     "Name": "Percent of Team's Field Goals Made",
@@ -99,25 +100,25 @@ Map allStats = {
     "Name": "Percent of Points (2-Point Field Goals)",
     "Definition":
         "The percentage of points scored by a player or team that are from 2 point field goals",
-    "Labels": ["%PTS 2PT", "% PTS 2PT"]
+    "Labels": ["%PTS 2PT", "% PTS 2PT", "% PTS 2P"]
   },
   "%PTS 2PT MR": {
     "Name": "Percent of Points (2-Point Field Goals: Mid Range)",
     "Definition":
         "The percentage of points scored by a player or team that are that are from mid-range field goals (2 point field goals from outside the paint)",
-    "Labels": ["%PTS 2PT MR", "% PTS 2PT MR"]
+    "Labels": ["%PTS 2PT MR", "% PTS 2PT MR", "% PTS 2P MR"]
   },
   "%PTS 3PT": {
     "Name": "Percent of Points (3-Point Field Goals)",
     "Definition":
         "The percentage of points scored by a player or team that are from 3 point field goals",
-    "Labels": ["%PTS 3PT", "% PTS 3PT"]
+    "Labels": ["%PTS 3PT", "% PTS 3PT", "% PTS 3P"]
   },
   "%PTS FBPS": {
     "Name": "Percent of Points (Fast Break Points)",
     "Definition":
         "The percentage of points scored by a player or team that are from fast break opportunities",
-    "Labels": ["%PTS FBPS", "% PTS FBPS, %PTS FB, % PTS FB"]
+    "Labels": ["%PTS FBPS", "% PTS FBPS", "%PTS FB", "% PTS FB"]
   },
   "%PTS FT": {
     "Name": "Percent of Points (Free Throws)",
@@ -135,7 +136,7 @@ Map allStats = {
     "Name": "Percent of Points (Points in the Paint)",
     "Definition":
         "The percentage of points scored by a player or team that are scored in the paint",
-    "Labels": ["%PTS PITP", "% PTS PITP"]
+    "Labels": ["%PTS PITP", "% PTS PITP", "% PTS PAINT"]
   },
   "%STL": {
     "Name": "Percent of Team's Steals",
@@ -154,7 +155,7 @@ Map allStats = {
     "Definition":
         "The percentage of opponent field goal attempts that fit the specified criteria",
     "Formula": "(2FGA)/(FGA)",
-    "Labels": ["2FG FREQ"]
+    "Labels": ["2FG FREQ", "2P FREQ"]
   },
   "2FG%": {
     "Name": "2 Point Field Goal Percentage",
@@ -167,50 +168,50 @@ Map allStats = {
     "Name": "2 Point Field Goals Attempted",
     "Definition":
         "The number of 2 point field goals that a player or team has attempted that fit the specified criteria",
-    "Labels": ["2FGA"]
+    "Labels": ["2FGA", "2PA"]
   },
   "2FGM": {
     "Name": "2 Point Field Goals Made",
     "Definition":
         "The number of 2 point field goals that a player or team has made that fit the specified criteria",
-    "Labels": ["2FGM"]
+    "Labels": ["2FGM", "2PM"]
   },
   "2FGM %AST": {
     "Name": "Percent of 2 Point Field Goals Made Assisted",
     "Definition":
         "The percentage of 2 point field goals made by a player or team that are assisted by a teammate",
-    "Labels": ["2FGM %AST", "2FGM % AST"]
+    "Labels": ["2FGM %AST", "2FGM % AST", "% AST 2P"]
   },
   "2FGM %UAST": {
     "Name": "Percent of 2 Point Field Goals Made Unassisted",
     "Definition":
         "The percentage of 2 point field goals made by a player or team that are not assisted by a teammate",
-    "Labels": ["2FGM %UAST", "2FGM % UAST"]
+    "Labels": ["2FGM %UAST", "2FGM % UAST", "% UAST 2P"]
   },
   "2nd PTS": {
     "Name": "Second Chance Points",
     "Definition":
         "The percentage of isolation plays where a player or team shoots free throws as the result of a shooting foul",
-    "Labels": ["2nd PTS", "2nd Chance Pts"]
+    "Labels": ["2nd PTS", "2nd Chance Pts", "PTS 2ND CHANCE"]
   },
   "3FG FREQ": {
     "Name": "3 Point Field Goal Frequency",
     "Definition":
         "The percentage of opponent field goal attempts of the specified criteria that are 3 point attempts",
     "Formula": "(3FGA)/(FGA)",
-    "Labels": ["3FG FREQ"]
+    "Labels": ["3FG FREQ", "3P FREQ"]
   },
   "3FGM %AST": {
     "Name": "Percent of 3 Point Field Goals Made Assisted",
     "Definition":
         "The percentage of 3 point field goals made by a player or team that are assisted by a teammate",
-    "Labels": ["3FGM %UAST", "3FGM % UAST"]
+    "Labels": ["3FGM %AST", "3FGM % AST", "% AST 3P"]
   },
   "3FGM % UAST": {
     "Name": "Percent of 3 Point Field Goals Made Unassisted",
     "Definition":
         "The percentage of 3 point field goals made by a player or team that are not assisted by a teammate",
-    "Labels": ["3FGM %UAST", "3FGM % UAST"]
+    "Labels": ["3FGM %UAST", "3FGM % UAST", "% UAST 3P"]
   },
   "3P%": {
     "Name": "3 Point Field Goal Percentage",
@@ -218,7 +219,7 @@ Map allStats = {
         "The percentage of 3 point field goal attempts that a player makes",
     "Formula": "(3PM)/(3PA)",
     "Type": "Traditional ",
-    "Labels": ["3P%", "FG3%", "3P%", "3P %", "FG3PCT", "FG3 PCT"],
+    "Labels": ["3P%", "FG3%", "3P %", "FG3PCT", "FG3 PCT"],
   },
   "FG3A": {
     "Name": "3 Point Field Goals Attempted",
@@ -313,25 +314,20 @@ Map allStats = {
     "Formula": "(Adjusted Assists)/(Passes Made)",
     "Type": "Tracking "
   },
-  "AST%": {
-    "Name": "Assist Percentage",
-    "Definition":
-        "The percentage of teammate field goals a player assisted on while they were on the floor",
-    "Formula": "AST / (TmFGM - FGM)",
-    "Type": "Advanced "
-  },
   "AST %": {
     "Name": "Assist Percentage",
     "Definition":
         "The percentage of teammate field goals a player assisted on while they were on the floor",
     "Formula": "AST / (TmFGM - FGM)",
-    "Type": "Advanced "
+    "Type": "Advanced ",
+    "Labels": ["AST%", "AST %"]
   },
   "AST/TO": {
     "Name": "Assist to Turnover Ratio",
     "Definition":
         "The number of assists for a player or team compared to the number of turnovers they have committed",
-    "Type": "Advanced "
+    "Type": "Advanced ",
+    "Labels": ["AST/TO", "AST/TOV"]
   },
   "AVG DREB Distance": {
     "Name": "Average Defensive Rebound Distance",
@@ -737,7 +733,7 @@ Map allStats = {
     "Definition":
         "The number of points scored by a player or team while on a fast break",
     "Type": "Misc ",
-    "Labels": ["FB PTS", "FBPS", "FBPTS"]
+    "Labels": ["FB PTS", "FBPS", "FBPTS", "PTS FB"]
   },
   "FG%": {
     "Name": "Field Goal Percentage",
@@ -767,25 +763,15 @@ Map allStats = {
     "Name": "Percent of Field Goals Made Assisted",
     "Definition":
         "The percentage of total field goals made by a player or team that are assisted by a teammate",
-    "Type": "Scoring "
-  },
-  "FGM % AST": {
-    "Name": "Percent of Field Goals Made Assisted",
-    "Definition":
-        "The percentage of total field goals made by a player or team that are assisted by a teammate",
-    "Type": "Scoring "
+    "Type": "Scoring ",
+    "Labels": ["FGM %AST", "FGM % AST", "% AST FGM"]
   },
   "FGM %UAST": {
     "Name": "Percent of Field Goals Made Unassisted",
     "Definition":
         "The percentage of total field goals made by a player or team that are not assisted by a teammate",
-    "Type": "Scoring "
-  },
-  "FGM % UAST": {
-    "Name": "Percent of Field Goals Made Unassisted",
-    "Definition":
-        "The percentage of total field goals made by a player or team that are not assisted by a teammate",
-    "Type": "Scoring "
+    "Type": "Scoring ",
+    "Labels": ["FGM %UAST", "FGM % UAST", "% UAST FGM"]
   },
   "Fifteen Break Left": {
     "Name": "Fifteen Break Left",
@@ -1059,17 +1045,12 @@ Map allStats = {
         "35 seconds to attempt as many shots as time allows from 15 feet while moving between spots (corners and elbows from both sides)",
     "Type": "Combine "
   },
-  "OPP 2nd PTS": {
-    "Name": "Opponent Second Chance Points",
-    "Definition":
-        "The number of points an opposing player or team scores on a possession when the opposing team rebounds the ball on offense",
-    "Type": "Misc "
-  },
   "OPP 2ND PTS": {
     "Name": "Opponent 2nd Chance Points",
     "Definition":
         "The number of points an opposing player or team scores on possessions where the opposing team rebounds the ball on offense",
-    "Type": "Misc "
+    "Type": "Misc ",
+    "Labels": ["OPP 2nd CHANCE PTS", "OPP 2ND PTS", "OPP PTS 2ND CH"]
   },
   "Opp 3P%": {
     "Name": "Opponent Three Point Percentage",
@@ -1123,7 +1104,8 @@ Map allStats = {
     "Name": "Opponent Fast Break Points",
     "Definition":
         "The number of points scored by an opposing player or team while on a fast break",
-    "Type": "Misc "
+    "Type": "Misc ",
+    "Labels": ["OPP FBPs", "OPP FB PTS", "OPP PTS FB"]
   },
   "Opp FG %": {
     "Name": "Opponent Field Goal Percentage",
@@ -1195,7 +1177,15 @@ Map allStats = {
     "Name": "Opponent Points in the Paint",
     "Definition":
         "The number of points scored by an opposing player or team in the paint",
-    "Type": "Misc "
+    "Type": "Misc ",
+    "Labels": ["OPP PITP", "OPP PTS PAINT", "OPP PTS IN PAINT"]
+  },
+  "OPP PLUSMINUS": {
+    "Name": "Opponent Plus-Minus",
+    "Definition":
+        "The point differential when the opposing team is on the floor",
+    "Type": "Traditional ",
+    "Labels": ["Opp +/-", "OPP PLUS MINUS", "OPP PLUSMINUS", "OPP PLUS-MINUS"]
   },
   "Opp PTS": {
     "Name": "Opponent Points",
@@ -1206,7 +1196,13 @@ Map allStats = {
     "Name": "Opponent Points off Turnovers",
     "Definition":
         "The number of points scored by an opposing player or team following a turnover",
-    "Type": "Misc "
+    "Type": "Misc ",
+    "Labels": [
+      "OPP PTS OFF TO",
+      "OPP PTS OFF TOS",
+      "OPP PTS OFF TOVS",
+      "OPP PTS OFF TOV"
+    ]
   },
   "Opp REB": {
     "Name": "Opponent Total Rebounds",
@@ -1230,7 +1226,7 @@ Map allStats = {
     "Definition":
         "The number of turnovers an opponent averages per 100 of their own possessions",
     "Type": "Four Factors ",
-    "Labels": ["OPP TOV%", "OPP TO %", "OPP TOV %", "OPP TO%"]
+    "Labels": ["OPP TOV%", "OPP TO %", "OPP TOV %", "OPP TO%", "OPP TM TOV %"]
   },
   "OREB": {
     "Name": "Offensive Rebounds",
@@ -1366,18 +1362,6 @@ Map allStats = {
     "Formula":
         "100*(Matchup Player Points/Matchup Possessions) – Player’s Season Average Points per 100 Possessions",
     "Type": "Matchups GAME "
-  },
-  "PLUSMINUS": {
-    "Name": "Plus-Minus",
-    "Definition":
-        "The point differential when a player or team is on the floor",
-    "Type": "Traditional "
-  },
-  "PLUS MINUS": {
-    "Name": "Plus-Minus",
-    "Definition":
-        "The point differential when a player or team is on the floor",
-    "Type": "Traditional "
   },
   "Poss": {
     "Name": "Possessions",

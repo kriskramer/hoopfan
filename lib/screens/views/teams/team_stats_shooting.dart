@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/screens/views/teams/team_stats_shooting_closest_defender_charts.dart';
 import 'package:hoop/screens/views/teams/team_stats_shooting_dribble_charts.dart';
 import 'package:hoop/screens/views/teams/team_stats_shooting_general_charts.dart';
@@ -138,19 +139,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                         }),
                         columns: [
                           DataColumn(label: Text('Shot Type')),
-                          DataColumn(label: Text('FGA Freq')),
-                          DataColumn(label: Text('FGM')),
-                          DataColumn(label: Text('FGA')),
-                          DataColumn(label: Text('FG %')),
-                          DataColumn(label: Text('eFG %')),
-                          DataColumn(label: Text('2P Freq')),
-                          DataColumn(label: Text('2PM')),
-                          DataColumn(label: Text('2PA')),
-                          DataColumn(label: Text('2P %')),
-                          DataColumn(label: Text('3P Freq')),
-                          DataColumn(label: Text('3PM')),
-                          DataColumn(label: Text('3PA')),
-                          DataColumn(label: Text('3P %')),
+                          ...getColumnHeaders(),
                         ],
                         rows: [
                           getDataRow(stats, 0, 0),
@@ -196,19 +185,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                         }),
                         columns: [
                           DataColumn(label: Text('Shot Clock Range')),
-                          DataColumn(label: Text('FGA Freq')),
-                          DataColumn(label: Text('FGM')),
-                          DataColumn(label: Text('FGA')),
-                          DataColumn(label: Text('FG %')),
-                          DataColumn(label: Text('eFG %')),
-                          DataColumn(label: Text('2P Freq')),
-                          DataColumn(label: Text('2PM')),
-                          DataColumn(label: Text('2PA')),
-                          DataColumn(label: Text('2P %')),
-                          DataColumn(label: Text('3P Freq')),
-                          DataColumn(label: Text('3PM')),
-                          DataColumn(label: Text('3PA')),
-                          DataColumn(label: Text('3P %')),
+                          ...getColumnHeaders(),
                         ],
                         rows: [
                           getDataRow(stats, 1, 0),
@@ -256,19 +233,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                         }),
                         columns: [
                           DataColumn(label: Text('Dribble Range')),
-                          DataColumn(label: Text('FGA Freq')),
-                          DataColumn(label: Text('FGM')),
-                          DataColumn(label: Text('FGA')),
-                          DataColumn(label: Text('FG %')),
-                          DataColumn(label: Text('eFG %')),
-                          DataColumn(label: Text('2P Freq')),
-                          DataColumn(label: Text('2PM')),
-                          DataColumn(label: Text('2PA')),
-                          DataColumn(label: Text('2P %')),
-                          DataColumn(label: Text('3P Freq')),
-                          DataColumn(label: Text('3PM')),
-                          DataColumn(label: Text('3PA')),
-                          DataColumn(label: Text('3P %')),
+                          ...getColumnHeaders(),
                         ],
                         rows: [
                           getDataRow(stats, 2, 0),
@@ -315,19 +280,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                         }),
                         columns: [
                           DataColumn(label: Text('Def Dist')),
-                          DataColumn(label: Text('FGA Freq')),
-                          DataColumn(label: Text('FGM')),
-                          DataColumn(label: Text('FGA')),
-                          DataColumn(label: Text('FG %')),
-                          DataColumn(label: Text('eFG %')),
-                          DataColumn(label: Text('2P Freq')),
-                          DataColumn(label: Text('2PM')),
-                          DataColumn(label: Text('2PA')),
-                          DataColumn(label: Text('2P %')),
-                          DataColumn(label: Text('3P Freq')),
-                          DataColumn(label: Text('3PM')),
-                          DataColumn(label: Text('3PA')),
-                          DataColumn(label: Text('3P %')),
+                          ...getColumnHeaders(),
                         ],
                         rows: [
                           getDataRow(stats, 3, 0),
@@ -374,19 +327,7 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
                         }),
                         columns: [
                           DataColumn(label: Text('Touch Time Range')),
-                          DataColumn(label: Text('FGA Freq')),
-                          DataColumn(label: Text('FGM')),
-                          DataColumn(label: Text('FGA')),
-                          DataColumn(label: Text('FG %')),
-                          DataColumn(label: Text('eFG %')),
-                          DataColumn(label: Text('2P Freq')),
-                          DataColumn(label: Text('2PM')),
-                          DataColumn(label: Text('2PA')),
-                          DataColumn(label: Text('2P %')),
-                          DataColumn(label: Text('3P Freq')),
-                          DataColumn(label: Text('3PM')),
-                          DataColumn(label: Text('3PA')),
-                          DataColumn(label: Text('3P %')),
+                          ...getColumnHeaders(),
                         ],
                         rows: [
                           getDataRow(stats, 5, 0),
@@ -440,6 +381,54 @@ class _TeamStatsShootingViewState extends State<TeamStatsShootingView> {
     // }
 
     return stats;
+  }
+
+  List<DataColumn> getColumnHeaders() {
+    List<DataColumn> list = [];
+
+    // list.add(DataColumn(label: Text('FGA Freq')));
+    // list.add(DataColumn(label: Text('FGM')));
+    // list.add(DataColumn(label: Text('FGA')));
+    // list.add(DataColumn(label: Text('FG %')));
+    // list.add(DataColumn(label: Text('eFG %')));
+    // list.add(DataColumn(label: Text('2P Freq')));
+    // list.add(DataColumn(label: Text('2PM')));
+    // list.add(DataColumn(label: Text('2PA')));
+    // list.add(DataColumn(label: Text('2P %')));
+    // list.add(DataColumn(label: Text('3P Freq')));
+    // list.add(DataColumn(label: Text('3PM')));
+    // list.add(DataColumn(label: Text('3PA')));
+    // list.add(DataColumn(label: Text('3P %')));
+
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FGA Freq'), statName: "FGA Freq")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGM'), statName: "FGM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGA'), statName: "FGA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FG %'), statName: "FG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('2P Freq'), statName: "2P Freq")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('2PM'), statName: "2PM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('2PA'), statName: "2PA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('2P %'), statName: "2P %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('3P FREQ'), statName: "3P FREQ")));
+
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PM'), statName: "3PM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PA'), statName: "3PA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('3P %'), statName: "3P %")));
+
+    return list;
   }
 
   DataRow getDataRow(dynamic stats, int typeNum, int setNum) {

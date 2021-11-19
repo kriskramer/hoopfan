@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 
 class TeamStatsSplitsShooting extends StatelessWidget {
   final dynamic stats;
@@ -212,20 +213,38 @@ class TeamStatsSplitsShooting extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    list.add(DataColumn(label: Text('FGM')));
-    list.add(DataColumn(label: Text('FGA')));
-    list.add(DataColumn(label: Text('FG %')));
-    list.add(DataColumn(label: Text('3PM')));
-    list.add(DataColumn(label: Text('3PA')));
-    list.add(DataColumn(label: Text('3P %')));
-    list.add(DataColumn(label: Text('eFG %')));
-    list.add(DataColumn(label: Text('BLKA')));
-    list.add(DataColumn(label: Text('% Ast 2P')));
-    list.add(DataColumn(label: Text('% UAst 2P')));
-    list.add(DataColumn(label: Text('% Ast 3P')));
-    list.add(DataColumn(label: Text('% UAst 3P')));
-    list.add(DataColumn(label: Text('% Ast FGM')));
-    list.add(DataColumn(label: Text('% UAst FGM')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGM'), statName: "FGM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGA'), statName: "FGA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FG %'), statName: "FG %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PM'), statName: "3PM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PA'), statName: "3PA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('3P %'), statName: "3P %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('BLKA'), statName: "BLKA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Ast 2P'), statName: "% Ast 2P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst 2P'), statName: "% UAst 2P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Ast 3P'), statName: "% Ast 3P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst 3P'), statName: "% UAst 3P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% Ast FGM'), statName: "% Ast FGM")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst FGM'), statName: "% UAst FGM")));
 
     return list;
   }

@@ -22,47 +22,6 @@ class TeamStatsView extends StatefulWidget {
 }
 
 class _TeamStatsViewState extends State<TeamStatsView> {
-  // bool showSummary = true;
-  // bool showShooting = false;
-  // bool showLineups = false;
-  // bool showSplits = false;
-
-  // void summaryClick() {
-  //   setState(() {
-  //     showSummary = true;
-  //     showShooting = false;
-  //     showLineups = false;
-  //     showSplits = false;
-  //   });
-  // }
-
-  // void shootingClick() {
-  //   setState(() {
-  //     showSummary = false;
-  //     showShooting = true;
-  //     showLineups = false;
-  //     showSplits = false;
-  //   });
-  // }
-
-  // void splitsClick() {
-  //   setState(() {
-  //     showSummary = false;
-  //     showShooting = false;
-  //     showLineups = false;
-  //     showSplits = true;
-  //   });
-  // }
-
-  // void lineupsClick() {
-  //   setState(() {
-  //     showSummary = false;
-  //     showShooting = false;
-  //     showLineups = true;
-  //     showSplits = false;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final teamColor = ConstantHelper.getTeamColor(widget.teamId);

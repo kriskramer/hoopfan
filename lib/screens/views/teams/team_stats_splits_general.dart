@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 
 class TeamStatsSplitsGeneral extends StatelessWidget {
   final dynamic stats;
@@ -381,33 +382,64 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('FGM')));
-    list.add(DataColumn(label: Text('FGA')));
-    list.add(DataColumn(label: Text('FG %')));
-    list.add(DataColumn(label: Text('3PM')));
-    list.add(DataColumn(label: Text('3PA')));
-    list.add(DataColumn(label: Text('3P %')));
-    list.add(DataColumn(label: Text('FTM')));
-    list.add(DataColumn(label: Text('FTA')));
-    list.add(DataColumn(label: Text('FT %')));
-    list.add(DataColumn(label: Text('OREB')));
-    list.add(DataColumn(label: Text('DREB')));
-    list.add(DataColumn(label: Text('REB')));
-    list.add(DataColumn(label: Text('AST')));
-    list.add(DataColumn(label: Text('TOV')));
-    list.add(DataColumn(label: Text('STL')));
-    list.add(DataColumn(label: Text('BLK')));
-    list.add(DataColumn(label: Text('BLKA')));
-    list.add(DataColumn(label: Text('PF')));
-    list.add(DataColumn(label: Text('PFD')));
-    list.add(DataColumn(label: Text('PTS')));
-    list.add(DataColumn(label: Text('+/-')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGM'), statName: "FGM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FGA'), statName: "FGA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FG %'), statName: "FG %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PM'), statName: "3PM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('3PA'), statName: "3PA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('3P %'), statName: "3P %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FTM'), statName: "FTM")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('FTA'), statName: "FTA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FT %'), statName: "FT %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('OREB'), statName: "OREB")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('DREB'), statName: "DREB")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('REB'), statName: "REB")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('AST'), statName: "AST")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('TOV'), statName: "TOV")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('STL'), statName: "STL")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('BLK'), statName: "BLK")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('BLKA'), statName: "BLKA")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('PF'), statName: "PF")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('PFD'), statName: "PFD")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('PTS'), statName: "PTS")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('+/-'), statName: "PLUSMINUS")));
 
     return list;
   }
@@ -417,28 +449,54 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('ORtg')));
-    list.add(DataColumn(label: Text('DRtg')));
-    list.add(DataColumn(label: Text('Net')));
-    list.add(DataColumn(label: Text('Ast %')));
-    list.add(DataColumn(label: Text('Ast/Tov')));
-    list.add(DataColumn(label: Text('Ast Rto')));
-    list.add(DataColumn(label: Text('OReb %')));
-    list.add(DataColumn(label: Text('DReb %')));
-    list.add(DataColumn(label: Text('Reb %')));
-    list.add(DataColumn(label: Text('Tm Tov %')));
-    list.add(DataColumn(label: Text('eFG %')));
-    list.add(DataColumn(label: Text('TS %')));
-    list.add(DataColumn(label: Text('Pace')));
-    list.add(DataColumn(label: Text('Pace/40')));
-    list.add(DataColumn(label: Text('Poss')));
-    list.add(DataColumn(label: Text('Pie')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('ORtg'), statName: "ORtg")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('DRtg'), statName: "DRtg")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Net'), statName: "NET")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Ast %'), statName: "AST %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Ast/Tov'), statName: "AST/TO")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Ast Rto'), statName: "AST RATIO")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('OReb %'), statName: "OReb %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('DReb %'), statName: "DReb %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Reb %'), statName: "REB %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Tm Tov %'), statName: "TM TOV %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('TS %'), statName: "TS %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Pace'), statName: "PACE")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Pace/40'), statName: "Pace/40")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Poss'), statName: "POSS")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Pie'), statName: "PIE")));
 
     return list;
   }
@@ -448,20 +506,45 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('Pts off Tov')));
-    list.add(DataColumn(label: Text('Pts 2nd Ch')));
-    list.add(DataColumn(label: Text('Pts Fb')));
-    list.add(DataColumn(label: Text('Pts Paint')));
-    list.add(DataColumn(label: Text('Opp Pts off Tov')));
-    list.add(DataColumn(label: Text('Opp Pts 2nd Ch')));
-    list.add(DataColumn(label: Text('Opp Pts Fb')));
-    list.add(DataColumn(label: Text('Opp Pts Paint')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Pts off Tov'), statName: "Pts off Tov")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Pts 2nd Ch'), statName: "Pts 2nd Chance")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Pts Fb'), statName: "Pts Fb")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Pts Paint'), statName: "Pts Paint")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp Pts off Tov'), statName: "Opp Pts off Tov")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp Pts 2nd Ch'), statName: "Opp Pts 2nd Ch")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Opp Pts Fb'), statName: "Opp Pts Fb")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp Pts Paint'), statName: "Opp Pts Paint")));
 
     return list;
   }
@@ -471,20 +554,42 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('eFg %')));
-    list.add(DataColumn(label: Text('FTA Rate')));
-    list.add(DataColumn(label: Text('Tm Tov %')));
-    list.add(DataColumn(label: Text('OReb %')));
-    list.add(DataColumn(label: Text('Opp eFg %')));
-    list.add(DataColumn(label: Text('Opp FTA Rate')));
-    list.add(DataColumn(label: Text('Opp Tm Tov %')));
-    list.add(DataColumn(label: Text('Opp OReb %')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('FTA Rate'), statName: "FTA RATE")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Tm Tov %'), statName: "TM TOV %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('OReb %'), statName: "OREB %")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Opp eFg %'), statName: "Opp eFg %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp FTA Rate'), statName: "Opp FTA Rate")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp Tm Tov %'), statName: "Opp Tm Tov %")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Opp OReb %'), statName: "Opp OReb %")));
 
     return list;
   }
@@ -494,27 +599,59 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('% FGA 2P')));
-    list.add(DataColumn(label: Text('% FGA 3P')));
-    list.add(DataColumn(label: Text('% Pts 2P')));
-    list.add(DataColumn(label: Text('% Pts 2P MR')));
-    list.add(DataColumn(label: Text('% Pts 3P')));
-    list.add(DataColumn(label: Text('% Pts FB')));
-    list.add(DataColumn(label: Text('% Pts FT')));
-    list.add(DataColumn(label: Text('% Pts off Tov')));
-    list.add(DataColumn(label: Text('% Pts Paint')));
-    list.add(DataColumn(label: Text('% Ast 2P')));
-    list.add(DataColumn(label: Text('% UAst 2P')));
-    list.add(DataColumn(label: Text('% Ast 3P')));
-    list.add(DataColumn(label: Text('% UAst 3P')));
-    list.add(DataColumn(label: Text('% Ast FGM')));
-    list.add(DataColumn(label: Text('% UAst FGM')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% FGA 2P'), statName: "% FGA 2P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% FGA 3P'), statName: "% FGA 3P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Pts 2P'), statName: "% Pts 2P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('% Pts 2P MR'), statName: "% Pts 2P MR")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Pts 3P'), statName: "% Pts 3P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Pts FB'), statName: "% Pts FB")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Pts FT'), statName: "% Pts FT")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('% Pts off Tov'), statName: "% Pts off Tov")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('% Pts Paint'), statName: "% Pts PITP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Ast 2P'), statName: "% Ast 2P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst 2P'), statName: "% UAst 2P")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('% Ast 3P'), statName: "% Ast 3P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst 3P'), statName: "% UAst 3P")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% Ast FGM'), statName: "% Ast FGM")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('% UAst FGM'), statName: "% UAst FGM")));
 
     return list;
   }
@@ -524,33 +661,65 @@ class TeamStatsSplitsGeneral extends StatelessWidget {
 
     list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
-    //list.add(DataColumn(label: Text('Year')),
-    list.add(DataColumn(label: Text('GP')));
-    list.add(DataColumn(label: Text('W')));
-    list.add(DataColumn(label: Text('L')));
-    list.add(DataColumn(label: Text('W %')));
-    list.add(DataColumn(label: Text('Min')));
-    list.add(DataColumn(label: Text('Opp FGM')));
-    list.add(DataColumn(label: Text('Opp FGA')));
-    list.add(DataColumn(label: Text('Opp FG %')));
-    list.add(DataColumn(label: Text('Opp 3PM')));
-    list.add(DataColumn(label: Text('Opp 3PA')));
-    list.add(DataColumn(label: Text('Opp 3P %')));
-    list.add(DataColumn(label: Text('Opp FTM')));
-    list.add(DataColumn(label: Text('Opp FTA')));
-    list.add(DataColumn(label: Text('Opp FT %')));
-    list.add(DataColumn(label: Text('Opp OREB')));
-    list.add(DataColumn(label: Text('Opp DREB')));
-    list.add(DataColumn(label: Text('Opp REB')));
-    list.add(DataColumn(label: Text('Opp AST')));
-    list.add(DataColumn(label: Text('Opp TOV')));
-    list.add(DataColumn(label: Text('Opp STL')));
-    list.add(DataColumn(label: Text('Opp BLK')));
-    list.add(DataColumn(label: Text('Opp BLKA')));
-    list.add(DataColumn(label: Text('Opp PF')));
-    list.add(DataColumn(label: Text('Opp PFD')));
-    list.add(DataColumn(label: Text('Opp PTS')));
-    list.add(DataColumn(label: Text('Opp +/-')));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('W'),
+      statName: "W",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+      label: Text('L'),
+      statName: "L",
+    )));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('W %'), statName: "Win %")));
+    list.add(
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FGM'), statName: "Opp FGM")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FGA'), statName: "Opp FGA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FG %'), statName: "Opp FG %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp 3PM'), statName: "Opp 3PM")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp 3PA'), statName: "Opp 3PA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp 3P %'), statName: "Opp 3P %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FTM'), statName: "Opp FTM")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FTA'), statName: "Opp FTA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp FT %'), statName: "Opp FT %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp OREB'), statName: "Opp OREB")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp DREB'), statName: "Opp DREB")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp REB'), statName: "Opp REB")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp AST'), statName: "Opp AST")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp TOV'), statName: "Opp TOV")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp STL'), statName: "Opp STL")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp BLK'), statName: "Opp BLK")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp BLKA'), statName: "Opp BLKA")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp PF'), statName: "Opp PF")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp PFD'), statName: "Opp PFD")));
+    list.add(DataColumn(
+        label: StatInfoDialog(label: Text('Opp PTS'), statName: "Opp PTS")));
+    list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Opp +/-'), statName: "Opp PLUSMINUS")));
 
     return list;
   }
