@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/teams/team_main.dart';
@@ -23,11 +24,14 @@ class _StandingsTableState extends State<StandingsTable> {
         //         .withOpacity(0.5)),
         cells: [
           DataCell(
-            Container(
-                width: 15,
-                height: 15,
-                color:
-                    Color(ConstantHelper.getTeamColor(team.teamID.toString()))),
+            // Container(
+            //     width: 15,
+            //     height: 15,
+            //     color:
+            //         Color(ConstantHelper.getTeamColor(team.teamID.toString()))),
+            CachedLogo(
+                radius: 12,
+                url: ConstantHelper.getTeamLogo(team.teamID.toString())),
           ),
           DataCell(
               Text(
@@ -122,7 +126,7 @@ class _StandingsTableState extends State<StandingsTable> {
           label: Text(
             'Pct',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.blueGrey,
             ),
           ),
           numeric: true,
@@ -131,7 +135,7 @@ class _StandingsTableState extends State<StandingsTable> {
           label: Text(
             'GB',
             style: TextStyle(
-              color: Colors.deepPurple,
+              color: Colors.blueGrey,
             ),
           ),
         ),
