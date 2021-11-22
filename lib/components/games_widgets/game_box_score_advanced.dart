@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/models/box_scores/game_box_score_advanced.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
@@ -84,23 +85,39 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
       columns: [
         DataColumn(label: Text('Player')),
         //DataColumn(label: Text('Min')),
-        DataColumn(label: Text('OffRtg')),
-        DataColumn(label: Text('DefRtg')),
-        DataColumn(label: Text('NetRtg')),
-        DataColumn(label: Text('Ast %')),
-        DataColumn(label: Text('Ast/TO')),
-        DataColumn(label: Text('Ast Ratio')),
-        DataColumn(label: Text('OReb %')),
-        DataColumn(label: Text('DReb %')),
-        DataColumn(label: Text('Reb %')),
-        DataColumn(label: Text('Tm TO %')),
-        DataColumn(label: Text('eFG %')),
-        DataColumn(label: Text('TS %')),
-        DataColumn(label: Text('USG %')),
-        DataColumn(label: Text('Pace')),
-        DataColumn(label: Text('Pace/40')),
-        DataColumn(label: Text('Poss')),
-        DataColumn(label: Text('PIE')),
+        DataColumn(
+            label: StatInfoDialog(label: Text('OffRtg'), statName: "ORTG")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('DefRtg'), statName: "DRTG")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('NetRtg'), statName: "NET")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Ast %'), statName: "AST %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Ast/TO'), statName: "AST/TO")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Ast Ratio'), statName: "AST RATIO")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('OReb %'), statName: "OREB %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('DReb %'), statName: "DREB %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Reb %'), statName: "REB %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Tm TO %'), statName: "TM TO %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('eFG %'), statName: "EFG%")),
+        DataColumn(label: StatInfoDialog(label: Text('TS %'), statName: "TS%")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('USG %'), statName: "USG%")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Pace'), statName: "PACE")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Pace/40'), statName: "PACE/40")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Poss'), statName: "POSS")),
+        DataColumn(label: StatInfoDialog(label: Text('PIE'), statName: "PIE")),
       ],
       rows: [
         ...rows,

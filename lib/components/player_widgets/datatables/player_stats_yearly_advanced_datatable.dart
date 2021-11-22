@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 
 class PlayerStatsYearOverYearAdvancedDataTable extends StatelessWidget {
   final dynamic json;
@@ -62,33 +63,66 @@ class PlayerStatsYearOverYearAdvancedDataTable extends StatelessWidget {
         //DataColumn(label: Text('Group')),
         DataColumn(label: Text('Value')),
         DataColumn(label: Text('Team')),
-        DataColumn(label: Text('G')),
-        DataColumn(label: Text('W')),
-        DataColumn(label: Text('L')),
-        DataColumn(label: Text('W %')),
-        DataColumn(label: Text('Min')),
+
+        DataColumn(label: StatInfoDialog(label: Text('G'), statName: "GP")),
+        DataColumn(
+            label: StatInfoDialog(
+          label: Text('W'),
+          statName: "W",
+        )),
+        DataColumn(
+            label: StatInfoDialog(
+          label: Text('L'),
+          statName: "L",
+        )),
+        DataColumn(
+            label: StatInfoDialog(label: Text('W %'), statName: "Win %")),
+
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")),
+
         DataColumn(label: Text('eORtg')),
-        DataColumn(label: Text('ORtg')),
+        DataColumn(
+            label: StatInfoDialog(label: Text('ORtg'), statName: "ORtg")),
         DataColumn(label: Text('eDRtg')),
-        DataColumn(label: Text('DRtg')),
+        DataColumn(
+            label: StatInfoDialog(label: Text('DRtg'), statName: "DRtg")),
         DataColumn(label: Text('eNet')),
-        DataColumn(label: Text('Net')),
-        DataColumn(label: Text('Ast %')),
-        DataColumn(label: Text('Ast/TO')),
-        DataColumn(label: Text('Ast Ratio')),
-        DataColumn(label: Text('OReb %')),
-        DataColumn(label: Text('DReb %')),
-        DataColumn(label: Text('Reb %')),
-        DataColumn(label: Text('Tm TO %')),
+        DataColumn(label: StatInfoDialog(label: Text('Net'), statName: "NET")),
+
+        DataColumn(
+            label: StatInfoDialog(label: Text('Ast %'), statName: "AST %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Ast/Tov'), statName: "AST/TO")),
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('Ast Rto'), statName: "AST RATIO")),
+
+        DataColumn(
+            label: StatInfoDialog(label: Text('OReb %'), statName: "OReb %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('DReb %'), statName: "DReb %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Reb %'), statName: "REB %")),
+
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('Tm Tov %'), statName: "TM TOV %")),
         DataColumn(label: Text('eTO %')),
-        DataColumn(label: Text('eFG %')),
-        DataColumn(label: Text('TS %')),
-        DataColumn(label: Text('Usage %')),
-        DataColumn(label: Text('ePace')),
-        DataColumn(label: Text('Pace')),
-        DataColumn(label: Text('Pace/40')),
-        DataColumn(label: Text('PIE')),
-        DataColumn(label: Text('Poss')),
+        DataColumn(
+            label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('TS %'), statName: "TS %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Usg %'), statName: "USG%")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('ePace'), statName: "ePace")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Pace'), statName: "PACE")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Pace/40'), statName: "Pace/40")),
+        DataColumn(label: StatInfoDialog(label: Text('Pie'), statName: "PIE")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Poss'), statName: "POSS")),
       ],
       rows: [
         ...rows,

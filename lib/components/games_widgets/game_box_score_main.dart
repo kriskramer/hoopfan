@@ -76,7 +76,7 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
             alignment: MainAxisAlignment.center,
             layoutBehavior: ButtonBarLayoutBehavior.constrained,
             children: [
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Summary',
                   style: TextStyle(
@@ -87,7 +87,7 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
                   summaryClick();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Advanced',
                   style: TextStyle(
@@ -98,7 +98,7 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
                   advancedClick();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Defense',
                   style: TextStyle(
@@ -109,7 +109,7 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
                   defensiveClick();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(
                   '4 Factors',
                   style: TextStyle(

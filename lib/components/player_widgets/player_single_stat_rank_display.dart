@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/screens/views/players/player_rank_list.dart';
 
 class PlayerSingleStatRankDisplay extends StatefulWidget {
@@ -72,11 +73,9 @@ class _PlayerSingleStatRankDisplayState
               children: [
                 Row(
                   children: [
-                    Text(
-                      widget.statName,
-                      style: TextStyle(fontSize: 18),
+                    SizedBox(
+                      width: 130,
                     ),
-                    SizedBox(width: 20),
                     Text(
                       widget.stat,
                       style:
@@ -104,6 +103,24 @@ class _PlayerSingleStatRankDisplayState
               ],
             ),
           ),
+          Row(
+            children: [
+              SizedBox(width: 12),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                child: StatInfoDialog(
+                  label: Text(
+                    widget.statName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      //color: Colors.red[900]
+                    ),
+                  ),
+                  statName: widget.statName,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

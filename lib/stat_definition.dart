@@ -168,13 +168,13 @@ Map allStats = {
     "Name": "2 Point Field Goals Attempted",
     "Definition":
         "The number of 2 point field goals that a player or team has attempted that fit the specified criteria",
-    "Labels": ["2FGA", "2PA"]
+    "Labels": ["2FGA", "2PA", "FG2A"]
   },
   "2FGM": {
     "Name": "2 Point Field Goals Made",
     "Definition":
         "The number of 2 point field goals that a player or team has made that fit the specified criteria",
-    "Labels": ["2FGM", "2PM"]
+    "Labels": ["2FGM", "2PM", "FG2M"]
   },
   "2FGM %AST": {
     "Name": "Percent of 2 Point Field Goals Made Assisted",
@@ -638,6 +638,12 @@ Map allStats = {
     "Type": "Defense ",
     "Labels": ["DIFF", "DIFF %"]
   },
+  "DNP": {
+    "Name": "Did Not Play",
+    "Definition": "A notification that the player did not play in this game",
+    "Type": "Defense ",
+    "Labels": ["DNP"]
+  },
   "Dist. Feet": {
     "Name": "Distance Feet",
     "Definition": "Distance run by a player or team measured in feet",
@@ -1050,7 +1056,12 @@ Map allStats = {
     "Definition":
         "The number of points an opposing player or team scores on possessions where the opposing team rebounds the ball on offense",
     "Type": "Misc ",
-    "Labels": ["OPP 2nd CHANCE PTS", "OPP 2ND PTS", "OPP PTS 2ND CH"]
+    "Labels": [
+      "OPP 2nd CHANCE PTS",
+      "OPP 2ND PTS",
+      "OPP PTS 2ND CH",
+      "OPP PTS 2ND"
+    ]
   },
   "Opp 3P%": {
     "Name": "Opponent Three Point Percentage",
@@ -1201,7 +1212,8 @@ Map allStats = {
       "OPP PTS OFF TO",
       "OPP PTS OFF TOS",
       "OPP PTS OFF TOVS",
-      "OPP PTS OFF TOV"
+      "OPP PTS OFF TOV",
+      "OPP PTS TOV"
     ]
   },
   "Opp REB": {
