@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games_view/game_view.dart';
+import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 

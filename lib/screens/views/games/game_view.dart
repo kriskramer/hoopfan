@@ -15,9 +15,9 @@ import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games_view/game_news.dart';
-import 'package:hoop/screens/views/games_view/game_preview_article.dart';
-import 'package:hoop/screens/views/games_view/game_recap_article.dart';
+import 'package:hoop/screens/views/games/game_news.dart';
+import 'package:hoop/screens/views/games/game_preview_article.dart';
+import 'package:hoop/screens/views/games/game_recap_article.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 

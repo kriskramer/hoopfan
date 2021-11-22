@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
@@ -210,31 +211,56 @@ class GameBoxScoreSummary extends StatelessWidget {
           columns: [
             DataColumn(label: Text('#')),
             //DataColumn(label: Text('Name')),
-            DataColumn(label: Text('Pos')),
-            DataColumn(label: Text('Min')),
-            DataColumn(label: Text('Pts')),
-            DataColumn(label: Text('FGm')),
-            DataColumn(label: Text('FGa')),
-            DataColumn(label: Text('FG %')),
-            DataColumn(label: Text('FTm')),
-            DataColumn(label: Text('FTa')),
-            DataColumn(label: Text('FT %')),
-            DataColumn(label: Text('3Pm')),
-            DataColumn(label: Text('3Pa')),
-            DataColumn(label: Text('3P %')),
-            DataColumn(label: Text('Asts')),
-            DataColumn(label: Text('TO')),
-            DataColumn(label: Text('Stls')),
-            DataColumn(label: Text('Blks')),
-            DataColumn(label: Text('OReb')),
-            DataColumn(label: Text('DReb')),
-            DataColumn(label: Text('TReb')),
-            DataColumn(label: Text('PF')),
-            DataColumn(label: Text('+/-')),
-            DataColumn(label: Text('TSA')),
-            DataColumn(label: Text('TS %')),
-            DataColumn(label: Text('eFG %')),
-            DataColumn(label: Text('DNP')),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Pos'), statName: "POS")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Min'), statName: "MIN")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Pts'), statName: "PTS")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FGm'), statName: "FGM")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FGa'), statName: "FGA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FG %'), statName: "FG%")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FTm'), statName: "FTM")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FTa'), statName: "FTA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FT %'), statName: "FT%")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3Pm'), statName: "3PM")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3Pa'), statName: "3PA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3P %'), statName: "3p%")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Asts'), statName: "AST")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('TO'), statName: "TOV")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Stls'), statName: "STL")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('Blks'), statName: "BLK")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('OReb'), statName: "OREB")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('DReb'), statName: "DREB")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('TReb'), statName: "REB")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('PF'), statName: "PF")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('+/-'), statName: "+/-")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('TSA'), statName: "TSA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('TS %'), statName: "TS%")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('eFG %'), statName: "EFG%")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('DNP'), statName: "DNP")),
           ],
           rows: rows,
         ),

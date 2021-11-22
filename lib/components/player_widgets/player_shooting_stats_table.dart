@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/screens/views/players/player_stats_shooting_closest_defender_charts.dart';
 import 'package:hoop/screens/views/players/player_stats_shooting_dribble_shooting_charts.dart';
 import 'package:hoop/screens/views/players/player_stats_shooting_general_charts.dart';
@@ -215,18 +216,41 @@ class PlayerShootingStatsTable extends StatelessWidget {
         DataColumn(label: Text('G')),
         DataColumn(label: Text('Shot Type')),
         DataColumn(label: Text('FGA Freq')),
-        DataColumn(label: Text('FGM')),
-        DataColumn(label: Text('FGA')),
-        DataColumn(label: Text('FG %')),
-        DataColumn(label: Text('eFG %')),
-        DataColumn(label: Text('FG2A Freq')),
-        DataColumn(label: Text('FG2A')),
-        DataColumn(label: Text('FG2M')),
-        DataColumn(label: Text('FG2 %')),
-        DataColumn(label: Text('3PA Freq')),
-        DataColumn(label: Text('3PM')),
-        DataColumn(label: Text('3PA')),
-        DataColumn(label: Text('3P %')),
+        DataColumn(label: StatInfoDialog(label: Text('FGM'), statName: "FGM")),
+        DataColumn(label: StatInfoDialog(label: Text('FGA'), statName: "FGA")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('FG %'), statName: "FG %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")),
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('2FG Freq'), statName: "2FG Freq")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('FG2A'), statName: "FG2A")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('FG2M'), statName: "FG2M")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('2FG %'), statName: "2FG%")),
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('3FG Freq'), statName: "3FG Freq")),
+        DataColumn(label: StatInfoDialog(label: Text('3PM'), statName: "3PM")),
+        DataColumn(label: StatInfoDialog(label: Text('3PA'), statName: "3PA")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('3P %'), statName: "3P %")),
+
+        //DataColumn(label: Text('FGM')),
+        //DataColumn(label: Text('FGA')),
+        //DataColumn(label: Text('FG %')),
+        //DataColumn(label: Text('eFG %')),
+        //DataColumn(label: Text('FG2A Freq')),
+        // DataColumn(label: Text('FG2A')),
+        // DataColumn(label: Text('FG2M')),
+        //DataColumn(label: Text('FG2 %')),
+        //DataColumn(label: Text('3PA Freq')),
+        //DataColumn(label: Text('3PM')),
+        //DataColumn(label: Text('3PA')),
+        //DataColumn(label: Text('3P %')),
       ],
       rows: [
         ...rows,

@@ -6,7 +6,7 @@ import 'package:hoop/components/games_widgets/game_video_feed.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_inline_pbp.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/screens/views/games_view/game_pbp.dart';
+import 'package:hoop/screens/views/games/game_pbp.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';

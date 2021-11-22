@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:hoop/screens/views/games_view/today_games.dart';
+// import 'package:hoop/screens/views/games/today_games.dart';
 
 // class Games extends StatelessWidget {
 //   @override

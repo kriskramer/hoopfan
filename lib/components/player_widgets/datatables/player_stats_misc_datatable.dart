@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 
 class PlayerStatsMiscDataTable extends StatelessWidget {
   final dynamic json;
@@ -48,23 +49,40 @@ class PlayerStatsMiscDataTable extends StatelessWidget {
       }),
       columns: [
         DataColumn(label: Text('Group')),
-        DataColumn(label: Text('G')),
-        DataColumn(label: Text('W')),
-        DataColumn(label: Text('L')),
-        DataColumn(label: Text('W %')),
-        DataColumn(label: Text('Min')),
-        DataColumn(label: Text('Pts TO')),
-        DataColumn(label: Text('2nd Ch Pts')),
-        DataColumn(label: Text('Pts FB')),
-        DataColumn(label: Text('Pts Paint')),
-        DataColumn(label: Text('Opp Pts TO')),
-        DataColumn(label: Text('Opp 2nd Ch Pts')),
-        DataColumn(label: Text('Opp Pts FB')),
-        DataColumn(label: Text('Opp Pts Paint')),
-        DataColumn(label: Text('Blks')),
-        DataColumn(label: Text('BlksA')),
-        DataColumn(label: Text('PF')),
-        DataColumn(label: Text('PFD')),
+        DataColumn(label: StatInfoDialog(label: Text('G'), statName: "GP")),
+        DataColumn(label: StatInfoDialog(label: Text('W'), statName: "W")),
+        DataColumn(label: StatInfoDialog(label: Text('L'), statName: "L")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('W %'), statName: "Win %")),
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Pts off Tov'), statName: "Pts off Tov")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Pts 2nd Ch'), statName: "Pts 2nd Chance")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('Pts Fb'), statName: "Pts Fb")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Pts Paint'), statName: "Pts Paint")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp Pts off Tov'), statName: "Opp Pts off Tov")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp Pts 2nd Ch'), statName: "Opp Pts 2nd Ch")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp Pts Fb'), statName: "Opp Pts Fb")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp Pts Paint'), statName: "Opp Pts Paint")),
+        DataColumn(label: StatInfoDialog(label: Text('BLK'), statName: "BLK")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('BLKA'), statName: "BLKA")),
+        DataColumn(label: StatInfoDialog(label: Text('PF'), statName: "PF")),
+        DataColumn(label: StatInfoDialog(label: Text('PFD'), statName: "PFD")),
       ],
       rows: [
         ...rows,

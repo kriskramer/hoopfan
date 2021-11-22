@@ -17,45 +17,49 @@ class TeamStatsSummaryView extends StatefulWidget {
 class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          getSectionHeader('Base Stats'),
-          TeamBaseStatsCard(
-            teamId: widget.teamId,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          getSectionHeader('Advanced Stats'),
-          TeamAdvancedStatsCard(
-            teamId: widget.teamId,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          getSectionHeader('Estimated Stats'),
-          TeamEstimatedStatsCard(
-            teamId: widget.teamId,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          getSectionHeader('Four Factors'),
-          TeamFourFactorsStatsCard(
-            teamId: widget.teamId,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          getSectionHeader('Misc Stats'),
-          TeamMiscStatsCard(
-            teamId: widget.teamId,
-          ),
-          SizedBox(
-            height: 60,
-          ),
-        ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        child: Column(
+          children: [
+            SizedBox(height: 15),
+            getSectionHeader('Base Stats'),
+            TeamBaseStatsCard(
+              teamId: widget.teamId,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            getSectionHeader('Advanced Stats'),
+            TeamAdvancedStatsCard(
+              teamId: widget.teamId,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            getSectionHeader('Estimated Stats'),
+            TeamEstimatedStatsCard(
+              teamId: widget.teamId,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            getSectionHeader('Four Factors'),
+            TeamFourFactorsStatsCard(
+              teamId: widget.teamId,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            getSectionHeader('Misc Stats'),
+            TeamMiscStatsCard(
+              teamId: widget.teamId,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
       ),
     );
   }

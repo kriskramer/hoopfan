@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/models/league_standings.dart';
-import 'package:hoop/screens/views/teams_view/team_main.dart';
+import 'package:hoop/screens/views/teams/team_main.dart';
 
 class ConfTable extends StatefulWidget {
   //final dynamic json;
