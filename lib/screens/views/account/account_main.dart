@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/screens/views/account/updates_main.dart';
+import 'package:hoop/screens/views/account/user_main.dart';
 
 class AccountMain extends StatefulWidget {
   @override
@@ -8,18 +10,32 @@ class AccountMain extends StatefulWidget {
 class _AccountMainState extends State<AccountMain> {
   @override
   Widget build(BuildContext context) {
-    print('test');
-    loadData();
-    return Container(
-      padding: EdgeInsets.all(15),
-      child: Column(children: [
-        Text(
-          'User Account',
-          style: TextStyle(fontSize: 24),
+    //print('test');
+    //loadData();
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Color(0XFFEDF1FF),
+        appBar: AppBar(
+          toolbarHeight: 60,
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: "Updates",
+              ),
+              Tab(
+                text: "User",
+              ),
+            ],
+          ),
         ),
-        Divider(),
-        Text('This feature is not fully implented.')
-      ]),
+        body: TabBarView(
+          children: [
+            UpdatesMain(),
+            UserMain(),
+          ],
+        ),
+      ),
     );
   }
 
