@@ -142,8 +142,13 @@ class _TeamStatsSplitsViewState extends State<TeamStatsSplitsView> {
                         ),
                       ],
                     ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      child: Text(
+                          "Splits show game or team stats split by various quantitative measures, such as by half, period, month, location, shooting distance, shot type, and more."),
+                    ),
                     SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     Card(
                       child: Row(

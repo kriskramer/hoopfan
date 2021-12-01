@@ -24,6 +24,11 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
           children: [
             SizedBox(height: 15),
             getSectionHeader('Base Stats'),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Text(
+                  "Standard basketball stats typically found in a box score."),
+            ),
             TeamBaseStatsCard(
               teamId: widget.teamId,
             ),
@@ -31,6 +36,11 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
               height: 20,
             ),
             getSectionHeader('Advanced Stats'),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Text(
+                  "Advanced Stats are a way to study basketball through objective analysis. It is a more in-depth way to look at a simple box score, and more accurately evaluates the skill and production of a player or team."),
+            ),
             TeamAdvancedStatsCard(
               teamId: widget.teamId,
             ),
@@ -38,6 +48,10 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
               height: 20,
             ),
             getSectionHeader('Estimated Stats'),
+            Container(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Text(
+                    "An estimate of specific stats based on performance so far.")),
             TeamEstimatedStatsCard(
               teamId: widget.teamId,
             ),
@@ -45,6 +59,11 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
               height: 20,
             ),
             getSectionHeader('Four Factors'),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Text(
+                  "The four factors of winning basketball are to score efficiently, protect the basketball on offense, grab as many rebounds as possible, and get to the foul line as often as possible."),
+            ),
             TeamFourFactorsStatsCard(
               teamId: widget.teamId,
             ),
@@ -52,6 +71,11 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
               height: 20,
             ),
             getSectionHeader('Misc Stats'),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Text(
+                  "Misc stats show types of scoring opportunities for the team and its opponent."),
+            ),
             TeamMiscStatsCard(
               teamId: widget.teamId,
             ),

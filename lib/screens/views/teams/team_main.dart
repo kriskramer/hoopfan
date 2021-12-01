@@ -1,6 +1,7 @@
 import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/teams_widgets/team_leader_card.dart';
+import 'package:hoop/components/teams_widgets/team_news_small.dart';
 import 'package:hoop/components/teams_widgets/team_schedule_small.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/components/teams_widgets/playerlst.dart';
@@ -90,207 +91,254 @@ class _TeamDetailsState extends State<TeamDetails> {
                 ? NoConnection()
                 : ListView(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      GestureDetector(
                         child: Container(
-                          // TODO: Some background images don't look good, or don't load.
-                          // Need to spend some more time on this...
-                          // decoration: BoxDecoration(
-                          //     image: DecorationImage(
-                          //         colorFilter: new ColorFilter.mode(
-                          //             Colors.black.withOpacity(0.50),
-                          //             BlendMode.dstATop),
-                          //         image: NetworkImage(teamBackgroundImage),
-                          //         fit: BoxFit.cover)),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          child: Column(
                             children: [
-                              Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Row(
+                                  Column(
                                     children: [
-                                      Column(
+                                      Row(
                                         children: [
                                           CachedLogo(
                                             url: ta[2],
                                             radius: 45,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              String name = ta[1] == "76ers"
-                                                  ? "sixers"
-                                                  : ta[1].toLowerCase();
-                                              setState(
-                                                () {
-                                                  _launched =
-                                                      Network.launchSite(
-                                                    Urls.link(
-                                                      name,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  ta[1],
+                                          SizedBox(width: 20),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                  ta[3]
+                                                          .toString()
+                                                          .toUpperCase() +
+                                                      'ERN CONFERENCE',
                                                   style: TextStyle(
-                                                    color: Colors.grey[800],
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.link,
-                                                  color: Colors.grey[800],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(
+                                                  ta[6]
+                                                          .toString()
+                                                          .toUpperCase() +
+                                                      ' DIVISION',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "${teamStandings.wins} - ${teamStandings.losses}",
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       ),
-                                      SizedBox(width: 20),
-                                      Column(
-                                        children: [
-                                          Text(
-                                              ta[3].toString().toUpperCase() +
-                                                  'ERN CONFERENCE',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text(
-                                              ta[6].toString().toUpperCase() +
-                                                  ' DIVISION',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            "${teamStandings.wins} - ${teamStandings.losses}",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ],
-                                      )
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      TextButton(
-                                        child: Text('Media',
-                                            style: TextStyle(
-                                                color: Color(teamTextColor))),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Color(teamColor))),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TeamMediaPage(
-                                                        teamId:
-                                                            widget.nbaTeamId)),
-                                          );
-                                        },
-                                      ),
-
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Color(teamColor))),
-                                        child: Text('Stats',
-                                            style: TextStyle(
-                                                color: Color(teamTextColor))),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TeamStatsView(
-                                                  teamId: widget.nbaTeamId,
-                                                ),
-                                              ));
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      TextButton(
-                                        child: Text('Info',
-                                            style: TextStyle(
-                                                color: Color(teamTextColor))),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Color(teamColor))),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TeamInfoPage(
-                                                  team: team,
-                                                ),
-                                              ));
-                                        },
-                                      ),
-                                      //...socialList(social, teamColor),
-                                    ],
+                                  SizedBox(
+                                    height: 5,
                                   ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Tap to view team info...",
+                                    style: TextStyle(fontSize: 12),
+                                  )
                                 ],
                               ),
                             ],
                           ),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TeamInfoPage(
+                                  team: team,
+                                ),
+                              ));
+                        },
                       ),
-                      SizedBox(height: 10),
-                      Card(
-                          child: Container(
-                        padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
-                        child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              standing(teamStandings.wins.toString(), "Win"),
-                              standing(teamStandings.losses.toString(), "Loss"),
-                              standing(
-                                  teamStandings.winPct.toString(), "Win %"),
-                              standing(
-                                  teamStandings.conferenceGamesBack.toString(),
-                                  "GB"),
-                              standing(
-                                  teamStandings.strCurrentStreak.toString(),
-                                  "Streak"),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              standing("${teamStandings.l10}", "Last 10"),
-                              standing(
-                                  "${teamStandings.conferenceRecord}", "Conf"),
-                              standing(
-                                  "${teamStandings.divisionRecord}", "Div"),
-                              standing("${teamStandings.home}", "Home"),
-                              standing("${teamStandings.road}", "Away"),
-                            ],
-                          ),
-                        ]),
-                      )),
-                      SizedBox(height: 20),
+                      SizedBox(height: 12),
                       Center(
-                          child: Text("Last Game",
-                              style: TextStyle(fontSize: 24))),
-                      TeamScheduleSmall(teamId: widget.nbaTeamId),
+                          child: Text("Stats", style: TextStyle(fontSize: 20))),
+                      GestureDetector(
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10), // if you need this
+                              side: BorderSide(
+                                color: Colors.cyan,
+                                width: 1,
+                              ),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    standing(
+                                        teamStandings.wins.toString(), "Win"),
+                                    standing(teamStandings.losses.toString(),
+                                        "Loss"),
+                                    standing(teamStandings.winPct.toString(),
+                                        "Win %"),
+                                    standing(
+                                        teamStandings.conferenceGamesBack
+                                            .toString(),
+                                        "GB"),
+                                    standing(
+                                        teamStandings.strCurrentStreak
+                                            .toString(),
+                                        "Streak"),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    standing("${teamStandings.l10}", "Last 10"),
+                                    standing(
+                                        "${teamStandings.conferenceRecord}",
+                                        "Conf"),
+                                    standing("${teamStandings.divisionRecord}",
+                                        "Div"),
+                                    standing("${teamStandings.home}", "Home"),
+                                    standing("${teamStandings.road}", "Away"),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Tap to view detailed stats...",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            )),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TeamStatsView(
+                                  teamId: widget.nbaTeamId,
+                                ),
+                              ));
+                        },
+                      ),
+                      SizedBox(height: 12),
+                      Center(
+                          child: Text("Media", style: TextStyle(fontSize: 20))),
+                      GestureDetector(
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10), // if you need this
+                              side: BorderSide(
+                                color: Colors.cyan,
+                                width: 1,
+                              ),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TeamNewsSmall(ta[1], widget.nbaTeamId),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Tap to view team-related media...",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            )),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamMediaPage(teamId: widget.nbaTeamId)),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Center(
+                          child:
+                              Text("Schedule", style: TextStyle(fontSize: 24))),
+                      GestureDetector(
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10), // if you need this
+                              side: BorderSide(
+                                color: Colors.cyan,
+                                width: 1,
+                              ),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TeamScheduleSmall(teamId: widget.nbaTeamId),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Tap to view full schedule...",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            )),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    TeamSchedule(teamId: widget.nbaTeamId)),
+                          );
+                        },
+                      ),
                       SizedBox(
                         height: 20,
                       ),
