@@ -132,8 +132,8 @@ class TeamScheduleSmall extends StatelessWidget {
         },
         child: Container(
             width: MediaQuery.of(context).size.width - 30,
-            color: Colors.blue[100],
-            //padding: EdgeInsets.all(8),
+            color: Colors.orange[100],
+            padding: EdgeInsets.all(4),
             child: Column(
               children: [
                 Row(

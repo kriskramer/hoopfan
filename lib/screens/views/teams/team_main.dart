@@ -1,5 +1,6 @@
 import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
+import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/teams_widgets/team_leader_card.dart';
 import 'package:hoop/components/teams_widgets/team_news_small.dart';
 import 'package:hoop/components/teams_widgets/team_schedule_small.dart';
@@ -11,9 +12,9 @@ import 'package:hoop/screens/views/teams/team_info_page.dart';
 import 'package:hoop/screens/views/teams/team_media_page.dart';
 import 'package:hoop/screens/views/teams/team_schedule.dart';
 import 'package:hoop/screens/views/teams/team_stats.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:hoop/components/connection.dart';
 import 'package:provider/provider.dart';
 
 class TeamDetails extends StatefulWidget {
@@ -31,7 +32,24 @@ class _TeamDetailsState extends State<TeamDetails> {
   @override
   initState() {
     super.initState();
-    //loadData();
+    loadData();
+  }
+
+  Future<dynamic> loadData() async {
+    if (Provider.of<JsonFiles>(context, listen: false).getBaseTeamStats() ==
+        null) {
+      dynamic baseTeamStats = await Network.getJson(
+        Urls.getNbaStatsTeamStatisticsBase(),
+        requestHeaders: RequestHeaders.nbaStatsHeaders,
+      );
+
+      Provider.of<JsonFiles>(context, listen: false)
+          .setBaseTeamStats(baseTeamStats);
+
+      return baseTeamStats;
+    } else {
+      return Provider.of<JsonFiles>(context, listen: false).getBaseTeamStats();
+    }
   }
 
   String year = "2021";
@@ -43,9 +61,6 @@ class _TeamDetailsState extends State<TeamDetails> {
     final LeagueStandingList standings =
         Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
     final teamStandings = standings.getTeamStandings(widget.nbaTeamId);
-
-    // final teamStats = Provider.of<JsonFiles>(context, listen: false)
-    //     .getTeamStats(widget.nbaTeamId);
 
     var teamColor = ConstantHelper.getTeamColor(widget.nbaTeamId);
     var teamTextColor = ConstantHelper.getTeamTextColor(widget.nbaTeamId);
@@ -109,6 +124,19 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         "${teamStandings.wins} - ${teamStandings.losses}",
                                         style: TextStyle(fontSize: 20),
                                       ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(teamStandings.conferenceGamesBack
+                                                  .toString() +
+                                              " GB"),
+                                          SizedBox(width: 10),
+                                          Text(teamStandings.strCurrentStreak
+                                              .toString()),
+                                        ],
+                                      )
                                     ],
                                   )
                                 ],
@@ -154,7 +182,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(
-                            Icons.bar_chart,
+                            Icons.leaderboard,
                             color: Colors.blue,
                           ),
                           SizedBox(
@@ -177,51 +205,70 @@ class _TeamDetailsState extends State<TeamDetails> {
                         width: 1,
                       ),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            standing(teamStandings.wins.toString(), "Win"),
-                            standing(teamStandings.losses.toString(), "Loss"),
-                            standing(teamStandings.winPct.toString(), "Win %"),
-                            standing(
-                                teamStandings.conferenceGamesBack.toString(),
-                                "GB"),
-                            standing(teamStandings.strCurrentStreak.toString(),
-                                "Streak"),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            standing("${teamStandings.l10}", "Last 10"),
-                            standing(
-                                "${teamStandings.conferenceRecord}", "Conf"),
-                            standing("${teamStandings.divisionRecord}", "Div"),
-                            standing("${teamStandings.home}", "Home"),
-                            standing("${teamStandings.road}", "Away"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Tap to view detailed stats...",
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ]),
-                    )),
+                    child: FutureBuilder(
+                        future: loadData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              !snapshot.hasData) {
+                            return Column(children: [
+                              SizedBox(height: 20),
+                              Text('No data')
+                            ]);
+                          }
+                          if (snapshot.hasData) {
+                            dynamic baseStats =
+                                Provider.of<JsonFiles>(context, listen: false)
+                                    .getBaseTeamStats();
+                            var teamStats =
+                                getTeamStats(widget.nbaTeamId, baseStats);
+
+                            return Container(
+                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    standing("${teamStats[9]}", "FG %"),
+                                    standing("${teamStats[12]}", "3P %"),
+                                    standing("${teamStats[15]}", "FT %"),
+                                    standing("${teamStats[19]}", "Asts"),
+                                    standing("${teamStats[20]}", "TOs"),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    standing("${teamStats[18]}", "Reb"),
+                                    standing("${teamStats[21]}", "Stls"),
+                                    standing("${teamStats[22]}", "Blks"),
+                                    standing("${teamStats[24]}", "PFs"),
+                                    standing("${teamStats[27]}", "+/-"),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Tap to view detailed stats...",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            );
+                          }
+                          return NoConnection();
+                        })),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -426,7 +473,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(
-                            Icons.leaderboard,
+                            Icons.show_chart_sharp,
                             color: Colors.blue,
                           ),
                           SizedBox(
@@ -462,7 +509,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                   border: Border.all(color: Colors.grey[400], width: 1))),
           Text(
             value,
-            style: TextStyle(fontSize: 18, color: Colors.grey),
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],
       ),
@@ -534,6 +581,17 @@ class _TeamDetailsState extends State<TeamDetails> {
           team = t;
           break;
         }
+      }
+    }
+
+    return team;
+  }
+
+  dynamic getTeamStats(String teamId, dynamic stats) {
+    dynamic team;
+    for (var t in stats["resultSets"][0]["rowSet"]) {
+      if (t[0].toString() == teamId) {
+        team = t;
       }
     }
 

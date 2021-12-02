@@ -4,6 +4,9 @@ import 'package:hoop/components/teams_widgets/team_base_stats_card.dart';
 import 'package:hoop/components/teams_widgets/team_estimated_stats_card.dart';
 import 'package:hoop/components/teams_widgets/team_ff_stats_card.dart';
 import 'package:hoop/components/teams_widgets/team_misc_stats_card.dart';
+import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/league_standings.dart';
+import 'package:provider/provider.dart';
 
 class TeamStatsSummaryView extends StatefulWidget {
   final String teamId;
@@ -17,11 +20,46 @@ class TeamStatsSummaryView extends StatefulWidget {
 class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
   @override
   Widget build(BuildContext context) {
+    final LeagueStandingList standings =
+        Provider.of<JsonFiles>(context, listen: false).getLeagueStandings();
+    final teamStandings = standings.getTeamStandings(widget.teamId);
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
         child: Column(
           children: [
+            Container(
+              //padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              child: Column(children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    standing(teamStandings.wins.toString(), "Win"),
+                    standing(teamStandings.losses.toString(), "Loss"),
+                    standing(teamStandings.winPct.toString(), "Win %"),
+                    standing(
+                        teamStandings.conferenceGamesBack.toString(), "GB"),
+                    standing(
+                        teamStandings.strCurrentStreak.toString(), "Streak"),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    standing("${teamStandings.l10}", "Last 10"),
+                    standing("${teamStandings.conferenceRecord}", "Conf"),
+                    standing("${teamStandings.divisionRecord}", "Div"),
+                    standing("${teamStandings.home}", "Home"),
+                    standing("${teamStandings.road}", "Away"),
+                  ],
+                ),
+              ]),
+            ),
             SizedBox(height: 15),
             getSectionHeader('Base Stats'),
             Container(
@@ -127,5 +165,29 @@ class _TeamStatsSummaryViewState extends State<TeamStatsSummaryView> {
     }
 
     return team;
+  }
+
+  Widget standing(String value, String desc) {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Column(
+        children: [
+          Text(
+            "$desc",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+          ),
+          Container(
+              height: 1,
+              width: 30,
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[400], width: 1))),
+          Text(
+            value,
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
   }
 }

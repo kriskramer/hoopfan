@@ -60,7 +60,10 @@ class TeamNewsSmall extends StatelessWidget {
                       children: [
                         Text(
                           json[index]["title"],
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue[800]),
                         ),
                         Divider(),
                       ],
