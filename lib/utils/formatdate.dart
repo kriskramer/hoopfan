@@ -28,7 +28,8 @@ List<String> formatDate(String date) {
       23: "11"
     };
 
-    String hour = dt.hour != 12 ? hourEquivalent[dt.hour] : dt.hour;
+    String hour =
+        dt.hour != 12 ? hourEquivalent[dt.hour].toString() : dt.hour.toString();
     localTime = "$hour:$minute pm";
   }
 

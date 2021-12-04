@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/model/news_item.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,8 @@ class NbaNewsFeed extends StatelessWidget {
   Widget build(BuildContext context) {
     bool blocked =
         Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
+    blocked = false; // for testing
+
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: blocked
@@ -22,19 +25,22 @@ class NbaNewsFeed extends StatelessWidget {
                 future: loadData(context),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    var news = Provider.of<JsonFiles>(context, listen: false)
+                    var json = Provider.of<JsonFiles>(context, listen: false)
                         .getNbaNews();
 
-                    if (news == null) {
+                    if (json == null) {
                       return Container(
                           padding: EdgeInsets.all(30),
                           child: Center(child: Text("No data returned")));
                     }
 
+                    NewsItemList news = NewsItemList(json);
+                    news.sortByDate();
+
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: news["entries"].length,
+                      itemCount: news.items.length,
                       itemBuilder: (context, index) {
                         // Check if Id is in allTeam and points aint empty
                         return Column(children: [
@@ -44,13 +50,12 @@ class NbaNewsFeed extends StatelessWidget {
                               margin: EdgeInsets.all(12),
                               child: InkWell(
                                 onTap: () {
-                                  Network.launchSite(
-                                      news["entries"][index]["link"]);
+                                  Network.launchSite(news.items[index].link);
                                 },
                                 child: Column(
                                   children: [
                                     Text(
-                                      news["entries"][index]["title"],
+                                      news.items[index].title,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -59,7 +64,7 @@ class NbaNewsFeed extends StatelessWidget {
                                       height: 4,
                                     ),
                                     Text(
-                                      news["entries"][index]["published"],
+                                      news.items[index].published,
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
@@ -68,12 +73,12 @@ class NbaNewsFeed extends StatelessWidget {
                                       height: 4,
                                     ),
                                     Text(removeAllHtmlTags(
-                                        news["entries"][index]["summary"])),
+                                        news.items[index].summary)),
                                     SizedBox(
                                       height: 4,
                                     ),
                                     Text(
-                                      news["entries"][index]["link"],
+                                      news.items[index].link,
                                       style: TextStyle(
                                           fontSize: 10, color: Colors.blue),
                                     ),

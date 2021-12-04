@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/model/news_item.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -25,14 +26,17 @@ class NbaNewsFeedSmall extends StatelessWidget {
                 future: loadData(context),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    var news = Provider.of<JsonFiles>(context, listen: false)
+                    var json = Provider.of<JsonFiles>(context, listen: false)
                         .getNbaNews();
 
-                    if (news == null) {
+                    if (json == null) {
                       return Container(
                           padding: EdgeInsets.all(30),
                           child: Center(child: Text("No data returned")));
                     }
+
+                    NewsItemList news = NewsItemList(json);
+                    news.sortByDate();
 
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -44,15 +48,14 @@ class NbaNewsFeedSmall extends StatelessWidget {
                           padding: EdgeInsets.all(4),
                           child: InkWell(
                             onTap: () {
-                              Network.launchSite(
-                                  news["entries"][index]["link"]);
+                              Network.launchSite(news.items[index].link);
                             },
                             child: Column(
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    news["entries"][index]["title"],
+                                    news.items[index].title,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,

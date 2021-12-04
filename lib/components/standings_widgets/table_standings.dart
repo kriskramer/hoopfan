@@ -19,16 +19,8 @@ class _StandingsTableState extends State<StandingsTable> {
     for (int index = 0; index < widget.teamCount; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
-        // color: MaterialStateProperty.all<Color>(
-        //     Color(ConstantHelper.getTeamColor(team.teamID.toString()))
-        //         .withOpacity(0.5)),
         cells: [
           DataCell(
-            // Container(
-            //     width: 15,
-            //     height: 15,
-            //     color:
-            //         Color(ConstantHelper.getTeamColor(team.teamID.toString()))),
             CachedLogo(
                 radius: 12,
                 url: ConstantHelper.getTeamLogo(team.teamID.toString())),
@@ -90,6 +82,8 @@ class _StandingsTableState extends State<StandingsTable> {
   Widget build(BuildContext context) {
     return DataTable(
       columnSpacing: 8,
+      dataRowHeight: 36,
+      headingRowHeight: 30,
       columns: [
         DataColumn(
           label: Text(

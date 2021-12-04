@@ -130,7 +130,7 @@ class _StandingsState extends State<Standings> {
               ),
               Text("Tap the team name to view the team page"),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Provider.of<SeasonProv>(context).confView
                   ? Container(
@@ -273,6 +273,9 @@ class _StandingsState extends State<Standings> {
                       ),
                     )
                   : SizedBox(),
+              SizedBox(
+                height: 40,
+              )
             ],
           ),
         ),
