@@ -11,27 +11,26 @@ class StatsMain extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0XFF1F6BA3),
-            automaticallyImplyLeading: false, // hides back arrow button
-            toolbarHeight: 50,
+            toolbarHeight: 30,
             bottom: TabBar(
               tabs: [
+                Tab(
+                  text: "Today",
+                ),
                 Tab(
                   text: "Teams",
                 ),
                 Tab(
                   text: "Players",
                 ),
-                Tab(
-                  text: "Today",
-                )
               ],
             ),
           ),
           body: TabBarView(
             children: [
+              SingleChildScrollView(child: StatsToday()),
               SingleChildScrollView(child: StatsTeams()),
               SingleChildScrollView(child: StatsPlayers()),
-              SingleChildScrollView(child: StatsToday())
             ],
           )),
     );

@@ -16,7 +16,7 @@ class StandingsTable extends StatefulWidget {
 class _StandingsTableState extends State<StandingsTable> {
   List<DataRow> tableData() {
     List<DataRow> table = List.filled(widget.teamCount, null);
-    for (int index = 0; index < widget.list.length; index++) {
+    for (int index = 0; index < widget.teamCount; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
         // color: MaterialStateProperty.all<Color>(

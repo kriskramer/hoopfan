@@ -1,6 +1,7 @@
 import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
 import 'package:hoop/components/teams_widgets/team_leader_card.dart';
 import 'package:hoop/components/teams_widgets/team_news_small.dart';
 import 'package:hoop/components/teams_widgets/team_schedule_small.dart';
@@ -280,191 +281,33 @@ class _TeamDetailsState extends State<TeamDetails> {
                 },
               ),
               SizedBox(height: 12),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.video_collection_sharp,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Media",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                  )),
-              GestureDetector(
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      // borderRadius:
-                      //     BorderRadius.circular(10), // if you need this
-                      side: BorderSide(
-                        color: Colors.cyan,
-                        width: 1,
-                      ),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TeamNewsSmall(ta[1], widget.nbaTeamId),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Tap to view team-related media...",
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ]),
-                    )),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TeamMediaPage(teamId: widget.nbaTeamId)),
-                  );
-                },
+              DashboardSectionBox(
+                dashboardWidget: TeamNewsSmall(ta[1], widget.nbaTeamId),
+                iconData: Icons.video_collection_sharp,
+                linkWidget: TeamMediaPage(teamId: widget.nbaTeamId),
+                sectionTitle: "Media",
+                tapMoreText: "Tap to view team-related media...",
               ),
-              SizedBox(
-                height: 12,
+              SizedBox(height: 12),
+              DashboardSectionBox(
+                dashboardWidget: TeamScheduleSmall(teamId: widget.nbaTeamId),
+                iconData: Icons.calendar_view_month_rounded,
+                linkWidget: TeamSchedule(teamId: widget.nbaTeamId),
+                sectionTitle: "Schedule",
+                tapMoreText: "Tap to view full schedule...",
               ),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.calendar_view_month_rounded,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Schedule",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                  )),
-              GestureDetector(
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      // borderRadius:
-                      //     BorderRadius.circular(10), // if you need this
-                      side: BorderSide(
-                        color: Colors.cyan,
-                        width: 1,
-                      ),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TeamScheduleSmall(teamId: widget.nbaTeamId),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Tap to view full schedule...",
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ]),
-                    )),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TeamSchedule(teamId: widget.nbaTeamId)),
-                  );
-                },
+              SizedBox(height: 12),
+              DashboardSectionBox(
+                dashboardWidget: PlayerList(
+                  teamId: widget.nbaTeamId,
+                  teamColor: teamColor,
+                ),
+                iconData: Icons.list_alt_rounded,
+                linkWidget: null,
+                sectionTitle: "Roster",
+                tapMoreText: "Tap player to view details...",
               ),
-              SizedBox(
-                height: 12,
-              ),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.list_alt_rounded,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Roster",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                    // borderRadius:
-                    //     BorderRadius.circular(10), // if you need this
-                    side: BorderSide(
-                      color: Colors.cyan,
-                      width: 1,
-                    ),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: Column(children: [
-                      SizedBox(
-                        height: 5,
-                      ),
-                      PlayerList(
-                        teamId: widget.nbaTeamId,
-                        teamColor: teamColor,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Tap player to view details...",
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
-                      ),
-                    ]),
-                  )),
-              SizedBox(
-                height: 12,
-              ),
+              SizedBox(height: 12),
               Align(
                   alignment: Alignment.centerRight,
                   child: Container(

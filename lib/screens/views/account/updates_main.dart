@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/screens/views/dashboard_main.dart';
 
 class UpdatesMain extends StatelessWidget {
   const UpdatesMain();
@@ -39,7 +40,20 @@ class UpdatesMain extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text("Watch here for patch notes")
+            Text("Watch here for patch notes"),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DashboardMain(),
+                    ));
+              },
+              child: Text(
+                "Dashboard",
+                style: TextStyle(fontSize: 12, color: Colors.blue[700]),
+              ),
+            ),
           ],
         ),
       ),

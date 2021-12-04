@@ -44,6 +44,12 @@ class TeamNewsSmall extends StatelessWidget {
             dynamic json =
                 Provider.of<JsonFiles>(context, listen: false).getNews(teamId);
 
+            if (json == null || json.length == 0) {
+              return Center(
+                child: Text("No data."),
+              );
+            }
+
             return ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
