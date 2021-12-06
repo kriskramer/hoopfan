@@ -33,7 +33,8 @@ class Urls {
 //       "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
   static String getBingVideoSearch(String team) {
-    return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";
+    //return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";
+    return '';
   }
 
   static String sioTeam(String team) =>

@@ -4,31 +4,30 @@ import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/teams/team_main.dart';
 
-class StandingsTable extends StatefulWidget {
+class StandingsTableSmall extends StatefulWidget {
   final List<LeagueStanding> list;
   final int teamCount;
-//  final dynamic json;
-  StandingsTable({this.list, this.teamCount});
+  StandingsTableSmall({this.list, this.teamCount});
   @override
-  _StandingsTableState createState() => _StandingsTableState();
+  _StandingsTableSmallState createState() => _StandingsTableSmallState();
 }
 
-class _StandingsTableState extends State<StandingsTable> {
+class _StandingsTableSmallState extends State<StandingsTableSmall> {
   List<DataRow> tableData() {
     List<DataRow> table = List.filled(widget.teamCount, null);
     for (int index = 0; index < widget.teamCount; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
         cells: [
-          DataCell(
-            CachedLogo(
-                radius: 12,
-                url: ConstantHelper.getTeamLogo(team.teamID.toString())),
-          ),
+          // DataCell(
+          //   CachedLogo(
+          //       radius: 10,
+          //       url: ConstantHelper.getTeamLogo(team.teamID.toString())),
+          // ),
           DataCell(
               Text(
                 "${index + 1} ${team.teamName}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ), onTap: () {
             var teamId = team.teamID;
             print(teamId);
@@ -45,31 +44,13 @@ class _StandingsTableState extends State<StandingsTable> {
           DataCell(
             Text(
               "${team.wins}".trim(),
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(fontSize: 12),
             ), //
           ),
           DataCell(
             Text(
               "${team.losses}",
-              style: TextStyle(fontSize: 14),
-            ),
-          ),
-          DataCell(
-            Text(
-              "${team.winPct}",
-              style: TextStyle(fontSize: 14),
-            ),
-          ),
-          DataCell(
-            Text(
-              "${team.divisionGamesBack}",
-              style: TextStyle(fontSize: 14),
-            ),
-          ),
-          DataCell(
-            Text(
-              "${team.l10}",
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(fontSize: 12),
             ),
           ),
         ],
@@ -81,15 +62,15 @@ class _StandingsTableState extends State<StandingsTable> {
   @override
   Widget build(BuildContext context) {
     return DataTable(
-      columnSpacing: 8,
-      dataRowHeight: 36,
-      headingRowHeight: 30,
+      columnSpacing: 5,
+      headingRowHeight: 0,
+      dataRowHeight: 20,
       columns: [
-        DataColumn(
-          label: Text(
-            '',
-          ),
-        ),
+        // DataColumn(
+        //   label: Text(
+        //     '',
+        //   ),
+        // ),
         DataColumn(
           label: Text(
             'Team',
@@ -115,31 +96,6 @@ class _StandingsTableState extends State<StandingsTable> {
             ),
           ),
           numeric: true,
-        ),
-        DataColumn(
-          label: Text(
-            'Pct',
-            style: TextStyle(
-              color: Colors.blueGrey,
-            ),
-          ),
-          numeric: true,
-        ),
-        DataColumn(
-          label: Text(
-            'GB',
-            style: TextStyle(
-              color: Colors.blueGrey,
-            ),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'L10',
-            style: TextStyle(
-              color: Colors.blue,
-            ),
-          ),
         ),
       ],
       rows: tableData(),

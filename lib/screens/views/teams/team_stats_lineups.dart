@@ -49,6 +49,7 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
   @override
   Widget build(BuildContext context) {
     var allPlayers = getTeamRoster(widget.teamId);
+    int selectedIndex = -1;
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -58,7 +59,11 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
           SizedBox(
             height: 20,
           ),
-          Text('Select up to 5 players to fliter lineup data below:'),
+          Container(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+            child: Text(
+                'Select up to 5 players to filter lineup data below. Swipe left or right to view the stats grid for the viewable lineups.'),
+          ),
           SizedBox(
             height: 20,
           ),
@@ -112,61 +117,71 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
                       List<DataRow> rows = [];
 
                       for (var l in list.items) {
-                        rows.add(DataRow(cells: [
-                          DataCell(Text(l.GROUP_NAME.toString())),
-                          DataCell(Text(l.GP.toString())),
-                          DataCell(Text(l.W.toString())),
-                          DataCell(Text(l.L.toString())),
-                          DataCell(Text(l.W_PCT.toString())),
-                          DataCell(Text(l.MIN.toStringAsFixed(2))),
-                          DataCell(Text(l.FGM.toString())),
-                          DataCell(Text(l.FGA.toString())),
-                          DataCell(Text(l.FG_PCT.toString())),
-                          DataCell(Text(l.FG3M.toString())),
-                          DataCell(Text(l.FG3A.toString())),
-                          DataCell(Text(l.FG3_PCT.toString())),
-                          DataCell(Text(l.FTM.toString())),
-                          DataCell(Text(l.FTA.toString())),
-                          DataCell(Text(l.FT_PCT.toString())),
-                          DataCell(Text(l.OREB.toString())),
-                          DataCell(Text(l.DREB.toString())),
-                          DataCell(Text(l.REB.toString())),
-                          DataCell(Text(l.AST.toString())),
-                          DataCell(Text(l.TOV.toString())),
-                          DataCell(Text(l.STL.toString())),
-                          DataCell(Text(l.BLK.toString())),
-                          DataCell(Text(l.BLKA.toString())),
-                          DataCell(Text(l.PF.toString())),
-                          DataCell(Text(l.PFD.toString())),
-                          DataCell(Text(l.PTS.toString())),
-                          DataCell(Text(l.PLUS_MINUS.toString())),
-                        ]));
+                        //var i = 0;
+                        rows.add(
+                          DataRow(
+                            // Working on highlighting tapped datarow...
+                            // selected: i == selectedIndex,
+                            // color: (i == selectedIndex ? Colors.amber : Colors.white),
+                            // onSelectChanged: (val) {
+                            //   setState(() {
+                            //     selectedIndex = 1;
+                            //   });
+                            // },
+                            cells: [
+                              DataCell(Text(l.GROUP_NAME.toString())),
+                              DataCell(Text(l.MIN.toStringAsFixed(2))),
+                              DataCell(Text(l.FGM.toString())),
+                              DataCell(Text(l.FGA.toString())),
+                              DataCell(Text(l.FG_PCT.toString())),
+                              DataCell(Text(l.FG3M.toString())),
+                              DataCell(Text(l.FG3A.toString())),
+                              DataCell(Text(l.FG3_PCT.toString())),
+                              DataCell(Text(l.FTM.toString())),
+                              DataCell(Text(l.FTA.toString())),
+                              DataCell(Text(l.FT_PCT.toString())),
+                              DataCell(Text(l.OREB.toString())),
+                              DataCell(Text(l.DREB.toString())),
+                              DataCell(Text(l.REB.toString())),
+                              DataCell(Text(l.AST.toString())),
+                              DataCell(Text(l.TOV.toString())),
+                              DataCell(Text(l.STL.toString())),
+                              DataCell(Text(l.BLK.toString())),
+                              DataCell(Text(l.BLKA.toString())),
+                              DataCell(Text(l.PF.toString())),
+                              DataCell(Text(l.PFD.toString())),
+                              DataCell(Text(l.PTS.toString())),
+                              DataCell(Text(l.PLUS_MINUS.toString())),
+                              DataCell(VerticalDivider(
+                                thickness: 2,
+                              )),
+                              DataCell(Text(l.GP.toString())),
+                              DataCell(Text(l.W.toString())),
+                              DataCell(Text(l.L.toString())),
+                              DataCell(Text(l.W_PCT.toString())),
+                            ],
+                          ),
+                        );
+                        //i++;
                       }
                       return DataTable(
                         columnSpacing: 15,
                         dataRowHeight: 25,
                         headingRowHeight: 25,
+                        dataRowColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.selected))
+                            return Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.08);
+                          return null; // Use the default value.
+                        }),
                         columns: [
                           DataColumn(
                               label: Text('Lineup (' +
                                   list.items.length.toString() +
                                   " total - top 20 shown)")),
-                          DataColumn(
-                              label: StatInfoDialog(
-                                  label: Text('GP'), statName: "GP")),
-                          DataColumn(
-                              label: StatInfoDialog(
-                            label: Text('W'),
-                            statName: "W",
-                          )),
-                          DataColumn(
-                              label: StatInfoDialog(
-                            label: Text('L'),
-                            statName: "L",
-                          )),
-                          DataColumn(
-                              label: StatInfoDialog(
-                                  label: Text('W %'), statName: "Win %")),
                           DataColumn(
                               label: StatInfoDialog(
                                   label: Text('Min'), statName: "MIN")),
@@ -233,6 +248,23 @@ class _TeamStatsLineupsViewState extends State<TeamStatsLineupsView> {
                           DataColumn(
                               label: StatInfoDialog(
                                   label: Text('+/-'), statName: "PLUSMINUS")),
+                          DataColumn(label: Text("")),
+                          DataColumn(
+                              label: StatInfoDialog(
+                                  label: Text('GP'), statName: "GP")),
+                          DataColumn(
+                              label: StatInfoDialog(
+                            label: Text('W'),
+                            statName: "W",
+                          )),
+                          DataColumn(
+                              label: StatInfoDialog(
+                            label: Text('L'),
+                            statName: "L",
+                          )),
+                          DataColumn(
+                              label: StatInfoDialog(
+                                  label: Text('W %'), statName: "Win %")),
                         ],
                         rows: [
                           ...rows.getRange(

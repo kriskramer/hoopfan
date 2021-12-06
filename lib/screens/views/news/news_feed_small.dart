@@ -6,12 +6,13 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class NbaNewsFeed extends StatelessWidget {
+class NbaNewsFeedSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool blocked =
         Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
-    blocked = false; // for testing
+
+    blocked = false;
 
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -40,61 +41,31 @@ class NbaNewsFeed extends StatelessWidget {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: news.items.length,
+                      itemCount: 5,
                       itemBuilder: (context, index) {
                         // Check if Id is in allTeam and points aint empty
-                        return Column(children: [
-                          Card(
-                            elevation: 3,
-                            child: Container(
-                              margin: EdgeInsets.all(12),
-                              child: InkWell(
-                                onTap: () {
-                                  Network.launchSite(news.items[index].link);
-                                },
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      news.items[index].title,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      news.items[index].published,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(removeAllHtmlTags(
-                                        news.items[index].summary)),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      news.items[index].link,
-                                      style: TextStyle(
-                                          fontSize: 10, color: Colors.blue),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Divider(),
-                                  ],
+                        return Container(
+                          padding: EdgeInsets.all(4),
+                          child: InkWell(
+                            onTap: () {
+                              Network.launchSite(news.items[index].link);
+                            },
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    news.items[index].title,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue[800]),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                        ]);
+                        );
                       },
                     );
                   } else if (snapshot.hasError) {

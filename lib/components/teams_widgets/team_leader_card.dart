@@ -12,7 +12,7 @@ class TeamLeaderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
+      //elevation: 2,
       child: Column(
         children: [
           Row(
@@ -21,11 +21,11 @@ class TeamLeaderCard extends StatelessWidget {
               CachedLogo(
                 url:
                     "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                radius: 35,
+                radius: 25,
               ),
               Text(
                 value + "  ",
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(fontSize: 20),
               ),
             ],
           ),
@@ -33,7 +33,7 @@ class TeamLeaderCard extends StatelessWidget {
             children: [
               Text(
                 getPlayerName(playerId, context),
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               )
             ],
           )

@@ -199,7 +199,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getBaseDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -232,7 +232,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getAdvancedDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -264,7 +264,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getMiscDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -284,7 +284,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getFourFactorDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -304,7 +304,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getScoringDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -331,7 +331,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
 
   DataRow getOpponentDataRow(dynamic stats, int typeNum, int setNum) {
     return DataRow(cells: [
-      getDataCell(stats, typeNum, setNum, 0),
+      //getDataCell(stats, typeNum, setNum, 0),
       getDataCell(stats, typeNum, setNum, 1),
       getDataCell(stats, typeNum, setNum, 2),
       getDataCell(stats, typeNum, setNum, 3),
@@ -374,7 +374,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getBaseDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
@@ -441,7 +441,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getAdvancedDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
@@ -498,7 +498,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getMiscDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
@@ -546,7 +546,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getFourFactorDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
@@ -591,7 +591,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getScoringDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));
@@ -653,7 +653,7 @@ class TeamStatsLastNGamesGrid extends StatelessWidget {
   List<DataColumn> getOpponentDataColumns() {
     List<DataColumn> list = [];
 
-    list.add(DataColumn(label: Text('Group')));
+    //list.add(DataColumn(label: Text('Group')));
     list.add(DataColumn(label: Text('Value')));
     list.add(
         DataColumn(label: StatInfoDialog(label: Text('GP'), statName: "GP")));

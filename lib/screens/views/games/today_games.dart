@@ -50,160 +50,166 @@ class _TodaysGamesState extends State<TodaysGames> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future:
-            _listGames, //loadData(context), // Network.getJson(Urls.nbaGamesToday()),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            //var games = snapshot.data;
-            var games = snapshot.data;
-            //Provider.of<JsonFiles>(context, listen: false).getTodaysGames();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Today's Games"),
+      ),
+      body: FutureBuilder(
+          future:
+              _listGames, //loadData(context), // Network.getJson(Urls.nbaGamesToday()),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              //var games = snapshot.data;
+              var games = snapshot.data;
+              //Provider.of<JsonFiles>(context, listen: false).getTodaysGames();
 
-            int count = games["numGames"];
-            var gamesCompleted = getGamesCompleted(games);
-            var gamesInProgress = getGamesInProgress(games);
-            var gamesWaiting = getGamesWaiting(games);
+              int count = games["numGames"];
+              var gamesCompleted = getGamesCompleted(games);
+              var gamesInProgress = getGamesInProgress(games);
+              var gamesWaiting = getGamesWaiting(games);
 
-            // Don't need to update the view if all the games are done
-            if (gamesCompleted.length == count) {
-              _timer.cancel();
-            }
+              // Don't need to update the view if all the games are done
+              if (gamesCompleted.length == count) {
+                _timer.cancel();
+              }
 
-            if (gamesWaiting.length > 0 && gamesInProgress.length == 0) {
-              timerDuration = 1000;
-            }
-            if (gamesInProgress.length > 0) {
-              timerDuration = 150;
-            }
-            String selectedDate = Provider.of<JsonFiles>(context, listen: false)
-                .getSelectedDate();
-            // parse date
-            int year = int.parse(selectedDate.substring(0, 4));
-            int month = int.parse(selectedDate.substring(4, 6));
-            int day = int.parse(selectedDate.substring(6, 8));
-            DateTime parseDate = DateTime(year, month, day);
-            DateTime todaysDate = DateTime.now();
-            String dateInfo = parseDate.day == todaysDate.day
-                ? "$count games Today"
-                : "$count games on ${formatDate(parseDate.toString())[0]}";
+              if (gamesWaiting.length > 0 && gamesInProgress.length == 0) {
+                timerDuration = 1000;
+              }
+              if (gamesInProgress.length > 0) {
+                timerDuration = 150;
+              }
+              String selectedDate =
+                  Provider.of<JsonFiles>(context, listen: false)
+                      .getSelectedDate();
+              // parse date
+              int year = int.parse(selectedDate.substring(0, 4));
+              int month = int.parse(selectedDate.substring(4, 6));
+              int day = int.parse(selectedDate.substring(6, 8));
+              DateTime parseDate = DateTime(year, month, day);
+              DateTime todaysDate = DateTime.now();
+              String dateInfo = parseDate.day == todaysDate.day
+                  ? "$count games Today"
+                  : "$count games on ${formatDate(parseDate.toString())[0]}";
 
-            return count == 0
-                ? Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      HorizontalCalendar(
-                          date: DateTime.now(),
-                          textColor: Colors.black45,
-                          backgroundColor: Colors.white,
-                          selectedColor: Colors.blue,
-                          onDateSelected: (date) {
-                            handleNewDate(
-                              date,
-                              context,
-                            );
-                            print("THis $date");
-                          }),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 2,
-                      ),
-                      Text('No games listed')
-                    ],
-                  )
-                : ListView(
-                    children: [
-                      HorizontalCalendar(
-                          date: DateTime.now(),
-                          textColor: Colors.black45,
-                          backgroundColor: Colors.white,
-                          selectedColor: Colors.blue,
-                          onDateSelected: (date) {
-                            if (date != null) {
-                              handleNewDate(date, context);
-                            }
-                          }),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            dateInfo,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+              return count == 0
+                  ? Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        HorizontalCalendar(
+                            date: DateTime.now(),
+                            textColor: Colors.black45,
+                            backgroundColor: Colors.white,
+                            selectedColor: Colors.blue,
+                            onDateSelected: (date) {
+                              handleNewDate(
+                                date,
+                                context,
+                              );
+                              print("THis $date");
+                            }),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 2,
+                        ),
+                        Text('No games listed')
+                      ],
+                    )
+                  : ListView(
+                      children: [
+                        HorizontalCalendar(
+                            date: DateTime.now(),
+                            textColor: Colors.black45,
+                            backgroundColor: Colors.white,
+                            selectedColor: Colors.blue,
+                            onDateSelected: (date) {
+                              if (date != null) {
+                                handleNewDate(date, context);
+                              }
+                            }),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              dateInfo,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: gamesInProgress.length,
-                          itemBuilder: (context, index) {
-                            return InProgressGameCard(
-                              game: gamesInProgress[index],
-                            );
-                          }),
-                      gamesInProgress.length > 0
-                          ? SizedBox(
-                              height: 10,
-                            )
-                          : SizedBox(),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: gamesCompleted.length,
-                          itemBuilder: (context, index) {
-                            return CompletedGameCard(
-                              game: gamesCompleted[index],
-                            );
-                          }),
-                      gamesCompleted.length > 0
-                          ? SizedBox(
-                              height: 10,
-                            )
-                          : SizedBox(),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: gamesWaiting.length,
-                          itemBuilder: (context, index) {
-                            return UpcomingGameCard(
-                              game: gamesWaiting[index],
-                            );
-                          }),
-                    ],
-                  );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            return Column(children: [
-              HorizontalCalendar(
-                  date: DateTime.now(),
-                  textColor: Colors.black45,
-                  backgroundColor: Colors.white,
-                  selectedColor: Colors.blue,
-                  onDateSelected: (date) {
-                    handleNewDate(date, context);
-                    print("THis $date");
-                  }),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
-              ),
-              Center(
-                child: Text('Unable to get data'),
-              )
-            ]);
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Getting games data..."),
-                ],
-              ),
-            );
-          }
-        });
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: gamesInProgress.length,
+                            itemBuilder: (context, index) {
+                              return InProgressGameCard(
+                                game: gamesInProgress[index],
+                              );
+                            }),
+                        gamesInProgress.length > 0
+                            ? SizedBox(
+                                height: 10,
+                              )
+                            : SizedBox(),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: gamesCompleted.length,
+                            itemBuilder: (context, index) {
+                              return CompletedGameCard(
+                                game: gamesCompleted[index],
+                              );
+                            }),
+                        gamesCompleted.length > 0
+                            ? SizedBox(
+                                height: 10,
+                              )
+                            : SizedBox(),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: gamesWaiting.length,
+                            itemBuilder: (context, index) {
+                              return UpcomingGameCard(
+                                game: gamesWaiting[index],
+                              );
+                            }),
+                      ],
+                    );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Column(children: [
+                HorizontalCalendar(
+                    date: DateTime.now(),
+                    textColor: Colors.black45,
+                    backgroundColor: Colors.white,
+                    selectedColor: Colors.blue,
+                    onDateSelected: (date) {
+                      handleNewDate(date, context);
+                      print("THis $date");
+                    }),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                ),
+                Center(
+                  child: Text('Unable to get data'),
+                )
+              ]);
+            } else {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Getting games data..."),
+                  ],
+                ),
+              );
+            }
+          }),
+    );
   }
 
   void handleNewDate(String date, BuildContext context) {

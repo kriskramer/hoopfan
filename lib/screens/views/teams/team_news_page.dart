@@ -33,8 +33,9 @@ class TeamNewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool blocked =
-        Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
+    //   bool blocked =
+    //       Provider.of<JsonFiles>(context, listen: false).getIsFeatureBlocked();
+    bool blocked = false;
 
     return Scaffold(
       body: SingleChildScrollView(

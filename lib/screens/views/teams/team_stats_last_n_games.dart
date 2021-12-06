@@ -38,6 +38,11 @@ class _TeamStatsLastNGamesState extends State<TeamStatsLastNGames> {
             var stats = snapshot.data;
 
             return Column(children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Text(
+                    "View team stats for the last N games by selecting from the Games dropdown below. Selecting 0 will reset to ALL games for the current season. "),
+              ),
               Card(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

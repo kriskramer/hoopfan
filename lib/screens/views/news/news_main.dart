@@ -17,7 +17,7 @@ class _NewsMainScreenState extends State<NewsMainScreen> {
       child: Scaffold(
         backgroundColor: Color(0XFFEDF1FF),
         appBar: AppBar(
-          toolbarHeight: 60,
+          toolbarHeight: 30,
           bottom: TabBar(
             tabs: [
               Tab(

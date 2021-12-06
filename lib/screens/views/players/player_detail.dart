@@ -91,23 +91,22 @@ class _PlayerDetailState extends State<PlayerDetail> {
                 )
               ],
             ),
+            Divider(
+              thickness: 2,
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Container(
-                margin: EdgeInsets.all(0),
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                //width: deviceWidth,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    color: Color(teamColor)),
+                // decoration: BoxDecoration(
+                //     border: Border.all(color: Colors.white),
+                //     color: Color(teamColor)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       children: [
-                        Text('Height',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Height', style: TextStyle(fontSize: 14)),
                         Text(
                             player["heightFeet"] +
                                 "\' " +
@@ -115,8 +114,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
                                 "\" (" +
                                 player["heightMeters"] +
                                 ")",
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(
@@ -124,16 +122,13 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('Weight',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Weight', style: TextStyle(fontSize: 14)),
                         Text(
                             player["weightPounds"] +
                                 " (" +
                                 player["weightKilograms"] +
                                 ")",
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(
@@ -141,12 +136,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('Country',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
-                        Text(player["country"],
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Country', style: TextStyle(fontSize: 14)),
+                        Text(player["country"], style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(
@@ -154,12 +145,9 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('Years Pro',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Years Pro', style: TextStyle(fontSize: 14)),
                         Text(player["yearsPro"],
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     )
                   ],
@@ -170,21 +158,17 @@ class _PlayerDetailState extends State<PlayerDetail> {
               scrollDirection: Axis.horizontal,
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                //width: deviceWidth,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    color: Color(teamColor)),
+                // decoration: BoxDecoration(
+                //     border: Border.all(color: Colors.white),
+                //     color: Color(teamColor)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       children: [
-                        Text('Age',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Age', style: TextStyle(fontSize: 14)),
                         Text(getAge(player["dateOfBirthUTC"]),
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(
@@ -192,12 +176,9 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('Birthday',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Birthday', style: TextStyle(fontSize: 14)),
                         Text(player["dateOfBirthUTC"],
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                     SizedBox(
@@ -205,20 +186,15 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('Drafted',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('Drafted', style: TextStyle(fontSize: 14)),
                         Row(
                           children: [
                             Text("Pick " + player["draft"]["pickNum"],
-                                style: TextStyle(
-                                    color: Color(teamTextColor), fontSize: 14)),
+                                style: TextStyle(fontSize: 14)),
                             Text(" R" + player["draft"]["roundNum"],
-                                style: TextStyle(
-                                    color: Color(teamTextColor), fontSize: 14)),
+                                style: TextStyle(fontSize: 14)),
                             Text(" " + player["draft"]["seasonYear"],
-                                style: TextStyle(
-                                    color: Color(teamTextColor), fontSize: 14)),
+                                style: TextStyle(fontSize: 14)),
                           ],
                         )
                       ],
@@ -228,21 +204,21 @@ class _PlayerDetailState extends State<PlayerDetail> {
                     ),
                     Column(
                       children: [
-                        Text('College',
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                        Text('College', style: TextStyle(fontSize: 14)),
                         Text(getShortString(player["lastAffiliation"]),
-                            style: TextStyle(
-                                color: Color(teamTextColor), fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            SizedBox(
-              height: 15,
+            Divider(
+              thickness: 2,
             ),
+            // SizedBox(
+            //   height: 5,
+            // ),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               TextButton(
                 onPressed: () {
