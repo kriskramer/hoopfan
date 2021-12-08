@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
+import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/games/today_games_small.dart';
@@ -38,8 +39,9 @@ class _DashboardMainState extends State<DashboardMain> {
                   Container(
                     height: 45,
                     decoration: BoxDecoration(
-                        color: Colors.lightBlue[100],
-                        border: Border(bottom: BorderSide(color: Colors.grey))),
+                        color: Colors.blue[800],
+                        border: Border(
+                            bottom: BorderSide(color: Colors.red, width: 3))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -53,7 +55,9 @@ class _DashboardMainState extends State<DashboardMain> {
                             ),
                             Text("Hoop Fan",
                                 style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
                           ],
                         ),
                       ],
@@ -134,6 +138,16 @@ class _DashboardMainState extends State<DashboardMain> {
               linkWidget: null,
               sectionTitle: "Stats",
               tapMoreText: "Tap to view league stats...",
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            DashboardSectionBox(
+              dashboardWidget: TwitterFeedSmall(searchTerms: "nba basketball"),
+              iconData: Icons.video_collection_sharp,
+              linkWidget: null,
+              sectionTitle: "Social",
+              tapMoreText: "Tap to view more...",
             ),
             SizedBox(
               height: 12,

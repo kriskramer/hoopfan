@@ -1,7 +1,7 @@
 // refactor network request Headers into this class
 class RequestHeaders {
   static Map<String, String> bingHeaders = {
-    'Ocp-Apim-Subscription-Key': "235ced56b4ba4206a1e59e1785657176"
+    'Ocp-Apim-Subscription-Key': "" //"235ced56b4ba4206a1e59e1785657176"
   };
   static Map<String, String> twitterStreamHeaders = {
     'Authorization':
