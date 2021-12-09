@@ -112,7 +112,7 @@ class AdvancedStatsLeagueList {
   String getTopORtg() {
     for (AdvancedStatsLeague b in items) {
       if (b.OFF_RATING_RANK == 1) {
-        return (b.OFF_RATING / b.GP).toStringAsFixed(2);
+        return (b.OFF_RATING).toStringAsFixed(2);
       }
     }
     return "";
@@ -121,7 +121,7 @@ class AdvancedStatsLeagueList {
   String getBottomORtg() {
     for (AdvancedStatsLeague b in items) {
       if (b.OFF_RATING_RANK == 30) {
-        return (b.OFF_RATING / b.GP).toStringAsFixed(2);
+        return (b.OFF_RATING).toStringAsFixed(2);
       }
     }
     return "";
@@ -130,7 +130,115 @@ class AdvancedStatsLeagueList {
   String getAvgORtg() {
     var total = 0.0;
     for (AdvancedStatsLeague b in items) {
-      total += b.OFF_RATING / b.GP;
+      total += b.OFF_RATING;
+    }
+
+    return (total / 30).toStringAsFixed(2);
+  }
+
+  String getTopDRtg() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.DEF_RATING_RANK == 1) {
+        return (b.DEF_RATING).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getBottomDRtg() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.DEF_RATING_RANK == 30) {
+        return (b.DEF_RATING).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getAvgDRtg() {
+    var total = 0.0;
+    for (AdvancedStatsLeague b in items) {
+      total += b.DEF_RATING;
+    }
+
+    return (total / 30).toStringAsFixed(2);
+  }
+
+  String getTopTSPct() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.TS_PCT_RANK == 1) {
+        return (b.TS_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getBottomTSPct() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.TS_PCT_RANK == 30) {
+        return (b.TS_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getAvgTSPct() {
+    var total = 0.0;
+    for (AdvancedStatsLeague b in items) {
+      total += b.TS_PCT;
+    }
+
+    return (total / 30).toStringAsFixed(2);
+  }
+
+  String getTopEFgPct() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.EFG_PCT_RANK == 1) {
+        return (b.EFG_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getBottomEFgPct() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.EFG_PCT_RANK == 30) {
+        return (b.EFG_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getAvgEFgPct() {
+    var total = 0.0;
+    for (AdvancedStatsLeague b in items) {
+      total += b.EFG_PCT;
+    }
+
+    return (total / 30).toStringAsFixed(2);
+  }
+
+  String getTopPace() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.PACE_RANK == 1) {
+        return b.PACE.toString();
+      }
+    }
+    return "";
+  }
+
+  String getBottomPace() {
+    for (AdvancedStatsLeague b in items) {
+      if (b.PACE_RANK == 30) {
+        return b.PACE.toString();
+      }
+    }
+    return "";
+  }
+
+  String getAvgPace() {
+    var total = 0.0;
+    for (AdvancedStatsLeague b in items) {
+      total += b.PACE;
     }
 
     return (total / 30).toStringAsFixed(2);

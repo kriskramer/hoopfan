@@ -174,4 +174,31 @@ class BaseStatsLeagueList {
 
     return (total / 30).toStringAsFixed(2);
   }
+
+  String getTop3PPct() {
+    for (BaseStatsLeague b in items) {
+      if (b.FG3_PCT_RANK == 1) {
+        return (b.FG3_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getBottom3PPct() {
+    for (BaseStatsLeague b in items) {
+      if (b.FG3_PCT_RANK == 30) {
+        return (b.FG3_PCT).toStringAsFixed(2);
+      }
+    }
+    return "";
+  }
+
+  String getAvg3PPct() {
+    var total = 0.0;
+    for (BaseStatsLeague b in items) {
+      total += b.FG3_PCT;
+    }
+
+    return (total / 30).toStringAsFixed(2);
+  }
 }

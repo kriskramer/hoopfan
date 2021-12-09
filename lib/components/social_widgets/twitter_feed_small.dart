@@ -26,7 +26,7 @@ class TwitterFeedSmall extends StatelessWidget {
               return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: 7,
                 itemBuilder: (context, index) {
                   // Check if Id is in allTeam and points aint empty
                   return Column(children: [
@@ -72,8 +72,8 @@ class TwitterFeedSmall extends StatelessWidget {
   }
 
   String getFormattedText(String text) {
-    if (text.toString().length > 179) {
-      return text.toString().substring(0, 180) + "...";
+    if (text.toString().length > 119) {
+      return text.toString().substring(0, 120) + "...";
     } else {
       return text;
     }

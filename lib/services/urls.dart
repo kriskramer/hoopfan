@@ -29,6 +29,9 @@ class Urls {
       //"https://bing-news-search1.p.rapidapi.com/news/search?q=$team&freshness=Day&textFormat=Raw&safeSearch=Off?rapidapi-key=${NbaApi.key}";
       "https://google-search3.p.rapidapi.com/api/v1/news/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
+  static String freeNewsApiSearch(String searchTerms) =>
+      "https://free-news.p.rapidapi.com/v1/search?q=$searchTerms&lang=en";
+
 //   static String teamGoogleImageSearch(String team) =>
 //       "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 

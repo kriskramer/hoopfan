@@ -20,7 +20,7 @@ class UpcomingGameCardSmall extends StatelessWidget {
         standings.getTeamStandings(game["vTeam"]["teamId"]);
     final LeagueStanding hTeam =
         standings.getTeamStandings(game["hTeam"]["teamId"]);
-    var countdown = getStartCountdown(game);
+    //var countdown = getStartCountdown(game);
     // bool preview = game["isPreviewArticleAvail"];
     // var gameId = game["gameId"];
     // var date = game["gameUrlCode"].toString().split("/")[0];

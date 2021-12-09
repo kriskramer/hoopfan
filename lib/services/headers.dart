@@ -21,4 +21,9 @@ class RequestHeaders {
     'Pragma': 'no-cache',
     'Cache-Control': 'no-cache',
   };
+
+  static Map<String, String> freeNewsHeaders = {
+    "x-rapidapi-host": "free-news.p.rapidapi.com",
+    "x-rapidapi-key": "5b26dde365mshcec96152e331e05p1ab7c8jsn6d180eadd5fb",
+  };
 }
