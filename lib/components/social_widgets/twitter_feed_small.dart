@@ -43,7 +43,7 @@ class TwitterFeedSmall extends StatelessWidget {
                             getFormattedText(list.items[index].text),
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                                //fontWeight: FontWeight.bold,
                                 color: Colors.blue[800]),
                           ),
                         ),
@@ -66,14 +66,14 @@ class TwitterFeedSmall extends StatelessWidget {
 
   Future<dynamic> loadData() async {
     var feed = await Network.getJson(
-        "https://api.twitter.com/2/tweets/search/recent?query=$searchTerms&max_results=20&tweet.fields=attachments,created_at,entities",
+        "https://api.twitter.com/2/tweets/search/recent?query=$searchTerms&max_results=10&tweet.fields=attachments,created_at,entities",
         requestHeaders: RequestHeaders.twitterStreamHeaders);
     return feed;
   }
 
   String getFormattedText(String text) {
-    if (text.toString().length > 199) {
-      return text.toString().substring(0, 200) + "...";
+    if (text.toString().length > 179) {
+      return text.toString().substring(0, 180) + "...";
     } else {
       return text;
     }

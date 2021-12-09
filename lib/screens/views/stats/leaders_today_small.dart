@@ -7,12 +7,12 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class StatsToday extends StatefulWidget {
+class LeadersTodaySmall extends StatefulWidget {
   @override
-  _StatsTodayState createState() => _StatsTodayState();
+  _LeadersTodaySmallState createState() => _LeadersTodaySmallState();
 }
 
-class _StatsTodayState extends State<StatsToday> {
+class _LeadersTodaySmallState extends State<LeadersTodaySmall> {
   Future<bool> dataLoadComplete;
 
   @override
@@ -25,11 +25,11 @@ class _StatsTodayState extends State<StatsToday> {
     return Container(
       child: Column(children: [
         SizedBox(
-          height: 10,
+          height: 5,
         ),
         Text(
           "Today's Leaders",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         ),
         SizedBox(
           height: 10,
@@ -40,7 +40,7 @@ class _StatsTodayState extends State<StatsToday> {
         ),
         showLeaders(),
         SizedBox(
-          height: 20,
+          height: 10,
         ),
       ]),
     );
@@ -56,9 +56,9 @@ class _StatsTodayState extends State<StatsToday> {
                   .getPlayerBoxScores();
 
           List<DataRow> rowsPoints = [];
-          List<DataRow> rowsRebs = [];
-          List<DataRow> rowsAsts = [];
-          List<DataRow> rowsPM = [];
+          // List<DataRow> rowsRebs = [];
+          // List<DataRow> rowsAsts = [];
+          // List<DataRow> rowsPM = [];
 
           if (list == null) {
             return Container(
@@ -91,54 +91,54 @@ class _StatsTodayState extends State<StatsToday> {
               ]));
             }
 
-            list.sortByRebounds(false);
+            // list.sortByRebounds(false);
 
-            for (var p in list.items) {
-              rowsRebs.add(DataRow(cells: [
-                DataCell(TeamTricodeCardFromTeamId(
-                  teamId: p.teamId,
-                )),
-                DataCell(
-                  Text(p.lastName),
-                ),
-                DataCell(Text(p.totReb.toString())),
-                DataCell(Text(p.offReb + " | " + p.defReb)),
-              ]));
-            }
+            // for (var p in list.items) {
+            //   rowsRebs.add(DataRow(cells: [
+            //     DataCell(TeamTricodeCardFromTeamId(
+            //       teamId: p.teamId,
+            //     )),
+            //     DataCell(
+            //       Text(p.lastName),
+            //     ),
+            //     DataCell(Text(p.totReb.toString())),
+            //     DataCell(Text(p.offReb + " | " + p.defReb)),
+            //   ]));
+            // }
 
-            list.sortByAssists(false);
+            // list.sortByAssists(false);
 
-            for (var p in list.items) {
-              rowsAsts.add(DataRow(cells: [
-                DataCell(TeamTricodeCardFromTeamId(
-                  teamId: p.teamId,
-                )),
-                DataCell(
-                  Text(p.lastName),
-                ),
-                DataCell(Text(p.assists.toString()))
-              ]));
-            }
+            // for (var p in list.items) {
+            //   rowsAsts.add(DataRow(cells: [
+            //     DataCell(TeamTricodeCardFromTeamId(
+            //       teamId: p.teamId,
+            //     )),
+            //     DataCell(
+            //       Text(p.lastName),
+            //     ),
+            //     DataCell(Text(p.assists.toString()))
+            //   ]));
+            // }
 
-            list.sortByPlusMinus(false);
+            // list.sortByPlusMinus(false);
 
-            for (var p in list.items) {
-              rowsPM.add(DataRow(cells: [
-                DataCell(TeamTricodeCardFromTeamId(
-                  teamId: p.teamId,
-                )),
-                DataCell(
-                  Text(p.lastName),
-                ),
-                DataCell(Text(p.plusMinus.toString()))
-              ]));
-            }
+            // for (var p in list.items) {
+            //   rowsPM.add(DataRow(cells: [
+            //     DataCell(TeamTricodeCardFromTeamId(
+            //       teamId: p.teamId,
+            //     )),
+            //     DataCell(
+            //       Text(p.lastName),
+            //     ),
+            //     DataCell(Text(p.plusMinus.toString()))
+            //   ]));
+            // }
 
             return Column(
               children: [
                 Text(
                   'Points',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 DataTable(
                   columnSpacing: 10,
@@ -151,70 +151,70 @@ class _StatsTodayState extends State<StatsToday> {
                     DataColumn(label: Text('%'))
                   ],
                   rows: [
-                    ...rowsPoints.getRange(0, 10),
+                    ...rowsPoints.getRange(0, 7),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Rebounds',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                DataTable(
-                  columnSpacing: 12,
-                  dataRowHeight: 25,
-                  headingRowHeight: 0,
-                  columns: [
-                    DataColumn(label: Text('Team')),
-                    DataColumn(label: Text('Player')),
-                    DataColumn(label: Text('Rebs')),
-                    DataColumn(label: Text('Totals'))
-                  ],
-                  rows: [
-                    ...rowsRebs.getRange(0, 10),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Assists',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                DataTable(
-                  columnSpacing: 12,
-                  dataRowHeight: 25,
-                  headingRowHeight: 0,
-                  columns: [
-                    DataColumn(label: Text('Team')),
-                    DataColumn(label: Text('Player')),
-                    DataColumn(label: Text('Asts'))
-                  ],
-                  rows: [
-                    ...rowsAsts.getRange(0, 10),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Plus/Minus',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                DataTable(
-                  columnSpacing: 12,
-                  dataRowHeight: 25,
-                  headingRowHeight: 0,
-                  columns: [
-                    DataColumn(label: Text('Team')),
-                    DataColumn(label: Text('Player')),
-                    DataColumn(label: Text('Asts'))
-                  ],
-                  rows: [
-                    ...rowsPM.getRange(0, 10),
-                  ],
-                )
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(
+                //   'Rebounds',
+                //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                // ),
+                // DataTable(
+                //   columnSpacing: 12,
+                //   dataRowHeight: 25,
+                //   headingRowHeight: 0,
+                //   columns: [
+                //     DataColumn(label: Text('Team')),
+                //     DataColumn(label: Text('Player')),
+                //     DataColumn(label: Text('Rebs')),
+                //     DataColumn(label: Text('Totals'))
+                //   ],
+                //   rows: [
+                //     ...rowsRebs.getRange(0, 10),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(
+                //   'Assists',
+                //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                // ),
+                // DataTable(
+                //   columnSpacing: 12,
+                //   dataRowHeight: 25,
+                //   headingRowHeight: 0,
+                //   columns: [
+                //     DataColumn(label: Text('Team')),
+                //     DataColumn(label: Text('Player')),
+                //     DataColumn(label: Text('Asts'))
+                //   ],
+                //   rows: [
+                //     ...rowsAsts.getRange(0, 10),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(
+                //   'Plus/Minus',
+                //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                // ),
+                // DataTable(
+                //   columnSpacing: 12,
+                //   dataRowHeight: 25,
+                //   headingRowHeight: 0,
+                //   columns: [
+                //     DataColumn(label: Text('Team')),
+                //     DataColumn(label: Text('Player')),
+                //     DataColumn(label: Text('Asts'))
+                //   ],
+                //   rows: [
+                //     ...rowsPM.getRange(0, 10),
+                //   ],
+                // )
               ],
             );
           } else {

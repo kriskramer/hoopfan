@@ -9,8 +9,9 @@ import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/players/player_search.dart';
 import 'package:hoop/screens/views/standings/standings.dart';
 import 'package:hoop/screens/views/standings/standings_small.dart';
-import 'package:hoop/screens/views/stats/stats_main.dart';
-import 'package:hoop/screens/views/stats/stats_today_small.dart';
+import 'package:hoop/screens/views/stats/leaders_main.dart';
+import 'package:hoop/screens/views/stats/leaders_today_small.dart';
+import 'package:hoop/screens/views/stats/league_stats_small.dart';
 
 class DashboardMain extends StatefulWidget {
   const DashboardMain();
@@ -123,9 +124,9 @@ class _DashboardMainState extends State<DashboardMain> {
               height: 12,
             ),
             DashboardSectionBox(
-              dashboardWidget: StatsTodaySmall(),
+              dashboardWidget: LeadersTodaySmall(),
               iconData: Icons.video_collection_sharp,
-              linkWidget: StatsMain(),
+              linkWidget: LeadersMain(),
               sectionTitle: "Leaders",
               tapMoreText: "Tap to view more leaders...",
             ),
@@ -133,7 +134,7 @@ class _DashboardMainState extends State<DashboardMain> {
               height: 12,
             ),
             DashboardSectionBox(
-              dashboardWidget: SizedBox(height: 120),
+              dashboardWidget: LeagueStatsSmall(),
               iconData: Icons.video_collection_sharp,
               linkWidget: null,
               sectionTitle: "Stats",

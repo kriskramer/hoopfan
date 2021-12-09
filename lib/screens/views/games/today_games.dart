@@ -53,6 +53,7 @@ class _TodaysGamesState extends State<TodaysGames> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Today's Games"),
+        toolbarHeight: 50,
       ),
       body: FutureBuilder(
           future:

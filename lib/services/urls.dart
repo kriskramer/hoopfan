@@ -119,7 +119,7 @@ class Urls {
     if (today.hour > 12) {
       String year = today.year.toString();
       String month = today.month.toString().padLeft(2, '0');
-      String day = today.day.toString();
+      String day = today.day.toString().padLeft(2, '0');
 
       return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
     } else {
