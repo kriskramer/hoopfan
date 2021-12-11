@@ -79,26 +79,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                       if (idx < 0) {
                         idx = 0;
                       }
-                      return Container(
-                        padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              plays[idx]["clock"] + "  ",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            getTeamCard(
-                                plays[idx]["description"], widget.gameData),
-                            Flexible(
-                                child: Text(
-                              getPbPDescriptionFormatted(
-                                  plays[idx]["description"], widget.gameData),
-                              style: TextStyle(fontSize: 14),
-                            ))
-                          ],
-                        ),
-                      );
+                      return getPbpItem(plays[idx], widget.gameData);
                     }),
                 SizedBox(
                   height: 8,
@@ -134,18 +115,6 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
             child: Text('Full Play by Play',
                 style: TextStyle(color: Colors.white)),
           ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => GamePlayByPlay(
-          //             gameData: widget.gameData,
-          //           ),
-          //         ));
-          //   },
-          //   child: Text('Lead Tracker', style: TextStyle(color: Colors.white)),
-          // ),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -180,6 +149,52 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
   Future<void> getData(String date, String gameId, String period) async {
     // Get the current period's pbp feed in real-time
     _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
+  }
+
+  Widget getPbpItem(dynamic play, dynamic game) {
+    if (play["isScoreChange"]) {
+      return Column(children: [
+        Container(
+          padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                play["clock"] + "  ",
+                style: TextStyle(fontSize: 14),
+              ),
+              getTeamCard(play["description"], widget.gameData),
+              Flexible(
+                  child: Text(
+                //getPbpShotMadeText(play["description"]),
+                getPbPDescriptionFormatted(
+                    play["description"], widget.gameData),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ))
+            ],
+          ),
+        ),
+      ]);
+    } else {
+      return Container(
+        padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              play["clock"] + "  ",
+              style: TextStyle(fontSize: 14),
+            ),
+            getTeamCard(play["description"], widget.gameData),
+            Flexible(
+                child: Text(
+              getPbPDescriptionFormatted(play["description"], widget.gameData),
+              style: TextStyle(fontSize: 14),
+            ))
+          ],
+        ),
+      );
+    }
   }
 
   Widget getTeamCard(String desc, dynamic game) {
@@ -231,6 +246,15 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
 
     return desc;
+  }
+
+  String getPbpShotMadeText(String desc) {
+    // TODO: Not working quite right. Needs more work...
+    if (desc.indexOf("Shot: Made") > -1) {
+      return desc.substring(desc.indexOf("] "), desc.indexOf("Shot: Made"));
+    } else {
+      return desc;
+    }
   }
 
   Widget loadPbpData(

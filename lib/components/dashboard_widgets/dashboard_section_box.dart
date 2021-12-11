@@ -19,23 +19,37 @@ class DashboardSectionBox extends StatelessWidget {
     return Column(
       children: [
         Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Icon(
-                  iconData,
-                  color: Colors.blue,
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Container(
+                  //width: 250,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue, width: 1)),
                 ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  sectionTitle,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ]),
-            )),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                iconData,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                sectionTitle,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ]),
+          ),
+        ),
         linkWidget == null
             ? Card(
                 shape: RoundedRectangleBorder(

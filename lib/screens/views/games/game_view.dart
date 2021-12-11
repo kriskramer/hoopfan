@@ -14,6 +14,7 @@ import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
+import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/games/game_news.dart';
 import 'package:hoop/screens/views/games/game_preview_article.dart';
@@ -93,6 +94,7 @@ class _GameViewState extends State<GameView> {
                 // var currentPeriod = gameData["period"]["current"];
 
                 var newsSearchString = getNewsSearchString(gameData);
+                var twitterSearchString = getTwitterSearchString(gameData);
 
                 vTeamScore = gameData["vTeam"]["score"];
                 hTeamScore = gameData["hTeam"]["score"];
@@ -185,8 +187,11 @@ class _GameViewState extends State<GameView> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => GameNews(
-                                          searchString: newsSearchString,
+                                        // builder: (context) => GameNews(
+                                        //   searchString: newsSearchString,
+                                        // ),
+                                        builder: (context) => TwitterFeed(
+                                          searchTerms: twitterSearchString,
                                         ),
                                       ),
                                     );
@@ -428,6 +433,15 @@ class _GameViewState extends State<GameView> {
         hTeamName +
         " " +
         gameData["startDateEastern"];
+
+    return search;
+  }
+
+  String getTwitterSearchString(dynamic gameData) {
+    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
+    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+
+    var search = vTeamName + " " + hTeamName;
 
     return search;
   }

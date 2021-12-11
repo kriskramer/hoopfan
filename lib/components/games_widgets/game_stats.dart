@@ -17,7 +17,7 @@ class GameStats extends StatelessWidget {
 
     AdvancedStats st = AdvancedStats(stats: stats);
 
-    print('teatstst');
+    //print('teatstst');
 
     return Container(
       child: Column(

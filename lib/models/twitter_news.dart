@@ -4,6 +4,14 @@ class TwitterNewsItem {
   var created;
 
   TwitterNewsItem({this.text, this.id, this.created});
+
+  String getShortText() {
+    if (text.toString().length > 119) {
+      return text.toString().substring(0, 120) + "...";
+    } else {
+      return text;
+    }
+  }
 }
 
 class TwitterNewsItemList {
@@ -28,3 +36,4 @@ class TwitterNewsItemList {
 }
 
 //TODO: Need to create a block list that checks the mentions in each tweet and blocks that tweet
+// This will be used to block out ads and other nonsense tweets

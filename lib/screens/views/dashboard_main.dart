@@ -109,7 +109,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: StandingsSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: Icons.bar_chart,
                   linkWidget: Standings(),
                   sectionTitle: "Standings",
                   tapMoreText: "Tap to view full standings...",
@@ -120,7 +120,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 DashboardSectionBox(
                   dashboardWidget:
                       TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: Icons.social_distance,
                   linkWidget: TwitterFeed(searchTerms: "nba basketball"),
                   sectionTitle: "Social",
                   tapMoreText: "Tap to view more...",
@@ -130,7 +130,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: Icons.star,
                   linkWidget: LeadersMain(),
                   sectionTitle: "Leaders",
                   tapMoreText: "Tap to view more leaders...",
@@ -140,7 +140,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: LeagueStatsSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: Icons.leaderboard,
                   linkWidget: null,
                   sectionTitle: "Stats",
                   tapMoreText: "Tap to view league stats...",
