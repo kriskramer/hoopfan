@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/model/news_item.dart';
+import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -98,6 +99,10 @@ class NbaNewsFeedSmall extends StatelessWidget {
       try {
         var news =
             await Network.getJson(Urls.teamGoogleNewsSearch("nba basketball"));
+        // var news = await Network.getJson(
+        //   Urls.freeNewsApiSearch("nba basketball"),
+        //   requestHeaders: RequestHeaders.freeNewsHeaders,
+        // );
         Provider.of<JsonFiles>(context, listen: false).setNbaNews(news);
         return true;
       } catch (e) {

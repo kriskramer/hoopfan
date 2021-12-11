@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/screens/views/stats/stats_players.dart';
 import 'package:hoop/screens/views/stats/stats_teams.dart';
-import 'package:hoop/screens/views/stats/stats_today.dart';
+import 'package:hoop/screens/views/stats/leaders_today.dart';
 
-class StatsMain extends StatelessWidget {
+class LeadersMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -28,7 +28,7 @@ class StatsMain extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              SingleChildScrollView(child: StatsToday()),
+              SingleChildScrollView(child: LeadersToday()),
               SingleChildScrollView(child: StatsTeams()),
               SingleChildScrollView(child: StatsPlayers()),
             ],

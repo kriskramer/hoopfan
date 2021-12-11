@@ -23,7 +23,7 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
   Future<dynamic> _listGames;
   DateTime selectedDate;
   Timer _timer;
-  int timerDuration = 180;
+  int timerDuration = 300;
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
               timerDuration = 1000;
             }
             if (gamesInProgress.length > 0) {
-              timerDuration = 150;
+              timerDuration = 240;
             }
             String selectedDate = Provider.of<JsonFiles>(context, listen: false)
                 .getSelectedDate();
@@ -114,8 +114,8 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: gamesInProgress.length > 3
-                              ? 3
+                          itemCount: gamesInProgress.length > 4
+                              ? 4
                               : gamesInProgress.length,
                           itemBuilder: (context, index) {
                             return InProgressGameCardSmall(
@@ -130,8 +130,8 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: gamesCompleted.length > 3
-                              ? 3
+                          itemCount: gamesCompleted.length > 4
+                              ? 4
                               : gamesCompleted.length,
                           itemBuilder: (context, index) {
                             return CompletedGameCardSmall(
@@ -147,7 +147,7 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount:
-                              gamesWaiting.length > 3 ? 3 : gamesWaiting.length,
+                              gamesWaiting.length > 4 ? 4 : gamesWaiting.length,
                           itemBuilder: (context, index) {
                             return UpcomingGameCardSmall(
                               game: gamesWaiting[index],

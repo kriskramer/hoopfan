@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
-import 'package:hoop/screens/views/players/player_detail.dart';
+//import 'package:hoop/screens/views/players/player_detail.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
   final dynamic game;

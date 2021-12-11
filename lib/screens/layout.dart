@@ -25,7 +25,7 @@ class _LayoutState extends State<Layout> {
   //   LeagueMainView(),
   //   NewsMainScreen(),
   //   TodaysGames(),
-  //   StatsMain(),
+  //   LeadersMain(),
   //   AccountMain(),
   // ];
 
@@ -98,6 +98,21 @@ class _LayoutState extends State<Layout> {
         );
         var players = await Network.getJson(Urls.nbaAllPlayers());
         var teams = await Network.getJson(Urls.nbaAllTeams());
+
+        dynamic baseTeamStats = await Network.getJson(
+          Urls.getNbaStatsTeamStatisticsBase(),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
+
+        dynamic advancedTeamStats = await Network.getJson(
+          Urls.getNbaStatsTeamStatisticsAdvanced(),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
+
+        Provider.of<JsonFiles>(context, listen: false)
+            .setBaseTeamStats(baseTeamStats);
+        Provider.of<JsonFiles>(context, listen: false)
+            .setAdvancedTeamStats(advancedTeamStats);
 
         //  standingsList = LeagueStandingList(newStandings);
         Provider.of<JsonFiles>(context, listen: false)

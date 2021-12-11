@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
-import 'package:hoop/screens/views/games/game_recap_article_header.dart';
+//import 'package:hoop/screens/views/games/game_recap_article_header.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
-import 'package:hoop/utils/formatdate.dart';
+//import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
@@ -22,9 +22,9 @@ class CompletedGameCardSmall extends StatelessWidget {
     final LeagueStanding hTeam =
         standings.getTeamStandings(game["hTeam"]["teamId"]);
 
-    bool recap = game["isRecapArticleAvail"];
-    var gameId = game["gameId"];
-    var date = game["gameUrlCode"].toString().split("/")[0];
+    // bool recap = game["isRecapArticleAvail"];
+    // var gameId = game["gameId"];
+    // var date = game["gameUrlCode"].toString().split("/")[0];
 
     bool isOvertime = false;
     if (game["period"] != null) {

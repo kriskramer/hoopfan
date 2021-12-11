@@ -1,7 +1,7 @@
 // refactor network request Headers into this class
 class RequestHeaders {
   static Map<String, String> bingHeaders = {
-    'Ocp-Apim-Subscription-Key': "235ced56b4ba4206a1e59e1785657176"
+    'Ocp-Apim-Subscription-Key': "" //"235ced56b4ba4206a1e59e1785657176"
   };
   static Map<String, String> twitterStreamHeaders = {
     'Authorization':
@@ -20,5 +20,10 @@ class RequestHeaders {
     'Referer': 'https://stats.nba.com/',
     'Pragma': 'no-cache',
     'Cache-Control': 'no-cache',
+  };
+
+  static Map<String, String> freeNewsHeaders = {
+    "x-rapidapi-host": "free-news.p.rapidapi.com",
+    "x-rapidapi-key": "5b26dde365mshcec96152e331e05p1ab7c8jsn6d180eadd5fb",
   };
 }
