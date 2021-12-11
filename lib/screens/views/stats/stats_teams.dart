@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/team_stats/team_stats.dart';
@@ -224,7 +225,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamName),
+          getTeamNameWithTeamColor(s.teamID.toString(), s.teamName),
         ),
         DataCell(Text(s.strCurrentStreak))
       ]));
@@ -248,7 +249,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamName),
+          getTeamNameWithTeamColor(s.teamID.toString(), s.teamName),
         ),
         DataCell(Text(s.strCurrentStreak))
       ]));
@@ -272,7 +273,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamName),
+          getTeamNameWithTeamColor(s.teamID.toString(), s.teamName),
         ),
         DataCell(Text(s.wins.toString()))
       ]));
@@ -296,7 +297,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var s in listStandings.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.teamName),
+          getTeamNameWithTeamColor(s.teamID.toString(), s.teamName),
         ),
         DataCell(Text(s.losses.toString()))
       ]));
@@ -320,7 +321,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.ppg.avg))
       ]));
@@ -347,7 +348,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.ppg.avg))
       ]));
@@ -375,7 +376,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.oppg.avg))
       ]));
@@ -403,7 +404,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.oppg.avg))
       ]));
@@ -431,7 +432,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.fgp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -459,7 +460,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.fgp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -487,7 +488,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.ftp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -515,7 +516,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.ftp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -543,7 +544,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.tpp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -568,7 +569,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text((double.parse(t.tpp.avg) * 100).toStringAsFixed(1) + "%"))
       ]));
@@ -593,7 +594,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.trpg.avg))
       ]));
@@ -621,7 +622,7 @@ class _StatsTeamsState extends State<StatsTeams> {
     for (var t in listTeamStats.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(t.nickname),
+          getTeamNameWithTeamColor(t.teamId, t.nickname),
         ),
         DataCell(Text(t.trpg.avg))
       ]));
@@ -1032,5 +1033,29 @@ class _StatsTeamsState extends State<StatsTeams> {
       else
         return -1;
     });
+  }
+
+  Widget getTeamNameWithTeamColor(String teamId, String teamName) {
+    if (teamId != '') {
+      int teamColor = ConstantHelper.getTeamColor(teamId);
+      int teamTextColor = ConstantHelper.getTeamTextColor(teamId);
+
+      return Card(
+        elevation: 1,
+        color: Color(teamColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(2),
+          child: Text(
+            teamName,
+            style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+          ),
+        ),
+      );
+    } else {
+      return Text(teamName);
+    }
   }
 }

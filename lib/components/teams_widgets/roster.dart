@@ -93,7 +93,8 @@ class Roster extends StatelessWidget {
       children: [
         DataTable(
           columnSpacing: 1,
-          dataRowHeight: 45,
+          dataRowHeight: 30,
+          headingRowHeight: 20,
           horizontalMargin: 10,
           columns: [
             DataColumn(
@@ -107,7 +108,8 @@ class Roster extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: DataTable(
               columnSpacing: 12,
-              dataRowHeight: 45,
+              dataRowHeight: 30,
+              headingRowHeight: 20,
               horizontalMargin: 10,
               columns: [
                 DataColumn(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 
 class PlayerStatsYearOverYearBaseDataTable extends StatelessWidget {
   final dynamic json;
@@ -63,34 +64,50 @@ class PlayerStatsYearOverYearBaseDataTable extends StatelessWidget {
         //DataColumn(label: Text('Group')),
         DataColumn(label: Text('Value')),
         DataColumn(label: Text('Team')),
-        DataColumn(label: Text('G')),
-        DataColumn(label: Text('W')),
-        DataColumn(label: Text('L')),
-        DataColumn(label: Text('W %')),
-        DataColumn(label: Text('Min')),
-        DataColumn(label: Text('FGM')),
-        DataColumn(label: Text('FGA')),
-        DataColumn(label: Text('FG %')),
-        DataColumn(label: Text('3PM')),
-        DataColumn(label: Text('3PA')),
-        DataColumn(label: Text('3P %')),
-        DataColumn(label: Text('FTM')),
-        DataColumn(label: Text('FTA')),
-        DataColumn(label: Text('FT %')),
-        DataColumn(label: Text('OReb')),
-        DataColumn(label: Text('DReb')),
-        DataColumn(label: Text('Rebs')),
-        DataColumn(label: Text('Asts')),
-        DataColumn(label: Text('TOs')),
-        DataColumn(label: Text('Stls')),
-        DataColumn(label: Text('Blks')),
-        DataColumn(label: Text('BlkA')),
-        DataColumn(label: Text('PF')),
-        DataColumn(label: Text('PFD')),
-        DataColumn(label: Text('Pts')),
-        DataColumn(label: Text('+/-')),
-        DataColumn(label: Text('DD2')),
-        DataColumn(label: Text('TD3')),
+        DataColumn(label: StatInfoDialog(label: Text('G'), statName: "GP")),
+        DataColumn(
+            label: StatInfoDialog(
+          label: Text('W'),
+          statName: "W",
+        )),
+        DataColumn(
+            label: StatInfoDialog(
+          label: Text('L'),
+          statName: "L",
+        )),
+        DataColumn(
+            label: StatInfoDialog(label: Text('W %'), statName: "Win %")),
+        DataColumn(label: StatInfoDialog(label: Text('Min'), statName: "MIN")),
+        DataColumn(label: StatInfoDialog(label: Text('FGM'), statName: "FGM")),
+        DataColumn(label: StatInfoDialog(label: Text('FGA'), statName: "FGA")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('FG %'), statName: "FG %")),
+        DataColumn(label: StatInfoDialog(label: Text('3PM'), statName: "3PM")),
+        DataColumn(label: StatInfoDialog(label: Text('3PA'), statName: "3PA")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('3P %'), statName: "3P %")),
+        DataColumn(label: StatInfoDialog(label: Text('FTM'), statName: "FTM")),
+        DataColumn(label: StatInfoDialog(label: Text('FTA'), statName: "FTA")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('FT %'), statName: "FT %")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('OREB'), statName: "OREB")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('DREB'), statName: "DREB")),
+        DataColumn(label: StatInfoDialog(label: Text('REB'), statName: "REB")),
+        DataColumn(label: StatInfoDialog(label: Text('AST'), statName: "AST")),
+        DataColumn(label: StatInfoDialog(label: Text('TOV'), statName: "TOV")),
+        DataColumn(label: StatInfoDialog(label: Text('STL'), statName: "STL")),
+        DataColumn(label: StatInfoDialog(label: Text('BLK'), statName: "BLK")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('BLKA'), statName: "BLKA")),
+        DataColumn(label: StatInfoDialog(label: Text('PF'), statName: "PF")),
+        DataColumn(label: StatInfoDialog(label: Text('PFD'), statName: "PFD")),
+        DataColumn(label: StatInfoDialog(label: Text('PTS'), statName: "PTS")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('+/-'), statName: "PLUSMINUS")),
+        DataColumn(label: StatInfoDialog(label: Text('DD2'), statName: "DD2")),
+        DataColumn(label: StatInfoDialog(label: Text('TD3'), statName: "TD3"))
       ],
       rows: [
         ...rows,

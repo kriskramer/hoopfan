@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/screens/views/teams_view/team_main.dart';
+import 'package:hoop/screens/views/teams/team_main.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';

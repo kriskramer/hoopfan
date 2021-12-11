@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/models/box_scores/game_box_score_four_factors.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
@@ -74,14 +75,28 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
       }),
       columns: [
         DataColumn(label: Text('Player')),
-        DataColumn(label: Text('eFG %')),
-        DataColumn(label: Text('FTA Rate')),
-        DataColumn(label: Text('TM TO Rate')),
-        DataColumn(label: Text('OReb %')),
-        DataColumn(label: Text('Opp eFG %')),
-        DataColumn(label: Text('Opp FTA Rate')),
-        DataColumn(label: Text('Opp TM TO Rate')),
-        DataColumn(label: Text('Opp OReb %')),
+        DataColumn(
+            label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")),
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('FTA Rate'), statName: "FTA Rate")),
+        DataColumn(
+            label:
+                StatInfoDialog(label: Text('TM TO Rate'), statName: "TM TOV")),
+        DataColumn(
+            label: StatInfoDialog(label: Text('OReb %'), statName: "OREB %")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp eFG %'), statName: "Opp eFG %")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp FTA Rate'), statName: "Opp FTA")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp TM TO Rate'), statName: "Opp TM TOV")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp OReb %'), statName: "Opp OReb %")),
       ],
       rows: [
         ...rows,

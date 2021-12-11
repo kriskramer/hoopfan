@@ -2,25 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/completed_game_card.dart';
+import 'package:hoop/components/games_widgets/completed_game_card_small.dart';
 import 'package:hoop/components/games_widgets/horiz_calendar.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
+import 'package:hoop/components/games_widgets/in_progress_game_card_small.dart';
 import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
+import 'package:hoop/components/games_widgets/upcoming_game_card_small.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 
-class TodaysGames extends StatefulWidget {
+class TodaysGamesSmall extends StatefulWidget {
   @override
-  _TodaysGamesState createState() => _TodaysGamesState();
+  _TodaysGamesSmallState createState() => _TodaysGamesSmallState();
 }
 
-class _TodaysGamesState extends State<TodaysGames> {
+class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
   Future<dynamic> _listGames;
   DateTime selectedDate;
   Timer _timer;
-  int timerDuration = 150;
+  int timerDuration = 300;
 
   @override
   void initState() {
@@ -55,9 +58,7 @@ class _TodaysGamesState extends State<TodaysGames> {
             _listGames, //loadData(context), // Network.getJson(Urls.nbaGamesToday()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            //var games = snapshot.data;
             var games = snapshot.data;
-            //Provider.of<JsonFiles>(context, listen: false).getTodaysGames();
 
             int count = games["numGames"];
             var gamesCompleted = getGamesCompleted(games);
@@ -73,7 +74,7 @@ class _TodaysGamesState extends State<TodaysGames> {
               timerDuration = 1000;
             }
             if (gamesInProgress.length > 0) {
-              timerDuration = 150;
+              timerDuration = 240;
             }
             String selectedDate = Provider.of<JsonFiles>(context, listen: false)
                 .getSelectedDate();
@@ -89,20 +90,7 @@ class _TodaysGamesState extends State<TodaysGames> {
 
             return count == 0
                 ? Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      HorizontalCalendar(
-                          date: DateTime.now(),
-                          textColor: Colors.black45,
-                          backgroundColor: Colors.white,
-                          selectedColor: Colors.blue,
-                          onDateSelected: (date) {
-                            handleNewDate(
-                              date,
-                              context,
-                            );
-                            print("THis $date");
-                          }),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 2,
                       ),
@@ -110,34 +98,27 @@ class _TodaysGamesState extends State<TodaysGames> {
                     ],
                   )
                 : ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     children: [
-                      HorizontalCalendar(
-                          date: DateTime.now(),
-                          textColor: Colors.black45,
-                          backgroundColor: Colors.white,
-                          selectedColor: Colors.blue,
-                          onDateSelected: (date) {
-                            if (date != null) {
-                              handleNewDate(date, context);
-                            }
-                          }),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         width: double.infinity,
                         child: Center(
                           child: Text(
                             dateInfo,
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: gamesInProgress.length,
+                          itemCount: gamesInProgress.length > 4
+                              ? 4
+                              : gamesInProgress.length,
                           itemBuilder: (context, index) {
-                            return InProgressGameCard(
+                            return InProgressGameCardSmall(
                               game: gamesInProgress[index],
                             );
                           }),
@@ -149,9 +130,11 @@ class _TodaysGamesState extends State<TodaysGames> {
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: gamesCompleted.length,
+                          itemCount: gamesCompleted.length > 4
+                              ? 4
+                              : gamesCompleted.length,
                           itemBuilder: (context, index) {
-                            return CompletedGameCard(
+                            return CompletedGameCardSmall(
                               game: gamesCompleted[index],
                             );
                           }),
@@ -163,9 +146,10 @@ class _TodaysGamesState extends State<TodaysGames> {
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: gamesWaiting.length,
+                          itemCount:
+                              gamesWaiting.length > 4 ? 4 : gamesWaiting.length,
                           itemBuilder: (context, index) {
-                            return UpcomingGameCard(
+                            return UpcomingGameCardSmall(
                               game: gamesWaiting[index],
                             );
                           }),
@@ -173,15 +157,6 @@ class _TodaysGamesState extends State<TodaysGames> {
                   );
           } else if (snapshot.connectionState == ConnectionState.done) {
             return Column(children: [
-              HorizontalCalendar(
-                  date: DateTime.now(),
-                  textColor: Colors.black45,
-                  backgroundColor: Colors.white,
-                  selectedColor: Colors.blue,
-                  onDateSelected: (date) {
-                    handleNewDate(date, context);
-                    print("THis $date");
-                  }),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2,
               ),
@@ -219,32 +194,6 @@ class _TodaysGamesState extends State<TodaysGames> {
     print(selectedDate);
     return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
   }
-
-  // Future<bool> loadData(BuildContext context) async {
-  //   if (Provider.of<JsonFiles>(context, listen: false).getTodaysGames() ==
-  //       null) {
-  //     var selectedDate =
-  //         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-  //     var games =
-  //         await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
-
-  //     if (games != null) {
-  //       Provider.of<JsonFiles>(context, listen: false).setTodaysGames(games);
-  //       return true;
-  //     }
-  //     return false;
-  //   }
-
-  //   return false;
-  // }
-
-  // Widget getDateSlider() {
-  //   Widget d;
-
-  //   DateTime today = DateTime.now();
-
-  //   return d;
-  // }
 
   List<dynamic> getGamesWaiting(dynamic json) {
     List<dynamic> games = [];

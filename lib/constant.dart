@@ -709,7 +709,7 @@ Map allTeams = {
     'Suns',
     'https://upload.wikimedia.org//wikipedia//fr//5//56//Phoenix_Suns_2013.png',
     'West',
-    'PHO',
+    'PHX', // changed from 'PHO'... not sure which one is correct
     '1610612756', //nba team id
     'pacific'
   ],
@@ -752,6 +752,16 @@ Map allTeams = {
 };
 
 class ConstantHelper {
+  static String getTeamIdByTriCode(String triCode) {
+    String teamId = '';
+    allTeams.forEach((key, value) {
+      if (value[4] == triCode.toUpperCase()) {
+        teamId = value[5];
+      }
+    });
+    return teamId;
+  }
+
   static String getTeamName(String teamId) {
     String name = "";
     allTeams.forEach((key, value) {

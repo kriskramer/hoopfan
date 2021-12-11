@@ -69,7 +69,7 @@ class TeamInfoPage extends StatelessWidget {
             " (" +
             json[0]["Details"][0]["ArenaCapacity"] +
             ")",
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
     list.add(
@@ -86,7 +86,7 @@ class TeamInfoPage extends StatelessWidget {
     list.add(
       Text(
         json[0]["Details"][0]["Owner"],
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
     list.add(
@@ -103,7 +103,7 @@ class TeamInfoPage extends StatelessWidget {
     list.add(
       Text(
         json[0]["Details"][0]["GeneralManager"],
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
     list.add(
@@ -120,7 +120,7 @@ class TeamInfoPage extends StatelessWidget {
     list.add(
       Text(
         json[0]["Details"][0]["HeadCoach"],
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
     list.add(
@@ -137,7 +137,7 @@ class TeamInfoPage extends StatelessWidget {
     list.add(
       Text(
         json[0]["Details"][0]["DLeagueAffiliation"],
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
     list.add(
@@ -154,7 +154,7 @@ class TeamInfoPage extends StatelessWidget {
     list.add(
       Text(
         json[0]["Details"][0]["YearFounded"].toString(),
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(fontSize: 16),
       ),
     );
 

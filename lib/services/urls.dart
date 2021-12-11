@@ -29,11 +29,15 @@ class Urls {
       //"https://bing-news-search1.p.rapidapi.com/news/search?q=$team&freshness=Day&textFormat=Raw&safeSearch=Off?rapidapi-key=${NbaApi.key}";
       "https://google-search3.p.rapidapi.com/api/v1/news/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
+  static String freeNewsApiSearch(String searchTerms) =>
+      "https://free-news.p.rapidapi.com/v1/search?q=$searchTerms&lang=en";
+
 //   static String teamGoogleImageSearch(String team) =>
 //       "https://google-search3.p.rapidapi.com/api/v1/images/q=$team?rapidapi-key=${GoogleSearchApi.key}";
 
   static String getBingVideoSearch(String team) {
-    return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";
+    //return "https://api.bing.microsoft.com/v7.0/videos/search?q=$team";
+    return '';
   }
 
   static String sioTeam(String team) =>
@@ -118,7 +122,7 @@ class Urls {
     if (today.hour > 12) {
       String year = today.year.toString();
       String month = today.month.toString().padLeft(2, '0');
-      String day = today.day.toString();
+      String day = today.day.toString().padLeft(2, '0');
 
       return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
     } else {
@@ -215,6 +219,28 @@ class Urls {
   // static String getNbaStatsPlayerSplitsAdvanced(String playerId) {
   //   return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   // }
+
+  static String getNbaStatsTeamSplitsShooting(String teamId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/teamdashboardbyshootingsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamSplitsGeneral(String teamId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/teamdashboardbygeneralsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamSplitsGame(String teamId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/teamdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamLastNGames(String teamId,
+      {String measureType = "Base",
+      String perMode = "Totals",
+      int lastNGames}) {
+    return "https://stats.nba.com/stats/teamdashboardbylastngames?DateFrom=&DateTo=&GameSegment=&LastNGames=$lastNGames&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
+  }
 
   static String getNbaStatsAllPlayerStats(
       {String measureType = "Base", String perMode = "Totals"}) {

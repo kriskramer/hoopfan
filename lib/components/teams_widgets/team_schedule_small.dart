@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games_view/game_view.dart';
+import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
@@ -30,14 +30,14 @@ class TeamScheduleSmall extends StatelessWidget {
           }
 
           if (listPrevious[listPrevious.length - 1] != null) {
-            list.add(
-                getGameCard(listPrevious[listPrevious.length - 1], context));
+            list.add(Text("Last Game", style: TextStyle(fontSize: 16)));
+            list.add(getGame(listPrevious[listPrevious.length - 1], context));
           }
-          list.add(SizedBox(height: 20));
-          list.add(Text("Next 3 Games", style: TextStyle(fontSize: 24)));
+          list.add(SizedBox(height: 8));
+          list.add(Text("Next 3 Games", style: TextStyle(fontSize: 16)));
           for (int i = 0; i < 3; i++) {
             if (listUpcoming[i] != null) {
-              list.add(getGameCard(listUpcoming[i], context));
+              list.add(getGame(listUpcoming[i], context));
             }
           }
 
@@ -63,135 +63,125 @@ class TeamScheduleSmall extends StatelessWidget {
     return d;
   }
 
-  Widget getGameCard(dynamic game, BuildContext context) {
+  Widget getGame(dynamic game, BuildContext context) {
     int gameStatus = game["statusNum"];
     int teamColor = ConstantHelper.getTeamColor(teamId);
 
     if (gameStatus == 1) {
       // Upcoming game
-      return Card(
-        //elevation: 2,
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {
-            //Network.launchSite(games[index]["url"]);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => GameView(
-                          game: game,
-                        )));
-          },
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(formatDate(game["startDateEastern"])),
-                      SizedBox(width: 5),
-                      Text(game["startTimeEastern"])
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        ConstantHelper.getTeamName(game["vTeam"]["teamId"]),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(game["vTeam"]["score"]),
-                      SizedBox(width: 10),
-                      Text(
-                        ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(game["hTeam"]["score"]),
-                    ],
-                  )
-                ],
-              )),
-        ),
+      return InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GameView(
+                        game: game,
+                      )));
+        },
+        child: Container(
+            width: MediaQuery.of(context).size.width - 30,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(formatDate(game["startDateEastern"])),
+                    SizedBox(width: 5),
+                    Text(game["startTimeEastern"])
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ConstantHelper.getTeamName(game["vTeam"]["teamId"]),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(game["vTeam"]["score"]),
+                    SizedBox(width: 10),
+                    Text(
+                      ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(game["hTeam"]["score"]),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ],
+            )),
       );
     } else {
       // In progress or completed game
       bool isHomeWin = isHomeTeamWinner(game);
       //bool isViewingTeamWin = getViewingTeamWinnerResult(game, teamId);
 
-      return Card(
-        //elevation: 2,
-        color: Colors.grey[70],
-        child: InkWell(
-          onTap: () {
-            //Network.launchSite(games[index]["url"]);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => GameView(
-                          game: game,
-                        )));
-          },
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(formatDate(game["startDateEastern"])),
-                      Text('Final'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        ConstantHelper.getTeamName(game["vTeam"]["teamId"]),
-                        style: TextStyle(
-                            fontWeight: isHomeWin
-                                ? FontWeight.normal
-                                : FontWeight.bold),
-                      ),
-                      Text(
-                        game["vTeam"]["score"],
-                        style: TextStyle(
-                            fontWeight: isHomeWin
-                                ? FontWeight.normal
-                                : FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
-                        style: TextStyle(
-                            fontWeight: isHomeWin
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      ),
-                      Text(
-                        game["hTeam"]["score"],
-                        style: TextStyle(
-                            fontWeight: isHomeWin
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      ),
-                    ],
-                  )
-                ],
-              )),
-        ),
+      return InkWell(
+        onTap: () {
+          //Network.launchSite(games[index]["url"]);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GameView(
+                        game: game,
+                      )));
+        },
+        child: Container(
+            width: MediaQuery.of(context).size.width - 30,
+            color: Colors.orange[100],
+            padding: EdgeInsets.all(4),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(formatDate(game["startDateEastern"])),
+                    Text('Final'),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ConstantHelper.getTeamName(game["vTeam"]["teamId"]),
+                      style: TextStyle(
+                          fontWeight:
+                              isHomeWin ? FontWeight.normal : FontWeight.bold),
+                    ),
+                    Text(
+                      game["vTeam"]["score"],
+                      style: TextStyle(
+                          fontWeight:
+                              isHomeWin ? FontWeight.normal : FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ConstantHelper.getTeamName(game["hTeam"]["teamId"]),
+                      style: TextStyle(
+                          fontWeight:
+                              isHomeWin ? FontWeight.bold : FontWeight.normal),
+                    ),
+                    Text(
+                      game["hTeam"]["score"],
+                      style: TextStyle(
+                          fontWeight:
+                              isHomeWin ? FontWeight.bold : FontWeight.normal),
+                    ),
+                  ],
+                )
+              ],
+            )),
       );
     }
   }

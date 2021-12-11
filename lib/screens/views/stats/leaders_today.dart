@@ -7,12 +7,12 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class StatsToday extends StatefulWidget {
+class LeadersToday extends StatefulWidget {
   @override
-  _StatsTodayState createState() => _StatsTodayState();
+  _LeadersTodayState createState() => _LeadersTodayState();
 }
 
-class _StatsTodayState extends State<StatsToday> {
+class _LeadersTodayState extends State<LeadersToday> {
   Future<bool> dataLoadComplete;
 
   @override

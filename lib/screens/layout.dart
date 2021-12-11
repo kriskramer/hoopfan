@@ -3,11 +3,12 @@ import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
-import 'package:hoop/screens/views/account/account_main.dart';
-import 'package:hoop/screens/views/games_view/today_games.dart';
-import 'package:hoop/screens/views/league/league.dart';
-import 'package:hoop/screens/views/news/news_main.dart';
-import 'package:hoop/screens/views/stats/stats_main.dart';
+//import 'package:hoop/screens/views/account/account_main.dart';
+import 'package:hoop/screens/views/dashboard_main.dart';
+//import 'package:hoop/screens/views/games/today_games.dart';
+//import 'package:hoop/screens/views/league/league.dart';
+//import 'package:hoop/screens/views/news/news_main.dart';
+//import 'package:hoop/screens/views/stats/stats_main.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -19,20 +20,20 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  int _selectedScreen = 0;
-  List<Widget> views = [
-    LeagueMainView(),
-    NewsMainScreen(),
-    TodaysGames(),
-    StatsMain(),
-    AccountMain(),
-  ];
+  // int _selectedScreen = 0;
+  // List<Widget> views = [
+  //   LeagueMainView(),
+  //   NewsMainScreen(),
+  //   TodaysGames(),
+  //   LeadersMain(),
+  //   AccountMain(),
+  // ];
 
-  void onTapChangeView(int index) {
-    setState(() {
-      _selectedScreen = index;
-    });
-  }
+  // void onTapChangeView(int index) {
+  //   setState(() {
+  //     _selectedScreen = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,37 +43,38 @@ class _LayoutState extends State<Layout> {
           if (snapshot.data == true) {
             return SafeArea(
               child: Scaffold(
-                body: views.elementAt(_selectedScreen),
+                //body: views.elementAt(_selectedScreen),
+                body: DashboardMain(),
                 backgroundColor: Color(0XFFEDF1FF),
-                bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.table_chart_outlined),
-                      label: "League",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.article),
-                      label: "News",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.sports_basketball_sharp),
-                      label: "Games",
-                    ),
-                    BottomNavigationBarItem(
-                      backgroundColor: Colors.blueGrey,
-                      icon: Icon(Icons.bar_chart),
-                      label: "Stats",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      label: "User",
-                    ),
-                  ],
-                  currentIndex: _selectedScreen,
-                  onTap: onTapChangeView,
-                  selectedItemColor: Color(0XFF1F6BA3),
-                ),
+                // bottomNavigationBar: BottomNavigationBar(
+                //   type: BottomNavigationBarType.fixed,
+                //   items: const <BottomNavigationBarItem>[
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.table_chart_outlined),
+                //       label: "League",
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.article),
+                //       label: "News",
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.sports_basketball_sharp),
+                //       label: "Games",
+                //     ),
+                //     BottomNavigationBarItem(
+                //       backgroundColor: Colors.blueGrey,
+                //       icon: Icon(Icons.bar_chart),
+                //       label: "Stats",
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.person),
+                //       label: "User",
+                //     ),
+                //   ],
+                //   currentIndex: _selectedScreen,
+                //   onTap: onTapChangeView,
+                //   selectedItemColor: Color(0XFF1F6BA3),
+                // ),
               ),
             );
           } else {
@@ -96,6 +98,21 @@ class _LayoutState extends State<Layout> {
         );
         var players = await Network.getJson(Urls.nbaAllPlayers());
         var teams = await Network.getJson(Urls.nbaAllTeams());
+
+        dynamic baseTeamStats = await Network.getJson(
+          Urls.getNbaStatsTeamStatisticsBase(),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
+
+        dynamic advancedTeamStats = await Network.getJson(
+          Urls.getNbaStatsTeamStatisticsAdvanced(),
+          requestHeaders: RequestHeaders.nbaStatsHeaders,
+        );
+
+        Provider.of<JsonFiles>(context, listen: false)
+            .setBaseTeamStats(baseTeamStats);
+        Provider.of<JsonFiles>(context, listen: false)
+            .setAdvancedTeamStats(advancedTeamStats);
 
         //  standingsList = LeagueStandingList(newStandings);
         Provider.of<JsonFiles>(context, listen: false)

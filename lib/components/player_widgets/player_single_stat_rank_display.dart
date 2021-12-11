@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/screens/views/players/player_rank_list.dart';
 
 class PlayerSingleStatRankDisplay extends StatefulWidget {
@@ -10,8 +11,9 @@ class PlayerSingleStatRankDisplay extends StatefulWidget {
   final int total;
   final String measure;
   final String playerId;
+  final double width;
   const PlayerSingleStatRankDisplay(this.stat, this.statName, this.rank,
-      this.total, this.measure, this.playerId);
+      this.total, this.measure, this.playerId, this.width);
 
   @override
   State<PlayerSingleStatRankDisplay> createState() =>
@@ -56,13 +58,17 @@ class _PlayerSingleStatRankDisplayState
       child: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width - 35,
-            child: LinearProgressIndicator(
-              color: getProgressBarColor(rankMeter),
-              backgroundColor: Colors.grey[50],
-              minHeight: 32,
-              value: progressValue,
-              semanticsValue: rankMeter.toString(),
+            width: MediaQuery.of(context).size.width - 25,
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              child: LinearProgressIndicator(
+                color: getProgressBarColor(rankMeter),
+                backgroundColor: Color(0xffD6D6D6), //Colors.green,
+                minHeight: 24,
+                value: progressValue,
+                semanticsValue: widget.rank.toString(),
+              ),
             ),
           ),
           Container(
@@ -72,20 +78,18 @@ class _PlayerSingleStatRankDisplayState
               children: [
                 Row(
                   children: [
-                    Text(
-                      widget.statName,
-                      style: TextStyle(fontSize: 18),
+                    SizedBox(
+                      width: 130,
                     ),
-                    SizedBox(width: 20),
                     Text(
                       widget.stat,
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 30,
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -97,13 +101,31 @@ class _PlayerSingleStatRankDisplayState
                     },
                     child: Text(
                       "Rank: " + widget.rank.toString(),
-                      style: TextStyle(fontSize: 16, color: Colors.blue[700]),
+                      style: TextStyle(fontSize: 12, color: Colors.blue[700]),
                     ),
                   ),
                 ),
               ],
             ),
           ),
+          Row(
+            children: [
+              SizedBox(width: 20),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                child: StatInfoDialog(
+                  label: Text(
+                    widget.statName,
+                    style: TextStyle(
+                      fontSize: 16,
+                      //color: Colors.red[900]
+                    ),
+                  ),
+                  statName: widget.statName,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

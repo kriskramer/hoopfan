@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/league_leaders.dart';
 import 'package:hoop/services/network.dart';
@@ -107,9 +108,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
 
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
-        DataCell(
-          Text(s.team),
-        ),
+        DataCell(getTeamTricodeCard(s.team)),
         DataCell(
           Text(s.player),
         ),
@@ -156,7 +155,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -204,7 +203,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -252,7 +251,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -300,7 +299,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -348,7 +347,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -396,7 +395,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -444,7 +443,7 @@ class _StatsPlayersState extends State<StatsPlayers> {
     for (var s in leadersList.items) {
       list.add(DataRow(cells: [
         DataCell(
-          Text(s.team),
+          getTeamTricodeCard(s.team),
         ),
         DataCell(
           Text(s.player),
@@ -500,5 +499,30 @@ class _StatsPlayersState extends State<StatsPlayers> {
         ),
       ),
     );
+  }
+
+  Widget getTeamTricodeCard(String triCode) {
+    String teamId = ConstantHelper.getTeamIdByTriCode(triCode);
+    if (teamId != '') {
+      int teamColor = ConstantHelper.getTeamColor(teamId);
+      int teamTextColor = ConstantHelper.getTeamTextColor(teamId);
+
+      return Card(
+        elevation: 2,
+        color: Color(teamColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(2),
+          child: Text(
+            triCode,
+            style: TextStyle(color: Color(teamTextColor), fontSize: 12),
+          ),
+        ),
+      );
+    } else {
+      return Text(triCode);
+    }
   }
 }

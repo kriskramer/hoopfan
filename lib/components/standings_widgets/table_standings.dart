@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
-import 'package:hoop/screens/views/teams_view/team_main.dart';
+import 'package:hoop/screens/views/teams/team_main.dart';
 
 class StandingsTable extends StatefulWidget {
   final List<LeagueStanding> list;
@@ -15,19 +16,14 @@ class StandingsTable extends StatefulWidget {
 class _StandingsTableState extends State<StandingsTable> {
   List<DataRow> tableData() {
     List<DataRow> table = List.filled(widget.teamCount, null);
-    for (int index = 0; index < widget.list.length; index++) {
+    for (int index = 0; index < widget.teamCount; index++) {
       LeagueStanding team = widget.list[index];
       table[index] = DataRow(
-        // color: MaterialStateProperty.all<Color>(
-        //     Color(ConstantHelper.getTeamColor(team.teamID.toString()))
-        //         .withOpacity(0.5)),
         cells: [
           DataCell(
-            Container(
-                width: 15,
-                height: 15,
-                color:
-                    Color(ConstantHelper.getTeamColor(team.teamID.toString()))),
+            CachedLogo(
+                radius: 12,
+                url: ConstantHelper.getTeamLogo(team.teamID.toString())),
           ),
           DataCell(
               Text(
@@ -86,6 +82,8 @@ class _StandingsTableState extends State<StandingsTable> {
   Widget build(BuildContext context) {
     return DataTable(
       columnSpacing: 8,
+      dataRowHeight: 36,
+      headingRowHeight: 30,
       columns: [
         DataColumn(
           label: Text(
@@ -122,7 +120,7 @@ class _StandingsTableState extends State<StandingsTable> {
           label: Text(
             'Pct',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.blueGrey,
             ),
           ),
           numeric: true,
@@ -131,7 +129,7 @@ class _StandingsTableState extends State<StandingsTable> {
           label: Text(
             'GB',
             style: TextStyle(
-              color: Colors.deepPurple,
+              color: Colors.blueGrey,
             ),
           ),
         ),

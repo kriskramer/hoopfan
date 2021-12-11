@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/screens/views/teams_view/team_rank_list.dart';
+import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
+import 'package:hoop/screens/views/teams/team_rank_list.dart';
+import 'package:hoop/stat_definition.dart';
 
 class TeamSingleStat extends StatefulWidget {
   final label;
@@ -85,6 +87,7 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+<<<<<<< HEAD
               Row(
                 children: [
                   Container(
@@ -107,6 +110,17 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   ),
                 ],
               ),
+=======
+              Row(children: [
+                SizedBox(
+                  width: 130,
+                ),
+                Text(
+                  widget.value,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ]),
+>>>>>>> master
               noRank
                   ? SizedBox(
                       width: 1,
@@ -128,6 +142,24 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                     ),
             ],
           ),
+        ),
+        Row(
+          children: [
+            SizedBox(width: 30),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+              child: StatInfoDialog(
+                label: Text(
+                  widget.label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    //color: Colors.red[900]
+                  ),
+                ),
+                statName: widget.statName,
+              ),
+            ),
+          ],
         )
       ]),
     );
