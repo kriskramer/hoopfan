@@ -87,30 +87,6 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-<<<<<<< HEAD
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    child: Text(
-                      widget.label,
-                      style: TextStyle(
-                        fontSize: 14,
-
-                        //color: Colors.red[900]
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    widget.value,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-=======
               Row(children: [
                 SizedBox(
                   width: 130,
@@ -120,7 +96,6 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ]),
->>>>>>> master
               noRank
                   ? SizedBox(
                       width: 1,
