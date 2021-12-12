@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_dialog.dart';
-import 'package:hoop/components/games_widgets/pbp_dialog.dart';
-import 'package:hoop/components/games_widgets/pbp_period_view.dart';
 import 'package:hoop/constant.dart';
 import '../../model/lead_tracker.dart';
 
@@ -34,39 +32,6 @@ class GameLeadChart extends StatelessWidget {
                 width: 15,
               ),
               Text('Lead Tracker'),
-              TextButton(
-                child: Text(
-                  'Play-by-Play',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return PbpDialog(
-                          pbp: pbp,
-                          game: game,
-                        );
-                      });
-                },
-              ),
-              // TextButton(
-              //   child: Text(
-              //     'Video',
-              //     style: TextStyle(color: Colors.blue),
-              //   ),
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => PbpPeriodView(
-              //           gameId: game["gameId"],
-              //           period: period,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // )
             ],
           ),
           SizedBox(

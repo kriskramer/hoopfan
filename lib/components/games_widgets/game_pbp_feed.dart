@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hoop/components/games_widgets/full_pbp.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
 import 'package:hoop/components/games_widgets/game_video_feed.dart';
+import 'package:hoop/components/games_widgets/pbp_dialog.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_inline_pbp.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/play_by_play_item.dart';
 import 'package:hoop/screens/views/games/game_pbp.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -70,6 +73,15 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
             if (snapshot.hasData) {
               var plays = snapshot.data["plays"];
               return Column(children: [
+                // SizedBox(
+                //   height: 15,
+                // ),
+                ScoringTrendsInlinePbp(
+                  game: widget.gameData,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -82,7 +94,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                       return getPbpItem(plays[idx], widget.gameData);
                     }),
                 SizedBox(
-                  height: 8,
+                  height: 12,
                 ),
                 GameLeadChartSmall(
                   pbp: plays,
@@ -91,41 +103,55 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                   period: period,
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
-                ScoringTrendsInlinePbp(
-                  game: widget.gameData,
-                )
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GamePlayByPlay(
+                                  gameData: widget.gameData,
+                                ),
+                              ));
+                        },
+                        child: Text('Lead Tracker',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FullPbp(
+                                  game: widget.gameData,
+                                  pbp: plays,
+                                ),
+                              ));
+                        },
+                        child: Text('Full PBP',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GameVideoFeed(gameId),
+                              ));
+                        },
+                        child: Text('Video Feed',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ]),
               ]);
             }
             return Text('');
           },
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GamePlayByPlay(
-                      gameData: widget.gameData,
-                    ),
-                  ));
-            },
-            child: Text('Full Play by Play',
-                style: TextStyle(color: Colors.white)),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GameVideoFeed(gameId),
-                  ));
-            },
-            child: Text('Video Feed', style: TextStyle(color: Colors.white)),
-          ),
-        ]),
         loadPbpData(date, widget.gameData, "1", context),
         widget.gameData["period"]["current"] >= 2
             ? loadPbpData(date, widget.gameData, "2", context)
@@ -152,49 +178,46 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
   }
 
   Widget getPbpItem(dynamic play, dynamic game) {
-    if (play["isScoreChange"]) {
-      return Column(children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                play["clock"] + "  ",
-                style: TextStyle(fontSize: 14),
-              ),
-              getTeamCard(play["description"], widget.gameData),
-              Flexible(
-                  child: Text(
-                //getPbpShotMadeText(play["description"]),
-                getPbPDescriptionFormatted(
-                    play["description"], widget.gameData),
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ))
-            ],
-          ),
+    Widget container;
+    Widget row;
+    PlayByPlayItem pbp = PlayByPlayItem(play);
+
+    row = Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          pbp.clock + "  ",
+          style: TextStyle(fontSize: 12),
         ),
-      ]);
-    } else {
-      return Container(
+        getTeamCard(pbp.description, widget.gameData),
+        Flexible(
+            child: Text(
+          getPbPDescriptionFormatted(pbp, widget.gameData),
+          style: pbp.isScoreChange
+              ? TextStyle(fontSize: 14, color: Colors.black)
+              : TextStyle(fontSize: 14, color: Colors.grey[800]),
+        )),
+        pbp.isScoreChange
+            ? Container(height: 16, child: Image.asset('images/bball.png'))
+            : SizedBox(),
+        pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
+      ],
+    );
+
+    var teamColor = pbp.isScoreChange
+        ? ConstantHelper.getTeamColor(pbp.teamId)
+        : Colors.white;
+    container = Container(
         padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              play["clock"] + "  ",
-              style: TextStyle(fontSize: 14),
-            ),
-            getTeamCard(play["description"], widget.gameData),
-            Flexible(
-                child: Text(
-              getPbPDescriptionFormatted(play["description"], widget.gameData),
-              style: TextStyle(fontSize: 14),
-            ))
-          ],
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey[300])),
+          color: pbp.isScoreChange
+              ? Color(teamColor).withOpacity(.10)
+              : Colors.white,
         ),
-      );
-    }
+        child: row);
+
+    return container;
   }
 
   Widget getTeamCard(String desc, dynamic game) {
@@ -237,7 +260,13 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     );
   }
 
-  String getPbPDescriptionFormatted(String desc, dynamic game) {
+  String getPbPDescriptionFormatted(PlayByPlayItem pbp, dynamic game) {
+    String desc = pbp.description;
+    if (pbp.isScoreChange) {
+      ScoreTextBreakdown t = pbp.getTextBreakdown();
+      String d = t.shotText;
+    }
+
     String vTeamTriCode = game["vTeam"]["triCode"];
     String hTeamTriCode = game["hTeam"]["triCode"];
     desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
@@ -246,15 +275,6 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
 
     return desc;
-  }
-
-  String getPbpShotMadeText(String desc) {
-    // TODO: Not working quite right. Needs more work...
-    if (desc.indexOf("Shot: Made") > -1) {
-      return desc.substring(desc.indexOf("] "), desc.indexOf("Shot: Made"));
-    } else {
-      return desc;
-    }
   }
 
   Widget loadPbpData(
