@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hoop/api/get_message.dart';
 import 'package:hoop/model/user.dart';
 import 'package:hoop/api/config/firebase.dart';
 
@@ -16,15 +17,7 @@ class Auth {
       } else {}
     } catch (e) {
       response["code"] = 400;
-      if (e.code == "email-already-in-use") {
-        response["message"] = "email already taken";
-      } else if (e.code == "invalid-email") {
-        response["message"] = "invalid email";
-      } else if (e.code == "operation-not-allowed") {
-        response["message"] = "enable your account";
-      } else if (e.code == "weak-password") {
-        response["message"] = "password is too weak";
-      }
+      response["message"] = getMessage(e.code);
     }
     return response; // return response for further processing by app
   }
@@ -40,15 +33,7 @@ class Auth {
       } else {}
     } on FirebaseAuthException catch (e) {
       response["code"] = 400;
-      if (e.code == "invalid-email") {
-        response["message"] = "invalid email";
-      } else if (e.code == "user-disabled") {
-        response["message"] = "account disabled";
-      } else if (e.code == "user-not-found") {
-        response["message"] = "account doesn't exist";
-      } else if (e.code == "wrong-password") {
-        response["message"] = "wrong password";
-      }
+      response["message"] = getMessage(e.code);
     }
     return response; // return response for further processing by app
   }
