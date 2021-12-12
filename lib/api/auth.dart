@@ -12,6 +12,14 @@ class Auth {
         password: user.password,
       );
       if (_user != null) {
+        String userId = _user.user.uid; // get user ID
+
+        // save the users details in the users collection
+        await store
+            .collection("users")
+            .doc(userId)
+            .set(user.toJson(id: userId));
+
         response["code"] = 200;
         response["message"] = "success";
       } else {}
