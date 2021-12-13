@@ -39,6 +39,12 @@ class NbaNewsFeedSmall extends StatelessWidget {
                     NewsItemList news = NewsItemList(json);
                     news.sortByDate();
 
+                    if (news.items.length == 0) {
+                      return Container(
+                          padding: EdgeInsets.all(30),
+                          child: Center(child: Text("No data returned")));
+                    }
+
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

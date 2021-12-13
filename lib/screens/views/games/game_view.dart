@@ -290,7 +290,7 @@ class _GameViewState extends State<GameView> {
                                           ),
                                         ),
                                         Container(
-                                          height: 1200, //height of TabBarView
+                                          height: 1300, //height of TabBarView
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   top: BorderSide(
@@ -310,19 +310,12 @@ class _GameViewState extends State<GameView> {
                                                       game: gameData,
                                                     ),
                                                   ),
-                                                  // QuarterScores(
-                                                  //   game: gameData,
-                                                  // ),
-                                                  // GameLeadersFeed(
-                                                  //   stats: stats,
-                                                  //   game: gameData,
-                                                  // ),
                                                   SizedBox(
-                                                    height: 8,
+                                                    height: 12,
                                                   ),
                                                   GamePbpFeed(
-                                                    gameData: gameData,
-                                                  ),
+                                                      gameData: gameData,
+                                                      stats: stats),
                                                   SizedBox(
                                                     height: 12,
                                                   ),

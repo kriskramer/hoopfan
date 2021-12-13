@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/team_tricode_card.dart';
+import 'package:hoop/components/games_widgets/game_player_popup.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/play_by_play_item.dart';
+import 'package:provider/provider.dart';
 
 import '../../constant.dart';
 
 class FullPbp extends StatelessWidget {
   final dynamic pbp;
   final dynamic game;
+  final dynamic stats;
 
-  FullPbp({this.pbp, this.game});
+  FullPbp({this.pbp, this.game, this.stats});
 
   @override
   Widget build(BuildContext context) {
+    var period1 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-1");
+    var period2 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-2");
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Full Play-by-Play"),
@@ -23,29 +31,37 @@ class FullPbp extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: pbp.length,
-                  itemBuilder: (context, index) {
-                    return getPbpItem(pbp[index], game);
-                    // Widget container;
-                    // container = new Container(
-                    //   padding: EdgeInsets.all(8),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: [
-                    //       Text(pbp[index]["clock"] + " - "),
-                    //       TeamTricodeCardFromBoxScore(
-                    //           desc: pbp[index]["description"], game: game),
-                    //       Flexible(
-                    //           child: Text(getPbPDescriptionFormatted(
-                    //               pbp[index]["description"], game)))
-                    //     ],
-                    //   ),
-                    // );
-                    // return container;
-                  }),
+              period1 != null
+                  ? Column(
+                      children: [
+                        Text("Period 1"),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            //itemCount: pbp.length,
+                            itemCount: period1.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period1[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              period2 != null
+                  ? Column(
+                      children: [
+                        Text("Period 2"),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            //itemCount: pbp.length,
+                            itemCount: period2.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period2[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
             ],
           ),
         ));
@@ -62,31 +78,43 @@ class FullPbp extends StatelessWidget {
     return desc;
   }
 
-  Widget getPbpItem(dynamic play, dynamic game) {
+  Widget getPbpItem(dynamic play, dynamic game, BuildContext context) {
     Widget container;
     Widget row;
     PlayByPlayItem pbp = PlayByPlayItem(play);
 
-    row = Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          pbp.clock + "  ",
-          style: TextStyle(fontSize: 12),
-        ),
-        getTeamCard(pbp.description, game),
-        Flexible(
-            child: Text(
-          getPbPDescriptionFormatted(pbp.description, game),
-          style: pbp.isScoreChange
-              ? TextStyle(fontSize: 14, color: Colors.black)
-              : TextStyle(fontSize: 14, color: Colors.grey[800]),
-        )),
-        pbp.isScoreChange
-            ? Container(height: 16, child: Image.asset('images/bball.png'))
-            : SizedBox(),
-        pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
-      ],
+    row = GestureDetector(
+      onTap: () {
+        if (pbp.personId != "" && pbp.personId != null) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GamePlayerPopup(
+                    personId: pbp.personId, game: game, stats: stats);
+              });
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            pbp.clock + "  ",
+            style: TextStyle(fontSize: 12),
+          ),
+          getTeamCard(pbp.description, game),
+          Flexible(
+              child: Text(
+            getPbPDescriptionFormatted(pbp.description, game),
+            style: pbp.isScoreChange
+                ? TextStyle(fontSize: 14, color: Colors.black)
+                : TextStyle(fontSize: 14, color: Colors.grey[800]),
+          )),
+          pbp.isScoreChange
+              ? Container(height: 16, child: Image.asset('images/bball.png'))
+              : SizedBox(),
+          pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
+        ],
+      ),
     );
 
     var teamColor = pbp.isScoreChange

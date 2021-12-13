@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/full_pbp.dart';
 import 'package:hoop/components/games_widgets/game_lead_chart_small.dart';
+import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/components/games_widgets/game_video_feed.dart';
 import 'package:hoop/components/games_widgets/pbp_dialog.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_inline_pbp.dart';
@@ -16,8 +17,9 @@ import 'package:provider/provider.dart';
 
 class GamePbpFeed extends StatefulWidget {
   final dynamic gameData;
+  final dynamic stats;
 
-  GamePbpFeed({this.gameData});
+  GamePbpFeed({this.gameData, this.stats});
 
   @override
   _GamePbpFeedState createState() => _GamePbpFeedState();
@@ -91,7 +93,8 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                       if (idx < 0) {
                         idx = 0;
                       }
-                      return getPbpItem(plays[idx], widget.gameData);
+                      return getPbpItem(
+                          plays[idx], widget.gameData, widget.stats);
                     }),
                 SizedBox(
                   height: 12,
@@ -127,9 +130,9 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FullPbp(
-                                  game: widget.gameData,
-                                  pbp: plays,
-                                ),
+                                    game: widget.gameData,
+                                    pbp: plays,
+                                    stats: widget.stats),
                               ));
                         },
                         child: Text('Full PBP',
@@ -177,31 +180,43 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
     _pbpFeed = Network.getJson(Urls.nbaPlayByPlay(date, gameId, period));
   }
 
-  Widget getPbpItem(dynamic play, dynamic game) {
+  Widget getPbpItem(dynamic play, dynamic game, dynamic stats) {
     Widget container;
     Widget row;
     PlayByPlayItem pbp = PlayByPlayItem(play);
 
-    row = Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          pbp.clock + "  ",
-          style: TextStyle(fontSize: 12),
-        ),
-        getTeamCard(pbp.description, widget.gameData),
-        Flexible(
-            child: Text(
-          getPbPDescriptionFormatted(pbp, widget.gameData),
-          style: pbp.isScoreChange
-              ? TextStyle(fontSize: 14, color: Colors.black)
-              : TextStyle(fontSize: 14, color: Colors.grey[800]),
-        )),
-        pbp.isScoreChange
-            ? Container(height: 16, child: Image.asset('images/bball.png'))
-            : SizedBox(),
-        pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
-      ],
+    row = GestureDetector(
+      onTap: () {
+        if (pbp.personId != "" && pbp.personId != null) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GamePlayerPopup(
+                    personId: pbp.personId, game: game, stats: stats);
+              });
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            pbp.clock + "  ",
+            style: TextStyle(fontSize: 12),
+          ),
+          getTeamCard(pbp.description, widget.gameData),
+          Flexible(
+              child: Text(
+            getPbPDescriptionFormatted(pbp, widget.gameData),
+            style: pbp.isScoreChange
+                ? TextStyle(fontSize: 14, color: Colors.black)
+                : TextStyle(fontSize: 14, color: Colors.grey[800]),
+          )),
+          pbp.isScoreChange
+              ? Container(height: 16, child: Image.asset('images/bball.png'))
+              : SizedBox(),
+          pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
+        ],
+      ),
     );
 
     var teamColor = pbp.isScoreChange
