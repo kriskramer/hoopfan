@@ -8,7 +8,7 @@ void toaster(String message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: position,
     timeInSecForIosWeb: 1,
-    backgroundColor: Color(0XFF1F6BA3),
+    backgroundColor: Colors.lightBlue,
     textColor: Colors.white,
     fontSize: 16.0,
   );
