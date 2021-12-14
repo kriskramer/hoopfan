@@ -74,6 +74,9 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               var plays = snapshot.data["plays"];
+              if (plays.length == 0) {
+                return Text("No data returned...");
+              }
               return Column(children: [
                 // SizedBox(
                 //   height: 15,

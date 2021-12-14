@@ -19,6 +19,14 @@ class FullPbp extends StatelessWidget {
         .getPbp(game["gameId"] + "-1");
     var period2 = Provider.of<JsonFiles>(context, listen: false)
         .getPbp(game["gameId"] + "-2");
+    var period3 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-3");
+    var period4 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-4");
+    var period5 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-5");
+    var period6 = Provider.of<JsonFiles>(context, listen: false)
+        .getPbp(game["gameId"] + "-6");
 
     return Scaffold(
         appBar: AppBar(
@@ -34,7 +42,15 @@ class FullPbp extends StatelessWidget {
               period1 != null
                   ? Column(
                       children: [
-                        Text("Period 1"),
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period 1",
+                              style: TextStyle(fontSize: 20),
+                            )),
                         ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -50,7 +66,15 @@ class FullPbp extends StatelessWidget {
               period2 != null
                   ? Column(
                       children: [
-                        Text("Period 2"),
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period 2",
+                              style: TextStyle(fontSize: 20),
+                            )),
                         ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -58,6 +82,99 @@ class FullPbp extends StatelessWidget {
                             itemCount: period2.length,
                             itemBuilder: (context, index) {
                               return getPbpItem(period2[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              period3 != null
+                  ? Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period 3",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: period3.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period3[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              period4 != null
+                  ? Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period 4",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: period4.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period4[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              period5 != null
+                  ? Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period OT 1",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            //itemCount: pbp.length,
+                            itemCount: period5.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period5[index], game, context);
+                            })
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              period6 != null
+                  ? Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom:
+                                        BorderSide(color: Colors.grey[800]))),
+                            child: Text(
+                              "Period OT 2",
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: period6.length,
+                            itemBuilder: (context, index) {
+                              return getPbpItem(period6[index], game, context);
                             })
                       ],
                     )
