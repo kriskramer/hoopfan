@@ -36,7 +36,7 @@ class NbaNewsFeedSmall extends StatelessWidget {
                           child: Center(child: Text("No data returned")));
                     }
 
-                    NewsItemList news = NewsItemList(json);
+                    FNNewsItemList news = FNNewsItemList(json);
                     news.sortByDate();
 
                     if (news.items.length == 0) {
@@ -62,7 +62,7 @@ class NbaNewsFeedSmall extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    news.items[index].title,
+                                    news.items[index].headline,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -103,8 +103,7 @@ class NbaNewsFeedSmall extends StatelessWidget {
 
     if (n == null) {
       try {
-        var news =
-            await Network.getJson(Urls.teamGoogleNewsSearch("nba basketball"));
+        var news = await Network.getJson(Urls.getFantasyNerdsNews());
         // var news = await Network.getJson(
         //   Urls.freeNewsApiSearch("nba basketball"),
         //   requestHeaders: RequestHeaders.freeNewsHeaders,

@@ -13,6 +13,7 @@ import 'package:hoop/screens/views/teams/team_info_page.dart';
 import 'package:hoop/screens/views/teams/team_media_page.dart';
 import 'package:hoop/screens/views/teams/team_schedule.dart';
 import 'package:hoop/screens/views/teams/team_stats.dart';
+import 'package:hoop/screens/views/teams/team_stats_small.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -175,110 +176,12 @@ class _TeamDetailsState extends State<TeamDetails> {
                 },
               ),
               SizedBox(height: 12),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.leaderboard,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Stats",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                  )),
-              GestureDetector(
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      // borderRadius:
-                      //     BorderRadius.circular(10), // if you need this
-                      side: BorderSide(
-                        color: Colors.cyan,
-                        width: 1,
-                      ),
-                    ),
-                    child: FutureBuilder(
-                        future: loadData(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              !snapshot.hasData) {
-                            return Column(children: [
-                              SizedBox(height: 20),
-                              Text('No data')
-                            ]);
-                          }
-                          if (snapshot.hasData) {
-                            dynamic baseStats =
-                                Provider.of<JsonFiles>(context, listen: false)
-                                    .getBaseTeamStats();
-                            var teamStats =
-                                getTeamStats(widget.nbaTeamId, baseStats);
-
-                            return Container(
-                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Column(children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    standing("${teamStats[9]}", "FG %"),
-                                    standing("${teamStats[12]}", "3P %"),
-                                    standing("${teamStats[15]}", "FT %"),
-                                    standing("${teamStats[19]}", "Asts"),
-                                    standing("${teamStats[20]}", "TOs"),
-                                  ],
-                                ),
-                                SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    standing("${teamStats[18]}", "Reb"),
-                                    standing("${teamStats[21]}", "Stls"),
-                                    standing("${teamStats[22]}", "Blks"),
-                                    standing("${teamStats[24]}", "PFs"),
-                                    standing("${teamStats[27]}", "+/-"),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Tap to view detailed stats...",
-                                      style: TextStyle(fontSize: 12),
-                                    )
-                                  ],
-                                ),
-                              ]),
-                            );
-                          }
-                          return NoConnection();
-                        })),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeamStatsView(
-                          teamId: widget.nbaTeamId,
-                        ),
-                      ));
-                },
+              DashboardSectionBox(
+                dashboardWidget: TeamStatsSmall(widget.nbaTeamId),
+                iconData: Icons.leaderboard,
+                linkWidget: TeamStatsView(teamId: widget.nbaTeamId),
+                sectionTitle: "Stats",
+                tapMoreText: "Tap to view detailed stats...",
               ),
               SizedBox(height: 12),
               DashboardSectionBox(
@@ -308,28 +211,14 @@ class _TeamDetailsState extends State<TeamDetails> {
                 tapMoreText: "Tap player to view details...",
               ),
               SizedBox(height: 12),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.show_chart_sharp,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Leaders",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                  )),
-              teamStatLeaders(ta[1].toLowerCase()),
+              DashboardSectionBox(
+                dashboardWidget: teamStatLeaders(ta[1].toLowerCase()),
+                iconData: Icons.show_chart_sharp,
+                linkWidget: null,
+                sectionTitle: "Leaders",
+                tapMoreText: "",
+              ),
+              SizedBox(height: 12),
             ],
           ),
         ));

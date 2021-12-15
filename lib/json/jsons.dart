@@ -54,6 +54,8 @@ class JsonFiles with ChangeNotifier {
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
 
+  var _injuryReport;
+
   bool _isFeatureBlocked = true;
 
   //Nba Api variables
@@ -90,6 +92,11 @@ class JsonFiles with ChangeNotifier {
 
   void setNbaNews(dynamic json) {
     _nbaNews = json;
+    notifyListeners();
+  }
+
+  void setInjuryReport(dynamic json) {
+    _injuryReport = json;
     notifyListeners();
   }
 
@@ -352,6 +359,8 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getNbaNews() => _nbaNews;
   dynamic getNbaVideos() => _nbaVideos;
+
+  dynamic getInjuryReport() => _injuryReport;
 
   PlayerBoxScoreList getPlayerBoxScores() => _playerBoxScores;
 

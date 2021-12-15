@@ -30,7 +30,7 @@ class DashboardSectionBox extends StatelessWidget {
                 child: Container(
                   //width: 250,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue, width: 1)),
+                      border: Border.all(color: Colors.blueGrey, width: 1)),
                 ),
               ),
               SizedBox(
@@ -104,9 +104,17 @@ class DashboardSectionBox extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              tapMoreText,
-                              style: TextStyle(fontSize: 12),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(8, 3, 8, 3),
+                              decoration: BoxDecoration(
+                                  color: Colors.orange[100],
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Text(
+                                tapMoreText,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
                             )
                           ],
                         ),

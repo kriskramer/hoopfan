@@ -3,8 +3,11 @@ import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
+import 'package:hoop/screens/views/account/updates_main.dart';
+import 'package:hoop/screens/views/account/user_main.dart';
 import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/games/today_games_small.dart';
+import 'package:hoop/screens/views/help_glossary.dart';
 import 'package:hoop/screens/views/news/news_feed_small.dart';
 import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/players/player_search.dart';
@@ -67,9 +70,27 @@ class _DashboardMainState extends State<DashboardMain> {
                           ],
                         ),
                       ),
+                      Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(color: Colors.amber[200]),
+                          child: Center(
+                            child: Text("Alpha Testing version",
+                                style: TextStyle(fontSize: 10)),
+                          )),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HelpGlossary()));
+                                },
+                                icon: Icon(
+                                  Icons.help_outline_outlined,
+                                )),
                             IconButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -87,7 +108,17 @@ class _DashboardMainState extends State<DashboardMain> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AccountMain()));
+                                          builder: (context) => UpdatesMain()));
+                                },
+                                icon: Icon(
+                                  Icons.notification_important_outlined,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UserMain()));
                                 },
                                 icon: Icon(
                                   Icons.account_box_outlined,
@@ -143,7 +174,7 @@ class _DashboardMainState extends State<DashboardMain> {
                   iconData: Icons.leaderboard,
                   linkWidget: null,
                   sectionTitle: "Stats",
-                  tapMoreText: "Tap to view league stats...",
+                  tapMoreText: "League Stats page is coming soon...",
                 ),
                 SizedBox(
                   height: 12,
