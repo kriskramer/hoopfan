@@ -4,15 +4,18 @@ class DashboardSectionBox extends StatelessWidget {
   final String sectionTitle;
   final String tapMoreText;
   final IconData iconData;
+  final IconData secondIcon;
   final Widget dashboardWidget;
   final Widget linkWidget;
 
-  const DashboardSectionBox(
-      {this.sectionTitle,
-      this.tapMoreText,
-      this.iconData,
-      this.dashboardWidget,
-      this.linkWidget});
+  const DashboardSectionBox({
+    this.sectionTitle,
+    this.tapMoreText,
+    this.iconData,
+    this.dashboardWidget,
+    this.linkWidget,
+    this.secondIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +26,19 @@ class DashboardSectionBox extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
               child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Icon(
-                  iconData,
-                  color: Colors.blue,
+                Row(
+                  children: [
+                    Icon(
+                      iconData,
+                      color: Colors.blue,
+                    ),
+                    secondIcon != null
+                        ? Icon(
+                            secondIcon,
+                            color: Colors.blue,
+                          )
+                        : SizedBox()
+                  ],
                 ),
                 SizedBox(
                   width: 5,

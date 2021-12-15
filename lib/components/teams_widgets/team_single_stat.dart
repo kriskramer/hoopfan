@@ -61,7 +61,9 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
     if (widget.rank.toString().trim() == "") {
       noRank = true;
     }
-
+    String rank = widget.rank.toString().length == 1
+        ? "  ${widget.rank.toString()}"
+        : widget.rank.toString();
     return Container(
       height: 35,
       child: Stack(children: [
@@ -101,14 +103,15 @@ class _TeamSingleStatState extends State<TeamSingleStat> {
                   : InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TeamRankList(widget.measure,
-                                  widget.label, widget.statName, widget.teamId),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TeamRankList(widget.measure,
+                                widget.label, widget.statName, widget.teamId),
+                          ),
+                        );
                       },
                       child: Text(
-                        "Rank: " + widget.rank.toString(),
+                        "Rank: $rank",
                         style: TextStyle(fontSize: 16, color: Colors.blue[700]),
                       ),
                     ),

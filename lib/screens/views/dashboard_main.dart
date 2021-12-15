@@ -13,6 +13,7 @@ import 'package:hoop/screens/views/standings/standings_small.dart';
 import 'package:hoop/screens/views/stats/leaders_main.dart';
 import 'package:hoop/screens/views/stats/leaders_today_small.dart';
 import 'package:hoop/screens/views/stats/league_stats_small.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DashboardMain extends StatefulWidget {
   const DashboardMain();
@@ -99,7 +100,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: TodaysGamesSmall(),
-                  iconData: Icons.sports_basketball_rounded,
+                  iconData: FontAwesomeIcons.basketballBall,
                   linkWidget: TodaysGames(),
                   sectionTitle: "Games",
                   tapMoreText: "Tap to view full game schedule...",
@@ -109,7 +110,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: StandingsSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: Icons.table_chart_sharp,
                   linkWidget: Standings(),
                   sectionTitle: "Standings",
                   tapMoreText: "Tap to view full standings...",
@@ -118,19 +119,8 @@ class _DashboardMainState extends State<DashboardMain> {
                   height: 12,
                 ),
                 DashboardSectionBox(
-                  dashboardWidget:
-                      TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: Icons.video_collection_sharp,
-                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
-                  sectionTitle: "Social",
-                  tapMoreText: "Tap to view more...",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: FontAwesomeIcons.chartLine,
                   linkWidget: LeadersMain(),
                   sectionTitle: "Leaders",
                   tapMoreText: "Tap to view more leaders...",
@@ -140,7 +130,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: LeagueStatsSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: FontAwesomeIcons.chartBar,
                   linkWidget: null,
                   sectionTitle: "Stats",
                   tapMoreText: "Tap to view league stats...",
@@ -150,10 +140,22 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: NbaNewsFeedSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: FontAwesomeIcons.newspaper,
                   linkWidget: NewsMainScreen(),
                   sectionTitle: "Media",
                   tapMoreText: "Tap to view league-related news and media...",
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                DashboardSectionBox(
+                  dashboardWidget:
+                      TwitterFeedSmall(searchTerms: "nba basketball"),
+                  iconData: FontAwesomeIcons.twitterSquare,
+                  secondIcon: FontAwesomeIcons.facebookSquare,
+                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                  sectionTitle: "Social",
+                  tapMoreText: "Tap to view more...",
                 ),
                 SizedBox(
                   height: 12,
