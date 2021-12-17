@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/models/twitter_news.dart';
+import 'package:hoop/services/headers.dart';
+import 'package:hoop/services/network.dart';
 
 class TweetDisplayWithPopup extends StatelessWidget {
   final TwitterNewsItem tweet;
@@ -47,5 +49,14 @@ class TweetDisplayWithPopup extends StatelessWidget {
             child: const Text('OK'),
           ),
         ]);
+  }
+
+  Future<dynamic> loadData() async {
+    // Load the tweet into a model object first...
+    var feed = await Network.getJson("https://api.twitter.com/2/tweets/:id",
+        requestHeaders: RequestHeaders.twitterStreamHeaders);
+
+    // Then get the user based on user id and load that into the tweet object...
+    return feed;
   }
 }

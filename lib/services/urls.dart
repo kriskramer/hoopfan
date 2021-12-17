@@ -220,6 +220,11 @@ class Urls {
   //   return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   // }
 
+  static String getNbaStatsTeamGameLogs(String teamId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=&LeagueID=&Location=&MeasureType=$measureType&Month=&OppTeamID=&Outcome=&PORound=&PerMode=$perMode&Period=&PlayerID=&Season=$_season&SeasonSegment=&SeasonType=&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
   static String getNbaStatsTeamSplitsShooting(String teamId,
       {String measureType = "Base", String perMode = "Totals"}) {
     return "https://stats.nba.com/stats/teamdashboardbyshootingsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";

@@ -2,6 +2,8 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
+import 'package:hoop/components/social_widgets/twitter_feed.dart';
+import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
 import 'package:hoop/components/teams_widgets/team_leader_card.dart';
 import 'package:hoop/components/teams_widgets/team_news_small.dart';
 import 'package:hoop/components/teams_widgets/team_schedule_small.dart';
@@ -183,13 +185,23 @@ class _TeamDetailsState extends State<TeamDetails> {
                 sectionTitle: "Stats",
                 tapMoreText: "Tap to view detailed stats...",
               ),
-              SizedBox(height: 12),
+              // SizedBox(height: 12),
+              // DashboardSectionBox(
+              //   dashboardWidget: TeamNewsSmall(ta[1], widget.nbaTeamId),
+              //   iconData: Icons.video_collection_sharp,
+              //   linkWidget: TeamMediaPage(teamId: widget.nbaTeamId),
+              //   sectionTitle: "Media",
+              //   tapMoreText: "Tap to view team-related media...",
+              // ),
+              SizedBox(
+                height: 12,
+              ),
               DashboardSectionBox(
-                dashboardWidget: TeamNewsSmall(ta[1], widget.nbaTeamId),
-                iconData: Icons.video_collection_sharp,
-                linkWidget: TeamMediaPage(teamId: widget.nbaTeamId),
-                sectionTitle: "Media",
-                tapMoreText: "Tap to view team-related media...",
+                dashboardWidget: TwitterFeedSmall(searchTerms: ta[0]),
+                iconData: Icons.social_distance,
+                linkWidget: TwitterFeed(searchTerms: ta[0]),
+                sectionTitle: "Social",
+                tapMoreText: "Tap to view more...",
               ),
               SizedBox(height: 12),
               DashboardSectionBox(

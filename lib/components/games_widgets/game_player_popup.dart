@@ -168,13 +168,15 @@ class GamePlayerPopup extends StatelessWidget {
       horizontalMargin: 5,
       dataRowHeight: 24,
       headingRowHeight: 24,
-      headingTextStyle:
-          TextStyle(color: Colors.red[900], fontWeight: FontWeight.bold),
+      headingTextStyle: TextStyle(
+        color: Colors.red[900],
+        fontWeight: FontWeight.bold,
+      ),
       columns: [
         DataColumn(label: Text('')),
-        DataColumn(label: Text('Game')),
-        DataColumn(label: Text('Season')),
-        DataColumn(label: Text('Compare')),
+        DataColumn(label: Center(child: Text('Game'))),
+        DataColumn(label: Center(child: Text('Season'))),
+        DataColumn(label: Center(child: Text('Compare'))),
       ],
       rows: [
         DataRow(cells: [

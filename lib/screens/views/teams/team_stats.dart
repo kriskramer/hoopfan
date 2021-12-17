@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/screens/views/teams/team_game_logs.dart';
 import 'package:hoop/screens/views/teams/team_stats_last_n_games.dart';
 import 'package:hoop/screens/views/teams/team_stats_lineups.dart';
 import 'package:hoop/screens/views/teams/team_stats_shooting.dart';
@@ -28,7 +29,7 @@ class _TeamStatsViewState extends State<TeamStatsView> {
     final teamTextColor = ConstantHelper.getTeamTextColor(widget.teamId);
 
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: teamColor != null
@@ -40,6 +41,10 @@ class _TeamStatsViewState extends State<TeamStatsView> {
             tabs: [
               Tab(
                 child: Text("Summary",
+                    style: TextStyle(color: Color(teamTextColor))),
+              ),
+              Tab(
+                child: Text("Games",
                     style: TextStyle(color: Color(teamTextColor))),
               ),
               Tab(
@@ -77,6 +82,7 @@ class _TeamStatsViewState extends State<TeamStatsView> {
                   return NoConnection();
                 }
               }),
+          TeamGameLogs(teamId: widget.teamId),
           TeamStatsLastNGames(teamId: widget.teamId),
           TeamStatsShootingView(teamId: widget.teamId),
           TeamStatsSplitsView(teamId: widget.teamId),
