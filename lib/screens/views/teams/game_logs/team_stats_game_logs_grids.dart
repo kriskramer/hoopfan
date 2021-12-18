@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
-import 'package:hoop/screens/views/teams/team_stats_game_log_base_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_advanced_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_base_trends_chart.dart';
 
 class TeamStatsGameLogsGrid extends StatelessWidget {
   final dynamic stats;
@@ -136,22 +137,22 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
           getDataCell(stats, game, 5, "", context),
           getDataCell(stats, game, 6, "", context),
           getDataCell(stats, game, 7, "", context),
-          getDataCell(stats, game, 10, "", context),
-          getDataCell(stats, game, 12, "", context),
-          getDataCell(stats, game, 14, "", context),
-          getDataCell(stats, game, 15, "", context),
-          getDataCell(stats, game, 16, "", context),
-          getDataCell(stats, game, 17, "", context),
-          getDataCell(stats, game, 18, "", context),
-          getDataCell(stats, game, 19, "", context),
-          getDataCell(stats, game, 20, "", context),
-          getDataCell(stats, game, 21, "", context),
-          getDataCell(stats, game, 22, "", context),
-          getDataCell(stats, game, 23, "", context),
-          getDataCell(stats, game, 25, "", context),
-          getDataCell(stats, game, 26, "", context),
-          getDataCell(stats, game, 27, "", context),
-          getDataCell(stats, game, 28, "", context),
+          getDataCell(stats, game, 10, "ORtg", context),
+          getDataCell(stats, game, 12, "DRtg", context),
+          getDataCell(stats, game, 14, "Net", context),
+          getDataCell(stats, game, 15, "Ast %", context),
+          getDataCell(stats, game, 16, "AstTov", context),
+          getDataCell(stats, game, 17, "Ast Rto", context),
+          getDataCell(stats, game, 18, "OReb %", context),
+          getDataCell(stats, game, 19, "DReb %", context),
+          getDataCell(stats, game, 20, "Reb %", context),
+          getDataCell(stats, game, 21, "TmTov %", context),
+          getDataCell(stats, game, 22, "eFG %", context),
+          getDataCell(stats, game, 23, "TS %", context),
+          getDataCell(stats, game, 25, "Pace", context),
+          getDataCell(stats, game, 26, "Pace/40", context),
+          getDataCell(stats, game, 27, "Poss", context),
+          getDataCell(stats, game, 28, "PIE", context),
         ]);
   }
 
@@ -292,7 +293,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
 
     if (statName == "") {
       return DataCell(Text(cellValue));
-    } else {
+    } else if (measure == "Base") {
       return DataCell(GestureDetector(
           onTap: () {
             showDialog(
@@ -302,7 +303,19 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
                 });
           },
           child: Text(cellValue)));
+    } else if (measure == "Advanced") {
+      return DataCell(GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return TeamStatsGameLogAdvancedCharts(stats, statName);
+                });
+          },
+          child: Text(cellValue)));
     }
+
+    return DataCell(Text(cellValue));
   }
 
   List<DataColumn> getBaseDataColumns() {
