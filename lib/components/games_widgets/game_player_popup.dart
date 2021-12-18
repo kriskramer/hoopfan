@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/player_base_stat_and_rank.dart';
+import 'package:hoop/models/player_base_stat_and_rank.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

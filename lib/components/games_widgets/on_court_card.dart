@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_box_score_on_court.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/model/advanced_stats.dart';
+import 'package:hoop/models/advanced_stats.dart';
 
 class OnCourtCard extends StatefulWidget {
   final dynamic stats;

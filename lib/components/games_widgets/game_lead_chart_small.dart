@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
-import '../../model/lead_tracker.dart';
+import '../../models/lead_tracker.dart';
 
 class GameLeadChartSmall extends StatelessWidget {
   final dynamic pbp;

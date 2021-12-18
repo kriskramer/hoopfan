@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/constant.dart';
 

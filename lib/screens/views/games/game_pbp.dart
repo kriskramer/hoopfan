@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/games_widgets/game_lead_tracker.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/model/advanced_stats.dart';
+import 'package:hoop/models/advanced_stats.dart';
 
 class GameStats extends StatelessWidget {
   final dynamic stats;

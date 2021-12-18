@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
 

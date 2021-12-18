@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/scoring_trends_dialog.dart';
 import 'package:hoop/constant.dart';
-import '../../model/lead_tracker.dart';
+import '../../models/lead_tracker.dart';
 
 class GameLeadChart extends StatelessWidget {
   final dynamic pbp;
