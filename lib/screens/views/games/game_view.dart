@@ -16,7 +16,6 @@ import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games/game_news.dart';
 import 'package:hoop/screens/views/games/game_preview_article.dart';
 import 'package:hoop/screens/views/games/game_recap_article.dart';
 import 'package:hoop/services/network.dart';

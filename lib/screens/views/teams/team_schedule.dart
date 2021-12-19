@@ -12,6 +12,8 @@ class TeamSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Team Schedule');
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Team Schedule"),

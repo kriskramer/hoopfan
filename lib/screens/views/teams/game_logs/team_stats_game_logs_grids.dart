@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
+import 'package:hoop/json/jsons.dart';
+import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_advanced_trends_chart.dart';
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_base_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_four_factors_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_misc_trends_chart.dart';
+import 'package:provider/provider.dart';
 
 class TeamStatsGameLogsGrid extends StatelessWidget {
   final dynamic stats;
@@ -22,7 +27,8 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Text("Tap a value to see a chart display for that data column."),
+          Text(
+              "Tap a value to see a chart display for that data column. Tap the Game value to see the game view for that game."),
           SizedBox(
             height: 10,
           ),
@@ -96,7 +102,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
           getDataCell(stats, game, 9, "FGM", context),
           getDataCell(stats, game, 10, "FGA", context),
@@ -135,7 +141,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
           getDataCell(stats, game, 10, "ORtg", context),
           getDataCell(stats, game, 12, "DRtg", context),
@@ -169,16 +175,16 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
-          getDataCell(stats, game, 9, "", context),
-          getDataCell(stats, game, 10, "", context),
-          getDataCell(stats, game, 11, "", context),
-          getDataCell(stats, game, 12, "", context),
-          getDataCell(stats, game, 13, "", context),
-          getDataCell(stats, game, 14, "", context),
-          getDataCell(stats, game, 15, "", context),
-          getDataCell(stats, game, 16, "", context),
+          getDataCell(stats, game, 9, "PtsOffTov", context),
+          getDataCell(stats, game, 10, "Pts2ndChance", context),
+          getDataCell(stats, game, 11, "PtsFB", context),
+          getDataCell(stats, game, 12, "PtsPaint", context),
+          getDataCell(stats, game, 13, "OppPtsOffTov", context),
+          getDataCell(stats, game, 14, "OppPts2ndChance", context),
+          getDataCell(stats, game, 15, "OppPtsFB", context),
+          getDataCell(stats, game, 16, "OppPtsPaint", context),
         ]);
   }
 
@@ -195,16 +201,27 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
-          getDataCell(stats, game, 9, "", context),
-          getDataCell(stats, game, 10, "", context),
-          getDataCell(stats, game, 11, "", context),
-          getDataCell(stats, game, 12, "", context),
-          getDataCell(stats, game, 13, "", context),
-          getDataCell(stats, game, 14, "", context),
-          getDataCell(stats, game, 15, "", context),
-          getDataCell(stats, game, 16, "", context),
+          getDataCell(stats, game, 9, "eFG", context),
+          getDataCell(stats, game, 13, "OppEFG", context),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDiffDataCell(stats, game, 9, 13),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDataCell(stats, game, 10, "FtaRate", context),
+          getDataCell(stats, game, 14, "OppFtaRate", context),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDiffDataCell(stats, game, 10, 14),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDataCell(stats, game, 11, "TmTovPct", context),
+          getDataCell(stats, game, 15, "OppTmTovPct", context),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDiffDataCell(stats, game, 11, 15),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDataCell(stats, game, 12, "ORebPct", context),
+          getDataCell(stats, game, 16, "OppORebPct", context),
+          DataCell(VerticalDivider(color: Colors.black)),
+          getDiffDataCell(stats, game, 12, 16),
         ]);
   }
 
@@ -221,7 +238,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
           getDataCell(stats, game, 9, "", context),
           getDataCell(stats, game, 10, "", context),
@@ -254,7 +271,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
               }),
         cells: [
           getDataCell(stats, game, 5, "", context),
-          getDataCell(stats, game, 6, "", context),
+          getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
           getDataCell(stats, game, 9, "", context),
           getDataCell(stats, game, 10, "", context),
@@ -280,6 +297,36 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
         ]);
   }
 
+  DataCell getGameDataCell(
+      dynamic stats, int game, int valueNum, BuildContext context) {
+    String teamId = stats["resultSets"][0]["rowSet"][game][1].toString();
+    String gameId = stats["resultSets"][0]["rowSet"][game][4].toString();
+
+    dynamic schedule =
+        Provider.of<JsonFiles>(context, listen: false).getTeamSchedule(teamId);
+
+    String cellValue =
+        stats["resultSets"][0]["rowSet"][game][valueNum].toString();
+
+    dynamic gameData;
+
+    for (var g in schedule["league"]["standard"]) {
+      if (g["gameId"].toString() == gameId.toString()) {
+        gameData = g;
+      }
+    }
+
+    return DataCell(GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameView(game: gameData);
+              });
+        },
+        child: Text(cellValue)));
+  }
+
   DataCell getDataCell(dynamic stats, int game, int valueNum, String statName,
       BuildContext context) {
     if (stats["resultSets"][0]["rowSet"].length == 0) {
@@ -292,6 +339,12 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
     cellValue = cellValue.replaceAll("T00:00:00", "");
 
     if (statName == "") {
+      return DataCell(Text(cellValue));
+    } else if (statName == "Game") {
+      // TODO: Need to do some work on this... when clicking on the game column,
+      // want to return a game box score for the selected team but need to rework
+      // parameters to get to that point.
+      //return DataCell(GestureDetector(onTap: () {showDialog(context: context, builder: (context) {return SingleGameLog(stats["resultSets"][0]["rowSet"][game]["gameId"]));})},));
       return DataCell(Text(cellValue));
     } else if (measure == "Base") {
       return DataCell(GestureDetector(
@@ -313,9 +366,73 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
                 });
           },
           child: Text(cellValue)));
+    } else if (measure == "Misc") {
+      return DataCell(GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return TeamStatsGameLogMiscCharts(stats, statName);
+                });
+          },
+          child: Text(cellValue)));
+    } else if (measure == "Four Factors") {
+      return DataCell(GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return TeamStatsGameLogFourFactorsCharts(stats, statName);
+                });
+          },
+          child: Center(child: Text(cellValue))));
     }
 
     return DataCell(Text(cellValue));
+  }
+
+  DataCell getDiffDataCell(dynamic stats, int game, int value1, int value2) {
+    String cellValue1 =
+        stats["resultSets"][0]["rowSet"][game][value1].toString();
+    String cellValue2 =
+        stats["resultSets"][0]["rowSet"][game][value2].toString();
+    double v1 = 0.0;
+    double v2 = 0.0;
+    double v3 = 0.0;
+
+    if (cellValue1 != "" && cellValue1 != null) {
+      v1 = double.parse(cellValue1);
+    }
+
+    if (cellValue2 != "" && cellValue2 != null) {
+      v2 = double.parse(cellValue2);
+    }
+
+    v3 = v1 - v2;
+
+    Widget c;
+
+    v3 > 0
+        ? c = Container(
+            alignment: Alignment.center,
+            width: 10,
+            child: Icon(
+              Icons.arrow_drop_up,
+              color: Colors.green,
+            ))
+        : c = Container(
+            alignment: Alignment.center,
+            width: 10,
+            child: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.red,
+            ));
+
+    return DataCell(Row(children: [
+      Text(v3.toStringAsFixed(2),
+          style: TextStyle(fontWeight: FontWeight.w500)),
+      c
+    ]));
   }
 
   List<DataColumn> getBaseDataColumns() {
@@ -454,23 +571,34 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
     list.add(DataColumn(
         label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")));
     list.add(DataColumn(
+        label:
+            StatInfoDialog(label: Text('Opp eFg %'), statName: "Opp eFg %")));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(label: Text('Diff')));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(
         label: StatInfoDialog(label: Text('FTA Rate'), statName: "FTA RATE")));
     list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp FTA Rate'), statName: "Opp FTA Rate")));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(label: Text('Diff')));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(
         label: StatInfoDialog(label: Text('Tm Tov %'), statName: "TM TOV %")));
+    list.add(DataColumn(
+        label: StatInfoDialog(
+            label: Text('Opp Tm Tov %'), statName: "Opp Tm Tov %")));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(label: Text('Diff')));
+    list.add(DataColumn(label: Text('')));
     list.add(DataColumn(
         label: StatInfoDialog(label: Text('OReb %'), statName: "OREB %")));
     list.add(DataColumn(
         label:
-            StatInfoDialog(label: Text('Opp eFg %'), statName: "Opp eFg %")));
-    list.add(DataColumn(
-        label: StatInfoDialog(
-            label: Text('Opp FTA Rate'), statName: "Opp FTA Rate")));
-    list.add(DataColumn(
-        label: StatInfoDialog(
-            label: Text('Opp Tm Tov %'), statName: "Opp Tm Tov %")));
-    list.add(DataColumn(
-        label:
             StatInfoDialog(label: Text('Opp OReb %'), statName: "Opp OReb %")));
+    list.add(DataColumn(label: Text('')));
+    list.add(DataColumn(label: Text('Diff')));
 
     return list;
   }
