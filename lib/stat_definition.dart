@@ -1692,7 +1692,6 @@ class StatHelper {
     // Loops through all stats above and checks for a Labels array. If it finds it, it searches for a match in the array.
     // If the array doesn't exist, it tries to match the key value
     allStats.forEach((key, value) {
-      //print(key);
       if (value["Labels"] != null) {
         for (var l in value["Labels"]) {
           if (statKey.toUpperCase() == l.toString().toUpperCase()) {

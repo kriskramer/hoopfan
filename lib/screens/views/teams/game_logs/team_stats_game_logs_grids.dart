@@ -6,6 +6,8 @@ import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_advanced_
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_base_trends_chart.dart';
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_four_factors_trends_chart.dart';
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_misc_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_opponent_trends_chart.dart';
+import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_scoring_trends_chart.dart';
 import 'package:provider/provider.dart';
 
 class TeamStatsGameLogsGrid extends StatelessWidget {
@@ -240,21 +242,21 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
           getDataCell(stats, game, 5, "", context),
           getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
-          getDataCell(stats, game, 9, "", context),
-          getDataCell(stats, game, 10, "", context),
-          getDataCell(stats, game, 11, "", context),
-          getDataCell(stats, game, 12, "", context),
-          getDataCell(stats, game, 13, "", context),
-          getDataCell(stats, game, 14, "", context),
-          getDataCell(stats, game, 15, "", context),
-          getDataCell(stats, game, 16, "", context),
-          getDataCell(stats, game, 17, "", context),
-          getDataCell(stats, game, 18, "", context),
-          getDataCell(stats, game, 19, "", context),
-          getDataCell(stats, game, 20, "", context),
-          getDataCell(stats, game, 21, "", context),
-          getDataCell(stats, game, 22, "", context),
-          getDataCell(stats, game, 23, "", context),
+          getDataCell(stats, game, 9, "PCT_FGA_2P", context),
+          getDataCell(stats, game, 10, "PCT_FGA_3P", context),
+          getDataCell(stats, game, 11, "PCT_PTS_2P", context),
+          getDataCell(stats, game, 12, "PCT_PTS_2P_MR", context),
+          getDataCell(stats, game, 13, "PCT_PTS_3P", context),
+          getDataCell(stats, game, 14, "PCT_PTS_FB", context),
+          getDataCell(stats, game, 15, "PCT_PTS_FT", context),
+          getDataCell(stats, game, 16, "PCT_PTS_OFF_TOV", context),
+          getDataCell(stats, game, 17, "PCT_PTS_PAINT", context),
+          getDataCell(stats, game, 18, "PCT_AST_2PM", context),
+          getDataCell(stats, game, 19, "PCT_UAST_2PM", context),
+          getDataCell(stats, game, 20, "PCT_AST_3PM", context),
+          getDataCell(stats, game, 21, "PCT_UAST_3PM", context),
+          getDataCell(stats, game, 22, "PCT_AST_FGM", context),
+          getDataCell(stats, game, 23, "PCT_UAST_FGM", context),
         ]);
   }
 
@@ -273,27 +275,27 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
           getDataCell(stats, game, 5, "", context),
           getGameDataCell(stats, game, 6, context),
           getDataCell(stats, game, 7, "", context),
-          getDataCell(stats, game, 9, "", context),
-          getDataCell(stats, game, 10, "", context),
-          getDataCell(stats, game, 11, "", context),
-          getDataCell(stats, game, 12, "", context),
-          getDataCell(stats, game, 13, "", context),
-          getDataCell(stats, game, 14, "", context),
-          getDataCell(stats, game, 15, "", context),
-          getDataCell(stats, game, 16, "", context),
-          getDataCell(stats, game, 17, "", context),
-          getDataCell(stats, game, 18, "", context),
-          getDataCell(stats, game, 19, "", context),
-          getDataCell(stats, game, 20, "", context),
-          getDataCell(stats, game, 21, "", context),
-          getDataCell(stats, game, 22, "", context),
-          getDataCell(stats, game, 23, "", context),
-          getDataCell(stats, game, 24, "", context),
-          getDataCell(stats, game, 25, "", context),
-          getDataCell(stats, game, 26, "", context),
-          getDataCell(stats, game, 27, "", context),
-          getDataCell(stats, game, 28, "", context),
-          getDataCell(stats, game, 29, "", context),
+          getDataCell(stats, game, 9, "FGM", context),
+          getDataCell(stats, game, 10, "FGA", context),
+          getDataCell(stats, game, 11, "FG %", context),
+          getDataCell(stats, game, 12, "3PM", context),
+          getDataCell(stats, game, 13, "3PA", context),
+          getDataCell(stats, game, 14, "3P %", context),
+          getDataCell(stats, game, 15, "FTM", context),
+          getDataCell(stats, game, 16, "FTA", context),
+          getDataCell(stats, game, 17, "FT %", context),
+          getDataCell(stats, game, 18, "OREB", context),
+          getDataCell(stats, game, 19, "DREB", context),
+          getDataCell(stats, game, 20, "REB", context),
+          getDataCell(stats, game, 21, "AST", context),
+          getDataCell(stats, game, 22, "TOV", context),
+          getDataCell(stats, game, 23, "STL", context),
+          getDataCell(stats, game, 24, "BLK", context),
+          getDataCell(stats, game, 25, "BLKA", context),
+          getDataCell(stats, game, 26, "PF", context),
+          getDataCell(stats, game, 27, "PFD", context),
+          getDataCell(stats, game, 28, "PTS", context),
+          getDataCell(stats, game, 29, "+/-", context),
         ]);
   }
 
@@ -383,6 +385,26 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return TeamStatsGameLogFourFactorsCharts(stats, statName);
+                });
+          },
+          child: Center(child: Text(cellValue))));
+    } else if (measure == "Scoring") {
+      return DataCell(GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return TeamStatsGameLogScoringCharts(stats, statName);
+                });
+          },
+          child: Center(child: Text(cellValue))));
+    } else if (measure == "Opponent") {
+      return DataCell(GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return TeamStatsGameLogOpponentCharts(stats, statName);
                 });
           },
           child: Center(child: Text(cellValue))));

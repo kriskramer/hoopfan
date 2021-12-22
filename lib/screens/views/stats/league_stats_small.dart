@@ -18,7 +18,7 @@ class LeagueStatsSmall extends StatelessWidget {
     AdvancedStatsLeagueList advancedStats =
         AdvancedStatsLeagueList(advancedStatsJson);
 
-    print("a");
+    //print("a");
     return Container(
       child: Column(
         children: [

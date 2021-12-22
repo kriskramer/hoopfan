@@ -32,7 +32,7 @@ class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
         if (snapshot.hasData) {
           var json = snapshot.data["resultSets"][0]["rowSet"];
           list = new GameBoxScoreAdvancedList(json, widget.teamId);
-          print(list.items.length.toString());
+          //print(list.items.length.toString());
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: getDataTable(list),
