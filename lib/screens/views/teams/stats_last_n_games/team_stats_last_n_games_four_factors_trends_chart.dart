@@ -198,14 +198,14 @@ class LastNGamesSeriesFourFactors {
   LastNGamesSeriesFourFactors(dynamic json) {
     type = json[0];
     typeValue = json[1];
-    eFG = getDoubleFromJson(json[7]);
-    ftaRate = getDoubleFromJson(json[8]);
-    tmTovPct = getDoubleFromJson(json[9]);
-    oRebPct = getDoubleFromJson(json[10]);
-    oppEFG = getDoubleFromJson(json[11]);
-    oppFtaRate = getDoubleFromJson(json[12]);
-    oppTmTovPct = getDoubleFromJson(json[13]);
-    oppORebPct = getDoubleFromJson(json[14]);
+    eFG = getPercentFromJson(json[7]);
+    ftaRate = getPercentFromJson(json[8]);
+    tmTovPct = getPercentFromJson(json[9]);
+    oRebPct = getPercentFromJson(json[10]);
+    oppEFG = getPercentFromJson(json[11]);
+    oppFtaRate = getPercentFromJson(json[12]);
+    oppTmTovPct = getPercentFromJson(json[13]);
+    oppORebPct = getPercentFromJson(json[14]);
   }
 
   double getDoubleFromJson(var value) {
@@ -216,6 +216,17 @@ class LastNGamesSeriesFourFactors {
       return 0.0;
     } else {
       return d;
+    }
+  }
+
+  double getPercentFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d * 100;
     }
   }
 }

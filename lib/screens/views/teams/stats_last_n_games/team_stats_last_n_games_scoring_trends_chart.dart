@@ -297,21 +297,21 @@ class LastNGamesSeriesScoring {
   LastNGamesSeriesScoring(dynamic json) {
     type = json[0];
     typeValue = json[1];
-    pctFga2pt = getDoubleFromJson(json[7]);
-    pctFga3pt = getDoubleFromJson(json[8]);
-    pctPts2p = getDoubleFromJson(json[9]);
-    pctPts2pMr = getDoubleFromJson(json[10]);
-    pctPts3p = getDoubleFromJson(json[11]);
-    pctPtsFb = getDoubleFromJson(json[12]);
-    pctPtsFt = getDoubleFromJson(json[13]);
-    pctPtsOffTov = getDoubleFromJson(json[14]);
-    pctPtsPaint = getDoubleFromJson(json[15]);
-    pctAst2pm = getDoubleFromJson(json[16]);
-    pctUAst2pm = getDoubleFromJson(json[17]);
-    pctAst3pm = getDoubleFromJson(json[18]);
-    pctUAst3pm = getDoubleFromJson(json[19]);
-    pctAstFgm = getDoubleFromJson(json[20]);
-    pctUAstFgm = getDoubleFromJson(json[21]);
+    pctFga2pt = getPercentFromJson(json[7]);
+    pctFga3pt = getPercentFromJson(json[8]);
+    pctPts2p = getPercentFromJson(json[9]);
+    pctPts2pMr = getPercentFromJson(json[10]);
+    pctPts3p = getPercentFromJson(json[11]);
+    pctPtsFb = getPercentFromJson(json[12]);
+    pctPtsFt = getPercentFromJson(json[13]);
+    pctPtsOffTov = getPercentFromJson(json[14]);
+    pctPtsPaint = getPercentFromJson(json[15]);
+    pctAst2pm = getPercentFromJson(json[16]);
+    pctUAst2pm = getPercentFromJson(json[17]);
+    pctAst3pm = getPercentFromJson(json[18]);
+    pctUAst3pm = getPercentFromJson(json[19]);
+    pctAstFgm = getPercentFromJson(json[20]);
+    pctUAstFgm = getPercentFromJson(json[21]);
   }
 
   double getDoubleFromJson(var value) {
@@ -322,6 +322,17 @@ class LastNGamesSeriesScoring {
       return 0.0;
     } else {
       return d;
+    }
+  }
+
+  double getPercentFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d * 100;
     }
   }
 }

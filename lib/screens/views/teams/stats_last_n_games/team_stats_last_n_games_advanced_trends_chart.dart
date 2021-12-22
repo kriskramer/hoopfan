@@ -316,19 +316,19 @@ class GameLogSeriesAdvanced {
     ortg = getDoubleFromJson(json[8]);
     drtg = getDoubleFromJson(json[10]);
     net = getDoubleFromJson(json[12]);
-    astPct = getDoubleFromJson(json[13]);
+    astPct = getPercentFromJson(json[13]);
     astTov = getDoubleFromJson(json[14]);
     astRatio = getDoubleFromJson(json[15]);
-    oRebPct = getDoubleFromJson(json[16]);
-    dRebPct = getDoubleFromJson(json[17]);
-    rebPct = getDoubleFromJson(json[18]);
-    tmTovPct = getDoubleFromJson(json[19]);
-    eFgPct = getDoubleFromJson(json[20]);
-    tsPct = getDoubleFromJson(json[21]);
+    oRebPct = getPercentFromJson(json[16]);
+    dRebPct = getPercentFromJson(json[17]);
+    rebPct = getPercentFromJson(json[18]);
+    tmTovPct = getPercentFromJson(json[19]);
+    eFgPct = getPercentFromJson(json[20]);
+    tsPct = getPercentFromJson(json[21]);
     pace = getDoubleFromJson(json[23]);
     pace40 = getDoubleFromJson(json[24]);
     poss = getDoubleFromJson(json[25]);
-    pie = getDoubleFromJson(json[26]);
+    pie = getPercentFromJson(json[26]);
   }
 
   double getDoubleFromJson(var value) {
@@ -339,6 +339,17 @@ class GameLogSeriesAdvanced {
       return 0.0;
     } else {
       return d;
+    }
+  }
+
+  double getPercentFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d * 100;
     }
   }
 }

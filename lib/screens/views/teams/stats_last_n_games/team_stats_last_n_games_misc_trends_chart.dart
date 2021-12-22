@@ -212,6 +212,17 @@ class LastNGamesSeriesMisc {
       return d;
     }
   }
+
+  double getPercentFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d * 100;
+    }
+  }
 }
 
 class LastNGamesSeriesMiscList {

@@ -389,13 +389,13 @@ class LastNGamesSeriesBase {
     typeValue = json[1];
     fgm = getDoubleFromJson(json[7]);
     fga = getDoubleFromJson(json[8]);
-    fgPct = getDoubleFromJson(json[9]);
+    fgPct = getPercentFromJson(json[9]);
     fg3m = getDoubleFromJson(json[10]);
     fg3a = getDoubleFromJson(json[11]);
-    fg3Pct = getDoubleFromJson(json[12]);
+    fg3Pct = getPercentFromJson(json[12]);
     ftm = getDoubleFromJson(json[13]);
     fta = getDoubleFromJson(json[14]);
-    ftPct = getDoubleFromJson(json[15]);
+    ftPct = getPercentFromJson(json[15]);
     oReb = getDoubleFromJson(json[16]);
     dReb = getDoubleFromJson(json[17]);
     reb = getDoubleFromJson(json[18]);
@@ -418,6 +418,17 @@ class LastNGamesSeriesBase {
       return 0.0;
     } else {
       return d;
+    }
+  }
+
+  double getPercentFromJson(var value) {
+    String s = value.toString();
+    double d = double.tryParse(s);
+
+    if (d == null) {
+      return 0.0;
+    } else {
+      return d * 100;
     }
   }
 }
