@@ -15,6 +15,7 @@ import 'package:hoop/screens/views/standings/standings.dart';
 import 'package:hoop/screens/views/standings/standings_small.dart';
 import 'package:hoop/screens/views/stats/leaders_main.dart';
 import 'package:hoop/screens/views/stats/leaders_today_small.dart';
+import 'package:hoop/screens/views/stats/league_stats.dart';
 import 'package:hoop/screens/views/stats/league_stats_small.dart';
 
 class DashboardMain extends StatefulWidget {
@@ -172,9 +173,9 @@ class _DashboardMainState extends State<DashboardMain> {
                 DashboardSectionBox(
                   dashboardWidget: LeagueStatsSmall(),
                   iconData: Icons.leaderboard,
-                  linkWidget: null,
+                  linkWidget: LeagueStats(),
                   sectionTitle: "Stats",
-                  tapMoreText: "League Stats page is coming soon...",
+                  tapMoreText: "Tap to view League Stats...",
                 ),
                 SizedBox(
                   height: 12,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/models/advanced_stats_league.dart';
-import 'package:hoop/models/base_stats_league.dart';
+import 'package:hoop/models/league_stats/advanced_stats_league.dart';
+import 'package:hoop/models/league_stats/base_stats_league.dart';
 import 'package:provider/provider.dart';
 
 class LeagueStatsSmall extends StatelessWidget {

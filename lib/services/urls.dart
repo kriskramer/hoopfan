@@ -275,6 +275,13 @@ class Urls {
     return "https://stats.nba.com/stats/teamdashboardbyteamperformance?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
+  static String getNbaStatsTeamStatistics(
+      {String measureType = "Base",
+      String perMode = "Totals",
+      String lastNGames = "0"}) {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=$lastNGames&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
+  }
+
   static String getNbaStatsTeamStatisticsBase() {
     return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }

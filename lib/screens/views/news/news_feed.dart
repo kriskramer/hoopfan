@@ -78,9 +78,9 @@ class NbaNewsFeed extends StatelessWidget {
                                       height: 4,
                                     ),
                                     Text(
-                                      news.items[index].link,
+                                      news.items[index].author,
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.blue),
+                                          fontSize: 12, color: Colors.blue),
                                     ),
                                     SizedBox(
                                       height: 4,
