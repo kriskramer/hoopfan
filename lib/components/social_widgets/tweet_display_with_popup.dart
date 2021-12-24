@@ -43,49 +43,91 @@ class TweetDisplayWithPopup extends StatelessWidget {
               var rt;
 
               if (t["data"]["referenced_tweets"] != null) {
-                rt = t["data"]["referenced_tweets"][0];
+                if (t["data"]["referenced_tweets"][0]["type"] == "retweeted") {
+                  rt = t["data"]["referenced_tweets"][0];
+                }
               }
 
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TweetAuthorDisplay(t["data"]["author_id"]),
-                      SizedBox(height: 10),
-                      Text(t["data"]["text"], style: TextStyle(fontSize: 20)),
-                      (rt != null)
-                          ? TweetDisplayEmbed(
-                              id: rt["id"],
-                            )
-                          : SizedBox(),
-                      SizedBox(height: 20),
-                      Text(t["data"]["created_at"],
-                          style: TextStyle(fontSize: 12)),
-                      SizedBox(height: 10),
-                      Text(t["data"]["source"], style: TextStyle(fontSize: 12)),
-                      SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          Network.launchSite('https://twitter.com/' +
-                              t["data"]["author_id"] +
-                              '/status/' +
-                              tweet.id.toString());
-                        },
-                        child: Text(
-                          'View in Twitter',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue[800]),
+              if (rt == null) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TweetAuthorDisplay(t["data"]["author_id"]),
+                        SizedBox(height: 10),
+                        Text(t["data"]["text"], style: TextStyle(fontSize: 20)),
+                        (rt != null)
+                            ? TweetDisplayEmbed(
+                                id: rt["id"],
+                              )
+                            : SizedBox(),
+                        SizedBox(height: 20),
+                        Text(t["data"]["created_at"],
+                            style: TextStyle(fontSize: 12)),
+                        SizedBox(height: 10),
+                        Text(t["data"]["source"],
+                            style: TextStyle(fontSize: 12)),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            Network.launchSite('https://twitter.com/' +
+                                t["data"]["author_id"] +
+                                '/status/' +
+                                tweet.id.toString());
+                          },
+                          child: Text(
+                            'View in Twitter',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800]),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                // This is a retweet
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TweetAuthorDisplay(t["data"]["author_id"]),
+                        SizedBox(height: 5),
+                        Text("Retweeted:", style: TextStyle(fontSize: 20)),
+                        TweetDisplayEmbed(
+                          id: rt["id"],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Network.launchSite('https://twitter.com/' +
+                                t["data"]["author_id"] +
+                                '/status/' +
+                                tweet.id.toString());
+                          },
+                          child: Text(
+                            'View in Twitter',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
             } else {
               return NoConnection();
             }

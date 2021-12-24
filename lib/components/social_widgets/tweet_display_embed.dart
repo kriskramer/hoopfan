@@ -21,6 +21,7 @@ class TweetDisplayEmbed extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Container(
               decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(width: 1, color: Colors.grey)),
               padding: EdgeInsets.all(15),
               child: Column(

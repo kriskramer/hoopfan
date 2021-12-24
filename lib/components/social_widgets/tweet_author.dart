@@ -31,7 +31,7 @@ class TweetAuthorDisplay extends StatelessWidget {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   Text(" (@" + author.username + ") ",
                       style: TextStyle(fontSize: 14)),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Text(
                       "Followers: " +
                           author.followerCount.toString() +
