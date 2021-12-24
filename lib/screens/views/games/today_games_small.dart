@@ -90,9 +90,12 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
                 ? Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: 50,
                       ),
-                      Text('No games listed')
+                      Text('No games listed'),
+                      SizedBox(
+                        height: 50,
+                      ),
                     ],
                   )
                 : ListView(

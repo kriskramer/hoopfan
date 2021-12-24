@@ -110,7 +110,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                               print("THis $date");
                             }),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: 150,
                         ),
                         Text('No games listed')
                       ],
