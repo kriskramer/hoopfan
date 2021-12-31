@@ -43,15 +43,17 @@ class _LeagueStatsMiscGridState extends State<LeagueStatsMiscGrid> {
 
   List<DataRow> getVariableMiscRows(dynamic stats) {
     List<DataRow> list = [];
+    int counter = 1;
     for (var i in stats.items) {
-      list.add(getMiscDataRow(i));
+      list.add(getMiscDataRow(i, counter));
+      counter++;
     }
     return list;
   }
 
-  DataRow getMiscDataRow(MiscStatsLeague item) {
+  DataRow getMiscDataRow(MiscStatsLeague item, int index) {
     return DataRow(cells: [
-      //DataCell(Text(item.TEAM_ID)),
+      DataCell(Text(index.toString())),
       DataCell(GestureDetector(
           onTap: () {
             showDialog(
@@ -61,7 +63,6 @@ class _LeagueStatsMiscGridState extends State<LeagueStatsMiscGrid> {
                 });
           },
           child: Text(item.TEAM_NAME))),
-      DataCell(Text(item.TEAM_NAME)),
       DataCell(Text(item.GP.toString())),
       DataCell(Text(item.W.toString())),
       DataCell(Text(item.L.toString())),
@@ -96,7 +97,7 @@ class _LeagueStatsMiscGridState extends State<LeagueStatsMiscGrid> {
   List<DataColumn> getMiscDataColumns() {
     List<DataColumn> list = [];
 
-    //list.add(DataColumn(label: Text('TEAM_ID')));
+    list.add(DataColumn(label: Text('')));
     list.add(DataColumn(
         label: Text('TEAM NAME'),
         onSort: (columnIndex, ascending) {
@@ -229,98 +230,98 @@ class _LeagueStatsMiscGridState extends State<LeagueStatsMiscGrid> {
   }
 
   void doSort(MiscStatsLeagueList stats) {
-    if (colIndex == 0) {
+    if (colIndex == 1) {
       if (sort) {
         stats.sortTeam(false);
       } else {
         stats.sortTeam(true);
       }
     }
-    if (colIndex == 1) {
+    if (colIndex == 2) {
       if (sort) {
         stats.sortGP(false);
       } else {
         stats.sortGP(true);
       }
     }
-    if (colIndex == 2) {
+    if (colIndex == 3) {
       if (sort) {
         stats.sortW(false);
       } else {
         stats.sortW(true);
       }
     }
-    if (colIndex == 3) {
+    if (colIndex == 4) {
       if (sort) {
         stats.sortL(false);
       } else {
         stats.sortL(true);
       }
     }
-    if (colIndex == 4) {
+    if (colIndex == 5) {
       if (sort) {
         stats.sortWPCT(false);
       } else {
         stats.sortWPCT(true);
       }
     }
-    if (colIndex == 5) {
+    if (colIndex == 6) {
       if (sort) {
         stats.sortMin(false);
       } else {
         stats.sortMin(true);
       }
     }
-    if (colIndex == 6) {
+    if (colIndex == 7) {
       if (sort) {
         stats.sortPtsOffTov(false);
       } else {
         stats.sortPtsOffTov(true);
       }
     }
-    if (colIndex == 7) {
+    if (colIndex == 8) {
       if (sort) {
         stats.sortPts2ndChance(false);
       } else {
         stats.sortPts2ndChance(true);
       }
     }
-    if (colIndex == 8) {
+    if (colIndex == 9) {
       if (sort) {
         stats.sortPtsFb(false);
       } else {
         stats.sortPtsFb(true);
       }
     }
-    if (colIndex == 9) {
+    if (colIndex == 10) {
       if (sort) {
         stats.sortPtsPaint(false);
       } else {
         stats.sortPtsPaint(true);
       }
     }
-    if (colIndex == 10) {
+    if (colIndex == 11) {
       if (sort) {
         stats.sortOppPtsOffTov(false);
       } else {
         stats.sortOppPtsOffTov(true);
       }
     }
-    if (colIndex == 11) {
+    if (colIndex == 12) {
       if (sort) {
         stats.sortOppPts2ndChance(false);
       } else {
         stats.sortOppPts2ndChance(true);
       }
     }
-    if (colIndex == 12) {
+    if (colIndex == 13) {
       if (sort) {
         stats.sortOppPtsFb(false);
       } else {
         stats.sortOppPtsFb(true);
       }
     }
-    if (colIndex == 13) {
+    if (colIndex == 14) {
       if (sort) {
         stats.sortOppPtsPaint(false);
       } else {

@@ -44,15 +44,17 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
 
   List<DataRow> getVariableBaseRows(BaseStatsLeagueList stats) {
     List<DataRow> list = [];
+    int counter = 1;
     for (var i in stats.items) {
-      list.add(getBaseDataRow(i));
+      list.add(getBaseDataRow(i, counter));
+      counter++;
     }
     return list;
   }
 
-  DataRow getBaseDataRow(BaseStatsLeague item) {
+  DataRow getBaseDataRow(BaseStatsLeague item, int index) {
     return DataRow(cells: [
-      //DataCell(Text(item.TEAM_ID.toString())),
+      DataCell(Text(index.toString())),
       DataCell(GestureDetector(
           onTap: () {
             showDialog(
@@ -119,7 +121,7 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
 
   List<DataColumn> getBaseDataColumns() {
     List<DataColumn> list = [];
-    //list.add(DataColumn(label: Text('TEAM_ID')));
+    list.add(DataColumn(label: Text('')));
     list.add(DataColumn(
         label: Text('Team'),
         onSort: (columnIndex, ascending) {
@@ -367,189 +369,189 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
   }
 
   void doBaseSort(BaseStatsLeagueList stats) {
-    if (colIndex == 0) {
+    if (colIndex == 1) {
       if (sort) {
         stats.sortTeam(false);
       } else {
         stats.sortTeam(true);
       }
     }
-    if (colIndex == 1) {
+    if (colIndex == 2) {
       if (sort) {
         stats.sortGP(false);
       } else {
         stats.sortGP(true);
       }
     }
-    if (colIndex == 2) {
+    if (colIndex == 3) {
       if (sort) {
         stats.sortW(false);
       } else {
         stats.sortW(true);
       }
     }
-    if (colIndex == 3) {
+    if (colIndex == 4) {
       if (sort) {
         stats.sortL(false);
       } else {
         stats.sortL(true);
       }
     }
-    if (colIndex == 4) {
+    if (colIndex == 5) {
       if (sort) {
         stats.sortWPCT(false);
       } else {
         stats.sortWPCT(true);
       }
     }
-    if (colIndex == 5) {
+    if (colIndex == 6) {
       if (sort) {
         stats.sortMin(false);
       } else {
         stats.sortMin(true);
       }
     }
-    if (colIndex == 6) {
+    if (colIndex == 7) {
       if (sort) {
         stats.sortFGM(false);
       } else {
         stats.sortFGM(true);
       }
     }
-    if (colIndex == 7) {
+    if (colIndex == 8) {
       if (sort) {
         stats.sortFGA(false);
       } else {
         stats.sortFGA(true);
       }
     }
-    if (colIndex == 8) {
+    if (colIndex == 9) {
       if (sort) {
         stats.sortFGPCT(false);
       } else {
         stats.sortFGPCT(true);
       }
     }
-    if (colIndex == 9) {
+    if (colIndex == 10) {
       if (sort) {
         stats.sortFG3M(false);
       } else {
         stats.sortFG3M(true);
       }
     }
-    if (colIndex == 10) {
+    if (colIndex == 11) {
       if (sort) {
         stats.sortFG3A(false);
       } else {
         stats.sortFG3A(true);
       }
     }
-    if (colIndex == 11) {
+    if (colIndex == 12) {
       if (sort) {
         stats.sortFG3PCT(false);
       } else {
         stats.sortFG3PCT(true);
       }
     }
-    if (colIndex == 12) {
+    if (colIndex == 13) {
       if (sort) {
         stats.sortFTM(false);
       } else {
         stats.sortFTM(true);
       }
     }
-    if (colIndex == 13) {
+    if (colIndex == 14) {
       if (sort) {
         stats.sortFTA(false);
       } else {
         stats.sortFTA(true);
       }
     }
-    if (colIndex == 14) {
+    if (colIndex == 15) {
       if (sort) {
         stats.sortFTPCT(false);
       } else {
         stats.sortFTPCT(true);
       }
     }
-    if (colIndex == 15) {
+    if (colIndex == 16) {
       if (sort) {
         stats.sortOREB(false);
       } else {
         stats.sortOREB(true);
       }
     }
-    if (colIndex == 16) {
+    if (colIndex == 17) {
       if (sort) {
         stats.sortDREB(false);
       } else {
         stats.sortDREB(true);
       }
     }
-    if (colIndex == 17) {
+    if (colIndex == 18) {
       if (sort) {
         stats.sortREB(false);
       } else {
         stats.sortREB(true);
       }
     }
-    if (colIndex == 18) {
+    if (colIndex == 19) {
       if (sort) {
         stats.sortAST(false);
       } else {
         stats.sortAST(true);
       }
     }
-    if (colIndex == 19) {
+    if (colIndex == 20) {
       if (sort) {
         stats.sortTOV(false);
       } else {
         stats.sortTOV(true);
       }
     }
-    if (colIndex == 20) {
+    if (colIndex == 21) {
       if (sort) {
         stats.sortSTL(false);
       } else {
         stats.sortSTL(true);
       }
     }
-    if (colIndex == 21) {
+    if (colIndex == 22) {
       if (sort) {
         stats.sortBLK(false);
       } else {
         stats.sortBLK(true);
       }
     }
-    if (colIndex == 22) {
+    if (colIndex == 23) {
       if (sort) {
         stats.sortBLKA(false);
       } else {
         stats.sortBLKA(true);
       }
     }
-    if (colIndex == 23) {
+    if (colIndex == 24) {
       if (sort) {
         stats.sortPF(false);
       } else {
         stats.sortPF(true);
       }
     }
-    if (colIndex == 24) {
+    if (colIndex == 25) {
       if (sort) {
         stats.sortPFD(false);
       } else {
         stats.sortPFD(true);
       }
     }
-    if (colIndex == 25) {
+    if (colIndex == 26) {
       if (sort) {
         stats.sortPTS(false);
       } else {
         stats.sortPTS(true);
       }
     }
-    if (colIndex == 26) {
+    if (colIndex == 27) {
       if (sort) {
         stats.sortPLUSMINUS(false);
       } else {

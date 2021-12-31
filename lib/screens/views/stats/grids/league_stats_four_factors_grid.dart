@@ -46,15 +46,17 @@ class _LeagueStatsFourFactorsGridState
 
   List<DataRow> getVariableFourFactorRows(FourFactorsStatsLeagueList stats) {
     List<DataRow> list = [];
+    int counter = 1;
     for (var i in stats.items) {
-      list.add(getFourFactorDataRow(i));
+      list.add(getFourFactorDataRow(i, counter));
+      counter++;
     }
     return list;
   }
 
-  DataRow getFourFactorDataRow(FourFactorsStatsLeague item) {
+  DataRow getFourFactorDataRow(FourFactorsStatsLeague item, int index) {
     return DataRow(cells: [
-      //DataCell(Text(item.TEAM_ID)),
+      DataCell(Text(index.toString())),
       DataCell(GestureDetector(
           onTap: () {
             showDialog(
@@ -109,7 +111,7 @@ class _LeagueStatsFourFactorsGridState
 
   List<DataColumn> getFourFactorDataColumns() {
     List<DataColumn> list = [];
-
+    list.add(DataColumn(label: Text('')));
     list.add(DataColumn(
         label: Text('TEAM_NAME'),
         onSort: (columnIndex, ascending) {
@@ -285,98 +287,98 @@ class _LeagueStatsFourFactorsGridState
   }
 
   void doSort(FourFactorsStatsLeagueList stats) {
-    if (colIndex == 0) {
+    if (colIndex == 1) {
       if (sort) {
         stats.sortTeam(false);
       } else {
         stats.sortTeam(true);
       }
     }
-    if (colIndex == 1) {
+    if (colIndex == 2) {
       if (sort) {
         stats.sortGP(false);
       } else {
         stats.sortGP(true);
       }
     }
-    if (colIndex == 2) {
+    if (colIndex == 3) {
       if (sort) {
         stats.sortW(false);
       } else {
         stats.sortW(true);
       }
     }
-    if (colIndex == 3) {
+    if (colIndex == 4) {
       if (sort) {
         stats.sortL(false);
       } else {
         stats.sortL(true);
       }
     }
-    if (colIndex == 4) {
+    if (colIndex == 5) {
       if (sort) {
         stats.sortWPCT(false);
       } else {
         stats.sortWPCT(true);
       }
     }
-    if (colIndex == 5) {
+    if (colIndex == 6) {
       if (sort) {
         stats.sortMin(false);
       } else {
         stats.sortMin(true);
       }
     }
-    if (colIndex == 6) {
+    if (colIndex == 7) {
       if (sort) {
         stats.sortEFGPct(false);
       } else {
         stats.sortEFGPct(true);
       }
     }
-    if (colIndex == 7) {
-      if (sort) {
-        stats.sortFTARate(false);
-      } else {
-        stats.sortFTARate(true);
-      }
-    }
     if (colIndex == 8) {
-      if (sort) {
-        stats.sortTmTovPct(false);
-      } else {
-        stats.sortTmTovPct(true);
-      }
-    }
-    if (colIndex == 9) {
-      if (sort) {
-        stats.sortORebPct(false);
-      } else {
-        stats.sortORebPct(true);
-      }
-    }
-    if (colIndex == 10) {
       if (sort) {
         stats.sortOppEFGPct(false);
       } else {
         stats.sortOppEFGPct(true);
       }
     }
-    if (colIndex == 11) {
+    if (colIndex == 12) {
+      if (sort) {
+        stats.sortFTARate(false);
+      } else {
+        stats.sortFTARate(true);
+      }
+    }
+    if (colIndex == 13) {
       if (sort) {
         stats.sortOppFtaRate(false);
       } else {
         stats.sortOppFtaRate(true);
       }
     }
-    if (colIndex == 12) {
+    if (colIndex == 17) {
+      if (sort) {
+        stats.sortTmTovPct(false);
+      } else {
+        stats.sortTmTovPct(true);
+      }
+    }
+    if (colIndex == 18) {
       if (sort) {
         stats.sortOppTovPct(false);
       } else {
         stats.sortOppTovPct(true);
       }
     }
-    if (colIndex == 13) {
+    if (colIndex == 22) {
+      if (sort) {
+        stats.sortORebPct(false);
+      } else {
+        stats.sortORebPct(true);
+      }
+    }
+    if (colIndex == 23) {
       if (sort) {
         stats.sortOppORebPct(false);
       } else {
