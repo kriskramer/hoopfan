@@ -14,6 +14,7 @@ class LeagueStatsAdvancedGrid extends StatefulWidget {
 class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
   bool sort = true;
   int colIndex = 0;
+  int selectedTeamId = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,249 +54,103 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
   }
 
   DataRow getAdvancedDataRow(AdvancedStatsLeague item, int index) {
-    return DataRow(cells: [
-      DataCell(Text(index.toString())),
-      DataCell(GestureDetector(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return TeamDetails(nbaTeamId: item.TEAM_ID.toString());
+    return DataRow(
+        color: MaterialStateColor.resolveWith((states) {
+          if (item.TEAM_ID == selectedTeamId) {
+            return Colors.blue[50];
+          } else {
+            return Colors.white;
+          }
+        }),
+        cells: [
+          DataCell(Text(index.toString())),
+          DataCell(GestureDetector(
+              onLongPress: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return TeamDetails(nbaTeamId: item.TEAM_ID.toString());
+                    });
+              },
+              onTap: () {
+                setState(() {
+                  selectedTeamId = item.TEAM_ID;
                 });
-          },
-          child: Text(item.TEAM_NAME))),
-      DataCell(Text(item.GP.toString())),
-      DataCell(Text(item.W.toString())),
-      DataCell(Text(item.L.toString())),
-      DataCell(Text(item.W_PCT.toString())),
-      DataCell(Text(item.MIN.toString())),
-      //DataCell(Text(item.E_OFF_RATING.toString())),
-      DataCell(Text(item.OFF_RATING.toString())),
-      //DataCell(Text(item.E_DEF_RATING.toString())),
-      DataCell(Text(item.DEF_RATING.toString())),
-      //DataCell(Text(item.E_NET_RATING.toString())),
-      DataCell(Text(item.NET_RATING.toString())),
-      DataCell(Text(item.AST_PCT.toString())),
-      DataCell(Text(item.AST_TO.toString())),
-      DataCell(Text(item.AST_RATIO.toString())),
-      DataCell(Text(item.OREB_PCT.toString())),
-      DataCell(Text(item.DREB_PCT.toString())),
-      DataCell(Text(item.REB_PCT.toString())),
-      DataCell(Text(item.TM_TOV_PCT.toString())),
-      DataCell(Text(item.EFG_PCT.toString())),
-      DataCell(Text(item.TS_PCT.toString())),
-      //DataCell(Text(item.E_PACE.toString())),
-      DataCell(Text(item.PACE.toString())),
-      DataCell(Text(item.PACE_PER40.toString())),
-      DataCell(Text(item.POSS.toString())),
-      DataCell(Text(item.PIE.toString())),
-      DataCell(Text(item.GP_RANK.toString())),
-      DataCell(Text(item.W_RANK.toString())),
-      DataCell(Text(item.L_RANK.toString())),
-      DataCell(Text(item.W_PCT_RANK.toString())),
-      DataCell(Text(item.MIN_RANK.toString())),
-      DataCell(Text(item.OFF_RATING_RANK.toString())),
-      DataCell(Text(item.DEF_RATING_RANK.toString())),
-      DataCell(Text(item.NET_RATING_RANK.toString())),
-      DataCell(Text(item.AST_PCT_RANK.toString())),
-      DataCell(Text(item.AST_TO_RANK.toString())),
-      DataCell(Text(item.AST_RATIO_RANK.toString())),
-      DataCell(Text(item.OREB_PCT_RANK.toString())),
-      DataCell(Text(item.DREB_PCT_RANK.toString())),
-      DataCell(Text(item.REB_PCT_RANK.toString())),
-      DataCell(Text(item.TM_TOV_PCT_RANK.toString())),
-      DataCell(Text(item.EFG_PCT_RANK.toString())),
-      DataCell(Text(item.TS_PCT_RANK.toString())),
-      DataCell(Text(item.PACE_RANK.toString())),
-      DataCell(Text(item.PIE_RANK.toString())),
-      // DataCell(Text(item.CFID.toString())),
-      // DataCell(Text(item.CFPARAMS.toString())),
-    ]);
+              },
+              child: Text(item.TEAM_NAME))),
+          getDataCell(item.GP.toString(), item.GP_RANK, item),
+          getDataCell(item.W.toString(), item.W_RANK, item),
+          getDataCell(item.L.toString(), item.L_RANK, item),
+          getDataCell(item.W_PCT.toString(), item.W_PCT_RANK, item),
+          getDataCell(item.MIN.toString(), item.MIN_RANK, item),
+          getDataCell(item.OFF_RATING.toString(), item.OFF_RATING_RANK, item),
+          getDataCell(item.DEF_RATING.toString(), item.DEF_RATING_RANK, item),
+          getDataCell(item.NET_RATING.toString(), item.NET_RATING_RANK, item),
+          getDataCell(item.AST_PCT.toString(), item.AST_PCT_RANK, item),
+          getDataCell(item.AST_TO.toString(), item.AST_TO_RANK, item),
+          getDataCell(item.AST_RATIO.toString(), item.AST_RATIO_RANK, item),
+          getDataCell(item.OREB_PCT.toString(), item.OREB_PCT_RANK, item),
+          getDataCell(item.DREB_PCT.toString(), item.DREB_PCT_RANK, item),
+          getDataCell(item.REB_PCT.toString(), item.REB_PCT_RANK, item),
+          getDataCell(item.TM_TOV_PCT.toString(), item.TM_TOV_PCT_RANK, item),
+          getDataCell(item.EFG_PCT.toString(), item.EFG_PCT_RANK, item),
+          getDataCell(item.TS_PCT.toString(), item.TS_PCT_RANK, item),
+          getDataCell(item.PACE.toString(), item.PACE_RANK, item),
+          getDataCell(item.PACE_PER40.toString(), 0, item),
+          getDataCell(item.POSS.toString(), 0, item),
+          getDataCell(item.PIE.toString(), item.PIE_RANK, item),
+          getDataCell(item.GP_RANK.toString(), item.GP_RANK, item),
+          getDataCell(item.W_RANK.toString(), item.W_RANK, item),
+          getDataCell(item.L_RANK.toString(), item.L_RANK, item),
+          getDataCell(item.W_PCT_RANK.toString(), item.W_PCT_RANK, item),
+          getDataCell(item.MIN_RANK.toString(), item.MIN_RANK, item),
+          getDataCell(
+              item.OFF_RATING_RANK.toString(), item.OFF_RATING_RANK, item),
+          getDataCell(
+              item.DEF_RATING_RANK.toString(), item.DEF_RATING_RANK, item),
+          getDataCell(
+              item.NET_RATING_RANK.toString(), item.NET_RATING_RANK, item),
+          getDataCell(item.AST_PCT_RANK.toString(), item.AST_PCT_RANK, item),
+          getDataCell(item.AST_TO_RANK.toString(), item.AST_TO_RANK, item),
+          getDataCell(
+              item.AST_RATIO_RANK.toString(), item.AST_RATIO_RANK, item),
+          getDataCell(item.OREB_PCT_RANK.toString(), item.OREB_PCT_RANK, item),
+          getDataCell(item.DREB_PCT_RANK.toString(), item.DREB_PCT_RANK, item),
+          getDataCell(item.REB_PCT_RANK.toString(), item.REB_PCT_RANK, item),
+          getDataCell(
+              item.TM_TOV_PCT_RANK.toString(), item.TM_TOV_PCT_RANK, item),
+          getDataCell(item.EFG_PCT_RANK.toString(), item.EFG_PCT_RANK, item),
+          getDataCell(item.TS_PCT_RANK.toString(), item.TS_PCT_RANK, item),
+          getDataCell(item.PACE_RANK.toString(), item.PACE_RANK, item),
+          getDataCell(item.PIE_RANK.toString(), item.PIE_RANK, item),
+        ]);
   }
 
   List<DataColumn> getAdvancedDataColumns() {
     List<DataColumn> list = [];
     list.add(DataColumn(label: Text('')));
-    list.add(DataColumn(
-        label: Text('TEAM NAME'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('GP'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('W'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('L'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('W %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('MIN'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    //list.add(DataColumn(label: Text('E OFF RATING')));
-    list.add(DataColumn(
-        label: Text('OFF RTG'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    //list.add(DataColumn(label: Text('E DEF RATING')));
-    list.add(DataColumn(
-        label: Text('DEF RTG'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    //list.add(DataColumn(label: Text('E NET RATING')));
-    list.add(DataColumn(
-        label: Text('NET RTG'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('AST %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('AST TO'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('AST RATIO'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('OREB %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('DREB %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('REB %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('TM TOV %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('EFG %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('TS %'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    //list.add(DataColumn(label: Text('E PACE')));
-    list.add(DataColumn(
-        label: Text('PACE'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('PACE/40'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('POSS'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
-    list.add(DataColumn(
-        label: Text('PIE'),
-        onSort: (columnIndex, ascending) {
-          setState(() {
-            sort = !sort;
-            colIndex = columnIndex;
-          });
-        }));
+    list.add(DataColumn(label: Text('TEAM NAME'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('GP'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('W'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('L'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('W %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('MIN'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('OFF RTG'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('DEF RTG'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('NET RTG'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('AST %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('AST TO'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('AST RATIO'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('OREB %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('DREB %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('REB %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('TM TOV %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('EFG %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('TS %'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('PACE'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('PACE/40'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('POSS'), onSort: sortFunction));
+    list.add(DataColumn(label: Text('PIE'), onSort: sortFunction));
     list.add(DataColumn(label: Text('GP RANK')));
     list.add(DataColumn(label: Text('W RANK')));
     list.add(DataColumn(label: Text('L RANK')));
@@ -315,166 +170,111 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
     list.add(DataColumn(label: Text('TS % RANK')));
     list.add(DataColumn(label: Text('PACE RANK')));
     list.add(DataColumn(label: Text('PIE RANK')));
-    // list.add(DataColumn(label: Text('CFID')));
-    // list.add(DataColumn(label: Text('CFPARAMS')));
 
     return list;
   }
 
   void doAdvancedSort(AdvancedStatsLeagueList stats) {
     if (colIndex == 1) {
-      if (sort) {
-        stats.sortTeam(false);
-      } else {
-        stats.sortTeam(true);
-      }
+      stats.sortTeam(sort);
     }
     if (colIndex == 2) {
-      if (sort) {
-        stats.sortGP(false);
-      } else {
-        stats.sortGP(true);
-      }
+      stats.sortGP(sort);
     }
     if (colIndex == 3) {
-      if (sort) {
-        stats.sortW(false);
-      } else {
-        stats.sortW(true);
-      }
+      stats.sortW(sort);
     }
     if (colIndex == 4) {
-      if (sort) {
-        stats.sortL(false);
-      } else {
-        stats.sortL(true);
-      }
+      stats.sortL(sort);
     }
     if (colIndex == 5) {
-      if (sort) {
-        stats.sortWPCT(false);
-      } else {
-        stats.sortWPCT(true);
-      }
+      stats.sortWPCT(sort);
     }
     if (colIndex == 6) {
-      if (sort) {
-        stats.sortMin(false);
-      } else {
-        stats.sortMin(true);
-      }
+      stats.sortMin(sort);
     }
     if (colIndex == 7) {
-      if (sort) {
-        stats.sortORTG(false);
-      } else {
-        stats.sortORTG(true);
-      }
+      stats.sortORTG(sort);
     }
     if (colIndex == 8) {
-      if (sort) {
-        stats.sortDRTG(false);
-      } else {
-        stats.sortDRTG(true);
-      }
+      stats.sortDRTG(sort);
     }
     if (colIndex == 9) {
-      if (sort) {
-        stats.sortNET(false);
-      } else {
-        stats.sortNET(true);
-      }
+      stats.sortNET(sort);
     }
     if (colIndex == 10) {
-      if (sort) {
-        stats.sortASTPCT(false);
-      } else {
-        stats.sortASTPCT(true);
-      }
+      stats.sortASTPCT(sort);
     }
     if (colIndex == 11) {
-      if (sort) {
-        stats.sortASTTOV(false);
-      } else {
-        stats.sortASTTOV(true);
-      }
+      stats.sortASTTOV(sort);
     }
     if (colIndex == 12) {
-      if (sort) {
-        stats.sortASTRATIO(false);
-      } else {
-        stats.sortASTRATIO(true);
-      }
+      stats.sortASTRATIO(sort);
     }
     if (colIndex == 13) {
-      if (sort) {
-        stats.sortOREBPCT(false);
-      } else {
-        stats.sortOREBPCT(true);
-      }
+      stats.sortOREBPCT(sort);
     }
     if (colIndex == 14) {
-      if (sort) {
-        stats.sortDREBPCT(false);
-      } else {
-        stats.sortDREBPCT(true);
-      }
+      stats.sortDREBPCT(sort);
     }
     if (colIndex == 15) {
-      if (sort) {
-        stats.sortREBPCT(false);
-      } else {
-        stats.sortREBPCT(true);
-      }
+      stats.sortREBPCT(sort);
     }
     if (colIndex == 16) {
-      if (sort) {
-        stats.sortTMTOVPCT(false);
-      } else {
-        stats.sortTMTOVPCT(true);
-      }
+      stats.sortTMTOVPCT(sort);
     }
     if (colIndex == 17) {
-      if (sort) {
-        stats.sortEFG(false);
-      } else {
-        stats.sortEFG(true);
-      }
+      stats.sortEFG(sort);
     }
     if (colIndex == 18) {
-      if (sort) {
-        stats.sortTS(false);
-      } else {
-        stats.sortTS(true);
-      }
+      stats.sortTS(sort);
     }
     if (colIndex == 19) {
-      if (sort) {
-        stats.sortPACE(false);
-      } else {
-        stats.sortPACE(true);
-      }
+      stats.sortPACE(sort);
     }
     if (colIndex == 20) {
-      if (sort) {
-        stats.sortPACE40(false);
-      } else {
-        stats.sortPACE40(true);
-      }
+      stats.sortPACE40(sort);
     }
     if (colIndex == 21) {
-      if (sort) {
-        stats.sortPOSS(false);
-      } else {
-        stats.sortPOSS(true);
-      }
+      stats.sortPOSS(sort);
     }
     if (colIndex == 22) {
-      if (sort) {
-        stats.sortPIE(false);
-      } else {
-        stats.sortPIE(true);
-      }
+      stats.sortPIE(sort);
     }
+  }
+
+  DataCell getDataCell(String value, int rank, AdvancedStatsLeague item) {
+    return DataCell(Text(value, style: rankColors(rank)), onTap: () {
+      setState(() {
+        selectedTeamId = item.TEAM_ID;
+      });
+    });
+  }
+
+  void sortFunction(int columnIndex, bool asc) {
+    setState(() {
+      sort = !sort;
+      colIndex = columnIndex;
+    });
+  }
+
+  TextStyle rankColors(int rank) {
+    TextStyle ts;
+
+    if (rank <= 5) {
+      ts = TextStyle(color: Colors.purple[900]);
+    } else if (rank <= 10) {
+      ts = TextStyle(color: Colors.blue[800]);
+    } else if (rank <= 15) {
+      ts = TextStyle(color: Colors.green[700]);
+    } else if (rank <= 20) {
+      ts = TextStyle(color: Colors.yellow[800]);
+    } else if (rank <= 25) {
+      ts = TextStyle(color: Colors.orange[800]);
+    } else if (rank <= 30) {
+      ts = TextStyle(color: Colors.red[800]);
+    }
+
+    return ts;
   }
 }
