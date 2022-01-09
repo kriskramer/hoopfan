@@ -77,17 +77,17 @@ class _LeadersTodayState extends State<LeadersToday> {
                   Text(p.lastName),
                 ),
                 DataCell(Text(p.points.toString())),
-                DataCell(Text(p.fga +
+                DataCell(Text(p.fgm +
                     "/" +
-                    p.fgm +
+                    p.fga +
                     "  " +
-                    p.fta +
-                    "/" +
                     p.ftm +
-                    "  " +
-                    p.tpa +
                     "/" +
-                    p.tpm)),
+                    p.fta +
+                    "  " +
+                    p.tpm +
+                    "/" +
+                    p.tpa)),
               ]));
             }
 

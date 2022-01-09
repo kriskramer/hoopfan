@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:provider/provider.dart';
 
 class TeamScheduleSmall extends StatelessWidget {
   final String teamId;
@@ -12,7 +14,8 @@ class TeamScheduleSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FutureBuilder(
-      future: Network.getJson(Urls.nbaTeamSchedule(teamId, "2021")),
+      future: loadData(
+          context), //Network.getJson(Urls.nbaTeamSchedule(teamId, "2021")),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           List<dynamic> games = snapshot.data["league"]["standard"];
@@ -52,6 +55,23 @@ class TeamScheduleSmall extends StatelessWidget {
         }
       },
     ));
+  }
+
+  Future<dynamic> loadData(BuildContext context) async {
+    var sched;
+    if (Provider.of<JsonFiles>(context, listen: false)
+            .getTeamSchedule(teamId) ==
+        null) {
+      sched = await Network.getJson(Urls.nbaTeamSchedule(teamId, "2021"));
+
+      Provider.of<JsonFiles>(context, listen: false)
+          .setTeamSchedule(teamId, sched);
+
+      return sched;
+    } else {
+      return Provider.of<JsonFiles>(context, listen: false)
+          .getTeamSchedule(teamId);
+    }
   }
 
   String formatDate(String date) {
@@ -132,7 +152,7 @@ class TeamScheduleSmall extends StatelessWidget {
         },
         child: Container(
             width: MediaQuery.of(context).size.width - 30,
-            color: Colors.orange[100],
+            color: Colors.teal[100],
             padding: EdgeInsets.all(4),
             child: Column(
               children: [

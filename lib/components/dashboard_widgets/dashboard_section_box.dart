@@ -47,8 +47,24 @@ class DashboardSectionBox extends StatelessWidget {
                   sectionTitle,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              ]),
-            )),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                iconData,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                sectionTitle,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ]),
+          ),
+        ),
         linkWidget == null
             ? Card(
                 shape: RoundedRectangleBorder(
@@ -103,9 +119,17 @@ class DashboardSectionBox extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              tapMoreText,
-                              style: TextStyle(fontSize: 12),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(8, 3, 8, 3),
+                              decoration: BoxDecoration(
+                                  color: Colors.orange[100],
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Text(
+                                tapMoreText,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
                             )
                           ],
                         ),

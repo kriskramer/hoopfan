@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/scoring_trend.dart';
 //import 'package:hoop/constant.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:provider/provider.dart';
 
 class ScoringTrendsDialog extends StatelessWidget {

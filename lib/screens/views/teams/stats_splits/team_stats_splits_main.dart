@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/json/jsons.dart';
-import 'package:hoop/screens/views/teams/team_stats_splits_game.dart';
-import 'package:hoop/screens/views/teams/team_stats_splits_general.dart';
-import 'package:hoop/screens/views/teams/team_stats_splits_shooting.dart';
+import 'package:hoop/screens/views/teams/stats_splits/team_stats_splits_game.dart';
+import 'package:hoop/screens/views/teams/stats_splits/team_stats_splits_general.dart';
+import 'package:hoop/screens/views/teams/stats_splits/team_stats_splits_shooting.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

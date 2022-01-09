@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/social_widgets/tweet_display_with_popup.dart';
 import 'package:hoop/models/twitter_news.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
@@ -37,16 +38,11 @@ class TwitterFeedSmall extends StatelessWidget {
                           //Network.launchSite(news.items[index].link);
                         },
                         child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            //list.items[index].text.toString().substring(0, 200),
-                            getFormattedText(list.items[index].text),
-                            style: TextStyle(
-                                fontSize: 14,
-                                //fontWeight: FontWeight.bold,
-                                color: Colors.blue[800]),
-                          ),
-                        ),
+                            alignment: Alignment.centerLeft,
+                            child: TweetDisplayWithPopup(
+                              tweet: list.items[index],
+                              shortDisplayText: true,
+                            )),
                       ),
                     ),
                     Divider(

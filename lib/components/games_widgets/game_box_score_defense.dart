@@ -31,7 +31,7 @@ class _GameBoxScoreDefenseState extends State<GameBoxScoreDefense> {
         if (snapshot.hasData) {
           var json = snapshot.data["resultSets"][0]["rowSet"];
           list = new GameBoxScoreDefenseList(json, widget.teamId);
-          print(list.items.length.toString());
+          //print(list.items.length.toString());
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: getDataTable(list),

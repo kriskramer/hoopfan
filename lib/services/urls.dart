@@ -220,6 +220,11 @@ class Urls {
   //   return "https://stats.nba.com/stats/playerdashboardbygamesplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlayerID=$playerId&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
   // }
 
+  static String getNbaStatsTeamGameLogs(String teamId,
+      {String measureType = "Base", String perMode = "Totals"}) {
+    return "https://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=&LeagueID=&Location=&MeasureType=$measureType&Month=&OppTeamID=&Outcome=&PORound=&PerMode=$perMode&Period=&PlayerID=&Season=$_season&SeasonSegment=&SeasonType=&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
   static String getNbaStatsTeamSplitsShooting(String teamId,
       {String measureType = "Base", String perMode = "Totals"}) {
     return "https://stats.nba.com/stats/teamdashboardbyshootingsplits?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&TeamId=$teamId&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerID=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision=";
@@ -268,6 +273,13 @@ class Urls {
 
   static String getNbaStatsTeamPerformance(String teamId) {
     return "https://stats.nba.com/stats/teamdashboardbyteamperformance?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
+  static String getNbaStatsTeamStatistics(
+      {String measureType = "Base",
+      String perMode = "Totals",
+      String lastNGames = "0"}) {
+    return "https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=$lastNGames&LeagueID=&Location=&MeasureType=$measureType&Month=0&OpponentTeamID=0&Outcome=&PORound=&PaceAdjust=N&PerMode=$perMode&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=&TwoWay=&VsConference=&VsDivision=";
   }
 
   static String getNbaStatsTeamStatisticsBase() {
@@ -331,5 +343,17 @@ class Urls {
       String playerId, String teamId, String gameId) {
     // Must include at a minimum teamId and playerId. GameId is optional.
     return "https://stats.nba.com/stats/shotchartdetail?AheadBehind=&ClutchTime=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&EndPeriod=&EndRange=&GameID=$gameId&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&PlayerID=$playerId&PlayerPosition=&PointDiff=&Position=&RangeType=&RookieYear=&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&StartPeriod=&StartRange=&TeamID=$teamId&VsConference=&VsDivision=";
+  }
+
+  static String getFantasyNerdsNews() {
+    return "https://api.fantasynerds.com/v1/nba/news?apikey=${FantasyNerdsApi.key}";
+  }
+
+  static String getFantasyNerdsInjuries() {
+    return "https://api.fantasynerds.com/v1/nba/injuries?apikey=${FantasyNerdsApi.key}";
+  }
+
+  static String getFantasyNerdsLineups() {
+    return "https://api.fantasynerds.com/v1/nba/lineups?apikey=${FantasyNerdsApi.key}";
   }
 }

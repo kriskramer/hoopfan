@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/news_item.dart';
-import 'package:hoop/services/headers.dart';
+import 'package:hoop/models/news_item.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +34,7 @@ class NbaNewsFeed extends StatelessWidget {
                           child: Center(child: Text("No data returned")));
                     }
 
-                    NewsItemList news = NewsItemList(json);
+                    FNNewsItemList news = FNNewsItemList(json);
                     news.sortByDate();
 
                     return ListView.builder(
@@ -56,7 +55,7 @@ class NbaNewsFeed extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      news.items[index].title,
+                                      news.items[index].headline,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -65,7 +64,7 @@ class NbaNewsFeed extends StatelessWidget {
                                       height: 4,
                                     ),
                                     Text(
-                                      news.items[index].published,
+                                      news.items[index].date,
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
@@ -74,14 +73,14 @@ class NbaNewsFeed extends StatelessWidget {
                                       height: 4,
                                     ),
                                     Text(removeAllHtmlTags(
-                                        news.items[index].summary)),
+                                        news.items[index].excerpt)),
                                     SizedBox(
                                       height: 4,
                                     ),
                                     Text(
-                                      news.items[index].link,
+                                      news.items[index].author,
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.blue),
+                                          fontSize: 12, color: Colors.blue),
                                     ),
                                     SizedBox(
                                       height: 4,
@@ -126,8 +125,7 @@ class NbaNewsFeed extends StatelessWidget {
 
     if (n == null) {
       try {
-        var news =
-            await Network.getJson(Urls.teamGoogleNewsSearch("nba basketball"));
+        var news = await Network.getJson(Urls.getFantasyNerdsNews());
         // var news = await Network.getJson(
         //   Urls.freeNewsApiSearch("nba basketball"),
         //   requestHeaders: RequestHeaders.freeNewsHeaders,

@@ -1,3 +1,4 @@
+// #############################################################################
 // Used with Google news search
 class NewsItem {
   var link;
@@ -24,6 +25,7 @@ class NewsItemList {
   }
 }
 
+// #############################################################################
 // Used with FreeNewsAPI articles
 class NewsItem2 {
   var link;
@@ -47,6 +49,35 @@ class NewsItem2List {
   void sortByDate() {
     items.sort((a, b) {
       return b.published.toString().compareTo(a.published.toString());
+    });
+  }
+}
+
+// #############################################################################
+// Used with Fantasy Nerds news search
+class FNNewsItem {
+  var headline;
+  var author;
+  var date;
+  var excerpt;
+  var link;
+
+  FNNewsItem(this.headline, this.date, this.author, this.excerpt, this.link);
+}
+
+class FNNewsItemList {
+  List<FNNewsItem> items = [];
+
+  FNNewsItemList(dynamic json) {
+    for (var n in json) {
+      items.add(FNNewsItem(n["article_headline"], n["article_date"],
+          n["article_author"], n["article_excerpt"], n["article_link"]));
+    }
+  }
+
+  void sortByDate() {
+    items.sort((a, b) {
+      return b.date.toString().compareTo(a.date.toString());
     });
   }
 }

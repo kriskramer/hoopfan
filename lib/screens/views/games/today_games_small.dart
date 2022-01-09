@@ -1,12 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/completed_game_card.dart';
 import 'package:hoop/components/games_widgets/completed_game_card_small.dart';
-import 'package:hoop/components/games_widgets/horiz_calendar.dart';
-import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card_small.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
 import 'package:hoop/components/games_widgets/upcoming_game_card_small.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
@@ -28,20 +24,21 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
   @override
   void initState() {
     super.initState();
-    _listGames = loadGames();
+
+    _listGames = loadGames(context);
     startTimer();
   }
 
   void refreshGames() {
     setState(() {
-      _listGames = loadGames();
+      _listGames = loadGames2(context);
     });
   }
 
   void startTimer() {
     _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
       refreshGames();
-      print('today_games timer tick');
+      print('today_games_small timer tick');
     });
   }
 
@@ -53,6 +50,7 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
 
   @override
   Widget build(BuildContext context) {
+//    print('TestWidget: ${ModalRoute.of(context).isCurrent}');
     return FutureBuilder(
         future:
             _listGames, //loadData(context), // Network.getJson(Urls.nbaGamesToday()),
@@ -92,9 +90,12 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
                 ? Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: 50,
                       ),
-                      Text('No games listed')
+                      Text('No games listed'),
+                      SizedBox(
+                        height: 50,
+                      ),
                     ],
                   )
                 : ListView(
@@ -160,9 +161,17 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2,
               ),
-              Center(
-                child: Text('Unable to get data'),
-              )
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SizedBox(width: 20),
+                Center(
+                  child: Text('Unable to get data'),
+                ),
+                IconButton(
+                    onPressed: () {
+                      refreshGames();
+                    },
+                    icon: Icon(Icons.refresh_rounded))
+              ])
             ]);
           } else {
             return Center(
@@ -188,10 +197,26 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
     refreshGames();
   }
 
-  Future<dynamic> loadGames() async {
+  Future<dynamic> loadGames(BuildContext context) async {
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
     print(selectedDate);
+
+    return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
+  }
+
+  Future<dynamic> loadGames2(BuildContext context) async {
+    print('TestWidget: ${ModalRoute.of(context).isCurrent}');
+
+    Future<dynamic> empty;
+
+    if (!ModalRoute.of(context).isCurrent) {
+      return empty;
+    }
+    var selectedDate =
+        Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
+    print(selectedDate);
+
     return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
   }
 

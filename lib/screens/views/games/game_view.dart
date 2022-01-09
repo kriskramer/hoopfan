@@ -14,8 +14,8 @@ import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
+import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games/game_news.dart';
 import 'package:hoop/screens/views/games/game_preview_article.dart';
 import 'package:hoop/screens/views/games/game_recap_article.dart';
 import 'package:hoop/services/network.dart';
@@ -93,6 +93,7 @@ class _GameViewState extends State<GameView> {
                 // var currentPeriod = gameData["period"]["current"];
 
                 var newsSearchString = getNewsSearchString(gameData);
+                var twitterSearchString = getTwitterSearchString(gameData);
 
                 vTeamScore = gameData["vTeam"]["score"];
                 hTeamScore = gameData["hTeam"]["score"];
@@ -185,8 +186,11 @@ class _GameViewState extends State<GameView> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => GameNews(
-                                          searchString: newsSearchString,
+                                        // builder: (context) => GameNews(
+                                        //   searchString: newsSearchString,
+                                        // ),
+                                        builder: (context) => TwitterFeed(
+                                          searchTerms: twitterSearchString,
                                         ),
                                       ),
                                     );
@@ -285,7 +289,7 @@ class _GameViewState extends State<GameView> {
                                           ),
                                         ),
                                         Container(
-                                          height: 1200, //height of TabBarView
+                                          height: 1300, //height of TabBarView
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   top: BorderSide(
@@ -305,19 +309,12 @@ class _GameViewState extends State<GameView> {
                                                       game: gameData,
                                                     ),
                                                   ),
-                                                  // QuarterScores(
-                                                  //   game: gameData,
-                                                  // ),
-                                                  // GameLeadersFeed(
-                                                  //   stats: stats,
-                                                  //   game: gameData,
-                                                  // ),
                                                   SizedBox(
-                                                    height: 8,
+                                                    height: 12,
                                                   ),
                                                   GamePbpFeed(
-                                                    gameData: gameData,
-                                                  ),
+                                                      gameData: gameData,
+                                                      stats: stats),
                                                   SizedBox(
                                                     height: 12,
                                                   ),
@@ -428,6 +425,15 @@ class _GameViewState extends State<GameView> {
         hTeamName +
         " " +
         gameData["startDateEastern"];
+
+    return search;
+  }
+
+  String getTwitterSearchString(dynamic gameData) {
+    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
+    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+
+    var search = vTeamName + " " + hTeamName;
 
     return search;
   }

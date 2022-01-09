@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 
 import '../../constant.dart';
 

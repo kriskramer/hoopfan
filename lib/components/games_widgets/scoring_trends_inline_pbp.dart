@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/constant.dart';
 
@@ -48,16 +48,20 @@ class ScoringTrendsInlinePbp extends StatelessWidget {
       String hTeamId = game["hTeam"]["teamId"];
 
       return Container(
-        decoration: BoxDecoration(color: Colors.blueGrey[100]),
-        padding: EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+            color: Colors.grey[100],
+            border: Border.symmetric(
+                horizontal: BorderSide(color: Colors.grey[400]))),
+        padding: EdgeInsets.symmetric(vertical: 2),
+        margin: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             Text(
               "Scoring last 5 minutes:",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
             ),
             SizedBox(
-              height: 5,
+              height: 2,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

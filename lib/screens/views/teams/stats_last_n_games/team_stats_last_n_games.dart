@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
-import 'package:hoop/screens/views/teams/team_stats_last_n_games_grids.dart';
+import 'package:hoop/screens/views/teams/stats_last_n_games/team_stats_last_n_games_grids.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

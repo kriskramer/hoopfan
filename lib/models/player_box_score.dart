@@ -201,7 +201,7 @@ class PlayerBoxScore {
 }
 
 class PlayerBoxScoreList {
-  List<PlayerBoxScore> items = List<PlayerBoxScore>();
+  List<PlayerBoxScore> items = [];
 
   void sortByPoints(bool asc) {
     if (asc) {
