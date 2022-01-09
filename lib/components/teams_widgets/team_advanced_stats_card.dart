@@ -14,7 +14,7 @@ class TeamAdvancedStatsCard extends StatelessWidget {
         Provider.of<JsonFiles>(context, listen: false).getAdvancedTeamStats();
     var teamStats = getTeamStats(teamId, advancedStats);
 
-    var width = MediaQuery.of(context).size.width - 35;
+    var width = MediaQuery.of(context).size.width - 20;
 
     return teamStats == null
         ? Text('No stats available')

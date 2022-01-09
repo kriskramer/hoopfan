@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/api/config/firebase.dart';
+import 'package:hoop/components/user_widgets/usr_button.dart';
+import 'package:hoop/screens/views/account/login_ui.dart';
+import 'package:hoop/screens/views/account/signup_ui.dart';
 
 class UserMain extends StatefulWidget {
   const UserMain();
@@ -10,16 +14,35 @@ class UserMain extends StatefulWidget {
 class _UserMainState extends State<UserMain> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("User Account"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(30),
-        child: Center(
-          child: Text("This feature is coming soon..."),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        UserButton(
+          title: "LOGIN",
+          function: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginUI(),
+              ),
+            );
+          },
         ),
-      ),
+        SizedBox(
+          height: 30,
+        ),
+        UserButton(
+          title: "SIGNUP",
+          function: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SignupUI(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

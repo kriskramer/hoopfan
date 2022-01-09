@@ -14,7 +14,7 @@ class TeamFourFactorsStatsCard extends StatelessWidget {
         .getFourFactorsTeamStats();
     var teamStats = getTeamStats(teamId, stats);
 
-    var width = MediaQuery.of(context).size.width - 35;
+    var width = MediaQuery.of(context).size.width - 20;
 
     return teamStats == null
         ? Text('No stats available')

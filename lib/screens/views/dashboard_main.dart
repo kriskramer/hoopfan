@@ -17,6 +17,7 @@ import 'package:hoop/screens/views/stats/leaders_main.dart';
 import 'package:hoop/screens/views/stats/leaders_today_small.dart';
 import 'package:hoop/screens/views/stats/league_stats.dart';
 import 'package:hoop/screens/views/stats/league_stats_small.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DashboardMain extends StatefulWidget {
   const DashboardMain();
@@ -131,7 +132,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: TodaysGamesSmall(),
-                  iconData: Icons.sports_basketball_rounded,
+                  iconData: FontAwesomeIcons.basketballBall,
                   linkWidget: TodaysGames(),
                   sectionTitle: "Games",
                   tapMoreText: "Tap to view full game schedule...",
@@ -182,10 +183,22 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: NbaNewsFeedSmall(),
-                  iconData: Icons.video_collection_sharp,
+                  iconData: FontAwesomeIcons.newspaper,
                   linkWidget: NewsMainScreen(),
                   sectionTitle: "Media",
                   tapMoreText: "Tap to view league-related news and media...",
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                DashboardSectionBox(
+                  dashboardWidget:
+                      TwitterFeedSmall(searchTerms: "nba basketball"),
+                  iconData: FontAwesomeIcons.twitterSquare,
+                  secondIcon: FontAwesomeIcons.facebookSquare,
+                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                  sectionTitle: "Social",
+                  tapMoreText: "Tap to view more...",
                 ),
                 SizedBox(
                   height: 12,

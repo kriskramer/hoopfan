@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-Container customPicker(
-  BuildContext context,
-  List items,
-  Color colour,
-  String chosenValue,
-  Function(dynamic) changeFunct,
-) {
+Container customPicker(BuildContext context, List items, Color colour,
+    String chosenValue, Function(dynamic) changeFunct,
+    {Color dropDownColor = const Color(0XFF1F6BA3),
+    Color textColour = Colors.white}) {
   List<DropdownMenuItem> itemList = [];
   for (var item in items) {
     var option = DropdownMenuItem(
       child: Text(
         "$item",
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(
+          color: textColour,
+        ),
       ),
       value: item,
     );
@@ -22,7 +21,7 @@ Container customPicker(
   return Container(
     color: colour,
     child: DropdownButton(
-      dropdownColor: Color(0XFF1F6BA3),
+      dropdownColor: dropDownColor,
       iconEnabledColor: Colors.white,
       underline: Container(),
       items: itemList,

@@ -4,33 +4,48 @@ class DashboardSectionBox extends StatelessWidget {
   final String sectionTitle;
   final String tapMoreText;
   final IconData iconData;
+  final IconData secondIcon;
   final Widget dashboardWidget;
   final Widget linkWidget;
 
-  const DashboardSectionBox(
-      {this.sectionTitle,
-      this.tapMoreText,
-      this.iconData,
-      this.dashboardWidget,
-      this.linkWidget});
+  const DashboardSectionBox({
+    this.sectionTitle,
+    this.tapMoreText,
+    this.iconData,
+    this.dashboardWidget,
+    this.linkWidget,
+    this.secondIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Container(
-                  //width: 250,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueGrey, width: 1)),
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Row(
+                  children: [
+                    Icon(
+                      iconData,
+                      color: Colors.blue,
+                    ),
+                    secondIcon != null
+                        ? Icon(
+                            secondIcon,
+                            color: Colors.blue,
+                          )
+                        : SizedBox()
+                  ],
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  sectionTitle,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
