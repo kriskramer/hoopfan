@@ -149,7 +149,7 @@ class TeamGameStats {
   }
 
   String get efg {
-    double efg = fgm + (tpm * 0.5) / fga;
+    double efg = 100 * (fgm + (tpm * 0.5)) / fga;
 
     return efg.toStringAsFixed(1);
   }

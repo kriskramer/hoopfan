@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/components/games_widgets/game_lead_tracker.dart';
@@ -33,7 +33,7 @@ class GamePlayByPlay extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(15),
             child: Text(
-                'Tap Play-by-Play to get the play-by-play for that period. Tap Video to see a list of videos for plays in the selected period. Tap a row in the lead tracker to see scoring trends up to that moment in the game.'),
+                'Tap a row in the lead tracker to see scoring trends up to that moment in the game.'),
           ),
           SizedBox(
             height: 15,

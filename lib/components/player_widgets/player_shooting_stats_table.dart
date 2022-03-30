@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
-import 'package:hoop/screens/views/players/player_stats_shooting_closest_defender_charts.dart';
-import 'package:hoop/screens/views/players/player_stats_shooting_dribble_shooting_charts.dart';
-import 'package:hoop/screens/views/players/player_stats_shooting_general_charts.dart';
-import 'package:hoop/screens/views/players/player_stats_shooting_shot_clock_charts.dart';
-import 'package:hoop/screens/views/players/player_stats_shooting_touch_time_charts.dart';
+import 'package:hoop/screens/views/players/stats_shooting/player_stats_shooting_closest_defender_charts.dart';
+import 'package:hoop/screens/views/players/stats_shooting/player_stats_shooting_dribble_shooting_charts.dart';
+import 'package:hoop/screens/views/players/stats_shooting/player_stats_shooting_general_charts.dart';
+import 'package:hoop/screens/views/players/stats_shooting/player_stats_shooting_shot_clock_charts.dart';
+import 'package:hoop/screens/views/players/stats_shooting/player_stats_shooting_touch_time_charts.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

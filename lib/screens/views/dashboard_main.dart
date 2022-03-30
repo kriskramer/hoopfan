@@ -3,8 +3,11 @@ import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
+import 'package:hoop/screens/views/account/updates_main.dart';
+import 'package:hoop/screens/views/account/user_main.dart';
 import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/games/today_games_small.dart';
+import 'package:hoop/screens/views/help_glossary.dart';
 import 'package:hoop/screens/views/news/news_feed_small.dart';
 import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/players/player_search.dart';
@@ -12,6 +15,7 @@ import 'package:hoop/screens/views/standings/standings.dart';
 import 'package:hoop/screens/views/standings/standings_small.dart';
 import 'package:hoop/screens/views/stats/leaders_main.dart';
 import 'package:hoop/screens/views/stats/leaders_today_small.dart';
+import 'package:hoop/screens/views/stats/league_stats.dart';
 import 'package:hoop/screens/views/stats/league_stats_small.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -68,9 +72,27 @@ class _DashboardMainState extends State<DashboardMain> {
                           ],
                         ),
                       ),
+                      Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(color: Colors.amber[200]),
+                          child: Center(
+                            child: Text("Alpha Testing version",
+                                style: TextStyle(fontSize: 10)),
+                          )),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HelpGlossary()));
+                                },
+                                icon: Icon(
+                                  Icons.help_outline_outlined,
+                                )),
                             IconButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -88,7 +110,17 @@ class _DashboardMainState extends State<DashboardMain> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AccountMain()));
+                                          builder: (context) => UpdatesMain()));
+                                },
+                                icon: Icon(
+                                  Icons.notification_important_outlined,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UserMain()));
                                 },
                                 icon: Icon(
                                   Icons.account_box_outlined,
@@ -110,7 +142,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: StandingsSmall(),
-                  iconData: Icons.table_chart_sharp,
+                  iconData: Icons.bar_chart,
                   linkWidget: Standings(),
                   sectionTitle: "Standings",
                   tapMoreText: "Tap to view full standings...",
@@ -119,8 +151,19 @@ class _DashboardMainState extends State<DashboardMain> {
                   height: 12,
                 ),
                 DashboardSectionBox(
+                  dashboardWidget:
+                      TwitterFeedSmall(searchTerms: "nba basketball"),
+                  iconData: Icons.social_distance,
+                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                  sectionTitle: "Social",
+                  tapMoreText: "Tap to view more...",
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
-                  iconData: FontAwesomeIcons.chartLine,
+                  iconData: Icons.star,
                   linkWidget: LeadersMain(),
                   sectionTitle: "Leaders",
                   tapMoreText: "Tap to view more leaders...",
@@ -130,10 +173,10 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 DashboardSectionBox(
                   dashboardWidget: LeagueStatsSmall(),
-                  iconData: FontAwesomeIcons.chartBar,
-                  linkWidget: null,
+                  iconData: Icons.leaderboard,
+                  linkWidget: LeagueStats(),
                   sectionTitle: "Stats",
-                  tapMoreText: "Tap to view league stats...",
+                  tapMoreText: "Tap to view League Stats...",
                 ),
                 SizedBox(
                   height: 12,

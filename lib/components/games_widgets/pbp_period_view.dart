@@ -19,58 +19,69 @@ class PbpPeriodView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text('Tap the game event below to see a video of the play.'),
-          SizedBox(height: 15),
           FutureBuilder(
               future: loadData(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var pbp = snapshot.data["resultSets"][0]["rowSet"];
 
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: pbp.length, //plays.length,
-                      itemBuilder: (context, index) {
-                        var teamId = pbp[index][15];
+                  if (pbp.length == 0) {
+                    return Center(
+                        child: Text("No Data returned for Period " +
+                            period.toString()));
+                  }
 
-                        if (pbp[index][33] == 1 &&
-                            pbp[index][13] != 0 &&
-                            !isEventNull(pbp[index])) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameEventVideoDialog(
-                                      gameId: gameId,
-                                      eventNum: pbp[index][1].toString(),
+                  return Column(children: [
+                    getHeader("Period " + period.toString()),
+                    Text(
+                        'Tap the game event below to see a video of the play.'),
+                    SizedBox(height: 15),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: pbp.length, //plays.length,
+                        itemBuilder: (context, index) {
+                          var teamId = pbp[index][15];
+
+                          if (pbp[index][33] == 1 &&
+                              pbp[index][13] != 0 &&
+                              !isEventNull(pbp[index])) {
+                            return Container(
+                              padding: EdgeInsets.all(8),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GameEventVideoDialog(
+                                        gameId: gameId,
+                                        eventNum: pbp[index][1].toString(),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(pbp[index][6] + " - "),
-                                  (teamId == null)
-                                      ? Text('')
-                                      : TeamTricodeCardFromTeamId(
-                                          teamId: teamId.toString()),
-                                  Icon(Icons.play_arrow),
-                                  Flexible(
-                                      child:
-                                          Text(getPbpDescription(pbp[index]))),
-                                ],
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(pbp[index][6] + " - "),
+                                    (teamId == null)
+                                        ? Text('')
+                                        : TeamTricodeCardFromTeamId(
+                                            teamId: teamId.toString()),
+                                    Icon(Icons.play_arrow),
+                                    Flexible(
+                                        child: Text(
+                                            getPbpDescription(pbp[index]))),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      });
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+                  ]);
                 } else {
                   return NoConnection();
                 }
@@ -116,5 +127,15 @@ class PbpPeriodView extends StatelessWidget {
     // }
 
     return isNull;
+  }
+
+  Widget getHeader(String text) {
+    return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(color: Colors.blueGrey),
+        child: Center(
+            child: Text(text,
+                style: TextStyle(fontSize: 20, color: Colors.white))));
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
+import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
-//import 'package:hoop/screens/views/players/player_detail.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
   final dynamic game;
@@ -77,14 +76,20 @@ class GameBoxScoreSummary extends StatelessWidget {
       rows.add(
         DataRow(cells: [
           DataCell(Text(p["lastName"]), onTap: () {
-            Navigator.push(
-              ctx,
-              MaterialPageRoute(
-                //
-                builder: (context) => GamePlayerShotChart(
-                    p["personId"], p["teamId"], game["gameId"]),
-              ),
-            );
+            // Navigator.push(
+            //   ctx,
+            //   MaterialPageRoute(
+            //     //
+            //     builder: (context) => GamePlayerShotChart(
+            //         p["personId"], p["teamId"], game["gameId"]),
+            //   ),
+            // );
+            showDialog(
+                context: ctx,
+                builder: (context) {
+                  return GamePlayerPopup(
+                      personId: p["personId"], game: game, stats: stats);
+                });
           }),
         ]),
       );
@@ -117,16 +122,6 @@ class GameBoxScoreSummary extends StatelessWidget {
           DataCell(
             Text(p["jersey"]),
           ),
-          // DataCell(Text(p["lastName"]), onTap: () {
-          //   Navigator.push(
-          //     ctx,
-          //     MaterialPageRoute(
-          //       builder: (context) => PlayerDetail(
-          //         playerId: p["personId"],
-          //       ),
-          //     ),
-          //   );
-          // }),
           DataCell(Row(children: [
             p["isOnCourt"]
                 ? CircleAvatar(
@@ -151,14 +146,16 @@ class GameBoxScoreSummary extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["ftm"]))),
-          DataCell(Center(child: Text(p["fta"]))),
+          DataCell(Center(child: VerticalDivider())),
+          DataCell(Center(child: Text(get2PM(p)))),
+          DataCell(Center(child: Text(get2PA(p)))),
           DataCell(Center(
             child: Text(
-              p["ftp"] == "" ? "" : p["ftp"] + "%",
+              get2PPct(p),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
+          DataCell(Center(child: VerticalDivider())),
           DataCell(Center(child: Text(p["tpm"]))),
           DataCell(Center(child: Text(p["tpa"]))),
           DataCell(Center(
@@ -167,6 +164,16 @@ class GameBoxScoreSummary extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
+          DataCell(Center(child: VerticalDivider())),
+          DataCell(Center(child: Text(p["ftm"]))),
+          DataCell(Center(child: Text(p["fta"]))),
+          DataCell(Center(
+            child: Text(
+              p["ftp"] == "" ? "" : p["ftp"] + "%",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )),
+          DataCell(Center(child: VerticalDivider())),
           DataCell(Center(child: Text(p["assists"]))),
           DataCell(Center(child: Text(p["turnovers"]))),
           DataCell(Center(child: Text(p["steals"]))),
@@ -218,23 +225,33 @@ class GameBoxScoreSummary extends StatelessWidget {
             DataColumn(
                 label: StatInfoDialog(label: Text('Pts'), statName: "PTS")),
             DataColumn(
-                label: StatInfoDialog(label: Text('FGm'), statName: "FGM")),
+                label: StatInfoDialog(label: Text('FGM'), statName: "FGM")),
             DataColumn(
-                label: StatInfoDialog(label: Text('FGa'), statName: "FGA")),
+                label: StatInfoDialog(label: Text('FGA'), statName: "FGA")),
             DataColumn(
                 label: StatInfoDialog(label: Text('FG %'), statName: "FG%")),
+            DataColumn(label: Text('')),
             DataColumn(
-                label: StatInfoDialog(label: Text('FTm'), statName: "FTM")),
+                label: StatInfoDialog(label: Text('2PM'), statName: "2PM")),
             DataColumn(
-                label: StatInfoDialog(label: Text('FTa'), statName: "FTA")),
+                label: StatInfoDialog(label: Text('2PA'), statName: "2PA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('2P %'), statName: "2P%")),
+            DataColumn(label: Text('')),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3PM'), statName: "3PM")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3PA'), statName: "3PA")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('3P %'), statName: "3P%")),
+            DataColumn(label: Text('')),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FTM'), statName: "FTM")),
+            DataColumn(
+                label: StatInfoDialog(label: Text('FTA'), statName: "FTA")),
             DataColumn(
                 label: StatInfoDialog(label: Text('FT %'), statName: "FT%")),
-            DataColumn(
-                label: StatInfoDialog(label: Text('3Pm'), statName: "3PM")),
-            DataColumn(
-                label: StatInfoDialog(label: Text('3Pa'), statName: "3PA")),
-            DataColumn(
-                label: StatInfoDialog(label: Text('3P %'), statName: "3p%")),
+            DataColumn(label: Text('')),
             DataColumn(
                 label: StatInfoDialog(label: Text('Asts'), statName: "AST")),
             DataColumn(
@@ -317,6 +334,48 @@ class GameBoxScoreSummary extends StatelessWidget {
       return efg.toStringAsFixed(2);
     } else {
       return "";
+    }
+  }
+
+  String get2PA(dynamic player) {
+    if (player["dnp"] == "") {
+      int fga = int.parse(player["fga"] == "" ? 0 : player["fga"]);
+      int tpa = int.parse(player["tpa"] == "" ? 0 : player["tpa"]);
+      int twopa = fga - tpa;
+
+      return twopa.toString();
+    } else {
+      return "";
+    }
+  }
+
+  String get2PM(dynamic player) {
+    if (player["dnp"] == "") {
+      int fgm = int.parse(player["fgm"] == "" ? 0 : player["fgm"]);
+      int tpm = int.parse(player["tpm"] == "" ? 0 : player["tpm"]);
+      int twopm = fgm - tpm;
+
+      return twopm.toString();
+    } else {
+      return "";
+    }
+  }
+
+  String get2PPct(dynamic player) {
+    var m = get2PM(player);
+    var a = get2PA(player);
+
+    if (m == "" || a == "") {
+      return "";
+    } else {
+      int m1 = int.parse(m);
+      int a1 = int.parse(a);
+      double p = (m1 / a1);
+
+      if (p.toString() == "NaN") {
+        p = 0;
+      }
+      return p.toStringAsFixed(2) + "%";
     }
   }
 }

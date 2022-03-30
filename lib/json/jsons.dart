@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:hoop/model/lead_tracker.dart';
+import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
 
@@ -22,6 +22,7 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
   Map<String, dynamic> _teamNews = {}; // teamID,Player_list
   Map<String, dynamic> _teamVideos = {};
+  Map<String, dynamic> _teamSchedule = {};
   Map<String, dynamic> _previewArticles = {};
   Map<String, dynamic> _recapArticles = {};
   Map<String, dynamic> _gameNews = {};
@@ -53,6 +54,8 @@ class JsonFiles with ChangeNotifier {
   String _selectedDate;
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
+
+  var _injuryReport;
 
   bool _isFeatureBlocked = true;
 
@@ -93,6 +96,11 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setInjuryReport(dynamic json) {
+    _injuryReport = json;
+    notifyListeners();
+  }
+
   void setNbaVideo(dynamic json) {
     _nbaVideos = json;
     notifyListeners();
@@ -100,6 +108,10 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamNews(String teamId, dynamic news) {
     _teamNews[teamId] = news;
+  }
+
+  void setTeamSchedule(String teamId, dynamic schedule) {
+    _teamSchedule[teamId] = schedule;
   }
 
   // key value is gameId and period concatenated together with a "-"
@@ -304,6 +316,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
   dynamic getGameNews(String searchString) => _gameNews[searchString];
 
+  dynamic getTeamSchedule(String teamId) => _teamSchedule[teamId];
+
   dynamic getPlayerSummaryStats(String playerKey) =>
       _playerSummaryStats[playerKey];
   dynamic getPlayerShotTypes(String playerId) => _playerShotTypes[playerId];
@@ -352,6 +366,8 @@ class JsonFiles with ChangeNotifier {
 
   dynamic getNbaNews() => _nbaNews;
   dynamic getNbaVideos() => _nbaVideos;
+
+  dynamic getInjuryReport() => _injuryReport;
 
   PlayerBoxScoreList getPlayerBoxScores() => _playerBoxScores;
 

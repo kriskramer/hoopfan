@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/screens/views/news/team_video_feed.dart';
-import 'package:hoop/screens/views/teams/team_news_page.dart';
+import 'package:hoop/screens/views/teams/media/team_news_page.dart';
 
 class TeamMediaPage extends StatelessWidget {
   final teamId;

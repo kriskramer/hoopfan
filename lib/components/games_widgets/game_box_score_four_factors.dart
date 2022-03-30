@@ -33,7 +33,7 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
         if (snapshot.hasData) {
           var json = snapshot.data["resultSets"][0]["rowSet"];
           list = new GameBoxScoreFourFactorsList(json, widget.teamId);
-          print(list.items.length.toString());
+          //print(list.items.length.toString());
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: getDataTable(list),
@@ -52,13 +52,24 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
       rows.add(DataRow(cells: [
         DataCell(Text(p.PLAYER_NAME)),
         DataCell(Text(p.EFG_PCT.toStringAsFixed(2))),
-        DataCell(Text(p.FTA_RATE.toStringAsFixed(2))),
-        DataCell(Text(p.TM_TOV_PCT.toStringAsFixed(2))),
-        DataCell(Text(p.OREB_PCT.toStringAsFixed(2))),
         DataCell(Text(p.OPP_EFG_PCT.toStringAsFixed(2))),
+        DataCell(VerticalDivider(color: Colors.black)),
+        getDiffDataCell(p.EFG_PCT, p.OPP_EFG_PCT),
+        DataCell(VerticalDivider(color: Colors.black)),
+        DataCell(Text(p.FTA_RATE.toStringAsFixed(2))),
         DataCell(Text(p.OPP_FTA_RATE.toStringAsFixed(2))),
+        DataCell(VerticalDivider(color: Colors.black)),
+        getDiffDataCell(p.FTA_RATE, p.OPP_FTA_RATE),
+        DataCell(VerticalDivider(color: Colors.black)),
+        DataCell(Text(p.TM_TOV_PCT.toStringAsFixed(2))),
         DataCell(Text(p.OPP_TM_TOV_PCT.toStringAsFixed(2))),
+        DataCell(VerticalDivider(color: Colors.black)),
+        getDiffDataCell(p.TM_TOV_PCT, p.OPP_TM_TOV_PCT),
+        DataCell(VerticalDivider(color: Colors.black)),
+        DataCell(Text(p.OREB_PCT.toStringAsFixed(2))),
         DataCell(Text(p.OPP_OREB_PCT.toStringAsFixed(2))),
+        DataCell(VerticalDivider(color: Colors.black)),
+        getDiffDataCell(p.OREB_PCT, p.OPP_OREB_PCT),
       ]));
     }
 
@@ -78,25 +89,36 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
         DataColumn(
             label: StatInfoDialog(label: Text('eFG %'), statName: "eFG %")),
         DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp eFG %'), statName: "Opp eFG %")),
+        DataColumn(label: Text('')),
+        DataColumn(label: Text('Diff')),
+        DataColumn(label: Text('')),
+        DataColumn(
             label:
                 StatInfoDialog(label: Text('FTA Rate'), statName: "FTA Rate")),
+        DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp FTA Rate'), statName: "Opp FTA")),
+        DataColumn(label: Text('')),
+        DataColumn(label: Text('Diff')),
+        DataColumn(label: Text('')),
         DataColumn(
             label:
                 StatInfoDialog(label: Text('TM TO Rate'), statName: "TM TOV")),
         DataColumn(
+            label: StatInfoDialog(
+                label: Text('Opp TM TO Rate'), statName: "Opp TM TOV")),
+        DataColumn(label: Text('')),
+        DataColumn(label: Text('Diff')),
+        DataColumn(label: Text('')),
+        DataColumn(
             label: StatInfoDialog(label: Text('OReb %'), statName: "OREB %")),
         DataColumn(
             label: StatInfoDialog(
-                label: Text('Opp eFG %'), statName: "Opp eFG %")),
-        DataColumn(
-            label: StatInfoDialog(
-                label: Text('Opp FTA Rate'), statName: "Opp FTA")),
-        DataColumn(
-            label: StatInfoDialog(
-                label: Text('Opp TM TO Rate'), statName: "Opp TM TOV")),
-        DataColumn(
-            label: StatInfoDialog(
                 label: Text('Opp OReb %'), statName: "Opp OReb %")),
+        DataColumn(label: Text('')),
+        DataColumn(label: Text('Diff')),
       ],
       rows: [
         ...rows,
@@ -109,5 +131,35 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
       Urls.getNbaStatsBoxScoreFourFactors(widget.gameId),
       requestHeaders: RequestHeaders.nbaStatsHeaders,
     );
+  }
+
+  DataCell getDiffDataCell(double value1, double value2) {
+    double v3 = 0.0;
+
+    v3 = value1 - value2;
+
+    Widget c;
+
+    v3 > 0
+        ? c = Container(
+            alignment: Alignment.center,
+            width: 10,
+            child: Icon(
+              Icons.arrow_drop_up,
+              color: Colors.green,
+            ))
+        : c = Container(
+            alignment: Alignment.center,
+            width: 10,
+            child: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.red,
+            ));
+
+    return DataCell(Row(children: [
+      Text(v3.toStringAsFixed(2),
+          style: TextStyle(fontWeight: FontWeight.w500)),
+      c
+    ]));
   }
 }

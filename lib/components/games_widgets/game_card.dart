@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/model/game_details.dart';
+import 'package:hoop/models/game_details.dart';
 import 'package:intl/intl.dart';
 
 const kLogoRadius = 22.0;
