@@ -39,8 +39,8 @@ class LoginUI extends StatelessWidget {
                         password: Provider.of<UserProv>(context, listen: false)
                             .password,
                       );
-                      Map<String, dynamic> response =
-                          await Auth.loginUser(user); // returns a response
+                      Map<String, dynamic> response = await Auth.loginUser(
+                          user, context); // returns a response
                       if (response["code"] == 200) {
                         toaster(response["message"]);
                         Navigator.pop(context);

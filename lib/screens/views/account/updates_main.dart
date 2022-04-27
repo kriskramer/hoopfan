@@ -7,9 +7,6 @@ class UpdatesMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Updates/Notifications"),
-      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(

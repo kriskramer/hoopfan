@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/utils/formatdate.dart';
 
+import '../../screens/views/games/game_feed_view.dart';
+
 class UpcomingGameCardSmall extends StatelessWidget {
   final dynamic game;
   UpcomingGameCardSmall({this.game});
@@ -43,7 +45,7 @@ class UpcomingGameCardSmall extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => GameView(
+                  builder: (context) => GameFeedView(
                         game: game,
                       )));
         },

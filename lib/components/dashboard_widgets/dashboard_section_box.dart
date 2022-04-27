@@ -50,17 +50,6 @@ class DashboardSectionBox extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              Icon(
-                iconData,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                sectionTitle,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
             ]),
           ),
         ),

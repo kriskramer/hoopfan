@@ -19,6 +19,14 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUser(AppUser u) {
+    _userInstance = u;
+  }
+
+  AppUser getUser() {
+    return _userInstance;
+  }
+
   String get email => _userInstance.email;
   String get displayName => _userInstance.displayName;
   String get password => _userInstance.password;

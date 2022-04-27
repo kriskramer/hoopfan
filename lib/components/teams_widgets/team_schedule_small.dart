@@ -6,6 +6,8 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
+import '../../screens/views/games/game_feed_view.dart';
+
 class TeamScheduleSmall extends StatelessWidget {
   final String teamId;
   TeamScheduleSmall({@required this.teamId});
@@ -94,7 +96,7 @@ class TeamScheduleSmall extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => GameView(
+                  builder: (context) => GameFeedView(
                         game: game,
                       )));
         },
@@ -146,7 +148,7 @@ class TeamScheduleSmall extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => GameView(
+                  builder: (context) => GameFeedView(
                         game: game,
                       )));
         },
