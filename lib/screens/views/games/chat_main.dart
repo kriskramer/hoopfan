@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 
 class ChatMain extends StatefulWidget {
   final String gameId;
@@ -17,8 +16,6 @@ class _ChatMainState extends State<ChatMain> {
         appBar: AppBar(
           title: Text('Game Recap'),
         ),
-        body: Container(
-            padding: EdgeInsets.all(20),
-            child: GameFeedMain(widget.gameId, null, null)));
+        body: Container(padding: EdgeInsets.all(20), child: null));
   }
 }

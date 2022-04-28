@@ -3,30 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
-import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
-import 'package:hoop/components/games_widgets/game_box_score_main.dart';
-import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
-import 'package:hoop/components/games_widgets/game_officials.dart';
-import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
-import 'package:hoop/components/games_widgets/game_stats.dart';
-import 'package:hoop/components/games_widgets/game_stats_popup.dart';
-import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
+import 'package:hoop/components/games_widgets/game_stats_view.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
-import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
-import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games/chat_main.dart';
-import 'package:hoop/screens/views/games/game_preview_article.dart';
-import 'package:hoop/screens/views/games/game_recap_article.dart';
-import 'package:hoop/screens/views/stats/stats_teams.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:provider/provider.dart';
 
-import '../../../components/games_widgets/game_player_popup.dart';
+import 'game_info_view.dart';
 
 class GameFeedView extends StatefulWidget {
   final dynamic game;
@@ -100,6 +89,9 @@ class _GameFeedViewState extends State<GameFeedView> {
               vTeamScore = gameData["vTeam"]["score"];
               hTeamScore = gameData["hTeam"]["score"];
 
+              Provider.of<JsonFiles>(context, listen: false)
+                  .setCurrentGameStats(gameId, stats);
+
               if (gameData["isGameActivated"]) {
                 timerDuration = 30;
               } else {
@@ -130,24 +122,15 @@ class _GameFeedViewState extends State<GameFeedView> {
                       Column(
                         children: [
                           SizedBox(
-                            height: 15,
-                          ),
-                          gameStatus == 1
-                              ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
-                              : GameFeedMain(gameId, gameData, stats),
-                          SizedBox(
                             height: 5,
                           ),
-                          ArenaCard(
-                            gameData: gameData,
+                          // gameStatus == 1
+                          //     ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
+                          //     : GameFeedMain(gameId, gameData, stats),
+                          GameFeedMain(gameId, gameData, stats),
+                          SizedBox(
+                            height: 15,
                           ),
-                          GameOfficials(
-                            game: gameData,
-                          ),
-                          gameStatus < 3
-                              ? HowToWatchCard(game: widget.game)
-                              : Text(''),
-                          gameStatus < 3 ? getTicketsCard() : Text('')
                         ],
                       ),
                     ]),
@@ -163,23 +146,31 @@ class _GameFeedViewState extends State<GameFeedView> {
   }
 
   Widget _buildFab(BuildContext context, dynamic stats) {
-    final icons = [Icons.sms, Icons.mail, Icons.bar_chart_outlined];
+    final icons = [
+      Icons.sms,
+      Icons.mail,
+      Icons.bar_chart_outlined,
+    ];
     return FabWithIcons(
       icons: icons,
       onIconTapped: (index) {
         if (index == 0) {
           // chat
+
         } else if (index == 1) {
           // show game info page
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameInfoView(gameData, gameId);
+              });
         } else if (index == 2) {
-          if (stats != null) {
-            // show stats page
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return GameStatsPopup(widget.game, stats);
-                });
-          }
+          // show stats page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GameStatsView(widget.game, gameId)),
+          );
         }
       },
     );

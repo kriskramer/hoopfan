@@ -69,8 +69,7 @@ class GameBoxScoreOnCourt extends StatelessWidget {
     for (var p in players) {
       rows.add(
         DataRow(cells: [
-          DataCell(Container(width: 125, child: Text(p["lastName"])),
-              onTap: () {
+          DataCell(Container(child: Text(p["lastName"])), onTap: () {
             Navigator.push(
               ctx,
               MaterialPageRoute(

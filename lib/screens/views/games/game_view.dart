@@ -349,11 +349,11 @@ class _GameViewState extends State<GameView> {
                                                 gameData: gameData,
                                               ),
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.all(20),
-                                              child: GameFeedMain(
-                                                  gameId, gameData, stats),
-                                            ),
+                                            // Container(
+                                            //   padding: EdgeInsets.all(20),
+                                            //   child: GameFeedMain(gameId,
+                                            //       gameData, stats, null),
+                                            // ),
                                           ],
                                         ),
                                       )

@@ -56,6 +56,7 @@ class _GameFeedMainState extends State<GameFeedMain> {
               //physics: const NeverScrollableScrollPhysics(),
               itemCount: list.items.length,
               itemBuilder: (BuildContext context, int index) {
+                // THis auto scrolls to the bottom, but it also keeps user from scrolling up for some reason...
                 // if (_scrollController.position.maxScrollExtent != null) {
                 //   _scrollController.animateTo(
                 //       _scrollController.position.maxScrollExtent,
@@ -65,17 +66,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
 
                 return getPbpItem(
                     list.items[index], widget.gameData, widget.stats);
-
-                // return Card(
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: <Widget>[
-                //       Text(list.items[index].clock +
-                //           ' - ' +
-                //           list.items[index].description),
-                //     ],
-                //   ),
-                // );
               },
             );
           }
