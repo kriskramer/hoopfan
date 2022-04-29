@@ -44,6 +44,9 @@ class _GameFeedMainState extends State<GameFeedMain> {
             list.items.clear();
             DataSnapshot dataValues = snapshot.data.snapshot;
             Map<dynamic, dynamic> values = dataValues.value;
+            if (values == null) {
+              return Text("No data");
+            }
             values.forEach((key, values) {
               list.items.add(PbpItem(key, values));
             });
@@ -52,8 +55,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
 
             return new ListView.builder(
               shrinkWrap: true,
-              controller: _scrollController,
-              //physics: const NeverScrollableScrollPhysics(),
+              //controller: _scrollController,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: list.items.length,
               itemBuilder: (BuildContext context, int index) {
                 // THis auto scrolls to the bottom, but it also keeps user from scrolling up for some reason...
@@ -80,53 +83,67 @@ class _GameFeedMainState extends State<GameFeedMain> {
     Widget row;
     //PlayByPlayItem pbp = PlayByPlayItem(play);
 
-    row = GestureDetector(
-      onTap: () {
-        if (pbp.personId != "" && pbp.personId != null) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return GamePlayerPopup(
-                    personId: pbp.personId, game: game, stats: stats);
-              });
-        }
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            pbp.clock + "  ",
-            style: TextStyle(fontSize: 12),
-          ),
-          getTeamCard(pbp.description, widget.gameData),
-          Flexible(
-              child: Text(
-            getPbPDescriptionFormatted(pbp, widget.gameData),
-            style: pbp.isScoreChange
-                ? TextStyle(fontSize: 14, color: Colors.black)
-                : TextStyle(fontSize: 14, color: Colors.grey[800]),
-          )),
-          pbp.isScoreChange
-              ? Container(height: 16, child: Image.asset('images/bball.png'))
-              : SizedBox(),
-          pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
-        ],
-      ),
-    );
-
-    var teamColor = pbp.isScoreChange
-        ? ConstantHelper.getTeamColor(pbp.teamId)
-        : Colors.white;
-    container = Container(
-        padding: EdgeInsets.fromLTRB(22, 2, 22, 2),
-        decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey[300])),
-          color: pbp.isScoreChange
-              ? Color(teamColor).withOpacity(.10)
-              : Colors.white,
+    if (pbp.type == "1") {
+      // Play-by-play item
+      row = GestureDetector(
+        onTap: () {
+          if (pbp.personId != "" && pbp.personId != null) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return GamePlayerPopup(
+                      personId: pbp.personId, game: game, stats: stats);
+                });
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              pbp.clock + "  ",
+              style: TextStyle(fontSize: 12),
+            ),
+            getTeamCard(pbp.description, widget.gameData),
+            Flexible(
+                child: Text(
+              getPbPDescriptionFormatted(pbp, widget.gameData),
+              style: pbp.isScoreChange
+                  ? TextStyle(fontSize: 14, color: Colors.black)
+                  : TextStyle(fontSize: 14, color: Colors.grey[800]),
+            )),
+            pbp.isScoreChange
+                ? Container(height: 16, child: Image.asset('images/bball.png'))
+                : SizedBox(),
+            pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
+          ],
         ),
-        child: row);
+      );
 
+      var teamColor = pbp.isScoreChange
+          ? ConstantHelper.getTeamColor(pbp.teamId)
+          : Colors.white;
+      container = Container(
+          padding: EdgeInsets.fromLTRB(22, 4, 22, 4),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.grey[300])),
+            color: pbp.isScoreChange
+                ? Color(teamColor).withOpacity(.10)
+                : Colors.white,
+          ),
+          child: row);
+    } else if (pbp.type == "2") {
+      // Chat message
+      row = Row(
+        children: [Flexible(child: Text(pbp.displayName + " - " + pbp.chat))],
+      );
+      container = Container(
+          margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          decoration: BoxDecoration(
+            color: Colors.amber[200],
+          ),
+          child: row);
+    }
     return container;
   }
 
@@ -199,6 +216,9 @@ class PbpItem {
   var hTeamScore;
   bool isScoreChange;
   bool isVideoAvailable;
+  String type;
+  String chat;
+  String displayName;
 
   PbpItem(String ts, dynamic json) {
     timestamp = int.parse(ts);
@@ -211,6 +231,9 @@ class PbpItem {
     hTeamScore = json["hTeamScore"];
     isScoreChange = json["isScoreChange"];
     isVideoAvailable = json["isVideoAvailable"];
+    type = json["type"];
+    chat = json["chat"];
+    displayName = json["displayName"];
   }
 
   ScoreTextBreakdown getTextBreakdown() {

@@ -15,6 +15,9 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
+import 'package:firebase_database/firebase_database.dart';
+
+import '../../../components/games_widgets/game_feed_chat_popup.dart';
 import 'game_info_view.dart';
 
 class GameFeedView extends StatefulWidget {
@@ -73,6 +76,7 @@ class _GameFeedViewState extends State<GameFeedView> {
               game: widget.game,
             )
           : SizedBox(),
+      resizeToAvoidBottomInset: true,
       body: FutureBuilder(
           future: _gameData,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -103,7 +107,7 @@ class _GameFeedViewState extends State<GameFeedView> {
                     iconTheme: IconThemeData(color: Colors.blue),
                     pinned: true,
                     elevation: 10,
-                    collapsedHeight: 135,
+                    collapsedHeight: 132,
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
                       padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
@@ -111,7 +115,7 @@ class _GameFeedViewState extends State<GameFeedView> {
                           ? Column(children: [
                               InProgressGameHeader(
                                   gameData: gameData, stats: stats),
-                              WinProbability(gameId: gameId)
+                              WinProbability(gameId: gameId),
                             ])
                           : ScheduledGameHeader(gameData: gameData),
                     ),
@@ -121,9 +125,6 @@ class _GameFeedViewState extends State<GameFeedView> {
                     delegate: SliverChildListDelegate([
                       Column(
                         children: [
-                          SizedBox(
-                            height: 5,
-                          ),
                           // gameStatus == 1
                           //     ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
                           //     : GameFeedMain(gameId, gameData, stats),
@@ -156,7 +157,11 @@ class _GameFeedViewState extends State<GameFeedView> {
       onIconTapped: (index) {
         if (index == 0) {
           // chat
-
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameFeedChatPopup(gameId: gameId);
+              });
         } else if (index == 1) {
           // show game info page
           showDialog(
@@ -236,3 +241,5 @@ class _GameFeedViewState extends State<GameFeedView> {
     return search;
   }
 }
+
+class ChatItem {}

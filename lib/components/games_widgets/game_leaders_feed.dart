@@ -166,7 +166,7 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
                 }
               },
               child: Container(
-                height: 55,
+                height: 50,
                 child: IndexedStack(
                   index: _currentIndex,
                   children: [...leaders],
