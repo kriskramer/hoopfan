@@ -21,7 +21,7 @@ class _GameFeedChatPopupState extends State<GameFeedChatPopup> {
     return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 8,
-        child: Column(children: [
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(
             controller: _textController,
             maxLines: 3,

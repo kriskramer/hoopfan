@@ -92,16 +92,25 @@ class _GameFeedMainState extends State<GameFeedMain> {
                 context: context,
                 builder: (context) {
                   return GamePlayerPopup(
-                      personId: pbp.personId, game: game, stats: stats);
+                    personId: pbp.personId,
+                    game: game,
+                    stats: stats,
+                    pbpText: pbp.formattedDescription,
+                  );
                 });
           }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              pbp.clock + "  ",
-              style: TextStyle(fontSize: 12),
+            Column(
+              children: [
+                Text(getCurrentPeriod(pbp.period)),
+                Text(
+                  pbp.clock + "  ",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
             ),
             getTeamCard(pbp.description, widget.gameData),
             Flexible(
@@ -136,15 +145,49 @@ class _GameFeedMainState extends State<GameFeedMain> {
       row = Row(
         children: [Flexible(child: Text(pbp.displayName + " - " + pbp.chat))],
       );
-      container = Container(
-          margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-          decoration: BoxDecoration(
-            color: Colors.amber[200],
+      container = Card(
+        margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+        color: Colors.amber[100],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // if you need this
+          side: BorderSide(
+            color: Colors.cyan,
+            width: 1,
           ),
-          child: row);
+        ),
+        child:
+            Container(padding: EdgeInsets.fromLTRB(20, 10, 20, 10), child: row),
+      );
     }
     return container;
+  }
+
+  String getCurrentPeriod(int period) {
+    String periodString = "";
+
+    if (period == 1) {
+      periodString = "1st";
+    }
+    if (period == 2) {
+      periodString = "2nd";
+    }
+    if (period == 3) {
+      periodString = "3rd";
+    }
+    if (period == 4) {
+      periodString = "4th";
+    }
+    if (period == 5) {
+      periodString = "OT1";
+    }
+    if (period == 6) {
+      periodString = "OT2";
+    }
+    if (period == 7) {
+      periodString = "OT3";
+    }
+
+    return periodString;
   }
 
   Widget getTeamCard(String desc, dynamic game) {
@@ -208,8 +251,10 @@ class _GameFeedMainState extends State<GameFeedMain> {
 class PbpItem {
   int timestamp;
   String clock;
+  int period;
   String eventMsgType;
   String description;
+  String formattedDescription;
   var personId;
   var teamId;
   var vTeamScore;
@@ -223,8 +268,12 @@ class PbpItem {
   PbpItem(String ts, dynamic json) {
     timestamp = int.parse(ts);
     clock = json["clock"];
+    period = json["period"];
     eventMsgType = json["eventMsgType"];
     description = json["description"];
+    if (json["formatted"] != null) {
+      formattedDescription = json["formatted"]["description"];
+    }
     personId = json["personId"];
     teamId = json["teamId"];
     vTeamScore = json["vTeamScore"];

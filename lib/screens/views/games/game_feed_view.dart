@@ -97,9 +97,14 @@ class _GameFeedViewState extends State<GameFeedView> {
                   .setCurrentGameStats(gameId, stats);
 
               if (gameData["isGameActivated"]) {
-                timerDuration = 30;
+                timerDuration = 25;
               } else {
-                _timer.cancel();
+                timerDuration = 120;
+
+                int startingMinutes = getStartCountdown(gameData);
+                if (startingMinutes == null) {
+                  _timer.cancel();
+                }
               }
               return SafeArea(
                 child: CustomScrollView(slivers: [
@@ -149,7 +154,7 @@ class _GameFeedViewState extends State<GameFeedView> {
   Widget _buildFab(BuildContext context, dynamic stats) {
     final icons = [
       Icons.sms,
-      Icons.mail,
+      Icons.sports_basketball,
       Icons.bar_chart_outlined,
     ];
     return FabWithIcons(
@@ -239,6 +244,19 @@ class _GameFeedViewState extends State<GameFeedView> {
     var search = vTeamName + " " + hTeamName;
 
     return search;
+  }
+
+  int getStartCountdown(dynamic game) {
+    String startTimeUTC = game["startTimeUTC"];
+
+    if (startTimeUTC == "") {
+      return null;
+    }
+
+    DateTime start = DateTime.parse(startTimeUTC);
+    Duration duration = start.difference(DateTime.now());
+
+    return duration.inMinutes;
   }
 }
 

@@ -12,8 +12,9 @@ class GamePlayerPopup extends StatelessWidget {
   final String personId;
   final dynamic game;
   final dynamic stats;
+  final String pbpText;
 
-  const GamePlayerPopup({this.personId, this.game, this.stats});
+  const GamePlayerPopup({this.personId, this.game, this.stats, this.pbpText});
 
   @override
   Widget build(BuildContext context) {
@@ -55,37 +56,47 @@ class GamePlayerPopup extends StatelessWidget {
                   radius: 45,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(player["pos"]),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(player["heightFeet"] +
-                        "' " +
-                        player["heightInches"] +
-                        "\""),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text("(" + player["heightMeters"] + ")"),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(player["weightPounds"] + "lbs"),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text("(" + player["weightKilograms"] + "kgs)"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Game Stats compared to season stats"),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(player["pos"]),
+                //     SizedBox(
+                //       width: 10,
+                //     ),
+                //     Text(player["heightFeet"] +
+                //         "' " +
+                //         player["heightInches"] +
+                //         "\""),
+                //     SizedBox(
+                //       width: 4,
+                //     ),
+                //     Text("(" + player["heightMeters"] + ")"),
+                //     SizedBox(
+                //       width: 10,
+                //     ),
+                //     Text(player["weightPounds"] + "lbs"),
+                //     SizedBox(
+                //       width: 4,
+                //     ),
+                //     Text("(" + player["weightKilograms"] + "kgs)"),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Text("Game Stats compared to season stats"),
+                Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: Center(
+                      child: Text(
+                        pbpText,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )),
 
                 FutureBuilder(
                     future: loadData(context),
