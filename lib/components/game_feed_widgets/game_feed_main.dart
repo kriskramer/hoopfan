@@ -28,6 +28,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
 
     DatabaseReference pbpFeed =
         FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
+    var vTeamId = widget.gameData["vTeam"]["teamId"];
+    var hTeamId = widget.gameData["hTeam"]["teamId"];
 
     // pbpFeed.onValue.listen((DatabaseEvent event) {
     //   final data = event.snapshot.value;
@@ -59,14 +61,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: list.items.length,
               itemBuilder: (BuildContext context, int index) {
-                // THis auto scrolls to the bottom, but it also keeps user from scrolling up for some reason...
-                // if (_scrollController.position.maxScrollExtent != null) {
-                //   _scrollController.animateTo(
-                //       _scrollController.position.maxScrollExtent,
-                //       duration: Duration(milliseconds: 500),
-                //       curve: Curves.ease);
-                // }
-
                 return getPbpItem(
                     list.items[index], widget.gameData, widget.stats);
               },
@@ -142,21 +136,67 @@ class _GameFeedMainState extends State<GameFeedMain> {
           child: row);
     } else if (pbp.type == "2") {
       // Chat message
-      row = Row(
-        children: [Flexible(child: Text(pbp.displayName + " - " + pbp.chat))],
+      var displayName = (pbp.displayName == null) ? "" : pbp.displayName;
+      var text = pbp.chat == null ? "" : pbp.chat;
+      var fanLevel = pbp.fanLevel;
+
+      var vTeamId = widget.gameData["vTeam"]["teamId"];
+      var hTeamId = widget.gameData["hTeam"]["teamId"];
+
+      row = Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                displayName,
+                style: TextStyle(fontSize: 10),
+              )
+            ],
+          ),
+          SizedBox(height: 6),
+          Row(
+            children: [
+              Flexible(
+                  child: Text(
+                text,
+                style: TextStyle(fontSize: 14),
+              ))
+            ],
+          ),
+        ],
       );
-      container = Card(
+
+      var teamId;
+      if (pbp.fanLevel > 30) {
+        teamId = hTeamId;
+      }
+      if (pbp.fanLevel < 30) {
+        teamId = vTeamId;
+      }
+      container = Container(
         margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-        color: Colors.amber[100],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // if you need this
-          side: BorderSide(
+        decoration: BoxDecoration(
+          color: Colors.amber[50],
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            // if you need this
+
             color: Colors.cyan,
             width: 1,
           ),
         ),
-        child:
-            Container(padding: EdgeInsets.fromLTRB(20, 10, 20, 10), child: row),
+        child: Column(children: [
+          Container(padding: EdgeInsets.fromLTRB(20, 5, 20, 4), child: row),
+          Container(
+            height: 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: teamId == null
+                  ? null
+                  : ConstantHelper.getTeamColor_Gradient(teamId, pbp.fanLevel),
+            ),
+          )
+        ]),
       );
     }
     return container;
@@ -264,6 +304,9 @@ class PbpItem {
   String type;
   String chat;
   String displayName;
+  int fanLevel;
+  int cheers;
+  int boos;
 
   PbpItem(String ts, dynamic json) {
     timestamp = int.parse(ts);
@@ -283,6 +326,9 @@ class PbpItem {
     type = json["type"];
     chat = json["chat"];
     displayName = json["displayName"];
+    fanLevel = json["fanLevel"] == null ? 0 : json["fanLevel"];
+    cheers = json["cheers"];
+    boos = json["boos"];
   }
 
   ScoreTextBreakdown getTextBreakdown() {

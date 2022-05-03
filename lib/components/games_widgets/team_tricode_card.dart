@@ -87,3 +87,26 @@ class TeamTricodeCardFromTeamId extends StatelessWidget {
           );
   }
 }
+
+class TeamIconFromTeamId extends StatelessWidget {
+  final String teamId;
+
+  TeamIconFromTeamId({this.teamId});
+
+  @override
+  Widget build(BuildContext context) {
+    var teamColor = ConstantHelper.getTeamColor(teamId);
+    var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
+    var triCode = ConstantHelper.getTeamTriCode(teamId);
+
+    return teamId == null
+        ? SizedBox()
+        : CircleAvatar(
+            backgroundColor: Color(teamColor),
+            radius: 20,
+            child: Text(
+              triCode,
+              style: TextStyle(color: Color(teamTextColor)),
+            ));
+  }
+}

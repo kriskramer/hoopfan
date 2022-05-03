@@ -165,7 +165,11 @@ class _GameFeedViewState extends State<GameFeedView> {
           showDialog(
               context: context,
               builder: (context) {
-                return GameFeedChatPopup(gameId: gameId);
+                return GameFeedChatPopup(
+                  gameId: gameId,
+                  vTeamId: gameData["vTeam"]["teamId"],
+                  hTeamId: gameData["hTeam"]["teamId"],
+                );
               });
         } else if (index == 1) {
           // show game info page
