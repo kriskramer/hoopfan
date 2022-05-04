@@ -272,7 +272,7 @@ class _GameViewState extends State<GameView> {
                           gameStatus == 1
                               ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
                               : DefaultTabController(
-                                  length: 5, // length of tabs
+                                  length: 4, // length of tabs
                                   initialIndex: 0,
                                   child: Column(
                                     crossAxisAlignment:
@@ -291,7 +291,6 @@ class _GameViewState extends State<GameView> {
                                                 text: gameData["hTeam"]
                                                     ["triCode"]),
                                             Tab(text: 'Stats'),
-                                            Tab(text: 'Video'),
                                           ],
                                         ),
                                       ),
@@ -349,11 +348,6 @@ class _GameViewState extends State<GameView> {
                                                 gameData: gameData,
                                               ),
                                             ),
-                                            // Container(
-                                            //   padding: EdgeInsets.all(20),
-                                            //   child: GameFeedMain(gameId,
-                                            //       gameData, stats, null),
-                                            // ),
                                           ],
                                         ),
                                       )

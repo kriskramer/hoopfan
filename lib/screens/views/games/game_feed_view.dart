@@ -153,14 +153,36 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   Widget _buildFab(BuildContext context, dynamic stats) {
     final icons = [
-      Icons.sms,
+      Icons.settings,
+      Icons.article_outlined,
       Icons.sports_basketball,
-      Icons.bar_chart_outlined,
+      Icons.sms,
     ];
     return FabWithIcons(
       icons: icons,
       onIconTapped: (index) {
         if (index == 0) {
+          // show game settings page
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameSettings(gameData, gameId, _update);
+              });
+        } else if (index == 1) {
+          // show news page
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => GameStatsView(gameData, gameId)),
+          // );
+        } else if (index == 2) {
+          // show stats page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GameStatsView(gameData, gameId)),
+          );
+        } else if (index == 3) {
           // chat
           showDialog(
               context: context,
@@ -171,23 +193,13 @@ class _GameFeedViewState extends State<GameFeedView> {
                   hTeamId: gameData["hTeam"]["teamId"],
                 );
               });
-        } else if (index == 1) {
-          // show game info page
-          showDialog(
-              context: context,
-              builder: (context) {
-                return GameInfoView(gameData, gameId);
-              });
-        } else if (index == 2) {
-          // show stats page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => GameStatsView(widget.game, gameId)),
-          );
         }
       },
     );
+  }
+
+  void _update(int count) {
+    setState(() => refreshGameData());
   }
 
   Future<dynamic> loadGameData() async {

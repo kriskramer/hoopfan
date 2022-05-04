@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:hoop/providers/game_settings.dart';
+import 'package:provider/provider.dart';
 
 import '../../constant.dart';
 import '../../models/play_by_play_item.dart';
@@ -36,6 +38,11 @@ class _GameFeedMainState extends State<GameFeedMain> {
     //   //print(data);
     // });
 
+    bool showPbp =
+        Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
+    bool showChat =
+        Provider.of<GameSettingsProv>(context, listen: false).getShowChat();
+
     return Container(
       padding: EdgeInsets.all(15),
       child: StreamBuilder(
@@ -48,9 +55,17 @@ class _GameFeedMainState extends State<GameFeedMain> {
             Map<dynamic, dynamic> values = dataValues.value;
             if (values == null) {
               return Text("No data");
+              // TODO: Put an option here to go to the old game view screen
             }
             values.forEach((key, values) {
-              list.items.add(PbpItem(key, values));
+              PbpItem pbp = PbpItem(key, values);
+
+              if (pbp.type == "1" && showPbp) {
+                list.items.add(PbpItem(key, values));
+              }
+              if (pbp.type == "2" && showChat) {
+                list.items.add(PbpItem(key, values));
+              }
             });
 
             list.sort();

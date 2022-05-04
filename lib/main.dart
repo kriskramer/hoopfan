@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/models/season_model.dart';
+import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/providers/progress.dart';
 import 'package:hoop/screens/layout.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UserProv>(
           create: (_) => UserProv(),
+        ),
+        ChangeNotifierProvider<GameSettingsProv>(
+          create: (_) => GameSettingsProv(),
         ),
       ],
       child: MaterialApp(
