@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hoop/providers/game_settings.dart';
+import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant.dart';
@@ -54,8 +55,22 @@ class _GameFeedMainState extends State<GameFeedMain> {
             DataSnapshot dataValues = snapshot.data.snapshot;
             Map<dynamic, dynamic> values = dataValues.value;
             if (values == null) {
-              return Text("No data");
+              return Column(children: [
+                Text("No data"),
+                Text("Want to go back to the old Game View?"),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                GameView(game: widget.gameData)),
+                      );
+                    },
+                    child: Text("Old Game View"))
+              ]);
               // TODO: Put an option here to go to the old game view screen
+
             }
             values.forEach((key, values) {
               PbpItem pbp = PbpItem(key, values);
