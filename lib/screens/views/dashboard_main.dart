@@ -160,17 +160,17 @@ class _DashboardMainState extends State<DashboardMain> {
                 SizedBox(
                   height: 12,
                 ),
-                DashboardSectionBox(
-                  dashboardWidget:
-                      TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: Icons.social_distance,
-                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
-                  sectionTitle: "Social",
-                  tapMoreText: "Tap to view more...",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
+                // DashboardSectionBox(
+                //   dashboardWidget:
+                //       TwitterFeedSmall(searchTerms: "nba basketball"),
+                //   iconData: Icons.social_distance,
+                //   linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                //   sectionTitle: "Social",
+                //   tapMoreText: "Tap to view more...",
+                // ),
+                // SizedBox(
+                //   height: 12,
+                // ),
                 DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
                   iconData: Icons.star,
@@ -201,18 +201,18 @@ class _DashboardMainState extends State<DashboardMain> {
                 SizedBox(
                   height: 12,
                 ),
-                DashboardSectionBox(
-                  dashboardWidget:
-                      TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: FontAwesomeIcons.twitterSquare,
-                  secondIcon: FontAwesomeIcons.facebookSquare,
-                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
-                  sectionTitle: "Social",
-                  tapMoreText: "Tap to view more...",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
+                // DashboardSectionBox(
+                //   dashboardWidget:
+                //       TwitterFeedSmall(searchTerms: "nba basketball"),
+                //   iconData: FontAwesomeIcons.twitterSquare,
+                //   secondIcon: FontAwesomeIcons.facebookSquare,
+                //   linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                //   sectionTitle: "Social",
+                //   tapMoreText: "Tap to view more...",
+                // ),
+                // SizedBox(
+                //   height: 12,
+                // ),
               ],
             ),
           )),

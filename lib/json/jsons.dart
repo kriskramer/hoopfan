@@ -58,7 +58,7 @@ class JsonFiles with ChangeNotifier {
 
   var _injuryReport;
 
-  bool _isFeatureBlocked = true;
+  bool _isFeatureBlocked = false;
 
   //Nba Api variables
   var _allPlayers;

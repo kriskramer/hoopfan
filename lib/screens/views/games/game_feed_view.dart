@@ -5,6 +5,7 @@ import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
+import 'package:hoop/components/games_widgets/game_news_view.dart';
 import 'package:hoop/components/games_widgets/game_stats_view.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
@@ -169,12 +170,12 @@ class _GameFeedViewState extends State<GameFeedView> {
                 return GameSettings(gameData, gameId, _update);
               });
         } else if (index == 1) {
-          // show news page
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => GameStatsView(gameData, gameId)),
-          // );
+          //show news page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GameNewsView(gameData, gameId)),
+          );
         } else if (index == 2) {
           // show stats page
           Navigator.push(
