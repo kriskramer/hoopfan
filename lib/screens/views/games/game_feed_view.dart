@@ -47,10 +47,10 @@ class _GameFeedViewState extends State<GameFeedView> {
   void initState() {
     super.initState();
     _gameData = loadGameData();
-    _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
-      refreshGameData();
-      print('game_view timer tick');
-    });
+    // _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
+    //   refreshGameData();
+    //   print('game_view timer tick');
+    // });
   }
 
   void refreshGameData() {
@@ -61,7 +61,7 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    //_timer.cancel();
     super.dispose();
   }
 
@@ -70,6 +70,10 @@ class _GameFeedViewState extends State<GameFeedView> {
     if (vTeamScore == null) vTeamScore = widget.game["vTeam"]["score"];
     if (hTeamScore == null) hTeamScore = widget.game["hTeam"]["score"];
     var gameStatus = widget.game["statusNum"];
+    gameId = widget.game["gameId"];
+
+    DatabaseReference gameDataDb =
+        FirebaseDatabase.instance.ref('gameData/$gameId');
 
     return Scaffold(
       bottomNavigationBar: gameStatus > 1
@@ -78,17 +82,25 @@ class _GameFeedViewState extends State<GameFeedView> {
             )
           : SizedBox(),
       resizeToAvoidBottomInset: true,
-      body: FutureBuilder(
-          future: _gameData,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+      body: StreamBuilder(
+          //future: _gameData,
+          stream: gameDataDb.onValue,
+          builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
             if (snapshot.hasData) {
               //print('reloading game_view data');
-              gameData = snapshot.data["basicGameData"];
-              stats = snapshot.data["stats"];
+              DataSnapshot dataValues = snapshot.data.snapshot;
+              Map<dynamic, dynamic> values = dataValues.value;
+              if (values == null) {
+                return Column(children: [
+                  Text("No data"),
+                ]);
+              }
+              gameData = values["data"]["basicGameData"];
+              stats = values["data"]["stats"];
 
               var gameActivated = gameData["isGameActivated"];
 
-              gameId = gameData["gameId"];
+              //gameId = gameData["gameId"];
               date = gameData["gameUrlCode"].toString().split("/")[0];
 
               vTeamScore = gameData["vTeam"]["score"];
@@ -97,16 +109,16 @@ class _GameFeedViewState extends State<GameFeedView> {
               Provider.of<JsonFiles>(context, listen: false)
                   .setCurrentGameStats(gameId, stats);
 
-              if (gameData["isGameActivated"]) {
-                timerDuration = 25;
-              } else {
-                timerDuration = 120;
+              // if (gameData["isGameActivated"]) {
+              //   timerDuration = 25;
+              // } else {
+              //   timerDuration = 120;
 
-                int startingMinutes = getStartCountdown(gameData);
-                if (startingMinutes == null) {
-                  _timer.cancel();
-                }
-              }
+              //   int startingMinutes = getStartCountdown(gameData);
+              //   if (startingMinutes == null) {
+              //     _timer.cancel();
+              //   }
+              // }
               return SafeArea(
                 child: CustomScrollView(slivers: [
                   SliverAppBar(

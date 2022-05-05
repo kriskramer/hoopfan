@@ -50,17 +50,30 @@ class _DashboardMainState extends State<DashboardMain> {
                             horizontal: BorderSide(color: Colors.black))),
                     child: Column(children: [
                       Container(
-                        height: 45,
+                        height: 55,
                         decoration: BoxDecoration(
                             color: Colors.blue[800],
                             border: Border(
                                 bottom:
                                     BorderSide(color: Colors.red, width: 3))),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            // IconButton(
+                            //     onPressed: () {
+                            //       Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) =>
+                            //                   HelpGlossary()));
+                            //     },
+                            //     icon: Icon(
+                            //       Icons.help_outline_outlined,
+                            //     )),
+
                             Row(
                               children: [
+                                SizedBox(width: 20),
                                 Container(
                                     height: 22,
                                     child: Image.asset('images/bball.png')),
@@ -74,68 +87,57 @@ class _DashboardMainState extends State<DashboardMain> {
                                         color: Colors.white)),
                               ],
                             ),
+                            Row(
+                              children: [
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PlayerSearch()));
+                                    },
+                                    icon: Icon(Icons.search)),
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => UpdatesMain()));
+                                    },
+                                    icon: Icon(
+                                      Icons.notification_important_outlined,
+                                    )),
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AccountMain()))
+                                          .then((value) => setState(() {}));
+                                    },
+                                    icon: user.email == null
+                                        ? Icon(Icons.account_box_outlined)
+                                        : Icon(
+                                            Icons.account_box,
+                                            color: Colors.orange,
+                                          )),
+                              ],
+                            )
                           ],
                         ),
                       ),
                       Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(color: Colors.amber[200]),
+                          decoration: BoxDecoration(color: Colors.amber[100]),
                           child: Center(
                             child: Text("Version 0.1",
                                 style: TextStyle(fontSize: 10)),
                           )),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              HelpGlossary()));
-                                },
-                                icon: Icon(
-                                  Icons.help_outline_outlined,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PlayerSearch()));
-                                },
-                                icon: Icon(Icons.search)),
-                            Text("Dashboard",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UpdatesMain()));
-                                },
-                                icon: Icon(
-                                  Icons.notification_important_outlined,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AccountMain()))
-                                      .then((value) => setState(() {}));
-                                },
-                                icon: user.email == null
-                                    ? Icon(Icons.account_box_outlined)
-                                    : Icon(
-                                        Icons.account_box,
-                                        color: Colors.blue,
-                                      )),
-                          ]),
                     ])),
                 SizedBox(
                   height: 12,

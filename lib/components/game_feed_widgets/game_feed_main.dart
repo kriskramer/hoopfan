@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +27,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
 
   @override
   Widget build(BuildContext context) {
-    // FirebaseDatabase database = FirebaseDatabase.instance;
-    // DatabaseReference ref = FirebaseDatabase.instance.ref();
-
     DatabaseReference pbpFeed =
         FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
     var vTeamId = widget.gameData["vTeam"]["teamId"];
@@ -69,8 +67,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
                     },
                     child: Text("Old Game View"))
               ]);
-              // TODO: Put an option here to go to the old game view screen
-
             }
             values.forEach((key, values) {
               PbpItem pbp = PbpItem(key, values);
@@ -89,10 +85,19 @@ class _GameFeedMainState extends State<GameFeedMain> {
               shrinkWrap: true,
               //controller: _scrollController,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: list.items.length,
+              itemCount: list.items.length > 200 ? 200 : list.items.length,
               itemBuilder: (BuildContext context, int index) {
+                // Only show the latest 200 items (for now)
+                int idx = index;
+                if (list.items.length > 200) {
+                  idx = index + list.items.length - 201;
+                }
+
+                if (idx < 0) {
+                  idx = 0;
+                }
                 return getPbpItem(
-                    list.items[index], widget.gameData, widget.stats);
+                    list.items[idx], widget.gameData, widget.stats);
               },
             );
           }
@@ -124,41 +129,59 @@ class _GameFeedMainState extends State<GameFeedMain> {
                 });
           }
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
+        child: Stack(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                getCurrentPeriod(pbp.period),
+                style: TextStyle(fontSize: 12),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                pbp.clock + "  ",
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(getCurrentPeriod(pbp.period)),
-                Text(
-                  pbp.clock + "  ",
-                  style: TextStyle(fontSize: 12),
-                ),
+                getTeamCard(pbp.description, widget.gameData),
+                getPlayerImage(pbp),
+                SizedBox(width: 5),
+                Flexible(
+                    child: Text(
+                  getPbPDescriptionFormatted(pbp, widget.gameData),
+                  style: pbp.isScoreChange
+                      ? TextStyle(fontSize: 14, color: Colors.black)
+                      : TextStyle(fontSize: 14, color: Colors.grey[800]),
+                )),
+                pbp.isScoreChange
+                    ? Container(
+                        height: 16, child: Image.asset('images/bball.png'))
+                    : SizedBox(),
+                pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
               ],
             ),
-            getTeamCard(pbp.description, widget.gameData),
-            Flexible(
-                child: Text(
-              getPbPDescriptionFormatted(pbp, widget.gameData),
-              style: pbp.isScoreChange
-                  ? TextStyle(fontSize: 14, color: Colors.black)
-                  : TextStyle(fontSize: 14, color: Colors.grey[800]),
-            )),
-            pbp.isScoreChange
-                ? Container(height: 16, child: Image.asset('images/bball.png'))
-                : SizedBox(),
-            pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
-          ],
-        ),
+          ),
+        ]),
       );
 
       var teamColor = pbp.isScoreChange
           ? ConstantHelper.getTeamColor(pbp.teamId)
           : Colors.white;
       container = Container(
-          padding: EdgeInsets.fromLTRB(22, 4, 22, 4),
+          padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
+          margin: EdgeInsets.fromLTRB(0, 2, 0, 2),
           decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.grey[300])),
+            border: Border.all(color: Colors.grey[300]),
+            borderRadius: BorderRadius.circular(10),
             color: pbp.isScoreChange
                 ? Color(teamColor).withOpacity(.10)
                 : Colors.white,
@@ -276,6 +299,22 @@ class _GameFeedMainState extends State<GameFeedMain> {
       return getTeamTricodeCard(hTeamId);
     } else {
       return Text('');
+    }
+  }
+
+  Widget getPlayerImage(PbpItem pbp) {
+    if (pbp.personId == null) return SizedBox();
+    if (pbp.personId == '') return SizedBox();
+    var url =
+        "https://cdn.nba.com/headshots/nba/latest/1040x760/${pbp.personId}.png";
+
+    try {
+      return CachedLogo(
+        url: url,
+        radius: 18,
+      );
+    } catch (err) {
+      print("Error fetching " + url);
     }
   }
 

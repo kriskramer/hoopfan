@@ -35,6 +35,25 @@ class HowToWatchCard extends StatelessWidget {
     String howToWatch = "";
     String nat, v, h;
 
+    if (game["watch"] == null) {
+      return howToWatch;
+    }
+    if (game["watch"]["broadcast"] == null) {
+      return howToWatch;
+    }
+    if (game["watch"]["broadcast"]["broadcasters"] == null) {
+      return howToWatch;
+    }
+    if (game["watch"]["broadcast"]["broadcasters"]["national"] == null) {
+      return howToWatch;
+    }
+    if (game["watch"]["broadcast"]["broadcasters"]["hTeam"] == null) {
+      return howToWatch;
+    }
+    if (game["watch"]["broadcast"]["broadcasters"]["vTeam"] == null) {
+      return howToWatch;
+    }
+
     if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
       nat =
           game["watch"]["broadcast"]["broadcasters"]["national"][0]["longName"];
@@ -61,6 +80,11 @@ class HowToWatchCard extends StatelessWidget {
   String getHowToWatchAudio(dynamic game) {
     String howToWatch = "";
     String nat, v, h;
+
+    if (game["watch"]["broadcast"]["audio"]["national"]["broadcasters"] ==
+        null) {
+      return howToWatch;
+    }
 
     if (game["watch"]["broadcast"]["audio"]["national"]["broadcasters"].length >
         0) {
