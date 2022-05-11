@@ -6,8 +6,9 @@ import 'package:hoop/services/network.dart';
 
 class TwitterFeedSmall extends StatelessWidget {
   final searchTerms;
+  final itemCount;
 
-  TwitterFeedSmall({this.searchTerms});
+  TwitterFeedSmall({this.searchTerms, this.itemCount});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class TwitterFeedSmall extends StatelessWidget {
               return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 7,
+                itemCount: itemCount == null ? 7 : itemCount,
                 itemBuilder: (context, index) {
                   // Check if Id is in allTeam and points aint empty
                   return Column(children: [
@@ -61,8 +62,9 @@ class TwitterFeedSmall extends StatelessWidget {
   }
 
   Future<dynamic> loadData() async {
-    var feed = await Network.getJson(
-        "https://api.twitter.com/2/tweets/search/recent?query=$searchTerms&max_results=10&tweet.fields=attachments,created_at,entities",
+    var url =
+        "https://api.twitter.com/2/tweets/search/recent?query=$searchTerms&max_results=10&tweet.fields=attachments,created_at,entities";
+    var feed = await Network.getJson(url,
         requestHeaders: RequestHeaders.twitterStreamHeaders);
     return feed;
   }

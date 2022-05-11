@@ -1,29 +1,39 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/player_base_stat_and_rank.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-class GamePlayerPopup extends StatelessWidget {
+class GamePlayerPopup extends StatefulWidget {
   final String personId;
   final dynamic game;
   final dynamic stats;
+  final PbpItem pbp;
 
-  const GamePlayerPopup({this.personId, this.game, this.stats});
+  const GamePlayerPopup({this.personId, this.game, this.stats, this.pbp});
 
   @override
+  State<GamePlayerPopup> createState() => _GamePlayerPopupState();
+}
+
+class _GamePlayerPopupState extends State<GamePlayerPopup> {
+  @override
   Widget build(BuildContext context) {
-    var player =
-        Provider.of<JsonFiles>(context, listen: false).getPlayer(personId);
+    var player = Provider.of<JsonFiles>(context, listen: false)
+        .getPlayer(widget.personId);
     var playerStats;
     PlayerBaseStatAndRank playerAllStats;
+    String gameId = widget.game["gameId"];
 
-    for (var p in stats["activePlayers"]) {
-      if (personId == p["personId"]) {
+    for (var p in widget.stats["activePlayers"]) {
+      if (widget.personId == p["personId"]) {
         playerStats = p;
       }
     }
@@ -45,47 +55,82 @@ class GamePlayerPopup extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                Card(
+                    elevation: 4,
+                    color: Colors.grey[100],
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(children: [
+                        Center(
+                          child: Text(
+                            widget.pbp.description,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Boo"),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.thumb_down,
+                              ),
+                              iconSize: 40,
+                              color: Colors.red,
+                              splashColor: Colors.purple,
+                              onPressed: () {
+                                setState(() {
+                                  doBoo(gameId, widget.pbp.timestamp,
+                                      widget.pbp.boos);
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text("Cheer"),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.thumb_up,
+                              ),
+                              iconSize: 40,
+                              color: Colors.green,
+                              splashColor: Colors.orange,
+                              onPressed: () {
+                                setState(() {
+                                  doCheer(gameId, widget.pbp.timestamp,
+                                      widget.pbp.cheers);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ]),
+                    )),
+                SizedBox(
+                  height: 5,
+                ),
+                CachedLogo(
+                  url:
+                      "https://cdn.nba.com/headshots/nba/latest/1040x760/${widget.personId}.png",
+                  radius: 45,
+                ),
                 Center(
                     child: Text(player["firstName"] + " " + player["lastName"],
                         style: TextStyle(fontSize: 20))),
                 //Text(personId),
-                CachedLogo(
-                  url:
-                      "https://cdn.nba.com/headshots/nba/latest/1040x760/$personId.png",
-                  radius: 45,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(player["pos"]),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(player["heightFeet"] +
-                        "' " +
-                        player["heightInches"] +
-                        "\""),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text("(" + player["heightMeters"] + ")"),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(player["weightPounds"] + "lbs"),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text("(" + player["weightKilograms"] + "kgs)"),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Game Stats compared to season stats"),
 
                 FutureBuilder(
                     future: loadData(context),
@@ -99,7 +144,7 @@ class GamePlayerPopup extends StatelessWidget {
 
                         if (list.items.length > 0) {
                           for (PlayerBaseStatAndRank p in list.items) {
-                            if (p.playerId.toString() == personId) {
+                            if (p.playerId.toString() == widget.personId) {
                               playerAllStats = p;
                             }
                           }
@@ -135,15 +180,6 @@ class GamePlayerPopup extends StatelessWidget {
   }
 
   // Widget getStatLabel(String label) {
-  //   return Container(
-  //       height: 24,
-  //       width: 50,
-  //       child: Text(
-  //         label,
-  //         style: TextStyle(fontSize: 16),
-  //       ));
-  // }
-
   Widget getGameStat(String value) {
     return Text(
       value,
@@ -153,15 +189,6 @@ class GamePlayerPopup extends StatelessWidget {
   }
 
   // Widget getSeasonStat(String value) {
-  //   return Container(
-  //       height: 24,
-  //       width: 50,
-  //       child: Text(
-  //         value,
-  //         style: TextStyle(fontSize: 16),
-  //       ));
-  // }
-
   Widget getDataTableFull(dynamic playerStats, dynamic playerAllStats) {
     return DataTable(
       columnSpacing: 10,
@@ -385,5 +412,39 @@ class GamePlayerPopup extends StatelessWidget {
         Text((compare * 100).toStringAsFixed(0) + "%"),
       ],
     );
+  }
+
+  void doCheer(gameId, key, cheers) {
+    DatabaseReference feed =
+        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+
+    if (cheers == null) {
+      cheers = 1;
+    } else {
+      cheers++;
+    }
+
+    feed.update({
+      "cheers": cheers,
+    });
+
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
+  void doBoo(gameId, key, boos) {
+    DatabaseReference feed =
+        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+
+    if (boos == null) {
+      boos = 1;
+    } else {
+      boos++;
+    }
+
+    feed.update({
+      "boos": boos,
+    });
+
+    Navigator.of(context, rootNavigator: true).pop();
   }
 }

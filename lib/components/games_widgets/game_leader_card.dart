@@ -51,19 +51,19 @@ class GameLeaderCard extends StatelessWidget {
                         elevation: 5,
                         child: Container(
                           color: Color(teamColor),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(8),
                           child: Text(triCode,
                               style: TextStyle(
                                 color: Color(teamTextColor),
                               )),
                         )),
                     SizedBox(
-                      width: 10,
+                      width: 8,
                     ),
                     CachedLogo(
                       url:
                           "https://cdn.nba.com/headshots/nba/latest/1040x760/$playerId.png",
-                      radius: 25,
+                      radius: 20,
                     ),
                     SizedBox(
                       width: 20,

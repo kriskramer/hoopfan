@@ -1,5 +1,10 @@
 // teamIds --> [full Name, nickname, img-url, conference]
 
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+
 Map eastID = {
   "1": [
     'Atlanta Hawks',
@@ -820,10 +825,118 @@ class ConstantHelper {
   }
 
   static int getTeamColor(String teamId) {
+    if (teamId.trim() != "") {
+      dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+      String primaryColor =
+          team["primaryColor"].toString().replaceFirst("#", "FF");
+      return int.parse(primaryColor, radix: 16);
+    } else
+      return null;
+  }
+
+  static LinearGradient getTeamColor_Gradient(String teamId, int fanValue) {
     dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
     String primaryColor =
         team["primaryColor"].toString().replaceFirst("#", "FF");
-    return int.parse(primaryColor, radix: 16);
+    var c = int.parse(primaryColor, radix: 16);
+
+    if (fanValue == 0) {
+      return LinearGradient(
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+        stops: [
+          0.1,
+          0.4,
+          0.6,
+          0.8,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.3),
+          Color(c).withOpacity(.6),
+          Color(c).withOpacity(.9),
+        ],
+      );
+    } else if (fanValue == 10) {
+      return LinearGradient(
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+        stops: [
+          0.4,
+          0.6,
+          0.8,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.4),
+          Color(c).withOpacity(.8),
+        ],
+      );
+    } else if (fanValue == 20) {
+      return LinearGradient(
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+        stops: [
+          0.7,
+          0.9,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.7),
+        ],
+      );
+    } else if (fanValue == 40) {
+      return LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        stops: [
+          0.7,
+          0.9,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.7),
+        ],
+      );
+    } else if (fanValue == 50) {
+      return LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        stops: [
+          0.4,
+          0.6,
+          0.8,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.4),
+          Color(c).withOpacity(.8),
+        ],
+      );
+    } else if (fanValue == 60) {
+      return LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        stops: [
+          0.1,
+          0.4,
+          0.6,
+          0.8,
+        ],
+        colors: [
+          Colors.amber[50],
+          Color(c).withOpacity(.3),
+          Color(c).withOpacity(.6),
+          Color(c).withOpacity(.9),
+        ],
+      );
+    }
+  }
+
+  static Color increaseColorLightness(Color color, double increment) {
+    var hslColor = HSLColor.fromColor(color);
+    var newValue = min(max(hslColor.lightness + increment, 0.0), 1.0);
+    return hslColor.withLightness(newValue).toColor();
   }
 
   static int getTeamTextColor(String teamId) {

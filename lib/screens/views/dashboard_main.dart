@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
+import 'package:hoop/model/user.dart';
+import 'package:hoop/providers/user_prov.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/account/updates_main.dart';
 import 'package:hoop/screens/views/account/user_main.dart';
@@ -18,6 +20,7 @@ import 'package:hoop/screens/views/stats/leaders_today_small.dart';
 import 'package:hoop/screens/views/stats/league_stats.dart';
 import 'package:hoop/screens/views/stats/league_stats_small.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class DashboardMain extends StatefulWidget {
   const DashboardMain();
@@ -29,6 +32,8 @@ class DashboardMain extends StatefulWidget {
 class _DashboardMainState extends State<DashboardMain> {
   @override
   Widget build(BuildContext context) {
+    AppUser user = Provider.of<UserProv>(context, listen: false).getUser();
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.grey[200],
@@ -45,17 +50,30 @@ class _DashboardMainState extends State<DashboardMain> {
                             horizontal: BorderSide(color: Colors.black))),
                     child: Column(children: [
                       Container(
-                        height: 45,
+                        height: 55,
                         decoration: BoxDecoration(
                             color: Colors.blue[800],
                             border: Border(
                                 bottom:
                                     BorderSide(color: Colors.red, width: 3))),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            // IconButton(
+                            //     onPressed: () {
+                            //       Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) =>
+                            //                   HelpGlossary()));
+                            //     },
+                            //     icon: Icon(
+                            //       Icons.help_outline_outlined,
+                            //     )),
+
                             Row(
                               children: [
+                                SizedBox(width: 20),
                                 Container(
                                     height: 22,
                                     child: Image.asset('images/bball.png')),
@@ -69,63 +87,57 @@ class _DashboardMainState extends State<DashboardMain> {
                                         color: Colors.white)),
                               ],
                             ),
+                            Row(
+                              children: [
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PlayerSearch()));
+                                    },
+                                    icon: Icon(Icons.search)),
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => UpdatesMain()));
+                                    },
+                                    icon: Icon(
+                                      Icons.notification_important_outlined,
+                                    )),
+                                IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AccountMain()))
+                                          .then((value) => setState(() {}));
+                                    },
+                                    icon: user.email == null
+                                        ? Icon(Icons.account_box_outlined)
+                                        : Icon(
+                                            Icons.account_box,
+                                            color: Colors.orange,
+                                          )),
+                              ],
+                            )
                           ],
                         ),
                       ),
                       Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(color: Colors.amber[200]),
+                          decoration: BoxDecoration(color: Colors.amber[100]),
                           child: Center(
-                            child: Text("Alpha Testing version",
+                            child: Text("Version 0.1",
                                 style: TextStyle(fontSize: 10)),
                           )),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              HelpGlossary()));
-                                },
-                                icon: Icon(
-                                  Icons.help_outline_outlined,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PlayerSearch()));
-                                },
-                                icon: Icon(Icons.search)),
-                            Text("Dashboard",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UpdatesMain()));
-                                },
-                                icon: Icon(
-                                  Icons.notification_important_outlined,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UserMain()));
-                                },
-                                icon: Icon(
-                                  Icons.account_box_outlined,
-                                )),
-                          ]),
                     ])),
                 SizedBox(
                   height: 12,
@@ -150,17 +162,17 @@ class _DashboardMainState extends State<DashboardMain> {
                 SizedBox(
                   height: 12,
                 ),
-                DashboardSectionBox(
-                  dashboardWidget:
-                      TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: Icons.social_distance,
-                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
-                  sectionTitle: "Social",
-                  tapMoreText: "Tap to view more...",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
+                // DashboardSectionBox(
+                //   dashboardWidget:
+                //       TwitterFeedSmall(searchTerms: "nba basketball"),
+                //   iconData: Icons.social_distance,
+                //   linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                //   sectionTitle: "Social",
+                //   tapMoreText: "Tap to view more...",
+                // ),
+                // SizedBox(
+                //   height: 12,
+                // ),
                 DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
                   iconData: Icons.star,
@@ -191,18 +203,18 @@ class _DashboardMainState extends State<DashboardMain> {
                 SizedBox(
                   height: 12,
                 ),
-                DashboardSectionBox(
-                  dashboardWidget:
-                      TwitterFeedSmall(searchTerms: "nba basketball"),
-                  iconData: FontAwesomeIcons.twitterSquare,
-                  secondIcon: FontAwesomeIcons.facebookSquare,
-                  linkWidget: TwitterFeed(searchTerms: "nba basketball"),
-                  sectionTitle: "Social",
-                  tapMoreText: "Tap to view more...",
-                ),
-                SizedBox(
-                  height: 12,
-                ),
+                // DashboardSectionBox(
+                //   dashboardWidget:
+                //       TwitterFeedSmall(searchTerms: "nba basketball"),
+                //   iconData: FontAwesomeIcons.twitterSquare,
+                //   secondIcon: FontAwesomeIcons.facebookSquare,
+                //   linkWidget: TwitterFeed(searchTerms: "nba basketball"),
+                //   sectionTitle: "Social",
+                //   tapMoreText: "Tap to view more...",
+                // ),
+                // SizedBox(
+                //   height: 12,
+                // ),
               ],
             ),
           )),

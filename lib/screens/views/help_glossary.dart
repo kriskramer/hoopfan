@@ -16,7 +16,10 @@ class HelpGlossary extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Text("Coming soon...")
+              Text(
+                "Coming soon...",
+                style: TextStyle(fontSize: 12),
+              )
             ],
           ),
         ));

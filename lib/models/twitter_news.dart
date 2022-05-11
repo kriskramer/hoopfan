@@ -18,10 +18,12 @@ class TwitterNewsItemList {
   List<TwitterNewsItem> items = [];
 
   TwitterNewsItemList(dynamic json) {
-    for (var t in json["data"]) {
-      if (!tweetBlocked(t)) {
-        items.add(TwitterNewsItem(
-            text: t["text"], id: t["id"], created: t["created_at"]));
+    if (json["data"] != null) {
+      for (var t in json["data"]) {
+        if (!tweetBlocked(t)) {
+          items.add(TwitterNewsItem(
+              text: t["text"], id: t["id"], created: t["created_at"]));
+        }
       }
     }
   }

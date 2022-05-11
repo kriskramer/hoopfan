@@ -98,29 +98,29 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
                   advancedClick();
                 },
               ),
-              TextButton(
-                child: Text(
-                  'Defense',
-                  style: TextStyle(
-                      fontWeight:
-                          showDefensive ? FontWeight.bold : FontWeight.normal),
-                ),
-                onPressed: () {
-                  defensiveClick();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  '4 Factors',
-                  style: TextStyle(
-                      fontWeight: showFourFactors
-                          ? FontWeight.bold
-                          : FontWeight.normal),
-                ),
-                onPressed: () {
-                  fourFactorsClick();
-                },
-              ),
+              // TextButton(
+              //   child: Text(
+              //     'Defense',
+              //     style: TextStyle(
+              //         fontWeight:
+              //             showDefensive ? FontWeight.bold : FontWeight.normal),
+              //   ),
+              //   onPressed: () {
+              //     defensiveClick();
+              //   },
+              // ),
+              // TextButton(
+              //   child: Text(
+              //     '4 Factors',
+              //     style: TextStyle(
+              //         fontWeight: showFourFactors
+              //             ? FontWeight.bold
+              //             : FontWeight.normal),
+              //   ),
+              //   onPressed: () {
+              //     fourFactorsClick();
+              //   },
+              // ),
             ]),
         Text('Some box scores are not populated real-time.'),
         SizedBox(

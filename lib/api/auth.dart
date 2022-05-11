@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hoop/api/get_message.dart';
 import 'package:hoop/model/user.dart';
 import 'package:hoop/api/config/firebase.dart';
+import 'package:hoop/providers/user_prov.dart';
+import 'package:provider/provider.dart';
 
 class Auth {
   static Future<Map<String, dynamic>> registerUser(AppUser user) async {
@@ -30,7 +33,8 @@ class Auth {
     return response; // return response for further processing by app
   }
 
-  static Future<Map<String, dynamic>> loginUser(AppUser user) async {
+  static Future<Map<String, dynamic>> loginUser(
+      AppUser user, BuildContext context) async {
     Map<String, dynamic> response = {};
     try {
       final UserCredential _user = await auth.signInWithEmailAndPassword(
@@ -38,6 +42,15 @@ class Auth {
       if (_user != null) {
         response["code"] = 200;
         response["message"] = "success";
+
+        // Load user details from firebase
+        var userDetails =
+            await store.collection("users").doc(auth.currentUser.uid).get();
+        user.id = userDetails.id;
+        user.displayName = userDetails.data()["displayName"];
+        //print(user);
+        // Save user to Provider
+        Provider.of<UserProv>(context, listen: false).setUser(user);
       } else {}
     } on FirebaseAuthException catch (e) {
       response["code"] = 400;

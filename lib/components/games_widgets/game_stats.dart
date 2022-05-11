@@ -85,7 +85,7 @@ class GameStats extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.all(5),
-          width: 75,
+          width: 55,
           child: CachedLogo(
             url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"]),
             radius: 20,
@@ -128,7 +128,7 @@ class GameStats extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: 75,
+          width: 55,
           child: CachedLogo(
             url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"]),
             radius: 20,
@@ -175,7 +175,7 @@ class GameStats extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey))),
           padding: EdgeInsets.all(5),
-          width: 120,
+          width: 100,
           child: Center(child: Text(name, style: TextStyle(fontSize: 14))),
         ),
         hLead
@@ -225,7 +225,7 @@ class GameStats extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey))),
           padding: EdgeInsets.all(5),
-          width: 120,
+          width: 100,
           child: Center(child: Text(name, style: TextStyle(fontSize: 14))),
         ),
         SizedBox(

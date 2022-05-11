@@ -7,7 +7,8 @@ class UserButton extends StatelessWidget {
   UserButton({@required this.title, @required this.function});
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height / 12;
+    //double height = MediaQuery.of(context).size.height / 15;
+    double height = 50;
     return GestureDetector(
       onTap: function,
       child: Padding(
@@ -22,7 +23,7 @@ class UserButton extends StatelessWidget {
           child: Center(
             child: Text(
               title,
-              style: TextStyle(fontSize: height / 2.7, color: Colors.white),
+              style: TextStyle(fontSize: height / 2.0, color: Colors.white),
             ),
           ),
         ),

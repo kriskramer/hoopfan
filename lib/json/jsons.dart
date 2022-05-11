@@ -54,10 +54,11 @@ class JsonFiles with ChangeNotifier {
   String _selectedDate;
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
+  Map<String, dynamic> _currentGameStats = {};
 
   var _injuryReport;
 
-  bool _isFeatureBlocked = true;
+  bool _isFeatureBlocked = false;
 
   //Nba Api variables
   var _allPlayers;
@@ -235,6 +236,10 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setCurrentGameStats(String gameId, dynamic stats) {
+    _currentGameStats[gameId] = stats;
+  }
+
   void setPlayerBoxScores(PlayerBoxScoreList list) {
     _playerBoxScores = list;
   }
@@ -339,6 +344,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
   LeadTrackerList getFullGameLeadTracker(String gameId) =>
       _fullGameLeadTracker[gameId];
+
+  dynamic getCurrentGameStats(String gameId) => _currentGameStats[gameId];
 
   dynamic getTransactions() => _transactions;
 

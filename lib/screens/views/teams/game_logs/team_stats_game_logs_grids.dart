@@ -10,6 +10,8 @@ import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_opponent_
 import 'package:hoop/screens/views/teams/game_logs/team_stats_game_log_scoring_trends_chart.dart';
 import 'package:provider/provider.dart';
 
+import '../../games/game_feed_view.dart';
+
 class TeamStatsGameLogsGrid extends StatelessWidget {
   final dynamic stats;
   final String measure;
@@ -323,7 +325,7 @@ class TeamStatsGameLogsGrid extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                return GameView(game: gameData);
+                return GameFeedView(game: gameData);
               });
         },
         child: Text(cellValue)));

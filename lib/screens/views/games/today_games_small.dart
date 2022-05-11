@@ -159,7 +159,7 @@ class _TodaysGamesSmallState extends State<TodaysGamesSmall> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             return Column(children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
+                height: 100, //MediaQuery.of(context).size.height / 2,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(width: 20),

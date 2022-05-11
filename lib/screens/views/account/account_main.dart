@@ -21,18 +21,18 @@ class _AccountMainState extends State<AccountMain> {
           bottom: TabBar(
             tabs: [
               Tab(
-                text: "Updates",
+                text: "User",
               ),
               Tab(
-                text: "User",
+                text: "Updates",
               ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            UpdatesMain(),
             UserMain(),
+            UpdatesMain(),
           ],
         ),
       ),

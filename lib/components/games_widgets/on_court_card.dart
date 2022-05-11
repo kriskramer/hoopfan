@@ -121,14 +121,12 @@ class _OnCourtCardState extends State<OnCourtCard> {
             height: 5,
           ),
           //Text(vTeamPlayers),
-          vTeamPlayersRow,
-          showVBox
-              ? GameBoxScoreOnCourt(
-                  game: widget.game,
-                  stats: widget.stats,
-                  isHomeTeam: false,
-                )
-              : SizedBox(),
+          //vTeamPlayersRow,
+          GameBoxScoreOnCourt(
+            game: widget.game,
+            stats: widget.stats,
+            isHomeTeam: false,
+          ),
           SizedBox(
             height: 15,
           ),
@@ -161,14 +159,12 @@ class _OnCourtCardState extends State<OnCourtCard> {
           SizedBox(
             height: 5,
           ),
-          hTeamPlayersRow,
-          showHBox
-              ? GameBoxScoreOnCourt(
-                  game: widget.game,
-                  stats: widget.stats,
-                  isHomeTeam: true,
-                )
-              : SizedBox(),
+          //hTeamPlayersRow,
+          GameBoxScoreOnCourt(
+            game: widget.game,
+            stats: widget.stats,
+            isHomeTeam: true,
+          )
         ],
       ),
     );

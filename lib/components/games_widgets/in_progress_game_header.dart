@@ -27,6 +27,11 @@ class InProgressGameHeader extends StatelessWidget {
         ? "0"
         : gameData["vTeam"]["seriesLoss"];
 
+    if (gameData["playoffs"] != null) {
+      seriesWin = gameData["playoffs"]["seriesSummaryText"];
+      seriesLoss = "";
+    }
+
     var gameStatus = gameData["statusNum"];
     bool isOverTime = gameData["period"]["current"] > 4 ? true : false;
 

@@ -22,38 +22,23 @@ class DashboardSectionBox extends StatelessWidget {
     return Column(
       children: [
         Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Row(
-                  children: [
-                    Icon(
-                      iconData,
-                      color: Colors.blue,
-                    ),
-                    secondIcon != null
-                        ? Icon(
-                            secondIcon,
-                            color: Colors.blue,
-                          )
-                        : SizedBox()
-                  ],
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  sectionTitle,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                iconData,
-                color: Colors.blue,
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Row(
+                children: [
+                  Icon(
+                    iconData,
+                    color: Colors.blue,
+                  ),
+                  secondIcon != null
+                      ? Icon(
+                          secondIcon,
+                          color: Colors.blue,
+                        )
+                      : SizedBox()
+                ],
               ),
               SizedBox(
                 width: 5,
@@ -61,6 +46,9 @@ class DashboardSectionBox extends StatelessWidget {
               Text(
                 sectionTitle,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: 10,
               ),
             ]),
           ),

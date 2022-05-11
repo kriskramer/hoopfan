@@ -8,6 +8,8 @@ import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
+import '../../screens/views/games/game_feed_view.dart';
+
 class CompletedGameCardSmall extends StatelessWidget {
   final dynamic game;
 
@@ -44,7 +46,7 @@ class CompletedGameCardSmall extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => GameView(
+              builder: (context) => GameFeedView(
                 game: game,
               ),
             ),
