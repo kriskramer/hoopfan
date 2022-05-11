@@ -54,7 +54,7 @@ class _GameFeedMainState extends State<GameFeedMain> {
             Map<dynamic, dynamic> values = dataValues.value;
             if (values == null) {
               return Column(children: [
-                Text("No data"),
+                Text("No data yet..."),
                 Text("Want to go back to the old Game View?"),
                 ElevatedButton(
                     onPressed: () {
@@ -124,12 +124,110 @@ class _GameFeedMainState extends State<GameFeedMain> {
                     personId: pbp.personId,
                     game: game,
                     stats: stats,
-                    pbpText: pbp.formattedDescription,
+                    pbp: pbp,
                   );
                 });
           }
         },
         child: Stack(children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                      flex: 90,
+                      child: Row(
+                        children: [
+                          getTeamCard(pbp.description, widget.gameData),
+                          getPlayerImage(pbp),
+                          SizedBox(width: 5),
+                          Flexible(
+                              child: Text(
+                            getPbPDescriptionFormatted(pbp, widget.gameData),
+                            style: pbp.isScoreChange
+                                ? TextStyle(fontSize: 14, color: Colors.black)
+                                : TextStyle(
+                                    fontSize: 14, color: Colors.grey[800]),
+                          )),
+                        ],
+                      )),
+                  Expanded(
+                      flex: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          pbp.isScoreChange
+                              ? Container(
+                                  height: 16,
+                                  child: Image.asset('images/bball.png'))
+                              : SizedBox(),
+                          pbp.isVideoAvailable
+                              ? Icon(Icons.play_arrow)
+                              : SizedBox(),
+                          pbp.description.contains("Substitution")
+                              ? Icon(
+                                  Icons.compare_arrows_outlined,
+                                  color: Colors.grey,
+                                  size: 24,
+                                )
+                              : SizedBox(),
+                          pbp.description.contains("Shot: Missed")
+                              ? Icon(
+                                  Icons.call_missed_outgoing,
+                                  color: Colors.grey,
+                                  size: 24,
+                                )
+                              : SizedBox()
+                        ],
+                      )),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  pbp.cheers == null
+                      ? SizedBox()
+                      : Row(children: [
+                          Icon(
+                            Icons.thumb_up,
+                            size: 15,
+                            color: Colors.green[200],
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            pbp.cheers.toString(),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey[500]),
+                          ),
+                        ]),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  pbp.boos == null
+                      ? SizedBox()
+                      : Row(children: [
+                          Icon(
+                            Icons.thumb_down,
+                            size: 15,
+                            color: Colors.red[200],
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            pbp.boos.toString(),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey[500]),
+                          ),
+                        ]),
+                ],
+              )
+            ]),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,29 +245,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
               ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                getTeamCard(pbp.description, widget.gameData),
-                getPlayerImage(pbp),
-                SizedBox(width: 5),
-                Flexible(
-                    child: Text(
-                  getPbPDescriptionFormatted(pbp, widget.gameData),
-                  style: pbp.isScoreChange
-                      ? TextStyle(fontSize: 14, color: Colors.black)
-                      : TextStyle(fontSize: 14, color: Colors.grey[800]),
-                )),
-                pbp.isScoreChange
-                    ? Container(
-                        height: 16, child: Image.asset('images/bball.png'))
-                    : SizedBox(),
-                pbp.isVideoAvailable ? Icon(Icons.play_arrow) : SizedBox()
-              ],
-            ),
-          ),
         ]),
       );
 
@@ -180,10 +255,13 @@ class _GameFeedMainState extends State<GameFeedMain> {
           padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
           margin: EdgeInsets.fromLTRB(0, 2, 0, 2),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey[300]),
+            border: getReactionBorder(
+                pbp.cheers, pbp.boos), //Border.all(color: Colors.grey[300]),
             borderRadius: BorderRadius.circular(10),
             color: pbp.isScoreChange
-                ? Color(teamColor).withOpacity(.10)
+                ? teamColor == null
+                    ? Colors.white
+                    : Color(teamColor).withOpacity(.10)
                 : Colors.white,
           ),
           child: row);
@@ -196,12 +274,22 @@ class _GameFeedMainState extends State<GameFeedMain> {
       var vTeamId = widget.gameData["vTeam"]["teamId"];
       var hTeamId = widget.gameData["hTeam"]["teamId"];
 
+      var dt = DateTime.fromMillisecondsSinceEpoch(pbp.timestamp);
+      //print(dt);
+
       row = Column(
         children: [
           Row(
             children: [
               Text(
                 displayName,
+                style: TextStyle(fontSize: 10),
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                dt.toString(),
                 style: TextStyle(fontSize: 10),
               )
             ],
@@ -255,6 +343,62 @@ class _GameFeedMainState extends State<GameFeedMain> {
     return container;
   }
 
+  Border getReactionBorder(int cheers, int boos) {
+    Border b;
+
+    if (cheers == null) {
+      cheers = 0;
+    }
+    if (boos == null) {
+      boos = 0;
+    }
+
+    var diff = cheers - boos;
+
+    // Check if cheers is higher
+    if (diff > 0) {
+      if (diff > 100) {
+        b = Border.all(color: Colors.green[800], width: 6);
+      } else if (diff > 80) {
+        b = Border.all(color: Colors.green[700], width: 5);
+      } else if (diff > 60) {
+        b = Border.all(color: Colors.green[600], width: 4);
+      } else if (diff > 40) {
+        b = Border.all(color: Colors.green[500], width: 4);
+      } else if (diff > 20) {
+        b = Border.all(color: Colors.green[400], width: 3);
+      } else if (diff > 10) {
+        b = Border.all(color: Colors.green[300], width: 3);
+      } else if (diff > 5) {
+        b = Border.all(color: Colors.green[200], width: 2);
+      } else {
+        b = Border.all(color: Colors.green[100], width: 2);
+      }
+    } else if (diff < 0) {
+      if (diff < -100) {
+        b = Border.all(color: Colors.red[800], width: 6);
+      } else if (diff < -80) {
+        b = Border.all(color: Colors.red[700], width: 5);
+      } else if (diff < -60) {
+        b = Border.all(color: Colors.red[600], width: 4);
+      } else if (diff < -40) {
+        b = Border.all(color: Colors.red[500], width: 4);
+      } else if (diff < -20) {
+        b = Border.all(color: Colors.red[400], width: 3);
+      } else if (diff < -10) {
+        b = Border.all(color: Colors.red[300], width: 3);
+      } else if (diff < -5) {
+        b = Border.all(color: Colors.red[200], width: 2);
+      } else {
+        b = Border.all(color: Colors.red[100], width: 2);
+      }
+    } else {
+      b = Border.all(color: Colors.grey[300]);
+    }
+
+    return b;
+  }
+
   String getCurrentPeriod(int period) {
     String periodString = "";
 
@@ -305,6 +449,11 @@ class _GameFeedMainState extends State<GameFeedMain> {
   Widget getPlayerImage(PbpItem pbp) {
     if (pbp.personId == null) return SizedBox();
     if (pbp.personId == '') return SizedBox();
+    if (pbp.description.contains('Timeout')) return SizedBox();
+    if (pbp.description.contains('Stoppage')) return SizedBox();
+    if (pbp.description.contains('Start Period')) return SizedBox();
+    if (pbp.description.contains('Challenge')) return SizedBox();
+
     var url =
         "https://cdn.nba.com/headshots/nba/latest/1040x760/${pbp.personId}.png";
 

@@ -825,10 +825,13 @@ class ConstantHelper {
   }
 
   static int getTeamColor(String teamId) {
-    dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
-    String primaryColor =
-        team["primaryColor"].toString().replaceFirst("#", "FF");
-    return int.parse(primaryColor, radix: 16);
+    if (teamId.trim() != "") {
+      dynamic team = ConstantHelper.getTeamDetailsExtra(teamId);
+      String primaryColor =
+          team["primaryColor"].toString().replaceFirst("#", "FF");
+      return int.parse(primaryColor, radix: 16);
+    } else
+      return null;
   }
 
   static LinearGradient getTeamColor_Gradient(String teamId, int fanValue) {

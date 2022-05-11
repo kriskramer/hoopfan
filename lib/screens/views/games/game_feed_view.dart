@@ -61,7 +61,8 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   @override
   void dispose() {
-    //_timer.cancel();
+    // Call code here to decrement the viewing numbers for this game
+
     super.dispose();
   }
 
