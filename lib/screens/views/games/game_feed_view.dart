@@ -172,6 +172,7 @@ class _GameFeedViewState extends State<GameFeedView> {
       Icons.sports_basketball,
       Icons.sms,
     ];
+
     return FabWithIcons(
       icons: icons,
       onIconTapped: (index) {
@@ -214,6 +215,14 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   void _update(int count) {
     setState(() => refreshGameData());
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: const Text('snack'),
+    //   duration: const Duration(seconds: 5),
+    //   action: SnackBarAction(
+    //     label: 'ACTION',
+    //     onPressed: () {},
+    //   ),
+    // ));
   }
 
   Future<dynamic> loadGameData() async {

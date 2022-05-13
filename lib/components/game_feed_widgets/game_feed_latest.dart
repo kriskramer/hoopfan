@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
+import 'package:hoop/models/game_feed/pbp_item.dart';
+import 'package:hoop/providers/game_settings.dart';
+import 'package:hoop/screens/views/games/game_view.dart';
+import 'package:provider/provider.dart';
+
+class GameFeedLatest extends StatefulWidget {
+  final String gameId;
+
+  const GameFeedLatest(this.gameId);
+
+  @override
+  State<GameFeedLatest> createState() => _GameFeedLatestState();
+}
+
+class _GameFeedLatestState extends State<GameFeedLatest> {
+  final FeedList list = new FeedList();
+
+  @override
+  Widget build(BuildContext context) {
+    DatabaseReference pbpFeed =
+        FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
+    int comments = 0;
+    int pbpCount = 0;
+    String lastPbp = "";
+
+    return Container(
+      //padding: EdgeInsets.all(15),
+      child: StreamBuilder(
+        stream: pbpFeed.onValue,
+        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+          if (snapshot.hasData) {
+            //print("Error on the way");
+            list.items.clear();
+            DataSnapshot dataValues = snapshot.data.snapshot;
+            Map<dynamic, dynamic> values = dataValues.value;
+            if (values == null) {
+              return SizedBox();
+            }
+            comments = 0;
+            pbpCount = 0;
+            values.forEach((key, values) {
+              var pbp = PbpItem(key, values);
+              list.items.add(pbp);
+              if (pbp.type == "1") {
+                pbpCount++;
+              }
+              if (pbp.type == "2") {
+                comments++;
+              }
+            });
+
+            list.sort();
+
+            var index = list.items.length - 1;
+            var lastItem = list.items[index];
+
+            if (lastItem.type == "1") {
+              lastPbp = lastItem.clock + " - " + lastItem.description;
+            } else if (lastItem.type == "2") {
+              lastPbp = '"' + lastItem.chat + '"';
+            }
+
+            return Column(
+              children: [
+                Divider(
+                  color: Colors.blueGrey,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Comments: " + comments.toString(),
+                      style: TextStyle(fontSize: 10, color: Colors.lightBlue),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "Plays: " + pbpCount.toString(),
+                      style: TextStyle(fontSize: 10, color: Colors.lightBlue),
+                    ),
+                  ],
+                ),
+                Text(
+                  lastPbp,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+              ],
+            );
+          }
+          return SizedBox();
+        },
+      ),
+    );
+  }
+}

@@ -55,7 +55,7 @@ class GameFeedLeadTracker extends StatelessWidget {
               Container(
                   alignment: Alignment.centerRight,
                   width: 100,
-                  height: 10,
+                  height: 8,
                   child: lti.isVisitorLead()
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -75,7 +75,7 @@ class GameFeedLeadTracker extends StatelessWidget {
                           bottom:
                               BorderSide(color: Colors.grey[200], width: 1))),
                   width: 100,
-                  height: 10,
+                  height: 8,
                   child: lti.isHomeLead()
                       ? Row(children: [
                           Container(
@@ -103,7 +103,11 @@ class GameFeedLeadTracker extends StatelessWidget {
 
   double getLeadWidth(int lead) {
     // Eventually, this will return a value that uses an algorithm to shrink the larger lead sizes to help it fix on the screen.
-    return lead * 2.01;
+    var width = lead * 3.01;
+    if (width > 90) {
+      width = 90;
+    }
+    return width;
     // if (lead < 10) {
     //   return lead * 5.1;
     // } else if (lead < 20) {

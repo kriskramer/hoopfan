@@ -8,6 +8,7 @@ import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/account/updates_main.dart';
 import 'package:hoop/screens/views/account/user_main.dart';
 import 'package:hoop/screens/views/games/today_games.dart';
+import 'package:hoop/screens/views/games/today_games_dashboard.dart';
 import 'package:hoop/screens/views/games/today_games_small.dart';
 import 'package:hoop/screens/views/help_glossary.dart';
 import 'package:hoop/screens/views/news/news_feed_small.dart';
@@ -52,10 +53,10 @@ class _DashboardMainState extends State<DashboardMain> {
                       Container(
                         height: 55,
                         decoration: BoxDecoration(
-                            color: Colors.blue[800],
+                            color: Colors.blue[600],
                             border: Border(
                                 bottom:
-                                    BorderSide(color: Colors.red, width: 3))),
+                                    BorderSide(color: Colors.blue, width: 1))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -131,36 +132,51 @@ class _DashboardMainState extends State<DashboardMain> {
                           ],
                         ),
                       ),
-                      Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(color: Colors.amber[100]),
-                          child: Center(
-                            child: Text("Version 0.1",
-                                style: TextStyle(fontSize: 10)),
-                          )),
+                      // Container(
+                      //     width: double.infinity,
+                      //     decoration: BoxDecoration(color: Colors.grey[100]),
+                      //     child: Center(
+                      //       child: Text("Version 0.1",
+                      //           style: TextStyle(fontSize: 10)),
+                      //     )),
                     ])),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
-                DashboardSectionBox(
-                  dashboardWidget: TodaysGamesSmall(),
-                  iconData: FontAwesomeIcons.basketballBall,
-                  linkWidget: TodaysGames(),
-                  sectionTitle: "Games",
-                  tapMoreText: "Tap to view full game schedule...",
-                ),
+                TodaysGamesDashboard(),
+                // DashboardSectionBox(
+                //   dashboardWidget: TodaysGamesSmall(),
+                //   iconData: FontAwesomeIcons.basketballBall,
+                //   linkWidget: TodaysGames(),
+                //   sectionTitle: "Games",
+                //   tapMoreText: "Tap to view full game schedule...",
+                // ),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
                 DashboardSectionBox(
                   dashboardWidget: StandingsSmall(),
                   iconData: Icons.bar_chart,
-                  linkWidget: Standings(),
+                  linkWidget: null,
                   sectionTitle: "Standings",
-                  tapMoreText: "Tap to view full standings...",
+                  tapMoreText: "",
+                ),
+                ElevatedButton(
+                  child: Text(
+                    "View All Standings",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Standings()),
+                    );
+                  },
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
                 // DashboardSectionBox(
                 //   dashboardWidget:
@@ -176,32 +192,74 @@ class _DashboardMainState extends State<DashboardMain> {
                 DashboardSectionBox(
                   dashboardWidget: LeadersTodaySmall(),
                   iconData: Icons.star,
-                  linkWidget: LeadersMain(),
+                  linkWidget: null,
                   sectionTitle: "Leaders",
-                  tapMoreText: "Tap to view more leaders...",
+                  tapMoreText: "",
+                ),
+                ElevatedButton(
+                  child: Text(
+                    "View All Leaders",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LeadersMain()),
+                    );
+                  },
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
                 DashboardSectionBox(
                   dashboardWidget: LeagueStatsSmall(),
                   iconData: Icons.leaderboard,
-                  linkWidget: LeagueStats(),
+                  linkWidget: null,
                   sectionTitle: "Stats",
-                  tapMoreText: "Tap to view League Stats...",
+                  tapMoreText: "",
+                ),
+                ElevatedButton(
+                  child: Text(
+                    "View More Stats",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LeagueStats()),
+                    );
+                  },
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
                 DashboardSectionBox(
                   dashboardWidget: NbaNewsFeedSmall(),
                   iconData: FontAwesomeIcons.newspaper,
-                  linkWidget: NewsMainScreen(),
+                  linkWidget: null,
                   sectionTitle: "Media",
-                  tapMoreText: "Tap to view league-related news and media...",
+                  tapMoreText: "",
+                ),
+                ElevatedButton(
+                  child: Text(
+                    "View More News",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NewsMainScreen()),
+                    );
+                  },
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 25,
                 ),
                 // DashboardSectionBox(
                 //   dashboardWidget:

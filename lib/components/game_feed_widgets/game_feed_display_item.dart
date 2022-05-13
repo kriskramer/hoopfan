@@ -55,7 +55,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                       flex: 90,
                       child: Row(
                         children: [
-                          getTeamCard(pbp.description, game),
+                          SizedBox(width: 5),
                           getPlayerImage(pbp),
                           SizedBox(width: 5),
                           Flexible(
@@ -170,6 +170,12 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
             ]),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              getTeamCard(pbp.description, game),
+            ],
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -201,7 +207,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
       container = Container(
           padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
-          margin: EdgeInsets.fromLTRB(0, 2, 0, 2),
+          margin: EdgeInsets.fromLTRB(0, 2, 0, 3),
           decoration: BoxDecoration(
             border: getReactionBorder(
                 pbp.cheers, pbp.boos), //Border.all(color: Colors.grey[300]),
@@ -357,7 +363,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
         b = Border.all(color: Colors.red[100], width: 2);
       }
     } else {
-      b = Border.all(color: Colors.grey[300]);
+      b = Border.all(color: Colors.grey[50]);
     }
 
     return b;
@@ -421,10 +427,19 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     var url =
         "https://cdn.nba.com/headshots/nba/latest/1040x760/${pbp.personId}.png";
 
+    var teamColor = ConstantHelper.getTeamColor(pbp.teamId);
     try {
-      return CachedLogo(
-        url: url,
-        radius: 18,
+      return CircleAvatar(
+        backgroundColor: Color(teamColor),
+        radius: 22,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 20,
+          child: CachedLogo(
+            url: url,
+            radius: 18,
+          ),
+        ),
       );
     } catch (err) {
       print("Error fetching " + url);
@@ -436,18 +451,15 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
     var tricode = ConstantHelper.getTeamTriCode(teamId);
 
-    return Card(
-      elevation: 2,
-      color: Color(teamColor),
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(teamColor),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Text(
-          tricode,
-          style: TextStyle(color: Color(teamTextColor), fontSize: 10),
-        ),
+      padding: EdgeInsets.fromLTRB(4, 1, 4, 1),
+      child: Text(
+        tricode,
+        style: TextStyle(color: Color(teamTextColor), fontSize: 10),
       ),
     );
   }
