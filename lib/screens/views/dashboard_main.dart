@@ -60,18 +60,6 @@ class _DashboardMainState extends State<DashboardMain> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // IconButton(
-                            //     onPressed: () {
-                            //       Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //               builder: (context) =>
-                            //                   HelpGlossary()));
-                            //     },
-                            //     icon: Icon(
-                            //       Icons.help_outline_outlined,
-                            //     )),
-
                             Row(
                               children: [
                                 SizedBox(width: 20),
@@ -132,25 +120,12 @@ class _DashboardMainState extends State<DashboardMain> {
                           ],
                         ),
                       ),
-                      // Container(
-                      //     width: double.infinity,
-                      //     decoration: BoxDecoration(color: Colors.grey[100]),
-                      //     child: Center(
-                      //       child: Text("Version 0.1",
-                      //           style: TextStyle(fontSize: 10)),
-                      //     )),
                     ])),
                 SizedBox(
                   height: 25,
                 ),
                 TodaysGamesDashboard(),
-                // DashboardSectionBox(
-                //   dashboardWidget: TodaysGamesSmall(),
-                //   iconData: FontAwesomeIcons.basketballBall,
-                //   linkWidget: TodaysGames(),
-                //   sectionTitle: "Games",
-                //   tapMoreText: "Tap to view full game schedule...",
-                // ),
+
                 SizedBox(
                   height: 25,
                 ),

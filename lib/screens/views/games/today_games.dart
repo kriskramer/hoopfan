@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/completed_game_card.dart';
+import 'package:hoop/components/games_widgets/completed_game_card_dashboard.dart';
 import 'package:hoop/components/games_widgets/horiz_calendar.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
+import 'package:hoop/components/games_widgets/in_progress_game_card_dashboard.dart';
 import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
+import 'package:hoop/components/games_widgets/upcoming_game_card_dashboard.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -143,7 +146,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                             shrinkWrap: true,
                             itemCount: gamesInProgress.length,
                             itemBuilder: (context, index) {
-                              return InProgressGameCard(
+                              return InProgressGameCardDashboard(
                                 game: gamesInProgress[index],
                               );
                             }),
@@ -157,7 +160,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                             shrinkWrap: true,
                             itemCount: gamesCompleted.length,
                             itemBuilder: (context, index) {
-                              return CompletedGameCard(
+                              return CompletedGameCardDashboard(
                                 game: gamesCompleted[index],
                               );
                             }),
@@ -171,7 +174,7 @@ class _TodaysGamesState extends State<TodaysGames> {
                             shrinkWrap: true,
                             itemCount: gamesWaiting.length,
                             itemBuilder: (context, index) {
-                              return UpcomingGameCard(
+                              return UpcomingGameCardDashboard(
                                 game: gamesWaiting[index],
                               );
                             }),

@@ -25,7 +25,10 @@ class GameFeedLeadTracker extends StatelessWidget {
     return Row(children: [
       lti.isVisitorLead()
           ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text(lti.getLead().toString()),
+              Text(
+                lti.getLead().toString(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               SizedBox(
                 width: 8,
               ),
@@ -35,9 +38,9 @@ class GameFeedLeadTracker extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[300]),
-          borderRadius: BorderRadius.circular(10),
-        ),
+            border: Border.all(color: Colors.grey[300]),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey[300]),
         child: GestureDetector(
           onTap: () {
             // showDialog(
@@ -70,10 +73,6 @@ class GameFeedLeadTracker extends StatelessWidget {
                 width: 2,
               ),
               Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom:
-                              BorderSide(color: Colors.grey[200], width: 1))),
                   width: 100,
                   height: 8,
                   child: lti.isHomeLead()
@@ -93,9 +92,8 @@ class GameFeedLeadTracker extends StatelessWidget {
               SizedBox(
                 width: 8,
               ),
-              Text(
-                lti.getLead().toString(),
-              ),
+              Text(lti.getLead().toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ])
           : Text(''),
     ]);

@@ -233,7 +233,25 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
           ],
         );
       } else {
-        return container;
+        return Column(
+          children: [
+            pbp.description.contains("Start Period")
+                ? Divider(
+                    color: Colors.black,
+                    height: 12,
+                    thickness: 3,
+                  )
+                : SizedBox(),
+            container,
+            pbp.description.contains("Start Period")
+                ? Divider(
+                    color: Colors.black,
+                    height: 12,
+                    thickness: 3,
+                  )
+                : SizedBox(),
+          ],
+        );
       }
     } else if (pbp.type == "2") {
       // Chat message
@@ -246,10 +264,20 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
       var dt = DateTime.fromMillisecondsSinceEpoch(pbp.timestamp);
       //print(dt);
+      var dtString = "${dt.year}-${dt.month}-${dt.day} ${dt.hour}:${dt.minute}";
 
-      row = Column(
-        children: [
-          Row(
+      var teamId;
+      if (pbp.fanLevel > 30) {
+        teamId = hTeamId;
+      }
+      if (pbp.fanLevel < 30) {
+        teamId = vTeamId;
+      }
+
+      return Column(children: [
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 2, 20, 0),
+          child: Row(
             children: [
               Text(
                 displayName,
@@ -259,58 +287,43 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                 width: 4,
               ),
               Text(
-                dt.toString(),
+                dtString,
                 style: TextStyle(fontSize: 10),
               )
             ],
           ),
-          SizedBox(height: 6),
-          Row(
-            children: [
-              Flexible(
-                  child: Text(
-                text,
-                style: TextStyle(fontSize: 14),
-              ))
-            ],
-          ),
-        ],
-      );
-
-      var teamId;
-      if (pbp.fanLevel > 30) {
-        teamId = hTeamId;
-      }
-      if (pbp.fanLevel < 30) {
-        teamId = vTeamId;
-      }
-      container = Container(
-        margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-        decoration: BoxDecoration(
-          color: Colors.amber[50],
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            // if you need this
-
-            color: Colors.cyan,
-            width: 1,
-          ),
         ),
-        child: Column(children: [
-          Container(padding: EdgeInsets.fromLTRB(20, 5, 20, 4), child: row),
-          Container(
-            height: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: teamId == null
-                  ? null
-                  : ConstantHelper.getTeamColor_Gradient(teamId, pbp.fanLevel),
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 2, 20, 10),
+          decoration: BoxDecoration(
+            color: Colors.amber[50],
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.amber[100],
+              width: 1,
             ),
-          )
-        ]),
-      );
+          ),
+          child: Column(children: [
+            Container(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 4),
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: 14),
+                )),
+            Container(
+              height: 10,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: teamId == null
+                    ? null
+                    : ConstantHelper.getTeamColor_Gradient(
+                        teamId, pbp.fanLevel),
+              ),
+            )
+          ]),
+        ),
+      ]);
     }
-    return container;
   }
 
   Border getReactionBorder(int cheers, int boos) {

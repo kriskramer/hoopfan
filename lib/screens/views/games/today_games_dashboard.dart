@@ -99,7 +99,25 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
                       ),
                       Text('No games listed'),
                       SizedBox(
-                        height: 50,
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        child: Text(
+                          "View full schedule",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TodaysGames()),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   )
