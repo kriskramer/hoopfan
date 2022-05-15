@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
-import 'package:hoop/components/social_widgets/twitter_feed.dart';
-import 'package:hoop/components/social_widgets/twitter_feed_small.dart';
 import 'package:hoop/model/user.dart';
 import 'package:hoop/providers/user_prov.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
-import 'package:hoop/screens/views/account/updates_main.dart';
-import 'package:hoop/screens/views/account/user_main.dart';
-import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/games/today_games_dashboard.dart';
-import 'package:hoop/screens/views/games/today_games_small.dart';
-import 'package:hoop/screens/views/help_glossary.dart';
 import 'package:hoop/screens/views/news/news_feed_small.dart';
 import 'package:hoop/screens/views/news/news_main.dart';
 import 'package:hoop/screens/views/players/player_search.dart';

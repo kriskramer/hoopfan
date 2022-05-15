@@ -97,7 +97,18 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
                       SizedBox(
                         height: 50,
                       ),
-                      Text('No games listed'),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('No games listed'),
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    refreshGames();
+                                  });
+                                },
+                                icon: Icon(Icons.refresh))
+                          ]),
                       SizedBox(
                         height: 20,
                       ),

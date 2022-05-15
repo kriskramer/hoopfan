@@ -7,6 +7,7 @@ import 'package:hoop/model/user.dart';
 import 'package:hoop/providers/user_prov.dart';
 import 'package:hoop/utils/fieldtype.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // TODO: add loading spinner
 class LoginUI extends StatelessWidget {
@@ -43,6 +44,7 @@ class LoginUI extends StatelessWidget {
                           user, context); // returns a response
                       if (response["code"] == 200) {
                         toaster(response["message"]);
+
                         Navigator.pop(context);
                       } else {
                         toaster(response["message"]);
