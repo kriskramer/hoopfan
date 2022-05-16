@@ -1,6 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hoop/components/connection.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
+import 'package:provider/provider.dart';
 
 class GamePbpPopup extends StatefulWidget {
   final dynamic game;
@@ -14,10 +17,26 @@ class GamePbpPopup extends StatefulWidget {
 }
 
 class _GamePbpPopupState extends State<GamePbpPopup> {
+  int cheersCount = 0;
+  int boosCount = 0;
+  String enoughCheers = "";
+  String enoughBoos = "";
+
   @override
   Widget build(BuildContext context) {
     String gameId = widget.game["gameId"];
     var pbp = widget.pbp;
+    String key = pbp.timestamp.toString();
+
+    cheersCount =
+        Provider.of<JsonFiles>(context, listen: false).getGameCheers(key);
+    if (cheersCount == null) cheersCount = 0;
+
+    boosCount = Provider.of<JsonFiles>(context, listen: false).getGameBoos(key);
+    if (boosCount == null) boosCount = 0;
+
+    DatabaseReference feed =
+        FirebaseDatabase.instance.ref('gameFeed/$gameId/${pbp.timestamp}');
 
     if (pbp == null) {
       return Dialog(
@@ -44,52 +63,112 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Boo"),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.thumb_down,
-                    ),
-                    iconSize: 40,
-                    color: Colors.red,
-                    splashColor: Colors.purple,
-                    onPressed: () {
-                      setState(() {
-                        doBoo(gameId, widget.pbp.timestamp, widget.pbp.boos);
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text("Cheer"),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.thumb_up,
-                    ),
-                    iconSize: 40,
-                    color: Colors.green,
-                    splashColor: Colors.orange,
-                    onPressed: () {
-                      setState(() {
-                        doCheer(
-                            gameId, widget.pbp.timestamp, widget.pbp.cheers);
-                      });
-                    },
-                  ),
-                ],
-              ),
+              StreamBuilder(
+                  stream: feed.onValue,
+                  builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                    if (snapshot.hasData) {
+                      //print("Error on the way");
+                      DataSnapshot dataValues = snapshot.data.snapshot;
+                      Map<dynamic, dynamic> values = dataValues.value;
+                      if (values == null) {
+                        return Text("No data yet...");
+                      }
+                      var cheers = values["cheers"];
+                      var boos = values["boos"];
+
+                      if (cheers == null) cheers = 0;
+                      if (boos == null) boos = 0;
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text("Boo"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.thumb_down,
+                                    ),
+                                    iconSize: 40,
+                                    color: Colors.red,
+                                    splashColor: Colors.purple,
+                                    onPressed: () {
+                                      setState(() {
+                                        doBoo(
+                                            gameId, widget.pbp.timestamp, boos);
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Row(children: [
+                                Text(boos.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.red)),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("+" + boosCount.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.red)),
+                              ]),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text("Cheer"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.thumb_up,
+                                    ),
+                                    iconSize: 40,
+                                    color: Colors.green,
+                                    splashColor: Colors.orange,
+                                    onPressed: () {
+                                      setState(() {
+                                        doCheer(gameId, widget.pbp.timestamp,
+                                            cheers);
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Row(children: [
+                                Text(cheers.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.green)),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("+" + cheersCount.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.green)),
+                              ]),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    return NoConnection();
+                  }),
               SizedBox(
                 height: 10,
               ),
+              Text(enoughCheers),
+              Text(enoughBoos)
             ]),
           ),
         ),
@@ -98,6 +177,13 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
   }
 
   void doCheer(gameId, key, cheers) {
+    enoughBoos = "";
+    enoughCheers = "";
+    if (cheersCount >= 5) {
+      enoughCheers = "That's enough... for now.";
+      return;
+    }
+
     DatabaseReference feed =
         FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
 
@@ -111,10 +197,20 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
       "cheers": cheers,
     });
 
-    Navigator.of(context, rootNavigator: true).pop();
+    cheersCount++;
+    Provider.of<JsonFiles>(context, listen: false)
+        .setGameCheers(key.toString(), cheersCount);
+    //Navigator.of(context, rootNavigator: true).pop();
   }
 
   void doBoo(gameId, key, boos) {
+    enoughCheers = "";
+    enoughBoos = "";
+    if (boosCount >= 5) {
+      enoughBoos = "That's enough... for now.";
+      return;
+    }
+
     DatabaseReference feed =
         FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
 
@@ -128,6 +224,9 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
       "boos": boos,
     });
 
-    Navigator.of(context, rootNavigator: true).pop();
+    boosCount++;
+    Provider.of<JsonFiles>(context, listen: false)
+        .setGameBoos(key.toString(), boosCount);
+    //Navigator.of(context, rootNavigator: true).pop();
   }
 }

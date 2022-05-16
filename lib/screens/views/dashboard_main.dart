@@ -3,6 +3,7 @@ import 'package:hoop/components/dashboard_widgets/dashboard_section_box.dart';
 import 'package:hoop/model/user.dart';
 import 'package:hoop/providers/user_prov.dart';
 import 'package:hoop/screens/views/account/account_main.dart';
+import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/screens/views/games/today_games_dashboard.dart';
 import 'package:hoop/screens/views/news/news_feed_small.dart';
 import 'package:hoop/screens/views/news/news_main.dart';
@@ -118,7 +119,20 @@ class _DashboardMainState extends State<DashboardMain> {
                   height: 25,
                 ),
                 TodaysGamesDashboard(),
-
+                ElevatedButton(
+                  child: Text(
+                    "View full schedule",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TodaysGames()),
+                    );
+                  },
+                ),
                 SizedBox(
                   height: 25,
                 ),

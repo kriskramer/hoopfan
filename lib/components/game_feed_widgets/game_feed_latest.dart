@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
-import 'package:hoop/providers/game_settings.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
-import 'package:provider/provider.dart';
 
 class GameFeedLatest extends StatefulWidget {
   final String gameId;

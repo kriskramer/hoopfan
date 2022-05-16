@@ -55,6 +55,8 @@ class JsonFiles with ChangeNotifier {
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
   Map<String, dynamic> _currentGameStats = {};
+  Map<String, dynamic> _gameCheers = {};
+  Map<String, dynamic> _gameBoos = {};
 
   var _injuryReport;
 
@@ -105,6 +107,14 @@ class JsonFiles with ChangeNotifier {
   void setNbaVideo(dynamic json) {
     _nbaVideos = json;
     notifyListeners();
+  }
+
+  void setGameCheers(String gameId, int cheers) {
+    _gameCheers[gameId] = cheers;
+  }
+
+  void setGameBoos(String gameId, int boos) {
+    _gameBoos[gameId] = boos;
   }
 
   void setTeamNews(String teamId, dynamic news) {
@@ -316,6 +326,9 @@ class JsonFiles with ChangeNotifier {
   bool getIsFeatureBlocked() => _isFeatureBlocked;
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
   dynamic getTeamVideos(String teamId) => _teamVideos[teamId];
+
+  int getGameCheers(String gameId) => _gameCheers[gameId];
+  int getGameBoos(String gameId) => _gameBoos[gameId];
 
   dynamic getPreviewArticle(String gameId) => _previewArticles[gameId];
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];

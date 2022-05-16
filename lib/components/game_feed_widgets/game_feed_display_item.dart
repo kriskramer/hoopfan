@@ -30,142 +30,144 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     if (pbp.type == "1") {
       // Play-by-play item
       row = Stack(children: [
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                    flex: 90,
-                    child: Row(
-                      children: [
-                        SizedBox(width: 5),
-                        getPlayerImage(pbp, game, stats),
-                        SizedBox(width: 5),
-                        Flexible(
-                            child: InkWell(
-                          child: Text(
-                            getPbPDescriptionFormatted(pbp, game),
-                            style: pbp.isScoreChange
-                                ? TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500)
-                                : TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.w500),
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                      flex: 90,
+                      child: Row(
+                        children: [
+                          SizedBox(width: 5),
+                          getPlayerImage(pbp, game, stats),
+                          SizedBox(width: 5),
+                          Flexible(
+                            child: Text(
+                              getPbPDescriptionFormatted(pbp, game),
+                              style: pbp.isScoreChange
+                                  ? TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500)
+                                  : TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.w500),
+                            ),
                           ),
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return GamePbpPopup(
-                                    game: game,
-                                    stats: stats,
-                                    pbp: pbp,
-                                  );
-                                });
-                          },
-                        )),
-                      ],
-                    )),
-                Expanded(
-                    flex: 10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        pbp.isScoreChange
-                            ? Container(
-                                height: 16,
-                                child: Image.asset('images/bball.png'))
-                            : SizedBox(),
-                        pbp.isVideoAvailable
-                            ? Icon(Icons.play_arrow)
-                            : SizedBox(),
-                        pbp.description.contains("Substitution")
-                            ? Icon(
-                                Icons.compare_arrows_outlined,
-                                color: Colors.grey,
-                                size: 24,
-                              )
-                            : SizedBox(),
-                        pbp.description.contains("Shot: Missed")
-                            ? Icon(
-                                Icons.close,
-                                color: Colors.red,
-                                size: 24,
-                              )
-                            : SizedBox(),
-                        pbp.description.contains("Rebound")
-                            ? Icon(
-                                Icons.sports_handball,
-                                color: Colors.brown,
-                                size: 24,
-                              )
-                            : SizedBox(),
-                        pbp.description.contains("Turnover")
-                            ? Icon(
-                                Icons.call_missed_outgoing,
-                                color: Colors.brown,
-                                size: 24,
-                              )
-                            : SizedBox(),
-                        pbp.description.contains("Foul:")
-                            ? Icon(
-                                Icons.sports_gymnastics_outlined,
-                                color: Colors.brown,
-                                size: 24,
-                              )
-                            : SizedBox()
-                      ],
-                    )),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                pbp.cheers == null
-                    ? SizedBox()
-                    : Row(children: [
-                        Icon(
-                          Icons.thumb_up,
-                          size: 15,
-                          color: Colors.green[200],
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          pbp.cheers.toString(),
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[500]),
-                        ),
-                      ]),
-                SizedBox(
-                  width: 10,
-                ),
-                pbp.boos == null
-                    ? SizedBox()
-                    : Row(children: [
-                        Icon(
-                          Icons.thumb_down,
-                          size: 15,
-                          color: Colors.red[200],
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          pbp.boos.toString(),
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[500]),
-                        ),
-                      ]),
-              ],
-            )
-          ]),
+                        ],
+                      )),
+                  Expanded(
+                      flex: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          pbp.isScoreChange
+                              ? Container(
+                                  height: 16,
+                                  child: Image.asset('images/bball.png'))
+                              : SizedBox(),
+                          pbp.isVideoAvailable
+                              ? Icon(Icons.play_arrow)
+                              : SizedBox(),
+                          pbp.description.contains("Substitution")
+                              ? Icon(
+                                  Icons.compare_arrows_outlined,
+                                  color: Colors.grey,
+                                  size: 24,
+                                )
+                              : SizedBox(),
+                          pbp.description.contains("Shot: Missed")
+                              ? Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                  size: 24,
+                                )
+                              : SizedBox(),
+                          pbp.description.contains("Rebound")
+                              ? Icon(
+                                  Icons.sports_handball,
+                                  color: Colors.brown,
+                                  size: 24,
+                                )
+                              : SizedBox(),
+                          pbp.description.contains("Turnover")
+                              ? Icon(
+                                  Icons.call_missed_outgoing,
+                                  color: Colors.brown,
+                                  size: 24,
+                                )
+                              : SizedBox(),
+                          pbp.description.contains("Foul:")
+                              ? Icon(
+                                  Icons.sports_gymnastics_outlined,
+                                  color: Colors.brown,
+                                  size: 24,
+                                )
+                              : SizedBox()
+                        ],
+                      )),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  pbp.cheers == null
+                      ? SizedBox()
+                      : Row(children: [
+                          Icon(
+                            Icons.thumb_up,
+                            size: 15,
+                            color: Colors.green[200],
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            pbp.cheers.toString(),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey[500]),
+                          ),
+                        ]),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  pbp.boos == null
+                      ? SizedBox()
+                      : Row(children: [
+                          Icon(
+                            Icons.thumb_down,
+                            size: 15,
+                            color: Colors.red[200],
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            pbp.boos.toString(),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey[500]),
+                          ),
+                        ]),
+                ],
+              )
+            ]),
+          ),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return GamePbpPopup(
+                    game: game,
+                    stats: stats,
+                    pbp: pbp,
+                  );
+                });
+          },
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
