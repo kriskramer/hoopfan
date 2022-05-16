@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
@@ -26,11 +27,6 @@ class _GameFeedMainState extends State<GameFeedMain> {
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
         FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
-
-    // pbpFeed.onValue.listen((DatabaseEvent event) {
-    //   final data = event.snapshot.value;
-    //   //print(data);
-    // });
 
     bool showPbp =
         Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
@@ -77,6 +73,9 @@ class _GameFeedMainState extends State<GameFeedMain> {
             });
 
             list.sort();
+
+            Provider.of<JsonFiles>(context, listen: false)
+                .setGameFeed(widget.gameId, list);
 
             return new ListView.builder(
               shrinkWrap: true,

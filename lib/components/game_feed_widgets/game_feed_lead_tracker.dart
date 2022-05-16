@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/scoring_trends_dialog.dart';
+import 'package:hoop/components/game_feed_widgets/game_feed_lead_trend.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/lead_tracker.dart';
@@ -43,14 +43,10 @@ class GameFeedLeadTracker extends StatelessWidget {
             color: Colors.grey[300]),
         child: GestureDetector(
           onTap: () {
-            // showDialog(
-            //     context: context,
-            //     builder: (context) {
-            //       return ScoringTrendsDialog(
-            //         leadTrackerItem: lti,
-            //         game: game,
-            //       );
-            //     });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GameFeedLeadTrend(game)),
+            );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +54,7 @@ class GameFeedLeadTracker extends StatelessWidget {
               Container(
                   alignment: Alignment.centerRight,
                   width: 100,
-                  height: 8,
+                  height: 12,
                   child: lti.isVisitorLead()
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -74,7 +70,7 @@ class GameFeedLeadTracker extends StatelessWidget {
               ),
               Container(
                   width: 100,
-                  height: 8,
+                  height: 12,
                   child: lti.isHomeLead()
                       ? Row(children: [
                           Container(
@@ -90,7 +86,7 @@ class GameFeedLeadTracker extends StatelessWidget {
       lti.isHomeLead()
           ? Row(children: [
               SizedBox(
-                width: 8,
+                width: 12,
               ),
               Text(lti.getLead().toString(),
                   style: TextStyle(fontWeight: FontWeight.bold)),

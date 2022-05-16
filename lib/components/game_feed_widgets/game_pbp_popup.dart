@@ -176,6 +176,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     }
   }
 
+  /// Register a cheer for the given PBP item, with a maximum of 5
   void doCheer(gameId, key, cheers) {
     enoughBoos = "";
     enoughCheers = "";
@@ -203,6 +204,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     //Navigator.of(context, rootNavigator: true).pop();
   }
 
+  /// Register a boo for the given PBP item, with a maximum of 5
   void doBoo(gameId, key, boos) {
     enoughCheers = "";
     enoughBoos = "";

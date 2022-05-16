@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
@@ -57,6 +58,7 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _currentGameStats = {};
   Map<String, dynamic> _gameCheers = {};
   Map<String, dynamic> _gameBoos = {};
+  Map<String, dynamic> _gameFeed = {};
 
   var _injuryReport;
 
@@ -302,6 +304,10 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setGameFeed(String gameId, FeedList list) {
+    _gameFeed[gameId] = list;
+  }
+
   void addTeamPlayers(String teamId, dynamic teamList) {
     _teamPlayers[teamId] = teamList;
   }
@@ -378,6 +384,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getSeasons() => _seasons;
 
   String getSelectedDate() => _selectedDate;
+
+  FeedList getGameFeed(String gameId) => _gameFeed[gameId];
 
   LeagueStandingList getLeagueStandings() => _allStandings;
   dynamic getStandings() => _confStandings;
