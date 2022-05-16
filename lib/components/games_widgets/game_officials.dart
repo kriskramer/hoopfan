@@ -7,6 +7,11 @@ class GameOfficials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (game["officials"] == null) {
+      return Center(
+        child: Text("No data available..."),
+      );
+    }
     dynamic officials = game["officials"]["formatted"];
     String returnValue = "";
 

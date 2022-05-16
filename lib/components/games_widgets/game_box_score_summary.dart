@@ -11,6 +11,11 @@ class GameBoxScoreSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (stats == null) {
+      return Center(
+        child: Text("No data available..."),
+      );
+    }
     Widget c;
     String vTeamId = game["vTeam"]["teamId"];
     String hTeamId = game["hTeam"]["teamId"];

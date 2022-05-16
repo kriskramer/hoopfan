@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_lead_tracker.dart';
+import 'package:hoop/components/game_feed_widgets/game_pbp_popup.dart';
 import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
@@ -28,38 +29,23 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
     if (pbp.type == "1") {
       // Play-by-play item
-      row = GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          if (pbp.personId != "" && pbp.personId != null) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return GamePlayerPopup(
-                    personId: pbp.personId,
-                    game: game,
-                    stats: stats,
-                    pbp: pbp,
-                  );
-                });
-          }
-        },
-        child: Stack(children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                      flex: 90,
-                      child: Row(
-                        children: [
-                          SizedBox(width: 5),
-                          getPlayerImage(pbp),
-                          SizedBox(width: 5),
-                          Flexible(
-                              child: Text(
+      row = Stack(children: [
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 90,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 5),
+                        getPlayerImage(pbp, game, stats),
+                        SizedBox(width: 5),
+                        Flexible(
+                            child: InkWell(
+                          child: Text(
                             getPbPDescriptionFormatted(pbp, game),
                             style: pbp.isScoreChange
                                 ? TextStyle(
@@ -70,136 +56,147 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                                     fontSize: 14,
                                     color: Colors.grey[800],
                                     fontWeight: FontWeight.w500),
-                          )),
-                        ],
-                      )),
-                  Expanded(
-                      flex: 10,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          pbp.isScoreChange
-                              ? Container(
-                                  height: 16,
-                                  child: Image.asset('images/bball.png'))
-                              : SizedBox(),
-                          pbp.isVideoAvailable
-                              ? Icon(Icons.play_arrow)
-                              : SizedBox(),
-                          pbp.description.contains("Substitution")
-                              ? Icon(
-                                  Icons.compare_arrows_outlined,
-                                  color: Colors.grey,
-                                  size: 24,
-                                )
-                              : SizedBox(),
-                          pbp.description.contains("Shot: Missed")
-                              ? Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                  size: 24,
-                                )
-                              : SizedBox(),
-                          pbp.description.contains("Rebound")
-                              ? Icon(
-                                  Icons.sports_handball,
-                                  color: Colors.brown,
-                                  size: 24,
-                                )
-                              : SizedBox(),
-                          pbp.description.contains("Turnover")
-                              ? Icon(
-                                  Icons.call_missed_outgoing,
-                                  color: Colors.brown,
-                                  size: 24,
-                                )
-                              : SizedBox(),
-                          pbp.description.contains("Foul:")
-                              ? Icon(
-                                  Icons.sports_gymnastics_outlined,
-                                  color: Colors.brown,
-                                  size: 24,
-                                )
-                              : SizedBox()
-                        ],
-                      )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  pbp.cheers == null
-                      ? SizedBox()
-                      : Row(children: [
-                          Icon(
-                            Icons.thumb_up,
-                            size: 15,
-                            color: Colors.green[200],
                           ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            pbp.cheers.toString(),
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey[500]),
-                          ),
-                        ]),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  pbp.boos == null
-                      ? SizedBox()
-                      : Row(children: [
-                          Icon(
-                            Icons.thumb_down,
-                            size: 15,
-                            color: Colors.red[200],
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            pbp.boos.toString(),
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey[500]),
-                          ),
-                        ]),
-                ],
-              )
-            ]),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              getTeamCard(pbp.description, game),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                getCurrentPeriod(pbp.period),
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                pbp.clock + "  ",
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ]),
-      );
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return GamePbpPopup(
+                                    game: game,
+                                    stats: stats,
+                                    pbp: pbp,
+                                  );
+                                });
+                          },
+                        )),
+                      ],
+                    )),
+                Expanded(
+                    flex: 10,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        pbp.isScoreChange
+                            ? Container(
+                                height: 16,
+                                child: Image.asset('images/bball.png'))
+                            : SizedBox(),
+                        pbp.isVideoAvailable
+                            ? Icon(Icons.play_arrow)
+                            : SizedBox(),
+                        pbp.description.contains("Substitution")
+                            ? Icon(
+                                Icons.compare_arrows_outlined,
+                                color: Colors.grey,
+                                size: 24,
+                              )
+                            : SizedBox(),
+                        pbp.description.contains("Shot: Missed")
+                            ? Icon(
+                                Icons.close,
+                                color: Colors.red,
+                                size: 24,
+                              )
+                            : SizedBox(),
+                        pbp.description.contains("Rebound")
+                            ? Icon(
+                                Icons.sports_handball,
+                                color: Colors.brown,
+                                size: 24,
+                              )
+                            : SizedBox(),
+                        pbp.description.contains("Turnover")
+                            ? Icon(
+                                Icons.call_missed_outgoing,
+                                color: Colors.brown,
+                                size: 24,
+                              )
+                            : SizedBox(),
+                        pbp.description.contains("Foul:")
+                            ? Icon(
+                                Icons.sports_gymnastics_outlined,
+                                color: Colors.brown,
+                                size: 24,
+                              )
+                            : SizedBox()
+                      ],
+                    )),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                pbp.cheers == null
+                    ? SizedBox()
+                    : Row(children: [
+                        Icon(
+                          Icons.thumb_up,
+                          size: 15,
+                          color: Colors.green[200],
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          pbp.cheers.toString(),
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.grey[500]),
+                        ),
+                      ]),
+                SizedBox(
+                  width: 10,
+                ),
+                pbp.boos == null
+                    ? SizedBox()
+                    : Row(children: [
+                        Icon(
+                          Icons.thumb_down,
+                          size: 15,
+                          color: Colors.red[200],
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          pbp.boos.toString(),
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.grey[500]),
+                        ),
+                      ]),
+              ],
+            )
+          ]),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            getTeamCard(pbp.description, game),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getCurrentPeriod(pbp.period),
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              pbp.clock + "  ",
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ]);
 
       var teamColor = pbp.isScoreChange
           ? ConstantHelper.getTeamColor(pbp.teamId)
@@ -429,7 +426,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     }
   }
 
-  Widget getPlayerImage(PbpItem pbp) {
+  Widget getPlayerImage(PbpItem pbp, dynamic game, dynamic stats) {
     if (pbp.personId == null) return SizedBox();
     if (pbp.personId == '') return SizedBox();
     if (pbp.description.contains('Timeout')) return SizedBox();
@@ -442,18 +439,34 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
     var teamColor = ConstantHelper.getTeamColor(pbp.teamId);
     try {
-      return CircleAvatar(
-        backgroundColor: Color(teamColor),
-        radius: 22,
-        child: CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: 20,
-          child: CachedLogo(
-            url: url,
-            radius: 18,
-          ),
-        ),
-      );
+      return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            if (pbp.personId != "" && pbp.personId != null) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return GamePlayerPopup(
+                      personId: pbp.personId,
+                      game: game,
+                      stats: stats,
+                      pbp: pbp,
+                    );
+                  });
+            }
+          },
+          child: CircleAvatar(
+            backgroundColor: Color(teamColor),
+            radius: 22,
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 20,
+              child: CachedLogo(
+                url: url,
+                radius: 18,
+              ),
+            ),
+          ));
     } catch (err) {
       print("Error fetching " + url);
     }

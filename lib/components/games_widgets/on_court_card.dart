@@ -19,6 +19,10 @@ class _OnCourtCardState extends State<OnCourtCard> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.stats == null) {
+      return Center(child: Text("No data available..."));
+    }
+
     dynamic vTeam = widget.stats["vTeam"]["totals"];
     dynamic hTeam = widget.stats["hTeam"]["totals"];
     String vTeamId = widget.game["vTeam"]["teamId"];
