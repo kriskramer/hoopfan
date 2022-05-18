@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
+import 'package:hoop/components/player_widgets/player_game_log.dart';
 
 class PlayerStatsYearOverYearBaseDataTable extends StatelessWidget {
   final dynamic json;
+  final String playerId;
 
-  PlayerStatsYearOverYearBaseDataTable({this.json});
+  PlayerStatsYearOverYearBaseDataTable({this.json, this.playerId});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,17 @@ class PlayerStatsYearOverYearBaseDataTable extends StatelessWidget {
       for (int j = 0; j < json[i]["rowSet"].length; j++) {
         rows.add(DataRow(cells: [
           //DataCell(Text(json[i]["rowSet"][j][0].toString())),
-          DataCell(Text(json[i]["rowSet"][j][1].toString())),
+          DataCell(Text(json[i]["rowSet"][j][1].toString()), onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlayerGameLogTable(
+                    playerId: playerId,
+                    season: json[i]["rowSet"][j][1].toString(),
+                    teamId: json[i]["rowSet"][j][2].toString()),
+              ),
+            );
+          }),
           DataCell(Text(json[i]["rowSet"][j][3].toString())),
           DataCell(Text(json[i]["rowSet"][j][5].toString())),
           DataCell(Text(json[i]["rowSet"][j][6].toString())),

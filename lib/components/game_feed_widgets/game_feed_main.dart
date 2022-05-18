@@ -22,6 +22,7 @@ class GameFeedMain extends StatefulWidget {
 class _GameFeedMainState extends State<GameFeedMain> {
   final FeedList list = new FeedList();
   ScrollController _scrollController = ScrollController();
+  bool showAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +82,35 @@ class _GameFeedMainState extends State<GameFeedMain> {
               shrinkWrap: true,
               //controller: _scrollController,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: list.items.length > 200 ? 200 : list.items.length,
+              itemCount: (list.items.length > 200 && !showAll)
+                  ? 200
+                  : list.items.length,
               itemBuilder: (BuildContext context, int index) {
-                // Only show the latest 200 items (for now)
-                int idx = index;
-                if (list.items.length > 200) {
-                  idx = index + list.items.length - 201;
+                if (list.items.length > 200 && index == 0 && !showAll) {
+                  return Column(children: [
+                    Center(
+                      child: Text("Showing latest 200 items..."),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            showAll = true;
+                          });
+                        },
+                        child: Text("Show All"))
+                  ]);
                 }
 
-                if (idx < 0) {
-                  idx = 0;
+                int idx = index;
+                // Only show the latest 200 items (for now)
+                if (!showAll) {
+                  if (list.items.length > 200) {
+                    idx = index + list.items.length - 200;
+                  }
+
+                  if (idx < 0) {
+                    idx = 0;
+                  }
                 }
                 return GameFeedDisplayItem(
                     list.items[idx], widget.gameData, widget.stats, showLead);

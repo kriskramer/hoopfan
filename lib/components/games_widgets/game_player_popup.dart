@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
+import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/player_base_stat_and_rank.dart';
+import 'package:hoop/screens/views/players/player_detail.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -90,7 +92,27 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
                       } else {
                         return getDataTableGameOnly(playerStats);
                       }
-                    })
+                    }),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PlayerDetail(playerId: widget.personId)));
+                    },
+                    child: Text("Player Card")),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GamePlayerShotChart(
+                                  widget.personId,
+                                  player["teamId"],
+                                  widget.game["gameId"])));
+                    },
+                    child: Text("Shot Chart"))
               ]),
         ),
       );

@@ -87,127 +87,136 @@ class _TeamDetailsState extends State<TeamDetails> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              GestureDetector(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  CachedLogo(
-                                    url: ta[2],
-                                    radius: 45,
-                                  ),
-                                  SizedBox(width: 20),
-                                  Column(
-                                    children: [
-                                      Text(
-                                          ta[3].toString().toUpperCase() +
-                                              'ERN CONFERENCE',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                          ta[6].toString().toUpperCase() +
-                                              ' DIVISION',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        "${teamStandings.wins} - ${teamStandings.losses}",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(teamStandings.conferenceGamesBack
-                                                  .toString() +
-                                              " GB"),
-                                          SizedBox(width: 10),
-                                          Text(teamStandings.strCurrentStreak
-                                              .toString()),
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Tap to view team info...",
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeamInfoPage(
-                          team: team,
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                CachedLogo(
+                                  url: ta[2],
+                                  radius: 45,
+                                ),
+                                SizedBox(width: 20),
+                                Column(
+                                  children: [
+                                    Text(
+                                        ta[3].toString().toUpperCase() +
+                                            'ERN CONFERENCE',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                        ta[6].toString().toUpperCase() +
+                                            ' DIVISION',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      "${teamStandings.wins} - ${teamStandings.losses}",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(teamStandings.conferenceGamesBack
+                                                .toString() +
+                                            " GB"),
+                                        SizedBox(width: 10),
+                                        Text(teamStandings.strCurrentStreak
+                                            .toString()),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
                         ),
-                      ));
-                },
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TeamInfoPage(
+                                  team: team,
+                                )));
+                  },
+                  child: Text("Team Stats")),
               SizedBox(height: 12),
               DashboardSectionBox(
                 dashboardWidget: TeamStatsSmall(widget.nbaTeamId),
                 iconData: Icons.leaderboard,
-                linkWidget: TeamStatsView(teamId: widget.nbaTeamId),
+                linkWidget: null,
                 sectionTitle: "Stats",
-                tapMoreText: "Tap to view detailed stats...",
+                tapMoreText: "",
               ),
-              // SizedBox(height: 12),
-              // DashboardSectionBox(
-              //   dashboardWidget: TeamNewsSmall(ta[1], widget.nbaTeamId),
-              //   iconData: Icons.video_collection_sharp,
-              //   linkWidget: TeamMediaPage(teamId: widget.nbaTeamId),
-              //   sectionTitle: "Media",
-              //   tapMoreText: "Tap to view team-related media...",
-              // ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TeamStatsView(teamId: widget.nbaTeamId)));
+                  },
+                  child: Text("Team Stats")),
               SizedBox(
                 height: 12,
               ),
               DashboardSectionBox(
                 dashboardWidget: TwitterFeedSmall(searchTerms: ta[0]),
                 iconData: Icons.social_distance,
-                linkWidget: TwitterFeed(searchTerms: ta[0]),
+                linkWidget: null,
                 sectionTitle: "Social",
-                tapMoreText: "Tap to view more...",
+                tapMoreText: "",
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TwitterFeed(searchTerms: ta[0])));
+                  },
+                  child: Text("More Social")),
               SizedBox(height: 12),
               DashboardSectionBox(
                 dashboardWidget: TeamScheduleSmall(teamId: widget.nbaTeamId),
                 iconData: Icons.calendar_view_month_rounded,
-                linkWidget: TeamSchedule(teamId: widget.nbaTeamId),
+                linkWidget: null,
                 sectionTitle: "Schedule",
-                tapMoreText: "Tap to view full schedule...",
+                tapMoreText: "",
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TeamSchedule(teamId: widget.nbaTeamId)));
+                  },
+                  child: Text("Full Schedule")),
               SizedBox(height: 12),
               DashboardSectionBox(
                 dashboardWidget: PlayerList(

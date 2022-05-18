@@ -28,7 +28,8 @@ class PlayerYearOverYearBaseTable extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Column(
                     children: [
-                      PlayerStatsYearOverYearBaseDataTable(json: json),
+                      PlayerStatsYearOverYearBaseDataTable(
+                          json: json, playerId: playerId),
                     ],
                   ),
                 ),

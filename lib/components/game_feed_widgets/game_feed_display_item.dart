@@ -63,7 +63,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                       )),
                   Expanded(
                       flex: 10,
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           pbp.isScoreChange

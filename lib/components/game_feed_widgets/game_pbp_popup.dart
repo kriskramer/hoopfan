@@ -79,6 +79,11 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
                       if (cheers == null) cheers = 0;
                       if (boos == null) boos = 0;
 
+                      // These act as a flag to prevent the value getting updated in the button tap
+                      // Not an elegant solution but sorta works for now
+                      var updatedCheers = cheers;
+                      var updatedBoos = boos;
+
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -98,10 +103,13 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
                                     color: Colors.red,
                                     splashColor: Colors.purple,
                                     onPressed: () {
-                                      setState(() {
-                                        doBoo(
-                                            gameId, widget.pbp.timestamp, boos);
-                                      });
+                                      if (updatedBoos == boos) {
+                                        setState(() {
+                                          doBoo(gameId, widget.pbp.timestamp,
+                                              boos);
+                                          updatedBoos++;
+                                        });
+                                      }
                                     },
                                   ),
                                 ],
@@ -138,10 +146,13 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
                                     color: Colors.green,
                                     splashColor: Colors.orange,
                                     onPressed: () {
-                                      setState(() {
-                                        doCheer(gameId, widget.pbp.timestamp,
-                                            cheers);
-                                      });
+                                      if (updatedCheers == cheers) {
+                                        setState(() {
+                                          doCheer(gameId, widget.pbp.timestamp,
+                                              cheers);
+                                          updatedCheers++;
+                                        });
+                                      }
                                     },
                                   ),
                                 ],
@@ -177,13 +188,19 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
   }
 
   /// Register a cheer for the given PBP item, with a maximum of 5
-  void doCheer(gameId, key, cheers) {
+  void doCheer(gameId, key, cheers) async {
     enoughBoos = "";
     enoughCheers = "";
     if (cheersCount >= 5) {
       enoughCheers = "That's enough... for now.";
       return;
     }
+
+    // TODO: If the button is pressed too fast, the counter goes up but the db update
+    // doesn't keep up with it. This leads to the counter getting maxed at 5 but
+    // only two entries getting added to the DB... need to find a way to either
+    // slow it down or to kick off the update asynchronously to ensure it ends up
+    // happening eventually.
 
     DatabaseReference feed =
         FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
@@ -205,7 +222,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
   }
 
   /// Register a boo for the given PBP item, with a maximum of 5
-  void doBoo(gameId, key, boos) {
+  void doBoo(gameId, key, boos) async {
     enoughCheers = "";
     enoughBoos = "";
     if (boosCount >= 5) {
@@ -222,7 +239,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
       boos++;
     }
 
-    feed.update({
+    await feed.update({
       "boos": boos,
     });
 
