@@ -8,6 +8,7 @@ import 'package:hoop/screens/views/players/player_detail.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:hoop/stat_calculator.dart';
 import 'package:provider/provider.dart';
 
 class GamePlayerPopup extends StatefulWidget {
@@ -64,13 +65,17 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
                 CachedLogo(
                   url:
                       "https://cdn.nba.com/headshots/nba/latest/1040x760/${widget.personId}.png",
-                  radius: 45,
+                  radius: 40,
+                ),
+                SizedBox(
+                  height: 4,
                 ),
                 Center(
                     child: Text(player["firstName"] + " " + player["lastName"],
                         style: TextStyle(fontSize: 20))),
-                //Text(personId),
-
+                SizedBox(
+                  height: 5,
+                ),
                 FutureBuilder(
                     future: loadData(context),
                     builder: (context, snapshot) {
@@ -248,14 +253,14 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         DataRow(cells: [
           DataCell(Center(child: Text("TS%"))),
           DataCell(Center(
-              child: getGameStat(
-                  getTSPercentGame(playerStats).toStringAsFixed(2)))),
+              child: getGameStat(StatCalculator.getTSPercentGame(playerStats)
+                  .toStringAsFixed(2)))),
           DataCell(Center(
-              child:
-                  Text(getTSPercentSeason(playerAllStats).toStringAsFixed(2)))),
+              child: Text(StatCalculator.getTSPercentSeason(playerAllStats)
+                  .toStringAsFixed(2)))),
           DataCell(Center(
-              child: getComparison(getTSPercentGame(playerStats),
-                  getTSPercentSeason(playerAllStats), false))),
+              child: getComparison(StatCalculator.getTSPercentGame(playerStats),
+                  StatCalculator.getTSPercentSeason(playerAllStats), false))),
         ]),
       ],
     );
@@ -383,19 +388,5 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         Text((compare * 100).toStringAsFixed(0) + "%"),
       ],
     );
-  }
-
-  double getTSPercentGame(dynamic stats) {
-    var ts = 0.0;
-    var tsa = 2 * (double.parse(stats["fta"]) * 0.44 + int.parse(stats["fga"]));
-    ts = int.parse(stats["points"]) / tsa;
-    return ts;
-  }
-
-  double getTSPercentSeason(PlayerBaseStatAndRank stats) {
-    var ts = 0.0;
-    var tsa = 2 * (stats.fta * 0.44 + stats.fga);
-    ts = stats.pts / tsa;
-    return ts;
   }
 }

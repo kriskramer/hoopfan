@@ -40,91 +40,103 @@ class GameFeedLeadTrend extends StatelessWidget {
           isScoreChange: true);
 
       items.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          getPeriodText(lti.period.toString()),
-          style: TextStyle(fontSize: 10, color: Colors.blue),
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Text(lti.clock.toString(),
-            style: TextStyle(fontSize: 10, color: Colors.blue)),
-        SizedBox(
-          width: 10,
-        ),
-        lti.isVisitorLead()
-            ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Text(
-                  lti.getLead().toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-              ])
-            : Text(''),
-        Container(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[300]),
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[300]),
-          child: GestureDetector(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ScoringTrendsDialog2(
-                      leadTrackerItem: lti,
-                      game: game,
-                    );
-                  });
-            },
+        Expanded(
+            flex: 18,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                    alignment: Alignment.centerRight,
-                    width: 90,
-                    height: 8,
-                    child: lti.isVisitorLead()
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                                Container(
-                                  width: getLeadWidth(lti.getLead()),
-                                  color: Color(vTeamColor),
-                                ),
-                              ])
-                        : Text('')),
-                SizedBox(
-                  width: 2,
+                Text(
+                  getPeriodText(lti.period.toString()),
+                  style: TextStyle(fontSize: 10, color: Colors.blue),
                 ),
-                Container(
-                    width: 90,
-                    height: 8,
-                    child: lti.isHomeLead()
-                        ? Row(children: [
-                            Container(
-                              width: getLeadWidth(lti.getLead()),
-                              color: Color(hTeamColor),
-                            ),
-                          ])
-                        : Text('')),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(lti.clock.toString(),
+                    style: TextStyle(fontSize: 10, color: Colors.blue)),
               ],
+            )),
+        Expanded(
+          flex: 5,
+          child: lti.isVisitorLead()
+              ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Text(
+                    lti.getLead().toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                ])
+              : Text(''),
+        ),
+        Expanded(
+          flex: 72,
+          child: Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]),
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[300]),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ScoringTrendsDialog2(
+                        leadTrackerItem: lti,
+                        game: game,
+                      );
+                    });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      alignment: Alignment.centerRight,
+                      width: 90,
+                      height: 8,
+                      child: lti.isVisitorLead()
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                  Container(
+                                    width: getLeadWidth(lti.getLead()),
+                                    color: Color(vTeamColor),
+                                  ),
+                                ])
+                          : Text('')),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Container(
+                      width: 90,
+                      height: 8,
+                      child: lti.isHomeLead()
+                          ? Row(children: [
+                              Container(
+                                width: getLeadWidth(lti.getLead()),
+                                color: Color(hTeamColor),
+                              ),
+                            ])
+                          : Text('')),
+                ],
+              ),
             ),
           ),
         ),
-        lti.isHomeLead()
-            ? Row(children: [
-                SizedBox(
-                  width: 8,
-                ),
-                Text(lti.getLead().toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ])
-            : Text(''),
+        Expanded(
+          flex: 10,
+          child: lti.isHomeLead()
+              ? Row(children: [
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(lti.getLead().toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ])
+              : Text(''),
+        )
       ]));
     });
 

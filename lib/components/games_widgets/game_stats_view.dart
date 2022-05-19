@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
+import 'package:hoop/components/games_widgets/game_video_feed.dart';
 import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class GameStatsView extends StatelessWidget {
         body: SingleChildScrollView(
           padding: EdgeInsets.all(15),
           child: DefaultTabController(
-            length: 4, // length of tabs
+            length: 5, // length of tabs
             initialIndex: 0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,6 +43,9 @@ class GameStatsView extends StatelessWidget {
                       Tab(text: 'Stats'),
                       Tab(text: gameData["vTeam"]["triCode"]),
                       Tab(text: gameData["hTeam"]["triCode"]),
+                      Tab(
+                        text: 'Video',
+                      )
                     ],
                   ),
                 ),
@@ -95,6 +99,9 @@ class GameStatsView extends StatelessWidget {
                           stats: stats,
                           isHomeTeam: true,
                         ),
+                      ),
+                      Container(
+                        child: GameVideoFeed(gameId),
                       ),
                     ],
                   ),

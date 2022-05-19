@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/chart_widgets/scatter_chart.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/shot_chart.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
-import 'package:xml/xml_events.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class GamePlayerShotChart extends StatefulWidget {
@@ -124,7 +122,11 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                     ])),
               );
             } else
-              return SizedBox();
+              return Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                    "No data yet. Shot chart data is usually populated after the game."),
+              );
           },
         ));
   }
