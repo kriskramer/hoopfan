@@ -757,6 +757,24 @@ Map allTeams = {
 };
 
 class ConstantHelper {
+  static String getPeriodText(String period) {
+    var periodString = "";
+
+    if (period == "1") {
+      periodString = "1st";
+    } else if (period == "2") {
+      periodString = "2nd";
+    } else if (period == "3") {
+      periodString = "3rd";
+    } else if (period == "4") {
+      periodString = "4th";
+    } else {
+      periodString = "OT";
+    }
+
+    return periodString;
+  }
+
   static String getTeamIdByTriCode(String triCode) {
     String teamId = '';
     allTeams.forEach((key, value) {

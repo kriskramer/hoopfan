@@ -27,6 +27,7 @@ class AppUser {
         id: json["id"],
         displayName: json["displayName"],
         email: json["email"],
+        password: json["password"],
         favoriteTeam: json["favoriteTeam"]);
   }
 }

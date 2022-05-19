@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
+import 'package:hoop/components/games_widgets/arena_card.dart';
+import 'package:hoop/components/games_widgets/game_officials.dart';
+import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
+import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
@@ -21,16 +25,14 @@ class GameFeedMain extends StatefulWidget {
 class _GameFeedMainState extends State<GameFeedMain> {
   final FeedList list = new FeedList();
   ScrollController _scrollController = ScrollController();
+  bool showAll = false;
 
   @override
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
         FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
-
-    // pbpFeed.onValue.listen((DatabaseEvent event) {
-    //   final data = event.snapshot.value;
-    //   //print(data);
-    // });
+    var gameData = widget.gameData;
+    var gameStatus = gameData["statusNum"];
 
     bool showPbp =
         Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
@@ -58,11 +60,21 @@ class _GameFeedMainState extends State<GameFeedMain> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                GameView(game: widget.gameData)),
+                            builder: (context) => GameView(game: gameData)),
                       );
                     },
-                    child: Text("Old Game View"))
+                    child: Text("Old Game View")),
+                SizedBox(
+                  height: 25,
+                ),
+                ArenaCard(
+                  gameData: gameData,
+                ),
+                GameOfficials(
+                  game: gameData,
+                ),
+                gameStatus < 3 ? HowToWatchCard(game: gameData) : Text(''),
+                gameStatus < 3 ? getTicketsCard() : Text('')
               ]);
             }
             values.forEach((key, values) {
@@ -78,20 +90,42 @@ class _GameFeedMainState extends State<GameFeedMain> {
 
             list.sort();
 
+            Provider.of<JsonFiles>(context, listen: false)
+                .setGameFeed(widget.gameId, list);
+
             return new ListView.builder(
               shrinkWrap: true,
               //controller: _scrollController,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: list.items.length > 200 ? 200 : list.items.length,
+              itemCount: (list.items.length > 200 && !showAll)
+                  ? 200
+                  : list.items.length,
               itemBuilder: (BuildContext context, int index) {
-                // Only show the latest 200 items (for now)
-                int idx = index;
-                if (list.items.length > 200) {
-                  idx = index + list.items.length - 201;
+                if (list.items.length > 200 && index == 0 && !showAll) {
+                  return Column(children: [
+                    Center(
+                      child: Text("Showing latest 200 items..."),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            showAll = true;
+                          });
+                        },
+                        child: Text("Show All"))
+                  ]);
                 }
 
-                if (idx < 0) {
-                  idx = 0;
+                int idx = index;
+                // Only show the latest 200 items (for now)
+                if (!showAll) {
+                  if (list.items.length > 200) {
+                    idx = index + list.items.length - 200;
+                  }
+
+                  if (idx < 0) {
+                    idx = 0;
+                  }
                 }
                 return GameFeedDisplayItem(
                     list.items[idx], widget.gameData, widget.stats, showLead);
@@ -100,6 +134,26 @@ class _GameFeedMainState extends State<GameFeedMain> {
           }
           return Container(child: Text("Loading Game Feed..."));
         },
+      ),
+    );
+  }
+
+  Widget getTicketsCard() {
+    return Card(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Text("GET TICKETS", style: TextStyle(fontWeight: FontWeight.bold)),
+            Container(
+                padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
+                child: Text(
+                  //widget.game["tickets"]["mobileApp"],
+                  'Coming Soon',
+                  style: TextStyle(fontSize: 12),
+                )),
+          ],
+        ),
       ),
     );
   }

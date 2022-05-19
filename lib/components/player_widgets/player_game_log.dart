@@ -44,6 +44,12 @@ class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
                   SizedBox(
                     height: 15,
                   ),
+                  Center(
+                    child: Text("Games played for the selected season."),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: getGameLogTable(json),
@@ -138,11 +144,16 @@ class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
   Future<dynamic> loadData() async {
     dynamic json;
 
-    String seasonString = '';
+    //String seasonString = '';
 
-    int year = int.parse(widget.season);
-    int yearPlus = year + 1;
-    seasonString = widget.season + "-" + yearPlus.toString().substring(2, 4);
+    // String season = widget.season;
+    // if (season.contains("-")) {
+    //   season = season.split("-")[0];
+    // }
+
+    // int year = int.parse(season);
+    // int yearPlus = year + 1;
+    // seasonString = season + "-" + yearPlus.toString().substring(2, 4);
 
     // if (Provider.of<JsonFiles>(context, listen: false)
     //         .getPlayerGameLog(playerId) ==
@@ -157,7 +168,7 @@ class _PlayerGameLogTableState extends State<PlayerGameLogTable> {
     //       .getPlayerShotTypes(playerId);
     // }
     json = Network.getJson(
-      Urls.getNbaStatsPlayerGameLog(widget.playerId, seasonString),
+      Urls.getNbaStatsPlayerGameLog(widget.playerId, widget.season),
       requestHeaders: RequestHeaders.nbaStatsHeaders,
     );
 

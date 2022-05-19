@@ -8,37 +8,32 @@ class GameVideoFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Video Feed"),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            PbpPeriodView(gameId: gameId, period: "1"),
-            SizedBox(
-              height: 20,
-            ),
-            PbpPeriodView(gameId: gameId, period: "2"),
-            SizedBox(
-              height: 20,
-            ),
-            PbpPeriodView(gameId: gameId, period: "3"),
-            SizedBox(
-              height: 20,
-            ),
-            PbpPeriodView(gameId: gameId, period: "4"),
-            SizedBox(
-              height: 20,
-            ),
-            PbpPeriodView(gameId: gameId, period: "5"),
-            SizedBox(
-              height: 20,
-            ),
-            PbpPeriodView(gameId: gameId, period: "6"),
-          ],
-        ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          PbpPeriodView(gameId: gameId, period: "1"),
+          SizedBox(
+            height: 20,
+          ),
+          PbpPeriodView(gameId: gameId, period: "2"),
+          SizedBox(
+            height: 20,
+          ),
+          PbpPeriodView(gameId: gameId, period: "3"),
+          SizedBox(
+            height: 20,
+          ),
+          PbpPeriodView(gameId: gameId, period: "4"),
+          SizedBox(
+            height: 20,
+          ),
+          PbpPeriodView(gameId: gameId, period: "5"),
+          SizedBox(
+            height: 20,
+          ),
+          PbpPeriodView(gameId: gameId, period: "6"),
+        ],
       ),
     );
   }

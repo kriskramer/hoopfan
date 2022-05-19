@@ -23,15 +23,15 @@ class GameRecapArticleHeader extends StatelessWidget {
               padding: EdgeInsets.all(4),
               child: Column(
                 children: [
-                  Divider(
-                    color: Colors.blueGrey,
-                  ),
                   Center(
                     child: Text(
                       article["title"],
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
+                  ),
+                  Divider(
+                    color: Colors.blueGrey,
                   ),
                 ],
               ),

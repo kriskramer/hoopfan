@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/api/auth.dart';
 import 'package:hoop/api/config/firebase.dart';
 import 'package:hoop/components/user_widgets/usr_button.dart';
 import 'package:hoop/model/user.dart';
@@ -108,12 +109,12 @@ class _UserMainState extends State<UserMain> {
                   UserButton(
                     title: "LOGOUT",
                     function: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginUI(),
-                        ),
-                      ).then((value) => {setState(() {})});
+                      Auth.logoutUser();
+                      AppUser u = AppUser();
+                      setState(() {
+                        Provider.of<UserProv>(context, listen: false)
+                            .setUser(u);
+                      });
                     },
                   ),
                 ]))

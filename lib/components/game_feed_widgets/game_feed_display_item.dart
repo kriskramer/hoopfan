@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_lead_tracker.dart';
+import 'package:hoop/components/game_feed_widgets/game_pbp_popup.dart';
 import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
@@ -28,24 +29,10 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
     if (pbp.type == "1") {
       // Play-by-play item
-      row = GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          if (pbp.personId != "" && pbp.personId != null) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return GamePlayerPopup(
-                    personId: pbp.personId,
-                    game: game,
-                    stats: stats,
-                    pbp: pbp,
-                  );
-                });
-          }
-        },
-        child: Stack(children: [
-          Container(
+      row = Stack(children: [
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          child: Container(
             margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Column(children: [
               Row(
@@ -55,27 +42,28 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                       flex: 90,
                       child: Row(
                         children: [
-                          getTeamCard(pbp.description, game),
-                          getPlayerImage(pbp),
+                          SizedBox(width: 5),
+                          getPlayerImage(pbp, game, stats),
                           SizedBox(width: 5),
                           Flexible(
-                              child: Text(
-                            getPbPDescriptionFormatted(pbp, game),
-                            style: pbp.isScoreChange
-                                ? TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500)
-                                : TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.w500),
-                          )),
+                            child: Text(
+                              getPbPDescriptionFormatted(pbp, game),
+                              style: pbp.isScoreChange
+                                  ? TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500)
+                                  : TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ),
                         ],
                       )),
                   Expanded(
                       flex: 10,
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           pbp.isScoreChange
@@ -169,31 +157,48 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
               )
             ]),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                getCurrentPeriod(pbp.period),
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                pbp.clock + "  ",
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ]),
-      );
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return GamePbpPopup(
+                    game: game,
+                    stats: stats,
+                    pbp: pbp,
+                  );
+                });
+          },
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            getTeamCard(pbp.description, game),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getCurrentPeriod(pbp.period),
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              pbp.clock + "  ",
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ]);
 
       var teamColor = pbp.isScoreChange
           ? ConstantHelper.getTeamColor(pbp.teamId)
@@ -201,7 +206,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
       container = Container(
           padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
-          margin: EdgeInsets.fromLTRB(0, 2, 0, 2),
+          margin: EdgeInsets.fromLTRB(0, 2, 0, 3),
           decoration: BoxDecoration(
             border: getReactionBorder(
                 pbp.cheers, pbp.boos), //Border.all(color: Colors.grey[300]),
@@ -227,7 +232,25 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
           ],
         );
       } else {
-        return container;
+        return Column(
+          children: [
+            pbp.description.contains("Start Period")
+                ? Divider(
+                    color: Colors.black,
+                    height: 12,
+                    thickness: 3,
+                  )
+                : SizedBox(),
+            container,
+            pbp.description.contains("Start Period")
+                ? Divider(
+                    color: Colors.black,
+                    height: 12,
+                    thickness: 3,
+                  )
+                : SizedBox(),
+          ],
+        );
       }
     } else if (pbp.type == "2") {
       // Chat message
@@ -240,10 +263,20 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
       var dt = DateTime.fromMillisecondsSinceEpoch(pbp.timestamp);
       //print(dt);
+      var dtString = "${dt.year}-${dt.month}-${dt.day} ${dt.hour}:${dt.minute}";
 
-      row = Column(
-        children: [
-          Row(
+      var teamId;
+      if (pbp.fanLevel > 30) {
+        teamId = hTeamId;
+      }
+      if (pbp.fanLevel < 30) {
+        teamId = vTeamId;
+      }
+
+      return Column(children: [
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 2, 20, 0),
+          child: Row(
             children: [
               Text(
                 displayName,
@@ -253,58 +286,43 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                 width: 4,
               ),
               Text(
-                dt.toString(),
+                dtString,
                 style: TextStyle(fontSize: 10),
               )
             ],
           ),
-          SizedBox(height: 6),
-          Row(
-            children: [
-              Flexible(
-                  child: Text(
-                text,
-                style: TextStyle(fontSize: 14),
-              ))
-            ],
-          ),
-        ],
-      );
-
-      var teamId;
-      if (pbp.fanLevel > 30) {
-        teamId = hTeamId;
-      }
-      if (pbp.fanLevel < 30) {
-        teamId = vTeamId;
-      }
-      container = Container(
-        margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-        decoration: BoxDecoration(
-          color: Colors.amber[50],
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            // if you need this
-
-            color: Colors.cyan,
-            width: 1,
-          ),
         ),
-        child: Column(children: [
-          Container(padding: EdgeInsets.fromLTRB(20, 5, 20, 4), child: row),
-          Container(
-            height: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: teamId == null
-                  ? null
-                  : ConstantHelper.getTeamColor_Gradient(teamId, pbp.fanLevel),
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 2, 20, 10),
+          decoration: BoxDecoration(
+            color: Colors.amber[50],
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.amber[100],
+              width: 1,
             ),
-          )
-        ]),
-      );
+          ),
+          child: Column(children: [
+            Container(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 4),
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: 14),
+                )),
+            Container(
+              height: 10,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: teamId == null
+                    ? null
+                    : ConstantHelper.getTeamColor_Gradient(
+                        teamId, pbp.fanLevel),
+              ),
+            )
+          ]),
+        ),
+      ]);
     }
-    return container;
   }
 
   Border getReactionBorder(int cheers, int boos) {
@@ -357,7 +375,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
         b = Border.all(color: Colors.red[100], width: 2);
       }
     } else {
-      b = Border.all(color: Colors.grey[300]);
+      b = Border.all(color: Colors.grey[50]);
     }
 
     return b;
@@ -410,7 +428,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     }
   }
 
-  Widget getPlayerImage(PbpItem pbp) {
+  Widget getPlayerImage(PbpItem pbp, dynamic game, dynamic stats) {
     if (pbp.personId == null) return SizedBox();
     if (pbp.personId == '') return SizedBox();
     if (pbp.description.contains('Timeout')) return SizedBox();
@@ -421,11 +439,36 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     var url =
         "https://cdn.nba.com/headshots/nba/latest/1040x760/${pbp.personId}.png";
 
+    var teamColor = ConstantHelper.getTeamColor(pbp.teamId);
     try {
-      return CachedLogo(
-        url: url,
-        radius: 18,
-      );
+      return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            if (pbp.personId != "" && pbp.personId != null) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return GamePlayerPopup(
+                      personId: pbp.personId,
+                      game: game,
+                      stats: stats,
+                      pbp: pbp,
+                    );
+                  });
+            }
+          },
+          child: CircleAvatar(
+            backgroundColor: Color(teamColor),
+            radius: 22,
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 20,
+              child: CachedLogo(
+                url: url,
+                radius: 18,
+              ),
+            ),
+          ));
     } catch (err) {
       print("Error fetching " + url);
     }
@@ -436,18 +479,15 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
     var tricode = ConstantHelper.getTeamTriCode(teamId);
 
-    return Card(
-      elevation: 2,
-      color: Color(teamColor),
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(teamColor),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Text(
-          tricode,
-          style: TextStyle(color: Color(teamTextColor), fontSize: 10),
-        ),
+      padding: EdgeInsets.fromLTRB(4, 1, 4, 1),
+      child: Text(
+        tricode,
+        style: TextStyle(color: Color(teamTextColor), fontSize: 10),
       ),
     );
   }

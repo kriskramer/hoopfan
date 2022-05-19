@@ -1,14 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/components/connection.dart';
-import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
+import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/player_base_stat_and_rank.dart';
+import 'package:hoop/screens/views/players/player_detail.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:hoop/stat_calculator.dart';
 import 'package:provider/provider.dart';
 
 class GamePlayerPopup extends StatefulWidget {
@@ -29,14 +29,18 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
     var player = Provider.of<JsonFiles>(context, listen: false)
         .getPlayer(widget.personId);
     var playerStats;
-    PlayerBaseStatAndRank playerAllStats;
-    String gameId = widget.game["gameId"];
+    // PlayerBaseStatAndRank playerAllStats;
+    // String gameId = widget.game["gameId"];
 
     for (var p in widget.stats["activePlayers"]) {
       if (widget.personId == p["personId"]) {
         playerStats = p;
       }
     }
+
+    print("PlayerId: ${widget.personId}");
+    print("TeamId: ${player["teamId"]}");
+    print("GameId: ${widget.game["gameId"]}");
 
     if (player == null) {
       return Dialog(
@@ -55,83 +59,23 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Card(
-                    elevation: 4,
-                    color: Colors.grey[100],
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(children: [
-                        Center(
-                          child: Text(
-                            widget.pbp.description,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Boo"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.thumb_down,
-                              ),
-                              iconSize: 40,
-                              color: Colors.red,
-                              splashColor: Colors.purple,
-                              onPressed: () {
-                                setState(() {
-                                  doBoo(gameId, widget.pbp.timestamp,
-                                      widget.pbp.boos);
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text("Cheer"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.thumb_up,
-                              ),
-                              iconSize: 40,
-                              color: Colors.green,
-                              splashColor: Colors.orange,
-                              onPressed: () {
-                                setState(() {
-                                  doCheer(gameId, widget.pbp.timestamp,
-                                      widget.pbp.cheers);
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ]),
-                    )),
                 SizedBox(
                   height: 5,
                 ),
                 CachedLogo(
                   url:
                       "https://cdn.nba.com/headshots/nba/latest/1040x760/${widget.personId}.png",
-                  radius: 45,
+                  radius: 40,
+                ),
+                SizedBox(
+                  height: 4,
                 ),
                 Center(
                     child: Text(player["firstName"] + " " + player["lastName"],
                         style: TextStyle(fontSize: 20))),
-                //Text(personId),
-
+                SizedBox(
+                  height: 5,
+                ),
                 FutureBuilder(
                     future: loadData(context),
                     builder: (context, snapshot) {
@@ -154,7 +98,27 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
                       } else {
                         return getDataTableGameOnly(playerStats);
                       }
-                    })
+                    }),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PlayerDetail(playerId: widget.personId)));
+                    },
+                    child: Text("Player Card")),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GamePlayerShotChart(
+                                  widget.personId,
+                                  player["teamId"],
+                                  widget.game["gameId"])));
+                    },
+                    child: Text("Shot Chart"))
               ]),
         ),
       );
@@ -286,6 +250,18 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
               child: getComparison(double.parse(playerStats["pFouls"]),
                   playerAllStats.pf, false))),
         ]),
+        DataRow(cells: [
+          DataCell(Center(child: Text("TS%"))),
+          DataCell(Center(
+              child: getGameStat(StatCalculator.getTSPercentGame(playerStats)
+                  .toStringAsFixed(2)))),
+          DataCell(Center(
+              child: Text(StatCalculator.getTSPercentSeason(playerAllStats)
+                  .toStringAsFixed(2)))),
+          DataCell(Center(
+              child: getComparison(StatCalculator.getTSPercentGame(playerStats),
+                  StatCalculator.getTSPercentSeason(playerAllStats), false))),
+        ]),
       ],
     );
   }
@@ -412,39 +388,5 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         Text((compare * 100).toStringAsFixed(0) + "%"),
       ],
     );
-  }
-
-  void doCheer(gameId, key, cheers) {
-    DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
-
-    if (cheers == null) {
-      cheers = 1;
-    } else {
-      cheers++;
-    }
-
-    feed.update({
-      "cheers": cheers,
-    });
-
-    Navigator.of(context, rootNavigator: true).pop();
-  }
-
-  void doBoo(gameId, key, boos) {
-    DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
-
-    if (boos == null) {
-      boos = 1;
-    } else {
-      boos++;
-    }
-
-    feed.update({
-      "boos": boos,
-    });
-
-    Navigator.of(context, rootNavigator: true).pop();
   }
 }

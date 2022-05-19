@@ -342,7 +342,7 @@ class Urls {
   static String getNbaStatsPlayerShotChart(
       String playerId, String teamId, String gameId) {
     // Must include at a minimum teamId and playerId. GameId is optional.
-    return "https://stats.nba.com/stats/shotchartdetail?AheadBehind=&ClutchTime=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&EndPeriod=&EndRange=&GameID=$gameId&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&PlayerID=$playerId&PlayerPosition=&PointDiff=&Position=&RangeType=&RookieYear=&Season=$_season&SeasonSegment=&SeasonType=Regular+Season&StartPeriod=&StartRange=&TeamID=$teamId&VsConference=&VsDivision=";
+    return "https://stats.nba.com/stats/shotchartdetail?AheadBehind=&ClutchTime=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&EndPeriod=&EndRange=&GameID=$gameId&GameSegment=&LastNGames=0&LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&Period=0&PlayerID=$playerId&PlayerPosition=&PointDiff=&Position=&RangeType=&RookieYear=&Season=&SeasonSegment=&SeasonType=Playoffs&StartPeriod=&StartRange=&TeamID=$teamId&VsConference=&VsDivision=";
   }
 
   static String getFantasyNerdsNews() {

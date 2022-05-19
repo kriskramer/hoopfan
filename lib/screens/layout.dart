@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/model/user.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/season_model.dart';
+import 'package:hoop/providers/user_prov.dart';
 //import 'package:hoop/screens/views/account/account_main.dart';
 import 'package:hoop/screens/views/dashboard_main.dart';
 //import 'package:hoop/screens/views/games/today_games.dart';
@@ -13,6 +17,7 @@ import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -123,6 +128,18 @@ class _LayoutState extends State<Layout> {
 
         Provider.of<JsonFiles>(context, listen: false)
             .setSelectedDate(DateTime.now());
+
+        // Login the user automatically if they've logged in before
+        final prefs = await SharedPreferences.getInstance();
+        var user = prefs.getString("user");
+        if (user != null) {
+          AppUser u = AppUser.fromJson(json.decode(user));
+          Provider.of<UserProv>(context, listen: false).setUser(u);
+          // TODO: The above will set the user object in the provider, making the
+          // app think the user is logged in, however, we should still ACTUALLY
+          //log in the user here to show a record on the DB of it happening.
+
+        }
 
         if (Provider.of<JsonFiles>(context, listen: false)
                 .getLeagueStandings() !=

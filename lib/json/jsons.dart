@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/lead_tracker.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
@@ -55,6 +56,9 @@ class JsonFiles with ChangeNotifier {
   PlayerBoxScoreList _playerBoxScores;
   Map<String, dynamic> _playerShotChart = {};
   Map<String, dynamic> _currentGameStats = {};
+  Map<String, dynamic> _gameCheers = {};
+  Map<String, dynamic> _gameBoos = {};
+  Map<String, dynamic> _gameFeed = {};
 
   var _injuryReport;
 
@@ -105,6 +109,14 @@ class JsonFiles with ChangeNotifier {
   void setNbaVideo(dynamic json) {
     _nbaVideos = json;
     notifyListeners();
+  }
+
+  void setGameCheers(String gameId, int cheers) {
+    _gameCheers[gameId] = cheers;
+  }
+
+  void setGameBoos(String gameId, int boos) {
+    _gameBoos[gameId] = boos;
   }
 
   void setTeamNews(String teamId, dynamic news) {
@@ -292,6 +304,10 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
+  void setGameFeed(String gameId, FeedList list) {
+    _gameFeed[gameId] = list;
+  }
+
   void addTeamPlayers(String teamId, dynamic teamList) {
     _teamPlayers[teamId] = teamList;
   }
@@ -316,6 +332,9 @@ class JsonFiles with ChangeNotifier {
   bool getIsFeatureBlocked() => _isFeatureBlocked;
   List<dynamic> getNews(String teamId) => _teamNews[teamId];
   dynamic getTeamVideos(String teamId) => _teamVideos[teamId];
+
+  int getGameCheers(String gameId) => _gameCheers[gameId];
+  int getGameBoos(String gameId) => _gameBoos[gameId];
 
   dynamic getPreviewArticle(String gameId) => _previewArticles[gameId];
   dynamic getRecapArticle(String gameId) => _recapArticles[gameId];
@@ -365,6 +384,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getSeasons() => _seasons;
 
   String getSelectedDate() => _selectedDate;
+
+  FeedList getGameFeed(String gameId) => _gameFeed[gameId];
 
   LeagueStandingList getLeagueStandings() => _allStandings;
   dynamic getStandings() => _confStandings;

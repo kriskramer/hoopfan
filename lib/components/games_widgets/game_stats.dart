@@ -12,6 +12,11 @@ class GameStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (stats == null) {
+      return Center(
+        child: Text("No data available..."),
+      );
+    }
     dynamic vTeam = stats["vTeam"]["totals"];
     dynamic hTeam = stats["hTeam"]["totals"];
 

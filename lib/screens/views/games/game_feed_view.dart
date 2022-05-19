@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
+import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_news_view.dart';
+import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/game_stats_view.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
@@ -172,6 +174,7 @@ class _GameFeedViewState extends State<GameFeedView> {
       Icons.sports_basketball,
       Icons.sms,
     ];
+
     return FabWithIcons(
       icons: icons,
       onIconTapped: (index) {
@@ -214,6 +217,14 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   void _update(int count) {
     setState(() => refreshGameData());
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: const Text('snack'),
+    //   duration: const Duration(seconds: 5),
+    //   action: SnackBarAction(
+    //     label: 'ACTION',
+    //     onPressed: () {},
+    //   ),
+    // ));
   }
 
   Future<dynamic> loadGameData() async {
