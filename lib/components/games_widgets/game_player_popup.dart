@@ -1,8 +1,5 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
-import 'package:hoop/components/connection.dart';
-import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
@@ -39,6 +36,10 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         playerStats = p;
       }
     }
+
+    print("PlayerId: ${widget.personId}");
+    print("TeamId: ${player["teamId"]}");
+    print("GameId: ${widget.game["gameId"]}");
 
     if (player == null) {
       return Dialog(
@@ -244,6 +245,18 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
               child: getComparison(double.parse(playerStats["pFouls"]),
                   playerAllStats.pf, false))),
         ]),
+        DataRow(cells: [
+          DataCell(Center(child: Text("TS%"))),
+          DataCell(Center(
+              child: getGameStat(
+                  getTSPercentGame(playerStats).toStringAsFixed(2)))),
+          DataCell(Center(
+              child:
+                  Text(getTSPercentSeason(playerAllStats).toStringAsFixed(2)))),
+          DataCell(Center(
+              child: getComparison(getTSPercentGame(playerStats),
+                  getTSPercentSeason(playerAllStats), false))),
+        ]),
       ],
     );
   }
@@ -370,5 +383,19 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         Text((compare * 100).toStringAsFixed(0) + "%"),
       ],
     );
+  }
+
+  double getTSPercentGame(dynamic stats) {
+    var ts = 0.0;
+    var tsa = 2 * (double.parse(stats["fta"]) * 0.44 + int.parse(stats["fga"]));
+    ts = int.parse(stats["points"]) / tsa;
+    return ts;
+  }
+
+  double getTSPercentSeason(PlayerBaseStatAndRank stats) {
+    var ts = 0.0;
+    var tsa = 2 * (stats.fta * 0.44 + stats.fga);
+    ts = stats.pts / tsa;
+    return ts;
   }
 }

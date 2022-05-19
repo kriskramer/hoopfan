@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
+import 'package:hoop/components/games_widgets/arena_card.dart';
+import 'package:hoop/components/games_widgets/game_officials.dart';
+import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
@@ -28,6 +31,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
         FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
+    var gameData = widget.gameData;
+    var gameStatus = gameData["statusNum"];
 
     bool showPbp =
         Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
@@ -55,11 +60,21 @@ class _GameFeedMainState extends State<GameFeedMain> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                GameView(game: widget.gameData)),
+                            builder: (context) => GameView(game: gameData)),
                       );
                     },
-                    child: Text("Old Game View"))
+                    child: Text("Old Game View")),
+                SizedBox(
+                  height: 25,
+                ),
+                ArenaCard(
+                  gameData: gameData,
+                ),
+                GameOfficials(
+                  game: gameData,
+                ),
+                gameStatus < 3 ? HowToWatchCard(game: gameData) : Text(''),
+                gameStatus < 3 ? getTicketsCard() : Text('')
               ]);
             }
             values.forEach((key, values) {
@@ -119,6 +134,26 @@ class _GameFeedMainState extends State<GameFeedMain> {
           }
           return Container(child: Text("Loading Game Feed..."));
         },
+      ),
+    );
+  }
+
+  Widget getTicketsCard() {
+    return Card(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Text("GET TICKETS", style: TextStyle(fontWeight: FontWeight.bold)),
+            Container(
+                padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
+                child: Text(
+                  //widget.game["tickets"]["mobileApp"],
+                  'Coming Soon',
+                  style: TextStyle(fontSize: 12),
+                )),
+          ],
+        ),
       ),
     );
   }

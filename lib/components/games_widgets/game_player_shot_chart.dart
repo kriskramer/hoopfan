@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/chart_widgets/scatter_chart.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/shot_chart.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:xml/xml_events.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class GamePlayerShotChart extends StatefulWidget {
   final playerId;
@@ -56,6 +58,22 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                 shotWidgets.add(getShotCard(e));
               });
 
+              List<charts.Series<PlayerShotChart, num>> seriesShots = [
+                charts.Series(
+                    id: "shots",
+                    data: listPlayer.items,
+                    domainFn: (PlayerShotChart series, _) => series.locX,
+                    measureFn: (PlayerShotChart series, _) => series.locY,
+                    // Set a label accessor to control the text of the arc label.
+                    // labelAccessorFn: (PlayerShotChart series, _) =>
+                    //     '${series.locX.toString()}',
+                    colorFn: (PlayerShotChart shots, _) {
+                      return shots.shotMadeFlag == 1
+                          ? charts.MaterialPalette.green.shadeDefault
+                          : charts.MaterialPalette.red.shadeDefault;
+                    }),
+              ];
+
               return SingleChildScrollView(
                 child: Container(
                     decoration: BoxDecoration(
@@ -63,6 +81,21 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                             horizontal:
                                 BorderSide(width: 1, color: Colors.grey[400]))),
                     child: Column(children: [
+                      Container(
+                        height: 350,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            Image.asset("images/shot_chart_background.png",
+                                fit: BoxFit.fill),
+                            charts.ScatterPlotChart(
+                              seriesShots,
+                              animate: true,
+                              behaviors: [new charts.SeriesLegend()],
+                            ),
+                          ],
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
