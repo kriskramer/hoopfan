@@ -163,7 +163,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                   team: team,
                                 )));
                   },
-                  child: Text("Team Stats")),
+                  child: Text("Team Info")),
               SizedBox(height: 12),
               DashboardSectionBox(
                 dashboardWidget: TeamStatsSmall(widget.nbaTeamId),

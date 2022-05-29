@@ -121,7 +121,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 TodaysGamesDashboard(),
                 ElevatedButton(
                   child: Text(
-                    "View full schedule",
+                    "Full Schedule",
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -145,7 +145,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "View All Standings",
+                    "All Standings",
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -180,7 +180,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "View All Leaders",
+                    "All Leaders",
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -204,7 +204,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "View More Stats",
+                    "More Stats",
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -223,12 +223,12 @@ class _DashboardMainState extends State<DashboardMain> {
                   dashboardWidget: NbaNewsFeedSmall(),
                   iconData: FontAwesomeIcons.newspaper,
                   linkWidget: null,
-                  sectionTitle: "Media",
+                  sectionTitle: " Media",
                   tapMoreText: "",
                 ),
                 ElevatedButton(
                   child: Text(
-                    "View More News",
+                    "More News",
                     style: TextStyle(
                       fontSize: 12,
                     ),

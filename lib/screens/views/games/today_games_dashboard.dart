@@ -2,14 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/completed_game_card_dashboard.dart';
-import 'package:hoop/components/games_widgets/completed_game_card_small.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_card_dashboard.dart';
-import 'package:hoop/components/games_widgets/in_progress_game_card_small.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
 import 'package:hoop/components/games_widgets/upcoming_game_card_dashboard.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card_small.dart';
 import 'package:hoop/json/jsons.dart';
-import 'package:hoop/screens/views/games/today_games.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/utils/formatdate.dart';
@@ -97,18 +92,22 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
                       SizedBox(
                         height: 50,
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('No games listed'),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    refreshGames();
-                                  });
-                                },
-                                icon: Icon(Icons.refresh))
-                          ]),
+                      Card(
+                        margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                        elevation: 5,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('No games listed'),
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      refreshGames();
+                                    });
+                                  },
+                                  icon: Icon(Icons.refresh))
+                            ]),
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -138,7 +137,15 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 40,
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.refresh),
+                                onPressed: () {
+                                  setState(() {
+                                    refreshGames();
+                                  });
+                                },
                               ),
                             ]),
                       ),
@@ -189,19 +196,24 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             return Column(children: [
               SizedBox(
-                height: 100, //MediaQuery.of(context).size.height / 2,
+                height: 30, //MediaQuery.of(context).size.height / 2,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SizedBox(width: 20),
-                Center(
-                  child: Text('Refresh data'),
-                ),
-                IconButton(
-                    onPressed: () {
-                      refreshGames();
-                    },
-                    icon: Icon(Icons.refresh_rounded))
-              ])
+              Card(
+                  elevation: 4,
+                  margin: EdgeInsets.all(10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 20),
+                        Center(
+                          child: Text('Refresh data'),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              refreshGames();
+                            },
+                            icon: Icon(Icons.refresh_rounded))
+                      ])),
             ]);
           } else {
             return Center(
