@@ -7,21 +7,21 @@ class GameOfficials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (game["officials"] == null) {
-      return Center(
-        child: Text("No data available..."),
-      );
-    }
-    dynamic officials = game["officials"]["formatted"];
     String returnValue = "";
 
-    for (var o in officials) {
-      returnValue += o["firstNameLastName"];
-      returnValue += ", ";
-    }
+    if (game["officials"] == null) {
+      returnValue = "Not yet listed";
+    } else {
+      dynamic officials = game["officials"]["formatted"];
 
-    if (returnValue == "") {
-      returnValue = "Not yet listed.";
+      for (var o in officials) {
+        returnValue += o["firstNameLastName"];
+        returnValue += ", ";
+      }
+
+      if (returnValue == "") {
+        returnValue = "Not yet listed.";
+      }
     }
 
     return Card(

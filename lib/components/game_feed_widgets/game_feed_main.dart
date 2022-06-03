@@ -59,16 +59,17 @@ class _GameFeedMainState extends State<GameFeedMain> {
                 gameStatus > 1
                     ? ElevatedButton(
                         onPressed: () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => GameView(game: gameData)),
-                          // );
                           var date = widget.gameData["homeStartDate"];
                           getPbpData(date, widget.gameId);
                         },
                         child: Text("Refresh"))
-                    : SizedBox(),
+                    : Text(
+                        getStartCountdown(widget.gameData),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.purple,
+                            fontWeight: FontWeight.bold),
+                      ),
                 SizedBox(
                   height: 25,
                 ),
@@ -161,6 +162,24 @@ class _GameFeedMainState extends State<GameFeedMain> {
         ),
       ),
     );
+  }
+
+  String getStartCountdown(dynamic game) {
+    String startTimeUTC = game["startTimeUTC"];
+
+    if (startTimeUTC == "") {
+      return "";
+    }
+
+    DateTime start = DateTime.parse(startTimeUTC);
+
+    Duration duration = start.difference(DateTime.now());
+
+    if (duration.inMinutes > 0) {
+      return "${duration.inMinutes.toString()} min to go!";
+    }
+
+    return "";
   }
 
   Future<void> getPbpData(String date, String gameId) async {

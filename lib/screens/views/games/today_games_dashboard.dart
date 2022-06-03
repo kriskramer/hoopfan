@@ -8,6 +8,7 @@ import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:hoop/utils/formatdate.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodaysGamesDashboard extends StatefulWidget {
@@ -17,6 +18,7 @@ class TodaysGamesDashboard extends StatefulWidget {
 
 class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   Future<dynamic> _listGames;
+  DateTime savedDate;
   DateTime selectedDate;
   Timer _timer;
   int timerDuration = 300;
@@ -74,125 +76,110 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
             if (gamesInProgress.length > 0) {
               timerDuration = 240;
             }
-            String selectedDate = Provider.of<JsonFiles>(context, listen: false)
+            String savedDate = Provider.of<JsonFiles>(context, listen: false)
                 .getSelectedDate();
             // parse date
-            int year = int.parse(selectedDate.substring(0, 4));
-            int month = int.parse(selectedDate.substring(4, 6));
-            int day = int.parse(selectedDate.substring(6, 8));
+            int year = int.parse(savedDate.substring(0, 4));
+            int month = int.parse(savedDate.substring(4, 6));
+            int day = int.parse(savedDate.substring(6, 8));
             DateTime parseDate = DateTime(year, month, day);
             DateTime todaysDate = DateTime.now();
             String dateInfo = parseDate.day == todaysDate.day
                 ? "$count Game(s) Today"
                 : "$count Game(s) on ${formatDate(parseDate.toString())[0]}";
 
-            return count == 0
-                ? Column(
-                    children: [
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Card(
-                        margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        elevation: 5,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('No games listed'),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      refreshGames();
-                                    });
-                                  },
-                                  icon: Icon(Icons.refresh))
-                            ]),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  )
-                : Column(children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.sports_basketball_sharp,
-                                color: Colors.blue,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                dateInfo,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.refresh),
-                                onPressed: () {
-                                  setState(() {
-                                    refreshGames();
-                                  });
-                                },
-                              ),
-                            ]),
-                      ),
-                    ),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: gamesInProgress.length > 4
-                            ? 4
-                            : gamesInProgress.length,
-                        itemBuilder: (context, index) {
-                          return InProgressGameCardDashboard(
-                            game: gamesInProgress[index],
-                          );
-                        }),
-                    gamesInProgress.length > 0
-                        ? SizedBox(
-                            height: 10,
-                          )
-                        : SizedBox(),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: gamesCompleted.length > 4
-                            ? 4
-                            : gamesCompleted.length,
-                        itemBuilder: (context, index) {
-                          return CompletedGameCardDashboard(
-                            game: gamesCompleted[index],
-                          );
-                        }),
-                    gamesCompleted.length > 0
-                        ? SizedBox(
-                            height: 10,
-                          )
-                        : SizedBox(),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount:
-                            gamesWaiting.length > 4 ? 4 : gamesWaiting.length,
-                        itemBuilder: (context, index) {
-                          return UpcomingGameCardDashboard(
-                            game: gamesWaiting[index],
-                          );
-                        })
-                  ]);
+            return Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_circle_left, color: Colors.blue),
+                  onPressed: () {
+                    setState(() {
+                      prevDay();
+                    });
+                  },
+                ),
+                IconButton(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  icon: Icon(
+                    Icons.calendar_today,
+                    color: Colors.blue,
+                    size: 22.0,
+                  ),
+                  onPressed: () async {
+                    DateTime date = await selectDate();
+                    if (date != null) {
+                      setState(
+                          () => {handleNewDate(Utils.getDate(date), context)});
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_circle_right, color: Colors.blue),
+                  onPressed: () {
+                    setState(() {
+                      nextDay();
+                    });
+                  },
+                )
+              ]),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Icon(
+                    Icons.sports_basketball_sharp,
+                    color: Colors.blue,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    dateInfo,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ]),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: gamesInProgress.length,
+                  itemBuilder: (context, index) {
+                    return InProgressGameCardDashboard(
+                      game: gamesInProgress[index],
+                    );
+                  }),
+              gamesInProgress.length > 0
+                  ? SizedBox(
+                      height: 10,
+                    )
+                  : SizedBox(),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: gamesCompleted.length,
+                  itemBuilder: (context, index) {
+                    return CompletedGameCardDashboard(
+                      game: gamesCompleted[index],
+                    );
+                  }),
+              gamesCompleted.length > 0
+                  ? SizedBox(
+                      height: 10,
+                    )
+                  : SizedBox(),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: gamesWaiting.length,
+                  itemBuilder: (context, index) {
+                    return UpcomingGameCardDashboard(
+                      game: gamesWaiting[index],
+                    );
+                  })
+            ]);
           } else if (snapshot.connectionState == ConnectionState.done) {
             return Column(children: [
               SizedBox(
@@ -234,8 +221,24 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
   void handleNewDate(String date, BuildContext context) {
     DateTime dt = DateTime.parse(date);
-    print("Handle date function: $dt");
+    //print("Handle date function: $dt");
     Provider.of<JsonFiles>(context, listen: false).setSelectedDate(dt);
+    refreshGames();
+  }
+
+  void nextDay() {
+    var dt = Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
+    DateTime date = DateTime.parse(dt);
+    date = date.add(Duration(days: 1));
+    Provider.of<JsonFiles>(context, listen: false).setSelectedDate(date);
+    refreshGames();
+  }
+
+  void prevDay() {
+    var dt = Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
+    DateTime date = DateTime.parse(dt);
+    date = date.add(Duration(days: -1));
+    Provider.of<JsonFiles>(context, listen: false).setSelectedDate(date);
     refreshGames();
   }
 
@@ -252,6 +255,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
     Future<dynamic> empty;
 
+    // I can't remember why I put this in here...
     if (!ModalRoute.of(context).isCurrent) {
       return empty;
     }
@@ -300,4 +304,22 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
     return games;
   }
+
+  Future<DateTime> selectDate() async {
+    return await showDatePicker(
+      context: context,
+      initialDatePickerMode: DatePickerMode.day,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(Duration(days: 90)),
+      lastDate: DateTime.now().add(Duration(days: 90)),
+    );
+  }
+}
+
+class Utils {
+  static String getDayOfWeek(DateTime date) => DateFormat('EEE').format(date);
+
+  static String getDayOfMonth(DateTime date) => DateFormat('dd').format(date);
+
+  static String getDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 }

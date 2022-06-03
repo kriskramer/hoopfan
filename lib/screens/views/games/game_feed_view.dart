@@ -94,6 +94,7 @@ class _GameFeedViewState extends State<GameFeedView> {
               DataSnapshot dataValues = snapshot.data.snapshot;
               Map<dynamic, dynamic> values = dataValues.value;
               if (values == null) {
+                populateGameData(gameId, widget.game);
                 return Column(children: [
                   Text("No data"),
                 ]);
@@ -160,7 +161,19 @@ class _GameFeedViewState extends State<GameFeedView> {
                 ]),
               );
             } else {
-              return NoConnection();
+              return gameStatus > 1
+                  ? ElevatedButton(
+                      onPressed: () {
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => GameView(game: gameData)),
+                        // );
+                        var date = gameData["homeStartDate"];
+                        getPbpData(date, gameId);
+                      },
+                      child: Text("Refresh"))
+                  : SizedBox();
             }
           }),
       floatingActionButton: _buildFab(context, stats),
@@ -298,6 +311,58 @@ class _GameFeedViewState extends State<GameFeedView> {
     Duration duration = start.difference(DateTime.now());
 
     return duration.inMinutes;
+  }
+
+  Future<void> getPbpData(String date, String gameId) async {
+    // Get the current period's pbp feed in real-time
+    var currentPeriod = gameData["period"]["current"];
+
+    for (int i = 1; i <= currentPeriod; i++) {
+      var _pbpFeed =
+          await Network.getJson(Urls.nbaPlayByPlay(date, gameId, i.toString()));
+      //print(_pbpFeed);
+      var plays = _pbpFeed["plays"];
+
+      if (plays.length > 0) {
+        for (int j = 0; j < plays.length; j++) {
+          print(plays[j]);
+          var pbp = plays[j];
+
+          DatabaseReference pbpFeed = FirebaseDatabase.instance.ref(
+              'gameFeed/' +
+                  gameId +
+                  '/' +
+                  DateTime.now().millisecondsSinceEpoch.toString());
+
+          pbpFeed.set({
+            "type": "1",
+            "period": i,
+            "clock": pbp["clock"],
+            "description": pbp["description"],
+            "hTeamScore": pbp["hTeamScore"],
+            "vTeamScore": pbp["vTeamScore"],
+            "eventMsgType": pbp["eventMsgType"],
+            "personId": pbp["personId"],
+            "teamId": pbp["teamId"],
+            "isScoreChange": pbp["isScoreChange"],
+            "isVideoAvailable": pbp["isVideoAvailable"],
+            "formatted": pbp["formatted"]
+          });
+        }
+      }
+    }
+  }
+
+  void populateGameData(String gameId, dynamic gameData) async {
+    var dt = gameData["homeStartDate"];
+
+    var _gameData = await Network.getJson(
+        "http://data.nba.net/prod/v1/${dt}/${gameId}_boxscore.json");
+
+    DatabaseReference gameDb =
+        FirebaseDatabase.instance.ref('gameData/' + gameId);
+
+    gameDb.set({"data": _gameData});
   }
 }
 
