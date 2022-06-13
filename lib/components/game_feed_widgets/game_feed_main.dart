@@ -9,6 +9,8 @@ import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/screens/views/games/game_view.dart';
+import 'package:hoop/services/network.dart';
+import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class GameFeedMain extends StatefulWidget {
@@ -54,16 +56,20 @@ class _GameFeedMainState extends State<GameFeedMain> {
             if (values == null) {
               return Column(children: [
                 Text("No data yet..."),
-                Text("Want to go back to the old Game View?"),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GameView(game: gameData)),
-                      );
-                    },
-                    child: Text("Old Game View")),
+                gameStatus > 1
+                    ? ElevatedButton(
+                        onPressed: () {
+                          var date = widget.gameData["homeStartDate"];
+                          getPbpData(date, widget.gameId);
+                        },
+                        child: Text("Refresh"))
+                    : Text(
+                        getStartCountdown(widget.gameData),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.purple,
+                            fontWeight: FontWeight.bold),
+                      ),
                 SizedBox(
                   height: 25,
                 ),
@@ -156,5 +162,63 @@ class _GameFeedMainState extends State<GameFeedMain> {
         ),
       ),
     );
+  }
+
+  String getStartCountdown(dynamic game) {
+    String startTimeUTC = game["startTimeUTC"];
+
+    if (startTimeUTC == "") {
+      return "";
+    }
+
+    DateTime start = DateTime.parse(startTimeUTC);
+
+    Duration duration = start.difference(DateTime.now());
+
+    if (duration.inMinutes > 0) {
+      return "${duration.inMinutes.toString()} min to go!";
+    }
+
+    return "";
+  }
+
+  Future<void> getPbpData(String date, String gameId) async {
+    // Get the current period's pbp feed in real-time
+    var currentPeriod = widget.gameData["period"]["current"];
+
+    for (int i = 1; i <= currentPeriod; i++) {
+      var _pbpFeed =
+          await Network.getJson(Urls.nbaPlayByPlay(date, gameId, i.toString()));
+      //print(_pbpFeed);
+      var plays = _pbpFeed["plays"];
+
+      if (plays.length > 0) {
+        for (int j = 0; j < plays.length; j++) {
+          print(plays[j]);
+          var pbp = plays[j];
+
+          DatabaseReference pbpFeed = FirebaseDatabase.instance.ref(
+              'gameFeed/' +
+                  gameId +
+                  '/' +
+                  DateTime.now().millisecondsSinceEpoch.toString());
+
+          pbpFeed.set({
+            "type": "1",
+            "period": i,
+            "clock": pbp["clock"],
+            "description": pbp["description"],
+            "hTeamScore": pbp["hTeamScore"],
+            "vTeamScore": pbp["vTeamScore"],
+            "eventMsgType": pbp["eventMsgType"],
+            "personId": pbp["personId"],
+            "teamId": pbp["teamId"],
+            "isScoreChange": pbp["isScoreChange"],
+            "isVideoAvailable": pbp["isVideoAvailable"],
+            "formatted": pbp["formatted"]
+          });
+        }
+      }
+    }
   }
 }

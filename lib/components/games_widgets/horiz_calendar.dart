@@ -145,8 +145,8 @@ class _CalendarState extends State<HorizontalCalendar> {
       initialDatePickerMode: DatePickerMode.day,
       initialDate: selecteDate,
       firstDate:
-          widget.initialDate ?? DateTime.now().subtract(Duration(days: 30)),
-      lastDate: widget.lastDate ?? DateTime.now().add(Duration(days: 30)),
+          widget.initialDate ?? DateTime.now().subtract(Duration(days: 90)),
+      lastDate: widget.lastDate ?? DateTime.now().add(Duration(days: 90)),
     );
   }
 }

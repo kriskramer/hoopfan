@@ -19,9 +19,7 @@ class Roster extends StatelessWidget {
               DataCell(
                   Text(
                     "${player["firstName"]} ${player["lastName"]}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ), onTap: () {
                 Navigator.push(
                   ctx,

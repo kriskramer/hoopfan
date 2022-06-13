@@ -41,7 +41,7 @@ class GameFeedLeadTrend extends StatelessWidget {
 
       items.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Expanded(
-            flex: 18,
+            flex: 16,
             child: Row(
               children: [
                 Text(
@@ -56,7 +56,7 @@ class GameFeedLeadTrend extends StatelessWidget {
               ],
             )),
         Expanded(
-          flex: 5,
+          flex: 8,
           child: lti.isVisitorLead()
               ? Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   Text(
@@ -70,7 +70,7 @@ class GameFeedLeadTrend extends StatelessWidget {
               : Text(''),
         ),
         Expanded(
-          flex: 72,
+          flex: 68,
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -126,7 +126,7 @@ class GameFeedLeadTrend extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 10,
+          flex: 8,
           child: lti.isHomeLead()
               ? Row(children: [
                   SizedBox(

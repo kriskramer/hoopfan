@@ -101,17 +101,17 @@ class _GameSettingsState extends State<GameSettings> {
                 ],
               ),
               SizedBox(height: 20),
-              Text("Want to go back to the old Game View?"),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              GameView(game: widget.gameData)),
-                    );
-                  },
-                  child: Text("Old Game View"))
+              // Text("Want to go back to the old Game View?"),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.pushReplacement(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) =>
+              //                 GameView(game: widget.gameData)),
+              //       );
+              //     },
+              //     child: Text("Old Game View"))
             ],
           ),
         ));

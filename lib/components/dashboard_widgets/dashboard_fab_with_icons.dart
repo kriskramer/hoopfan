@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 // https://stackoverflow.com/questions/46480221/flutter-floating-action-button-with-speed-dail
-class FabWithIcons extends StatefulWidget {
-  FabWithIcons({this.icons, this.onIconTapped});
+class DashboardFabWithIcons extends StatefulWidget {
+  DashboardFabWithIcons({this.icons, this.onIconTapped});
   final List<IconData> icons;
   ValueChanged<int> onIconTapped;
   @override
-  State createState() => FabWithIconsState();
+  State createState() => DashboardFabWithIconsState();
 }
 
-class FabWithIconsState extends State<FabWithIcons>
+class DashboardFabWithIconsState extends State<DashboardFabWithIcons>
     with TickerProviderStateMixin {
   AnimationController _controller;
 
@@ -37,8 +37,8 @@ class FabWithIconsState extends State<FabWithIcons>
   }
 
   Widget _buildChild(int index) {
-    Color backgroundColor = Colors.blueGrey[50]; //Theme.of(context).cardColor;
-    Color foregroundColor = Theme.of(context).accentColor;
+    Color backgroundColor = Colors.orange[500]; //Theme.of(context).cardColor;
+    Color foregroundColor = Colors.white; //Theme.of(context).accentColor;
     return Container(
       height: 70.0,
       width: 56.0,
@@ -62,17 +62,17 @@ class FabWithIconsState extends State<FabWithIcons>
 
   Widget _buildFab() {
     return FloatingActionButton(
-      onPressed: () {
-        if (_controller.isDismissed) {
-          _controller.forward();
-        } else {
-          _controller.reverse();
-        }
-      },
-      tooltip: 'Increment',
-      child: Icon(Icons.add),
-      elevation: 2.0,
-    );
+        onPressed: () {
+          if (_controller.isDismissed) {
+            _controller.forward();
+          } else {
+            _controller.reverse();
+          }
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+        elevation: 4.0,
+        backgroundColor: Colors.orange);
   }
 
   void _onTapped(int index) {

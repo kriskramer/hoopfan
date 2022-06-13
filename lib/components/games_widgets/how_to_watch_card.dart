@@ -32,7 +32,7 @@ class HowToWatchCard extends StatelessWidget {
   }
 
   String getHowToWatchBroadcast(dynamic game) {
-    String howToWatch = "";
+    String howToWatch = "Not yet listed";
     String nat, v, h;
 
     if (game["watch"] == null) {
