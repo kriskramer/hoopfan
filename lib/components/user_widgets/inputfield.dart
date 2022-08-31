@@ -111,8 +111,8 @@ class _InputFieldState extends State<InputField> {
             icon: Icon(
               widget.fieldType == FieldType.password
                   ? _hidePassword
-                      ? FluentIcons.eye_hide_24_regular
-                      : FluentIcons.eye_show_24_regular
+                      ? FluentIcons.eye_24_regular
+                      : FluentIcons.eye_24_filled
                   : null,
             ),
             onPressed: () {
