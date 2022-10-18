@@ -40,9 +40,11 @@ class TeamScheduleSmall extends StatelessWidget {
           }
           list.add(SizedBox(height: 8));
           list.add(Text("Next 3 Games", style: TextStyle(fontSize: 16)));
-          for (int i = 0; i < 3; i++) {
-            if (listUpcoming[i] != null) {
-              list.add(getGame(listUpcoming[i], context));
+          if (listUpcoming.length > 0) {
+            for (int i = 0; i < 3; i++) {
+              if (listUpcoming[i] != null) {
+                list.add(getGame(listUpcoming[i], context));
+              }
             }
           }
 

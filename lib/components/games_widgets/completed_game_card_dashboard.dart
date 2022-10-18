@@ -61,10 +61,13 @@ class CompletedGameCardDashboard extends StatelessWidget {
                   CachedLogo(
                       radius: 35,
                       url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
-                  Text(
-                    "(${vTeam.wins}-${vTeam.losses})",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 16),
-                  ),
+                  vTeam != null
+                      ? Text(
+                          "(${vTeam.win}-${vTeam.loss})",
+                          style:
+                              TextStyle(color: Colors.grey[700], fontSize: 16),
+                        )
+                      : Text(""),
                   Column(children: [
                     Text(
                       formatDate(game["startDateEastern"].toString())[0],

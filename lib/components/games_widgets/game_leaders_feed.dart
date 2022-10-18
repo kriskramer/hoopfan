@@ -53,6 +53,9 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
             leaders.clear();
             //print('reloading game_view data');
             var gameData = snapshot.data["basicGameData"];
+            if (snapshot.data["stats"] == null) {
+              return Text("");
+            }
             var stats = snapshot.data["stats"];
 
             dynamic hTeam = stats["hTeam"]["leaders"];

@@ -12,7 +12,9 @@ class LeagueStanding {
   var division;
   var divisionRecord;
   var divisionRank;
+  var win;
   var wins;
+  var loss;
   var losses;
   var winPct;
   var leagueRank;

@@ -5,7 +5,7 @@ import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/models/player_box_score.dart';
 
 class JsonFiles with ChangeNotifier {
-  String _year = "2021";
+  String _year = "2022";
   String _seasonStage = "2";
   var _teamStats;
   var _seasons;
