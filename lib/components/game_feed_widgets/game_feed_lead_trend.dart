@@ -12,8 +12,10 @@ class GameFeedLeadTrend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var vTeamColor = ConstantHelper.getTeamColor(game["vTeam"]["teamId"]);
-    var hTeamColor = ConstantHelper.getTeamColor(game["hTeam"]["teamId"]);
+    var vTeamColor =
+        ConstantHelper.getTeamColor(game["awayTeam"]["teamId"].toString());
+    var hTeamColor =
+        ConstantHelper.getTeamColor(game["homeTeam"]["teamId"].toString());
 
     String gameId = game["gameId"];
 
@@ -33,10 +35,10 @@ class GameFeedLeadTrend extends StatelessWidget {
       }
 
       LeadTrackerItem lti = new LeadTrackerItem(
-          clock: element.clock,
+          clock: element.clockFormatted(),
           period: element.period,
-          vScore: int.parse(element.vTeamScore),
-          hScore: int.parse(element.hTeamScore),
+          vScore: element.vTeamScore,
+          hScore: element.hTeamScore,
           isScoreChange: true);
 
       items.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -70,7 +72,7 @@ class GameFeedLeadTrend extends StatelessWidget {
               : Text(''),
         ),
         Expanded(
-          flex: 68,
+          flex: 65,
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),

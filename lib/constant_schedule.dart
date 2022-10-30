@@ -247,7 +247,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0012100005",
         "seasonStageId": 1,
-        "gameUrlCode": "20211004/NOPMIN",
+        "gameUrlCode": "20211004/NOPmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -1249,7 +1249,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0012100030",
         "seasonStageId": 1,
-        "gameUrlCode": "20211008/MINDEN",
+        "gameUrlCode": "20211008/minDEN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -1821,7 +1821,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0012100045",
         "seasonStageId": 1,
-        "gameUrlCode": "20211011/MINLAC",
+        "gameUrlCode": "20211011/minLAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -1989,7 +1989,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0012100049",
         "seasonStageId": 1,
-        "gameUrlCode": "20211013/MEMIND",
+        "gameUrlCode": "20211013/MEminD",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -2249,7 +2249,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0012100056",
         "seasonStageId": 1,
-        "gameUrlCode": "20211014/MINBKN",
+        "gameUrlCode": "20211014/minBKN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -2933,7 +2933,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100008",
         "seasonStageId": 2,
-        "gameUrlCode": "20211020/HOUMIN",
+        "gameUrlCode": "20211020/HOUmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -3789,7 +3789,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100031",
         "seasonStageId": 2,
-        "gameUrlCode": "20211023/NOPMIN",
+        "gameUrlCode": "20211023/NOPmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -4379,7 +4379,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100047",
         "seasonStageId": 2,
-        "gameUrlCode": "20211025/NOPMIN",
+        "gameUrlCode": "20211025/NOPmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -4865,7 +4865,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100060",
         "seasonStageId": 2,
-        "gameUrlCode": "20211027/MINMIL",
+        "gameUrlCode": "20211027/minMIL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -5861,7 +5861,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100087",
         "seasonStageId": 2,
-        "gameUrlCode": "20211030/DENMIN",
+        "gameUrlCode": "20211030/DENmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -6375,7 +6375,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100101",
         "seasonStageId": 2,
-        "gameUrlCode": "20211101/ORLMIN",
+        "gameUrlCode": "20211101/ORLmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -6893,7 +6893,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100115",
         "seasonStageId": 2,
-        "gameUrlCode": "20211103/LACMIN",
+        "gameUrlCode": "20211103/LACmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -7415,7 +7415,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100129",
         "seasonStageId": 2,
-        "gameUrlCode": "20211105/LACMIN",
+        "gameUrlCode": "20211105/LACmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -8157,7 +8157,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100149",
         "seasonStageId": 2,
-        "gameUrlCode": "20211108/MINMEM",
+        "gameUrlCode": "20211108/minMEM",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -8895,7 +8895,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100169",
         "seasonStageId": 2,
-        "gameUrlCode": "20211110/MINGSW",
+        "gameUrlCode": "20211110/minGSW",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -9457,7 +9457,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100184",
         "seasonStageId": 2,
-        "gameUrlCode": "20211112/MINLAL",
+        "gameUrlCode": "20211112/minLAL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -9719,7 +9719,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100191",
         "seasonStageId": 2,
-        "gameUrlCode": "20211113/MINLAC",
+        "gameUrlCode": "20211113/minLAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -10263,7 +10263,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100206",
         "seasonStageId": 2,
-        "gameUrlCode": "20211115/PHXMIN",
+        "gameUrlCode": "20211115/PHXmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -10785,7 +10785,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100220",
         "seasonStageId": 2,
-        "gameUrlCode": "20211117/SACMIN",
+        "gameUrlCode": "20211117/SACmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -11041,7 +11041,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100227",
         "seasonStageId": 2,
-        "gameUrlCode": "20211118/SASMIN",
+        "gameUrlCode": "20211118/SASmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -11709,7 +11709,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100245",
         "seasonStageId": 2,
-        "gameUrlCode": "20211120/MEMMIN",
+        "gameUrlCode": "20211120/MEMmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -12219,7 +12219,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100259",
         "seasonStageId": 2,
-        "gameUrlCode": "20211122/MINNOP",
+        "gameUrlCode": "20211122/minNOP",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -12777,7 +12777,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100274",
         "seasonStageId": 2,
-        "gameUrlCode": "20211124/MIAMIN",
+        "gameUrlCode": "20211124/MIAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -13033,7 +13033,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100281",
         "seasonStageId": 2,
-        "gameUrlCode": "20211126/MINCHA",
+        "gameUrlCode": "20211126/minCHA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -13435,7 +13435,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100292",
         "seasonStageId": 2,
-        "gameUrlCode": "20211127/MINPHI",
+        "gameUrlCode": "20211127/minPHI",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -14057,7 +14057,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100309",
         "seasonStageId": 2,
-        "gameUrlCode": "20211129/INDMIN",
+        "gameUrlCode": "20211129/INDmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -14499,7 +14499,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100321",
         "seasonStageId": 2,
-        "gameUrlCode": "20211201/MINWAS",
+        "gameUrlCode": "20211201/minWAS",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -15061,7 +15061,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100336",
         "seasonStageId": 2,
-        "gameUrlCode": "20211203/MINBKN",
+        "gameUrlCode": "20211203/minBKN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -15899,7 +15899,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100359",
         "seasonStageId": 2,
-        "gameUrlCode": "20211206/ATLMIN",
+        "gameUrlCode": "20211206/ATLmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -16453,7 +16453,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100374",
         "seasonStageId": 2,
-        "gameUrlCode": "20211208/UTAMIN",
+        "gameUrlCode": "20211208/UTAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -16935,7 +16935,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100387",
         "seasonStageId": 2,
-        "gameUrlCode": "20211210/CLEMIN",
+        "gameUrlCode": "20211210/CLEmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -17483,7 +17483,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100402",
         "seasonStageId": 2,
-        "gameUrlCode": "20211212/MINPOR",
+        "gameUrlCode": "20211212/minPOR",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -18299,7 +18299,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100424",
         "seasonStageId": 2,
-        "gameUrlCode": "20211215/MINDEN",
+        "gameUrlCode": "20211215/minDEN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -18745,7 +18745,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100436",
         "seasonStageId": 2,
-        "gameUrlCode": "20211217/LALMIN",
+        "gameUrlCode": "20211217/LALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -19443,7 +19443,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100455",
         "seasonStageId": 2,
-        "gameUrlCode": "20211219/DALMIN",
+        "gameUrlCode": "20211219/DALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -19921,7 +19921,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100468",
         "seasonStageId": 2,
-        "gameUrlCode": "20211221/MINDAL",
+        "gameUrlCode": "20211221/minDAL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -20515,7 +20515,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100484",
         "seasonStageId": 2,
-        "gameUrlCode": "20211223/MINUTA",
+        "gameUrlCode": "20211223/minUTA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -21225,7 +21225,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100503",
         "seasonStageId": 2,
-        "gameUrlCode": "20211227/BOSMIN",
+        "gameUrlCode": "20211227/BOSmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -21559,7 +21559,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100512",
         "seasonStageId": 2,
-        "gameUrlCode": "20211228/NYKMIN",
+        "gameUrlCode": "20211228/NYKmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -22481,7 +22481,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100537",
         "seasonStageId": 2,
-        "gameUrlCode": "20211231/MINUTA",
+        "gameUrlCode": "20211231/minUTA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -23003,7 +23003,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100551",
         "seasonStageId": 2,
-        "gameUrlCode": "20220102/MINLAL",
+        "gameUrlCode": "20220102/minLAL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -23371,7 +23371,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100561",
         "seasonStageId": 2,
-        "gameUrlCode": "20220103/MINLAC",
+        "gameUrlCode": "20220103/minLAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -23855,7 +23855,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100574",
         "seasonStageId": 2,
-        "gameUrlCode": "20220105/OKCMIN",
+        "gameUrlCode": "20220105/OKCmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -24341,7 +24341,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100587",
         "seasonStageId": 2,
-        "gameUrlCode": "20220107/MINOKC",
+        "gameUrlCode": "20220107/minOKC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -24819,7 +24819,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100600",
         "seasonStageId": 2,
-        "gameUrlCode": "20220109/MINHOU",
+        "gameUrlCode": "20220109/minHOU",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -25373,7 +25373,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100615",
         "seasonStageId": 2,
-        "gameUrlCode": "20220111/MINNOP",
+        "gameUrlCode": "20220111/minNOP",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -25857,7 +25857,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100628",
         "seasonStageId": 2,
-        "gameUrlCode": "20220113/MINMEM",
+        "gameUrlCode": "20220113/minMEM",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -26741,7 +26741,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100652",
         "seasonStageId": 2,
-        "gameUrlCode": "20220116/GSWMIN",
+        "gameUrlCode": "20220116/GSWmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -27259,7 +27259,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100666",
         "seasonStageId": 2,
-        "gameUrlCode": "20220118/MINNYK",
+        "gameUrlCode": "20220118/minNYK",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -27411,7 +27411,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100670",
         "seasonStageId": 2,
-        "gameUrlCode": "20220119/MINATL",
+        "gameUrlCode": "20220119/minATL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -28741,7 +28741,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100706",
         "seasonStageId": 2,
-        "gameUrlCode": "20220123/BKNMIN",
+        "gameUrlCode": "20220123/BKNmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -29299,7 +29299,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100721",
         "seasonStageId": 2,
-        "gameUrlCode": "20220125/MINPOR",
+        "gameUrlCode": "20220125/minPOR",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -29781,7 +29781,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100734",
         "seasonStageId": 2,
-        "gameUrlCode": "20220127/MINGSW",
+        "gameUrlCode": "20220127/minGSW",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -30113,7 +30113,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100743",
         "seasonStageId": 2,
-        "gameUrlCode": "20220128/MINPHX",
+        "gameUrlCode": "20220128/minPHX",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -30627,7 +30627,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100757",
         "seasonStageId": 2,
-        "gameUrlCode": "20220130/UTAMIN",
+        "gameUrlCode": "20220130/UTAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -31105,7 +31105,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100770",
         "seasonStageId": 2,
-        "gameUrlCode": "20220201/DENMIN",
+        "gameUrlCode": "20220201/DENmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -31549,7 +31549,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100782",
         "seasonStageId": 2,
-        "gameUrlCode": "20220203/MINDET",
+        "gameUrlCode": "20220203/minDET",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -32329,7 +32329,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100803",
         "seasonStageId": 2,
-        "gameUrlCode": "20220206/DETMIN",
+        "gameUrlCode": "20220206/DETmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -33107,7 +33107,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100824",
         "seasonStageId": 2,
-        "gameUrlCode": "20220208/MINSAC",
+        "gameUrlCode": "20220208/minSAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -33333,7 +33333,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100830",
         "seasonStageId": 2,
-        "gameUrlCode": "20220209/MINSAC",
+        "gameUrlCode": "20220209/minSAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -33815,7 +33815,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100843",
         "seasonStageId": 2,
-        "gameUrlCode": "20220211/MINCHI",
+        "gameUrlCode": "20220211/minCHI",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -34329,7 +34329,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100857",
         "seasonStageId": 2,
-        "gameUrlCode": "20220213/MININD",
+        "gameUrlCode": "20220213/minIND",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -34847,7 +34847,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100871",
         "seasonStageId": 2,
-        "gameUrlCode": "20220215/CHAMIN",
+        "gameUrlCode": "20220215/CHAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -35179,7 +35179,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100880",
         "seasonStageId": 2,
-        "gameUrlCode": "20220216/TORMIN",
+        "gameUrlCode": "20220216/TORmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -35625,7 +35625,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100892",
         "seasonStageId": 2,
-        "gameUrlCode": "20220224/MEMMIN",
+        "gameUrlCode": "20220224/MEMmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -35959,7 +35959,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100901",
         "seasonStageId": 2,
-        "gameUrlCode": "20220225/PHIMIN",
+        "gameUrlCode": "20220225/PHImin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -36669,7 +36669,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100920",
         "seasonStageId": 2,
-        "gameUrlCode": "20220228/MINCLE",
+        "gameUrlCode": "20220228/minCLE",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -37039,7 +37039,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100930",
         "seasonStageId": 2,
-        "gameUrlCode": "20220301/GSWMIN",
+        "gameUrlCode": "20220301/GSWmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -37821,7 +37821,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100951",
         "seasonStageId": 2,
-        "gameUrlCode": "20220304/MINOKC",
+        "gameUrlCode": "20220304/minOKC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -38077,7 +38077,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100958",
         "seasonStageId": 2,
-        "gameUrlCode": "20220305/PORMIN",
+        "gameUrlCode": "20220305/PORmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -38567,7 +38567,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100971",
         "seasonStageId": 2,
-        "gameUrlCode": "20220307/PORMIN",
+        "gameUrlCode": "20220307/PORmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -39123,7 +39123,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100986",
         "seasonStageId": 2,
-        "gameUrlCode": "20220309/OKCMIN",
+        "gameUrlCode": "20220309/OKCmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -39461,7 +39461,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022100995",
         "seasonStageId": 2,
-        "gameUrlCode": "20220311/MINORL",
+        "gameUrlCode": "20220311/minORL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -39831,7 +39831,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101005",
         "seasonStageId": 2,
-        "gameUrlCode": "20220312/MINMIA",
+        "gameUrlCode": "20220312/minMIA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -40537,7 +40537,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101024",
         "seasonStageId": 2,
-        "gameUrlCode": "20220314/MINSAS",
+        "gameUrlCode": "20220314/minSAS",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -40723,7 +40723,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101029",
         "seasonStageId": 2,
-        "gameUrlCode": "20220315/MEMIND",
+        "gameUrlCode": "20220315/MEminD",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -41091,7 +41091,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101039",
         "seasonStageId": 2,
-        "gameUrlCode": "20220316/LALMIN",
+        "gameUrlCode": "20220316/LALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -41795,7 +41795,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101058",
         "seasonStageId": 2,
-        "gameUrlCode": "20220319/MILMIN",
+        "gameUrlCode": "20220319/MILmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -42571,7 +42571,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101079",
         "seasonStageId": 2,
-        "gameUrlCode": "20220321/MINDAL",
+        "gameUrlCode": "20220321/minDAL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -42979,7 +42979,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101090",
         "seasonStageId": 2,
-        "gameUrlCode": "20220323/PHXMIN",
+        "gameUrlCode": "20220323/PHXmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -43497,7 +43497,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101104",
         "seasonStageId": 2,
-        "gameUrlCode": "20220325/DALMIN",
+        "gameUrlCode": "20220325/DALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -43939,7 +43939,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101116",
         "seasonStageId": 2,
-        "gameUrlCode": "20220327/MINBOS",
+        "gameUrlCode": "20220327/minBOS",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -44861,7 +44861,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101141",
         "seasonStageId": 2,
-        "gameUrlCode": "20220330/MINTOR",
+        "gameUrlCode": "20220330/minTOR",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -45529,7 +45529,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101159",
         "seasonStageId": 2,
-        "gameUrlCode": "20220401/MINDEN",
+        "gameUrlCode": "20220401/minDEN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -46051,7 +46051,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101173",
         "seasonStageId": 2,
-        "gameUrlCode": "20220403/MINHOU",
+        "gameUrlCode": "20220403/minHOU",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -46457,7 +46457,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101184",
         "seasonStageId": 2,
-        "gameUrlCode": "20220405/WASMIN",
+        "gameUrlCode": "20220405/WASmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -47015,7 +47015,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101199",
         "seasonStageId": 2,
-        "gameUrlCode": "20220407/SASMIN",
+        "gameUrlCode": "20220407/SASmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -47933,7 +47933,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "0022101224",
         "seasonStageId": 2,
-        "gameUrlCode": "20220410/CHIMIN",
+        "gameUrlCode": "20220410/CHImin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": true,
@@ -49077,7 +49077,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "1522100013",
         "seasonStageId": 2,
-        "gameUrlCode": "20210809/SASMIN",
+        "gameUrlCode": "20210809/SASmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -50021,7 +50021,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "1522100031",
         "seasonStageId": 2,
-        "gameUrlCode": "20210812/CHIMIN",
+        "gameUrlCode": "20210812/CHImin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -50388,7 +50388,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "1522100038",
         "seasonStageId": 2,
-        "gameUrlCode": "20210813/MINMIL",
+        "gameUrlCode": "20210813/minMIL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -51377,7 +51377,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "1522100057",
         "seasonStageId": 2,
-        "gameUrlCode": "20210815/MINPHI",
+        "gameUrlCode": "20210815/minPHI",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -52262,7 +52262,7 @@ dynamic current_season_schedule = {
       {
         "gameId": "1522100074",
         "seasonStageId": 2,
-        "gameUrlCode": "20210817/NOPMIN",
+        "gameUrlCode": "20210817/NOPmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -53140,7 +53140,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0012000010",
         "seasonStageId": 1,
-        "gameUrlCode": "20201212/MEMMIN",
+        "gameUrlCode": "20201212/MEMmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -53772,7 +53772,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0012000023",
         "seasonStageId": 1,
-        "gameUrlCode": "20201214/MEMMIN",
+        "gameUrlCode": "20201214/MEMmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -54406,7 +54406,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0012000036",
         "seasonStageId": 1,
-        "gameUrlCode": "20201217/MINDAL",
+        "gameUrlCode": "20201217/minDAL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -55573,7 +55573,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000018",
         "seasonStageId": 2,
-        "gameUrlCode": "20201223/DETMIN",
+        "gameUrlCode": "20201223/DETmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -56359,7 +56359,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000028",
         "seasonStageId": 2,
-        "gameUrlCode": "20201226/MINUTA",
+        "gameUrlCode": "20201226/minUTA",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -56935,7 +56935,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000040",
         "seasonStageId": 2,
-        "gameUrlCode": "20201227/MINLAL",
+        "gameUrlCode": "20201227/minLAL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -57617,7 +57617,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000054",
         "seasonStageId": 2,
-        "gameUrlCode": "20201229/MINLAC",
+        "gameUrlCode": "20201229/minLAC",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -58579,7 +58579,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000074",
         "seasonStageId": 2,
-        "gameUrlCode": "20210101/WASMIN",
+        "gameUrlCode": "20210101/WASmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -59263,7 +59263,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000088",
         "seasonStageId": 2,
-        "gameUrlCode": "20210103/DENMIN",
+        "gameUrlCode": "20210103/DENmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -60027,7 +60027,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000104",
         "seasonStageId": 2,
-        "gameUrlCode": "20210105/MINDEN",
+        "gameUrlCode": "20210105/minDEN",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -60899,7 +60899,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000122",
         "seasonStageId": 2,
-        "gameUrlCode": "20210107/MINPOR",
+        "gameUrlCode": "20210107/minPOR",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -61673,7 +61673,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000138",
         "seasonStageId": 2,
-        "gameUrlCode": "20210109/SASMIN",
+        "gameUrlCode": "20210109/SASmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -62055,7 +62055,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000147",
         "seasonStageId": 2,
-        "gameUrlCode": "20210110/SASMIN",
+        "gameUrlCode": "20210110/SASmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -62915,7 +62915,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000169",
         "seasonStageId": 2,
-        "gameUrlCode": "20210113/MEMMIN",
+        "gameUrlCode": "20210113/MEMmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -64283,7 +64283,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000205",
         "seasonStageId": 2,
-        "gameUrlCode": "20210118/MINATL",
+        "gameUrlCode": "20210118/minATL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -65013,7 +65013,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000221",
         "seasonStageId": 2,
-        "gameUrlCode": "20210120/ORLMIN",
+        "gameUrlCode": "20210120/ORLmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -65643,7 +65643,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000236",
         "seasonStageId": 2,
-        "gameUrlCode": "20210122/ATLMIN",
+        "gameUrlCode": "20210122/ATLmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -65981,7 +65981,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000246",
         "seasonStageId": 2,
-        "gameUrlCode": "20210123/NOPMIN",
+        "gameUrlCode": "20210123/NOPmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -66889,7 +66889,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000266",
         "seasonStageId": 2,
-        "gameUrlCode": "20210125/MINGSW",
+        "gameUrlCode": "20210125/minGSW",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -67649,7 +67649,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000283",
         "seasonStageId": 2,
-        "gameUrlCode": "20210127/MINGSW",
+        "gameUrlCode": "20210127/minGSW",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -68183,7 +68183,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000294",
         "seasonStageId": 2,
-        "gameUrlCode": "20210129/PHIMIN",
+        "gameUrlCode": "20210129/PHImin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -68999,7 +68999,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000311",
         "seasonStageId": 2,
-        "gameUrlCode": "20210131/CLEMIN",
+        "gameUrlCode": "20210131/CLEmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -69141,7 +69141,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000312",
         "seasonStageId": 2,
-        "gameUrlCode": "20210201/MINCLE",
+        "gameUrlCode": "20210201/minCLE",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -69571,7 +69571,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000322",
         "seasonStageId": 2,
-        "gameUrlCode": "20210202/MEMIND",
+        "gameUrlCode": "20210202/MEminD",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -70095,7 +70095,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000334",
         "seasonStageId": 2,
-        "gameUrlCode": "20210203/MINSAS",
+        "gameUrlCode": "20210203/minSAS",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -70771,7 +70771,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000348",
         "seasonStageId": 2,
-        "gameUrlCode": "20210205/MINOKC",
+        "gameUrlCode": "20210205/minOKC",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -71251,7 +71251,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000359",
         "seasonStageId": 2,
-        "gameUrlCode": "20210206/MINOKC",
+        "gameUrlCode": "20210206/minOKC",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -71827,7 +71827,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000370",
         "seasonStageId": 2,
-        "gameUrlCode": "20210208/MINDAL",
+        "gameUrlCode": "20210208/minDAL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -72597,7 +72597,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000387",
         "seasonStageId": 2,
-        "gameUrlCode": "20210210/LACMIN",
+        "gameUrlCode": "20210210/LACmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -73081,7 +73081,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000395",
         "seasonStageId": 2,
-        "gameUrlCode": "20210212/MINCHA",
+        "gameUrlCode": "20210212/minCHA",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -73897,7 +73897,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000413",
         "seasonStageId": 2,
-        "gameUrlCode": "20210214/MINTOR",
+        "gameUrlCode": "20210214/minTOR",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -74813,7 +74813,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000431",
         "seasonStageId": 2,
-        "gameUrlCode": "20210216/LALMIN",
+        "gameUrlCode": "20210216/LALmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -75151,7 +75151,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000440",
         "seasonStageId": 2,
-        "gameUrlCode": "20210217/INDMIN",
+        "gameUrlCode": "20210217/INDmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -75913,7 +75913,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000454",
         "seasonStageId": 2,
-        "gameUrlCode": "20210219/TORMIN",
+        "gameUrlCode": "20210219/TORmin",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -76445,7 +76445,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000469",
         "seasonStageId": 2,
-        "gameUrlCode": "20210221/MINNYK",
+        "gameUrlCode": "20210221/minNYK",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -77207,7 +77207,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000486",
         "seasonStageId": 2,
-        "gameUrlCode": "20210223/MINMIL",
+        "gameUrlCode": "20210223/minMIL",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -77545,7 +77545,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000493",
         "seasonStageId": 2,
-        "gameUrlCode": "20210224/MINCHI",
+        "gameUrlCode": "20210224/minCHI",
         "statusNum": 3,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -78549,7 +78549,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000517",
         "seasonStageId": 2,
-        "gameUrlCode": "20210227/MINWAS",
+        "gameUrlCode": "20210227/minWAS",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -79171,7 +79171,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000526",
         "seasonStageId": 2,
-        "gameUrlCode": "20210228/PHXMIN",
+        "gameUrlCode": "20210228/PHXmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -80135,7 +80135,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000547",
         "seasonStageId": 2,
-        "gameUrlCode": "20210303/CHAMIN",
+        "gameUrlCode": "20210303/CHAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -81219,7 +81219,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000574",
         "seasonStageId": 2,
-        "gameUrlCode": "20210311/MINNOP",
+        "gameUrlCode": "20210311/minNOP",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -82021,7 +82021,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000591",
         "seasonStageId": 2,
-        "gameUrlCode": "20210313/PORMIN",
+        "gameUrlCode": "20210313/PORmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -82447,7 +82447,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000599",
         "seasonStageId": 2,
-        "gameUrlCode": "20210314/PORMIN",
+        "gameUrlCode": "20210314/PORmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -83249,7 +83249,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000615",
         "seasonStageId": 2,
-        "gameUrlCode": "20210316/MINLAL",
+        "gameUrlCode": "20210316/minLAL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -83905,7 +83905,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000628",
         "seasonStageId": 2,
-        "gameUrlCode": "20210318/MINPHX",
+        "gameUrlCode": "20210318/minPHX",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -84415,7 +84415,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000638",
         "seasonStageId": 2,
-        "gameUrlCode": "20210319/MINPHX",
+        "gameUrlCode": "20210319/minPHX",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -85259,7 +85259,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000654",
         "seasonStageId": 2,
-        "gameUrlCode": "20210322/OKCMIN",
+        "gameUrlCode": "20210322/OKCmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -86149,7 +86149,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000673",
         "seasonStageId": 2,
-        "gameUrlCode": "20210324/DALMIN",
+        "gameUrlCode": "20210324/DALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -86855,7 +86855,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000688",
         "seasonStageId": 2,
-        "gameUrlCode": "20210326/HOUMIN",
+        "gameUrlCode": "20210326/HOUmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -87227,7 +87227,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000696",
         "seasonStageId": 2,
-        "gameUrlCode": "20210327/HOUMIN",
+        "gameUrlCode": "20210327/HOUmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -87837,7 +87837,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000709",
         "seasonStageId": 2,
-        "gameUrlCode": "20210329/MINBKN",
+        "gameUrlCode": "20210329/minBKN",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -88677,7 +88677,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000726",
         "seasonStageId": 2,
-        "gameUrlCode": "20210331/NYKMIN",
+        "gameUrlCode": "20210331/NYKmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -89429,7 +89429,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000741",
         "seasonStageId": 2,
-        "gameUrlCode": "20210402/MINMEM",
+        "gameUrlCode": "20210402/minMEM",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -89847,7 +89847,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000750",
         "seasonStageId": 2,
-        "gameUrlCode": "20210403/MINPHI",
+        "gameUrlCode": "20210403/minPHI",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -90553,7 +90553,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000765",
         "seasonStageId": 2,
-        "gameUrlCode": "20210405/SACMIN",
+        "gameUrlCode": "20210405/SACmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -91113,7 +91113,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000776",
         "seasonStageId": 2,
-        "gameUrlCode": "20210407/MININD",
+        "gameUrlCode": "20210407/minIND",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -91911,7 +91911,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000792",
         "seasonStageId": 2,
-        "gameUrlCode": "20210409/MINBOS",
+        "gameUrlCode": "20210409/minBOS",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -92897,7 +92897,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000812",
         "seasonStageId": 2,
-        "gameUrlCode": "20210411/CHIMIN",
+        "gameUrlCode": "20210411/CHImin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -93135,7 +93135,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000817",
         "seasonStageId": 2,
-        "gameUrlCode": "20210412/BKNMIN",
+        "gameUrlCode": "20210412/BKNmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -93979,7 +93979,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000834",
         "seasonStageId": 2,
-        "gameUrlCode": "20210414/MILMIN",
+        "gameUrlCode": "20210414/MILmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -94873,7 +94873,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000852",
         "seasonStageId": 2,
-        "gameUrlCode": "20210416/MIAMIN",
+        "gameUrlCode": "20210416/MIAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -95633,7 +95633,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000867",
         "seasonStageId": 2,
-        "gameUrlCode": "20210418/MINLAC",
+        "gameUrlCode": "20210418/minLAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -96297,7 +96297,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000880",
         "seasonStageId": 2,
-        "gameUrlCode": "20210420/MINSAC",
+        "gameUrlCode": "20210420/minSAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -96857,7 +96857,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000891",
         "seasonStageId": 2,
-        "gameUrlCode": "20210421/MINSAC",
+        "gameUrlCode": "20210421/minSAC",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -97805,7 +97805,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000909",
         "seasonStageId": 2,
-        "gameUrlCode": "20210424/MINUTA",
+        "gameUrlCode": "20210424/minUTA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -98561,7 +98561,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000923",
         "seasonStageId": 2,
-        "gameUrlCode": "20210426/UTAMIN",
+        "gameUrlCode": "20210426/UTAmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -98937,7 +98937,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000931",
         "seasonStageId": 2,
-        "gameUrlCode": "20210427/MINHOU",
+        "gameUrlCode": "20210427/minHOU",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -99643,7 +99643,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000946",
         "seasonStageId": 2,
-        "gameUrlCode": "20210429/GSWMIN",
+        "gameUrlCode": "20210429/GSWmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -100391,7 +100391,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000962",
         "seasonStageId": 2,
-        "gameUrlCode": "20210501/NOPMIN",
+        "gameUrlCode": "20210501/NOPmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -101803,7 +101803,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022000183",
         "seasonStageId": 2,
-        "gameUrlCode": "20210505/MEMMIN",
+        "gameUrlCode": "20210505/MEMmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -102601,7 +102601,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001005",
         "seasonStageId": 2,
-        "gameUrlCode": "20210507/MINMIA",
+        "gameUrlCode": "20210507/minMIA",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -103449,7 +103449,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001022",
         "seasonStageId": 2,
-        "gameUrlCode": "20210509/MINORL",
+        "gameUrlCode": "20210509/minORL",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -104013,7 +104013,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001033",
         "seasonStageId": 2,
-        "gameUrlCode": "20210511/MINDET",
+        "gameUrlCode": "20210511/minDET",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -105025,7 +105025,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001052",
         "seasonStageId": 2,
-        "gameUrlCode": "20210513/DENMIN",
+        "gameUrlCode": "20210513/DENmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": false,
@@ -105623,7 +105623,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001063",
         "seasonStageId": 2,
-        "gameUrlCode": "20210515/BOSMIN",
+        "gameUrlCode": "20210515/BOSmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": true,
@@ -105991,7 +105991,7 @@ dynamic last_season_schedule = {
       {
         "gameId": "0022001071",
         "seasonStageId": 2,
-        "gameUrlCode": "20210516/DALMIN",
+        "gameUrlCode": "20210516/DALmin",
         "statusNum": 1,
         "extendedStatusNum": 0,
         "isStartTimeTBD": true,

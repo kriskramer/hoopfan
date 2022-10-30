@@ -50,7 +50,7 @@ class _TransactionsState extends State<Transactions> {
               if (_filterByTeam) {
                 for (int i = 0; i < transactions.length; i++) {
                   var tx = transactions[i];
-                  if (tx["TEAM_ID"].toString().replaceAll(".0", "") ==
+                  if (tx["TEAMID"].toString().replaceAll(".0", "") ==
                       _filteredTeamId) {
                     list.add(transactionItem(tx));
                   }
@@ -58,7 +58,7 @@ class _TransactionsState extends State<Transactions> {
               } else if (_filterByPlayer) {
                 for (int i = 0; i < transactions.length; i++) {
                   var tx = transactions[i];
-                  if (tx["PLAYER_ID"].toString().replaceAll(".0", "") ==
+                  if (tx["playerId"].toString().replaceAll(".0", "") ==
                       _filteredPlayerId) {
                     list.add(transactionItem(tx));
                   }
@@ -155,7 +155,7 @@ class _TransactionsState extends State<Transactions> {
               GestureDetector(
                 child: Text(
                   Provider.of<JsonFiles>(context, listen: false).getTeamName(
-                      tx["TEAM_ID"].toString().replaceAll(".0", "")),
+                      tx["TEAMID"].toString().replaceAll(".0", "")),
                   style: TextStyle(
                       color: Colors.blue[800], fontWeight: FontWeight.bold),
                 ),
@@ -164,7 +164,7 @@ class _TransactionsState extends State<Transactions> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => TeamDetails(
-                              nbaTeamId: tx["TEAM_ID"]
+                              nbaTeamId: tx["TEAMID"]
                                   .toString()
                                   .replaceAll(".0", ""))));
                 },
@@ -182,7 +182,7 @@ class _TransactionsState extends State<Transactions> {
                       icon: Icon(Icons.filter_alt),
                       onPressed: () {
                         var teamId =
-                            tx["TEAM_ID"].toString().replaceAll(".0", "");
+                            tx["TEAMID"].toString().replaceAll(".0", "");
                         filterByTeam(teamId);
                       },
                     ),
@@ -195,9 +195,8 @@ class _TransactionsState extends State<Transactions> {
                     GestureDetector(
                       child: Text(
                         Provider.of<JsonFiles>(context, listen: false)
-                            .getPlayerName(tx["PLAYER_ID"]
-                                .toString()
-                                .replaceAll(".0", "")),
+                            .getPlayerName(
+                                tx["playerId"].toString().replaceAll(".0", "")),
                         style: TextStyle(
                             color: Colors.blue[800],
                             fontWeight: FontWeight.bold),
@@ -216,7 +215,7 @@ class _TransactionsState extends State<Transactions> {
                             iconSize: 20,
                             icon: Icon(Icons.filter_alt),
                             onPressed: () {
-                              var playerId = tx["PLAYER_ID"]
+                              var playerId = tx["playerId"]
                                   .toString()
                                   .replaceAll(".0", "");
                               filterByPlayer(playerId);
@@ -234,7 +233,7 @@ class _TransactionsState extends State<Transactions> {
 
   bool isPlayer(dynamic tx, BuildContext context) {
     if (Provider.of<JsonFiles>(context, listen: false)
-            .getPlayerName(tx["PLAYER_ID"].toString().replaceAll(".0", "")) ==
+            .getPlayerName(tx["playerId"].toString().replaceAll(".0", "")) ==
         "") {
       return false;
     } else {

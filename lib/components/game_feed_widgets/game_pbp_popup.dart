@@ -36,7 +36,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     if (boosCount == null) boosCount = 0;
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/${pbp.timestamp}');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/${pbp.timestamp}');
 
     if (pbp == null) {
       return Dialog(
@@ -203,7 +203,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     // happening eventually.
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/$key');
 
     if (cheers == null) {
       cheers = 1;
@@ -231,7 +231,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     }
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/$key');
 
     if (boos == null) {
       boos = 1;

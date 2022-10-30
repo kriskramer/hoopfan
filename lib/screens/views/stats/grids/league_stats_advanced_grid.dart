@@ -56,7 +56,7 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
   DataRow getAdvancedDataRow(AdvancedStatsLeague item, int index) {
     return DataRow(
         color: MaterialStateColor.resolveWith((states) {
-          if (item.TEAM_ID == selectedTeamId) {
+          if (item.TEAMID == selectedTeamId) {
             return Colors.blue[50];
           } else {
             return Colors.white;
@@ -69,12 +69,12 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return TeamDetails(nbaTeamId: item.TEAM_ID.toString());
+                      return TeamDetails(nbaTeamId: item.TEAMID.toString());
                     });
               },
               onTap: () {
                 setState(() {
-                  selectedTeamId = item.TEAM_ID;
+                  selectedTeamId = item.TEAMID;
                 });
               },
               child: Text(item.TEAM_NAME))),
@@ -83,20 +83,20 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
           getDataCell(item.L.toString(), item.L_RANK, item),
           getDataCell(item.W_PCT.toString(), item.W_PCT_RANK, item),
           getDataCell(item.MIN.toString(), item.MIN_RANK, item),
-          getDataCell(item.OFF_RATING.toString(), item.OFF_RATING_RANK, item),
-          getDataCell(item.DEF_RATING.toString(), item.DEF_RATING_RANK, item),
-          getDataCell(item.NET_RATING.toString(), item.NET_RATING_RANK, item),
-          getDataCell(item.AST_PCT.toString(), item.AST_PCT_RANK, item),
+          getDataCell(item.offRating.toString(), item.offRating_RANK, item),
+          getDataCell(item.defRating.toString(), item.defRating_RANK, item),
+          getDataCell(item.netRating.toString(), item.netRating_RANK, item),
+          getDataCell(item.astPct.toString(), item.astPct_RANK, item),
           getDataCell(item.AST_TO.toString(), item.AST_TO_RANK, item),
-          getDataCell(item.AST_RATIO.toString(), item.AST_RATIO_RANK, item),
-          getDataCell(item.OREB_PCT.toString(), item.OREB_PCT_RANK, item),
-          getDataCell(item.DREB_PCT.toString(), item.DREB_PCT_RANK, item),
-          getDataCell(item.REB_PCT.toString(), item.REB_PCT_RANK, item),
-          getDataCell(item.TM_TOV_PCT.toString(), item.TM_TOV_PCT_RANK, item),
-          getDataCell(item.EFG_PCT.toString(), item.EFG_PCT_RANK, item),
-          getDataCell(item.TS_PCT.toString(), item.TS_PCT_RANK, item),
+          getDataCell(item.astRatio.toString(), item.astRatio_RANK, item),
+          getDataCell(item.oRebPct.toString(), item.oRebPct_RANK, item),
+          getDataCell(item.dRebPct.toString(), item.dRebPct_RANK, item),
+          getDataCell(item.rebPct.toString(), item.rebPct_RANK, item),
+          getDataCell(item.tmTovPct.toString(), item.tmTovPct_RANK, item),
+          getDataCell(item.eFgPct.toString(), item.eFgPct_RANK, item),
+          getDataCell(item.tsPct.toString(), item.tsPct_RANK, item),
           getDataCell(item.PACE.toString(), item.PACE_RANK, item),
-          getDataCell(item.PACE_PER40.toString(), 0, item),
+          getDataCell(item.pacePer40.toString(), 0, item),
           getDataCell(item.POSS.toString(), 0, item),
           getDataCell(item.PIE.toString(), item.PIE_RANK, item),
           getDataCell(item.GP_RANK.toString(), item.GP_RANK, item),
@@ -105,22 +105,20 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
           getDataCell(item.W_PCT_RANK.toString(), item.W_PCT_RANK, item),
           getDataCell(item.MIN_RANK.toString(), item.MIN_RANK, item),
           getDataCell(
-              item.OFF_RATING_RANK.toString(), item.OFF_RATING_RANK, item),
+              item.offRating_RANK.toString(), item.offRating_RANK, item),
           getDataCell(
-              item.DEF_RATING_RANK.toString(), item.DEF_RATING_RANK, item),
+              item.defRating_RANK.toString(), item.defRating_RANK, item),
           getDataCell(
-              item.NET_RATING_RANK.toString(), item.NET_RATING_RANK, item),
-          getDataCell(item.AST_PCT_RANK.toString(), item.AST_PCT_RANK, item),
+              item.netRating_RANK.toString(), item.netRating_RANK, item),
+          getDataCell(item.astPct_RANK.toString(), item.astPct_RANK, item),
           getDataCell(item.AST_TO_RANK.toString(), item.AST_TO_RANK, item),
-          getDataCell(
-              item.AST_RATIO_RANK.toString(), item.AST_RATIO_RANK, item),
-          getDataCell(item.OREB_PCT_RANK.toString(), item.OREB_PCT_RANK, item),
-          getDataCell(item.DREB_PCT_RANK.toString(), item.DREB_PCT_RANK, item),
-          getDataCell(item.REB_PCT_RANK.toString(), item.REB_PCT_RANK, item),
-          getDataCell(
-              item.TM_TOV_PCT_RANK.toString(), item.TM_TOV_PCT_RANK, item),
-          getDataCell(item.EFG_PCT_RANK.toString(), item.EFG_PCT_RANK, item),
-          getDataCell(item.TS_PCT_RANK.toString(), item.TS_PCT_RANK, item),
+          getDataCell(item.astRatio_RANK.toString(), item.astRatio_RANK, item),
+          getDataCell(item.oRebPct_RANK.toString(), item.oRebPct_RANK, item),
+          getDataCell(item.dRebPct_RANK.toString(), item.dRebPct_RANK, item),
+          getDataCell(item.rebPct_RANK.toString(), item.rebPct_RANK, item),
+          getDataCell(item.tmTovPct_RANK.toString(), item.tmTovPct_RANK, item),
+          getDataCell(item.eFgPct_RANK.toString(), item.eFgPct_RANK, item),
+          getDataCell(item.tsPct_RANK.toString(), item.tsPct_RANK, item),
           getDataCell(item.PACE_RANK.toString(), item.PACE_RANK, item),
           getDataCell(item.PIE_RANK.toString(), item.PIE_RANK, item),
         ]);
@@ -246,7 +244,7 @@ class _LeagueStatsAdvancedGridState extends State<LeagueStatsAdvancedGrid> {
   DataCell getDataCell(String value, int rank, AdvancedStatsLeague item) {
     return DataCell(Text(value, style: rankColors(rank)), onTap: () {
       setState(() {
-        selectedTeamId = item.TEAM_ID;
+        selectedTeamId = item.TEAMID;
       });
     });
   }

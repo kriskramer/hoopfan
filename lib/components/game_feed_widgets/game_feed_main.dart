@@ -32,7 +32,7 @@ class _GameFeedMainState extends State<GameFeedMain> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
-        FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
+        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}');
     var gameData = widget.gameData;
     var gameStatus = gameData["statusNum"];
 
@@ -90,6 +90,10 @@ class _GameFeedMainState extends State<GameFeedMain> {
                 list.items.add(PbpItem(key, values));
               }
               if (pbp.type == "2" && showChat) {
+                list.items.add(PbpItem(key, values));
+              }
+              // temp fix
+              if (pbp.type == null) {
                 list.items.add(PbpItem(key, values));
               }
             });

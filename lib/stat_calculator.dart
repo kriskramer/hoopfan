@@ -4,8 +4,11 @@ class StatCalculator {
   // True Shooting Percentage methods
   static double getTSPercentGame(dynamic stats) {
     var ts = 0.0;
-    var tsa = 2 * (double.parse(stats["fta"]) * 0.44 + int.parse(stats["fga"]));
-    ts = int.parse(stats["points"]) / tsa;
+    var tsa = 2 *
+        (double.parse(stats["statistics"]["freeThrowsAttempted"].toString()) *
+                0.44 +
+            int.parse(stats["statistics"]["fieldGoalsAttempted"].toString()));
+    ts = int.parse(stats["statistics"]["points"].toString()) / tsa;
     return ts;
   }
 

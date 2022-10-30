@@ -1,40 +1,40 @@
 class GameBoxScoreFourFactors {
-  String GAME_ID;
-  String TEAM_ID;
-  String TEAM_ABBREVIATION;
-  String TEAM_CITY;
-  String PLAYER_ID;
-  String PLAYER_NAME;
-  String START_POSITION;
-  String COMMENT;
+  String gameId;
+  String TEAMID;
+  String teamAbbreviation;
+  String teamCity;
+  String playerId;
+  String playerName;
+  String startPosition;
+  String comment;
   String MIN;
-  double EFG_PCT;
+  double eFgPct;
   double FTA_RATE;
-  double TM_TOV_PCT;
-  double OREB_PCT;
-  double OPP_EFG_PCT;
+  double tmTovPct;
+  double oRebPct;
+  double OPP_eFgPct;
   double OPP_FTA_RATE;
-  double OPP_TM_TOV_PCT;
-  double OPP_OREB_PCT;
+  double OPP_tmTovPct;
+  double OPP_oRebPct;
 
   GameBoxScoreFourFactors(dynamic json) {
-    GAME_ID = json[0];
-    TEAM_ID = json[1].toString();
-    TEAM_ABBREVIATION = json[2];
-    TEAM_CITY = json[3];
-    PLAYER_ID = json[4].toString();
-    PLAYER_NAME = json[5];
-    START_POSITION = json[7];
-    COMMENT = json[8];
+    gameId = json[0];
+    TEAMID = json[1].toString();
+    teamAbbreviation = json[2];
+    teamCity = json[3];
+    playerId = json[4].toString();
+    playerName = json[5];
+    startPosition = json[7];
+    comment = json[8];
     MIN = json[9] == null ? "0" : json[9];
-    EFG_PCT = json[10] == null ? 0.0 : json[10];
+    eFgPct = json[10] == null ? 0.0 : json[10];
     FTA_RATE = json[11] == null ? 0.0 : json[11];
-    TM_TOV_PCT = json[12] == null ? 0.0 : json[12];
-    OREB_PCT = json[13] == null ? 0.0 : json[13];
-    OPP_EFG_PCT = json[14] == null ? 0.0 : json[14];
+    tmTovPct = json[12] == null ? 0.0 : json[12];
+    oRebPct = json[13] == null ? 0.0 : json[13];
+    OPP_eFgPct = json[14] == null ? 0.0 : json[14];
     OPP_FTA_RATE = json[15] == null ? 0.0 : json[15];
-    OPP_TM_TOV_PCT = json[16] == null ? 0.0 : json[16];
-    OPP_OREB_PCT = json[17] == null ? 0.0 : json[17];
+    OPP_tmTovPct = json[16] == null ? 0.0 : json[16];
+    OPP_oRebPct = json[17] == null ? 0.0 : json[17];
   }
 }
 
@@ -52,14 +52,14 @@ class GameBoxScoreFourFactorsList {
   // void sortByOffRtg(bool asc) {
   //   if (asc) {
   //     items.sort((a, b) {
-  //       if (b.OFF_RATING < a.OFF_RATING)
+  //       if (b.offRating < a.offRating)
   //         return 1;
   //       else
   //         return -1;
   //     });
   //   } else {
   //     items.sort((a, b) {
-  //       if (b.OFF_RATING > a.OFF_RATING)
+  //       if (b.offRating > a.offRating)
   //         return 1;
   //       else
   //         return -1;
@@ -70,14 +70,14 @@ class GameBoxScoreFourFactorsList {
   // void sortByDefRtg(bool asc) {
   //   if (asc) {
   //     items.sort((a, b) {
-  //       if (b.DEF_RATING < a.DEF_RATING)
+  //       if (b.defRating < a.defRating)
   //         return 1;
   //       else
   //         return -1;
   //     });
   //   } else {
   //     items.sort((a, b) {
-  //       if (b.DEF_RATING > a.DEF_RATING)
+  //       if (b.defRating > a.defRating)
   //         return 1;
   //       else
   //         return -1;

@@ -33,9 +33,9 @@ class ScoringTrendsDialog2 extends StatelessWidget {
       list.items.add(LeadTrackerItem(
           clock: e.clock,
           period: e.period,
-          isScoreChange: e.isScoreChange,
-          hScore: e.hTeamScore == null ? 0 : int.parse(e.hTeamScore),
-          vScore: e.vTeamScore == null ? 0 : int.parse(e.vTeamScore)));
+          isScoreChange: e.shotResult == "Made",
+          hScore: e.hTeamScore == null ? 0 : e.hTeamScore,
+          vScore: e.vTeamScore == null ? 0 : e.vTeamScore));
     });
 
     RecentPoints rp = list.getRecentPoints(

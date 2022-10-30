@@ -56,7 +56,7 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
   DataRow getBaseDataRow(BaseStatsLeague item, int index) {
     return DataRow(
         color: MaterialStateColor.resolveWith((states) {
-          if (item.TEAM_ID == selectedTeamId) {
+          if (item.TEAMID == selectedTeamId) {
             return Colors.blue[50];
           } else {
             return Colors.white;
@@ -69,12 +69,12 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return TeamDetails(nbaTeamId: item.TEAM_ID.toString());
+                      return TeamDetails(nbaTeamId: item.TEAMID.toString());
                     });
               },
               onTap: () {
                 setState(() {
-                  selectedTeamId = item.TEAM_ID;
+                  selectedTeamId = item.TEAMID;
                 });
               },
               child: Text(item.TEAM_NAME))),
@@ -137,7 +137,7 @@ class _LeagueStatsBaseGridState extends State<LeagueStatsBaseGrid> {
   DataCell getDataCell(String value, int rank, BaseStatsLeague item) {
     return DataCell(Text(value, style: rankColors(rank)), onTap: () {
       setState(() {
-        selectedTeamId = item.TEAM_ID;
+        selectedTeamId = item.TEAMID;
       });
     });
   }

@@ -71,31 +71,31 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                                   height: 16,
                                   child: Image.asset('images/bball.png'))
                               : SizedBox(),
-                          pbp.isVideoAvailable
-                              ? Icon(Icons.play_arrow)
-                              : SizedBox(),
-                          pbp.description.contains("Substitution")
+                          // pbp.isVideoAvailable
+                          //     ? Icon(Icons.play_arrow)
+                          //     : SizedBox(),
+                          pbp.description.contains("SUB ")
                               ? Icon(
                                   Icons.compare_arrows_outlined,
                                   color: Colors.grey,
                                   size: 24,
                                 )
                               : SizedBox(),
-                          pbp.description.contains("Shot: Missed")
+                          pbp.description.contains("MISS")
                               ? Icon(
                                   Icons.close,
                                   color: Colors.red,
                                   size: 24,
                                 )
                               : SizedBox(),
-                          pbp.description.contains("Rebound")
+                          pbp.description.contains("REBOUND")
                               ? Icon(
                                   Icons.sports_handball,
                                   color: Colors.brown,
                                   size: 24,
                                 )
                               : SizedBox(),
-                          pbp.description.contains("Turnover")
+                          pbp.description.contains("TURNOVER")
                               ? Icon(
                                   Icons.call_missed_outgoing,
                                   color: Colors.brown,
@@ -190,7 +190,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
               width: 10,
             ),
             Text(
-              pbp.clock + "  ",
+              pbp.clockFormatted() + "  ",
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.blue,
@@ -201,7 +201,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
       ]);
 
       var teamColor = pbp.isScoreChange
-          ? ConstantHelper.getTeamColor(pbp.teamId)
+          ? ConstantHelper.getTeamColor(pbp.teamId.toString())
           : Colors.white;
 
       container = Container(
@@ -258,8 +258,8 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
       var text = pbp.chat == null ? "" : pbp.chat;
       var fanLevel = pbp.fanLevel;
 
-      var vTeamId = game["vTeam"]["teamId"];
-      var hTeamId = game["hTeam"]["teamId"];
+      var vTeamId = game["awayTeam"]["teamId"];
+      var hTeamId = game["homeTeam"]["teamId"];
 
       var dt = DateTime.fromMillisecondsSinceEpoch(pbp.timestamp);
       //print(dt);
@@ -316,7 +316,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                 gradient: teamId == null
                     ? null
                     : ConstantHelper.getTeamColor_Gradient(
-                        teamId, pbp.fanLevel),
+                        teamId.toString(), pbp.fanLevel),
               ),
             )
           ]),
@@ -410,11 +410,11 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
   }
 
   Widget getTeamCard(String desc, dynamic game) {
-    String vTeamTriCode = game["vTeam"]["triCode"];
-    String hTeamTriCode = game["hTeam"]["triCode"];
+    String vTeamTriCode = game["awayTeam"]["teamTricode"];
+    String hTeamTriCode = game["homeTeam"]["teamTricode"];
 
-    var vTeamId = game["vTeam"]["teamId"];
-    var hTeamId = game["hTeam"]["teamId"];
+    var vTeamId = game["awayTeam"]["teamId"];
+    var hTeamId = game["homeTeam"]["teamId"];
 
     int vTeamIndex = desc.indexOf("[" + vTeamTriCode) + 1;
     int hTeamIndex = desc.indexOf("[" + hTeamTriCode) + 1;
@@ -429,17 +429,13 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
   }
 
   Widget getPlayerImage(PbpItem pbp, dynamic game, dynamic stats) {
+    if (pbp.personId == 0) return SizedBox();
     if (pbp.personId == null) return SizedBox();
-    if (pbp.personId == '') return SizedBox();
-    if (pbp.description.contains('Timeout')) return SizedBox();
-    if (pbp.description.contains('Stoppage')) return SizedBox();
-    if (pbp.description.contains('Start Period')) return SizedBox();
-    if (pbp.description.contains('Challenge')) return SizedBox();
 
     var url =
         "https://cdn.nba.com/headshots/nba/latest/1040x760/${pbp.personId}.png";
 
-    var teamColor = ConstantHelper.getTeamColor(pbp.teamId);
+    var teamColor = ConstantHelper.getTeamColor(pbp.teamId.toString());
     try {
       return GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -449,7 +445,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                   context: context,
                   builder: (context) {
                     return GamePlayerPopup(
-                      personId: pbp.personId,
+                      personId: pbp.personId.toString(),
                       game: game,
                       stats: stats,
                       pbp: pbp,
@@ -494,13 +490,13 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
   String getPbPDescriptionFormatted(PbpItem pbp, dynamic game) {
     String desc = pbp.description;
-    if (pbp.isScoreChange) {
+    if (pbp.shotResult == "Made") {
       ScoreTextBreakdown t = pbp.getTextBreakdown();
       String d = t.shotText;
     }
 
-    String vTeamTriCode = game["vTeam"]["triCode"];
-    String hTeamTriCode = game["hTeam"]["triCode"];
+    String vTeamTriCode = game["awayTeam"]["teamTricode"];
+    String hTeamTriCode = game["homeTeam"]["teamTricode"];
     desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
     desc = desc.replaceAll("[" + hTeamTriCode + "]", "");
     desc = desc.replaceAll("[" + vTeamTriCode + " ", "[");

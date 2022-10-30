@@ -36,9 +36,9 @@ class _GameFeedViewState extends State<GameFeedView> {
   Future<dynamic> _gameData;
   Timer _timer;
   int timerDuration = 30;
-  String vTeamScore;
-  String hTeamScore;
-  String period;
+  int vTeamScore;
+  int hTeamScore;
+  int period;
   String clock;
   var date;
   String gameId;
@@ -70,13 +70,13 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   @override
   Widget build(BuildContext context) {
-    if (vTeamScore == null) vTeamScore = widget.game["vTeam"]["score"];
-    if (hTeamScore == null) hTeamScore = widget.game["hTeam"]["score"];
-    var gameStatus = widget.game["statusNum"];
+    if (vTeamScore == null) vTeamScore = widget.game["awayTeam"]["score"];
+    if (hTeamScore == null) hTeamScore = widget.game["homeTeam"]["score"];
+    var gameStatus = widget.game["gameStatus"];
     gameId = widget.game["gameId"];
 
     DatabaseReference gameDataDb =
-        FirebaseDatabase.instance.ref('gameData/$gameId');
+        FirebaseDatabase.instance.ref('gameData22/$gameId');
 
     return Scaffold(
       bottomNavigationBar: gameStatus > 1
@@ -99,19 +99,19 @@ class _GameFeedViewState extends State<GameFeedView> {
                   Text("No data"),
                 ]);
               }
-              gameData = values["data"]["basicGameData"];
-              stats = values["data"]["stats"];
+              gameData = values["data"]["game"];
+              //stats = values["data"]["gameLeaders"];
 
               var gameActivated = gameData["isGameActivated"];
 
               //gameId = gameData["gameId"];
               date = gameData["gameUrlCode"].toString().split("/")[0];
 
-              vTeamScore = gameData["vTeam"]["score"];
-              hTeamScore = gameData["hTeam"]["score"];
+              vTeamScore = widget.game["awayTeam"]["score"];
+              hTeamScore = widget.game["homeTeam"]["score"];
 
-              Provider.of<JsonFiles>(context, listen: false)
-                  .setCurrentGameStats(gameId, stats);
+              //Provider.of<JsonFiles>(context, listen: false)
+              //    .setCurrentGameStats(gameId, stats);
 
               // if (gameData["isGameActivated"]) {
               //   timerDuration = 25;
@@ -133,10 +133,9 @@ class _GameFeedViewState extends State<GameFeedView> {
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
                       padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: gameStatus > 1 || gameActivated
+                      child: gameStatus == 2
                           ? Column(children: [
-                              InProgressGameHeader(
-                                  gameData: gameData, stats: stats),
+                              InProgressGameHeader(gameData: gameData),
                               WinProbability(gameId: gameId),
                             ])
                           : ScheduledGameHeader(gameData: gameData),
@@ -219,8 +218,8 @@ class _GameFeedViewState extends State<GameFeedView> {
               builder: (context) {
                 return GameFeedChatPopup(
                   gameId: gameId,
-                  vTeamId: gameData["vTeam"]["teamId"],
-                  hTeamId: gameData["hTeam"]["teamId"],
+                  vTeamId: gameData["awayTeam"]["teamId"],
+                  hTeamId: gameData["homeTeam"]["teamId"],
                 );
               });
         }
@@ -242,7 +241,7 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   Future<dynamic> loadGameData() async {
     String gameId = widget.game["gameId"];
-    String gameUrlCode = widget.game["gameUrlCode"];
+    String gameUrlCode = widget.game["gameCode"];
     String gameDate = gameUrlCode.split("/")[0];
     print('game_view network call');
     return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
@@ -278,8 +277,8 @@ class _GameFeedViewState extends State<GameFeedView> {
   }
 
   String getNewsSearchString(dynamic gameData) {
-    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
-    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+    var vTeamName = ConstantHelper.getTeamName(gameData["awayTeam"]["teamId"]);
+    var hTeamName = ConstantHelper.getTeamName(gameData["homeTeam"]["teamId"]);
 
     var search = "nba game " +
         vTeamName +
@@ -292,8 +291,8 @@ class _GameFeedViewState extends State<GameFeedView> {
   }
 
   String getTwitterSearchString(dynamic gameData) {
-    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
-    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+    var vTeamName = ConstantHelper.getTeamName(gameData["awayTeam"]["teamId"]);
+    var hTeamName = ConstantHelper.getTeamName(gameData["homeTeam"]["teamId"]);
 
     var search = vTeamName + " " + hTeamName;
 
@@ -315,7 +314,7 @@ class _GameFeedViewState extends State<GameFeedView> {
 
   Future<void> getPbpData(String date, String gameId) async {
     // Get the current period's pbp feed in real-time
-    var currentPeriod = gameData["period"]["current"];
+    var currentPeriod = gameData["period"];
 
     for (int i = 1; i <= currentPeriod; i++) {
       var _pbpFeed =
@@ -329,7 +328,7 @@ class _GameFeedViewState extends State<GameFeedView> {
           var pbp = plays[j];
 
           DatabaseReference pbpFeed = FirebaseDatabase.instance.ref(
-              'gameFeed/' +
+              'gameFeed22/' +
                   gameId +
                   '/' +
                   DateTime.now().millisecondsSinceEpoch.toString());
@@ -360,7 +359,7 @@ class _GameFeedViewState extends State<GameFeedView> {
         "http://data.nba.net/prod/v1/${dt}/${gameId}_boxscore.json");
 
     DatabaseReference gameDb =
-        FirebaseDatabase.instance.ref('gameData/' + gameId);
+        FirebaseDatabase.instance.ref('gameData22/' + gameId);
 
     gameDb.set({"data": _gameData});
   }

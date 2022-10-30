@@ -20,7 +20,7 @@ class GameStatsView extends StatelessWidget {
   Widget build(BuildContext context) {
     var stats = Provider.of<JsonFiles>(context, listen: false)
         .getCurrentGameStats(gameId);
-    var gameStatus = gameData["statusNum"];
+    var gameStatus = gameData["gameStatus"];
 
     return Scaffold(
         appBar: AppBar(
@@ -41,8 +41,8 @@ class GameStatsView extends StatelessWidget {
                     tabs: [
                       Tab(text: 'Game'),
                       Tab(text: 'Stats'),
-                      Tab(text: gameData["vTeam"]["triCode"]),
-                      Tab(text: gameData["hTeam"]["triCode"]),
+                      Tab(text: gameData["awayTeam"]["teamTricode"]),
+                      Tab(text: gameData["homeTeam"]["teamTricode"]),
                       Tab(
                         text: 'Video',
                       )

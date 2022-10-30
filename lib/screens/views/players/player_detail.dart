@@ -23,7 +23,7 @@ class _PlayerDetailState extends State<PlayerDetail> {
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
     var player = Provider.of<JsonFiles>(context, listen: false)
-        .getPlayer(widget.playerId);
+        .getPlayer(widget.playerId.toString());
 
     var teamId = player["teamId"];
     var teamColor = ConstantHelper.getTeamColor(teamId);
@@ -225,8 +225,8 @@ class _PlayerDetailState extends State<PlayerDetail> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            PlayerDetailedStats(widget.playerId, playerName),
+                        builder: (context) => PlayerDetailedStats(
+                            widget.playerId.toString(), playerName),
                       ));
                 },
                 child: Text(

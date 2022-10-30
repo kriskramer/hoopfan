@@ -116,8 +116,7 @@ class _GameViewState extends State<GameView> {
                     flexibleSpace: Container(
                       padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       child: gameStatus > 1 || gameActivated
-                          ? InProgressGameHeader(
-                              gameData: gameData, stats: stats)
+                          ? InProgressGameHeader(gameData: gameData)
                           : ScheduledGameHeader(gameData: gameData),
                     ),
                     expandedHeight: 120,

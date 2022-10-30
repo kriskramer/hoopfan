@@ -18,7 +18,7 @@ class _GameFeedLatestState extends State<GameFeedLatest> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
-        FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}');
+        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}');
     int comments = 0;
     int pbpCount = 0;
     String lastPbp = "";
@@ -46,6 +46,9 @@ class _GameFeedLatestState extends State<GameFeedLatest> {
               }
               if (pbp.type == "2") {
                 comments++;
+              }
+              if (pbp.type == null) {
+                pbpCount++;
               }
             });
 

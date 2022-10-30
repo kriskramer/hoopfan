@@ -1,64 +1,64 @@
 class FourFactorsStatsLeague {
-  var TEAM_ID;
+  var TEAMID;
   var TEAM_NAME;
   var GP;
   var W;
   var L;
   var W_PCT;
   var MIN;
-  var EFG_PCT;
+  var eFgPct;
   var FTA_RATE;
-  var TM_TOV_PCT;
-  var OREB_PCT;
-  var OPP_EFG_PCT;
+  var tmTovPct;
+  var oRebPct;
+  var OPP_eFgPct;
   var OPP_FTA_RATE;
   var OPP_TOV_PCT;
-  var OPP_OREB_PCT;
+  var OPP_oRebPct;
   var GP_RANK;
   var W_RANK;
   var L_RANK;
   var W_PCT_RANK;
   var MIN_RANK;
-  var EFG_PCT_RANK;
+  var eFgPct_RANK;
   var FTA_RATE_RANK;
-  var TM_TOV_PCT_RANK;
-  var OREB_PCT_RANK;
-  var OPP_EFG_PCT_RANK;
+  var tmTovPct_RANK;
+  var oRebPct_RANK;
+  var OPP_eFgPct_RANK;
   var OPP_FTA_RATE_RANK;
   var OPP_TOV_PCT_RANK;
-  var OPP_OREB_PCT_RANK;
+  var OPP_oRebPct_RANK;
   var CFID;
   var CFPARAMS;
 
   FourFactorsStatsLeague(dynamic json) {
-    TEAM_ID = json[0];
+    TEAMID = json[0];
     TEAM_NAME = json[1];
     GP = json[2];
     W = json[3];
     L = json[4];
     W_PCT = json[5];
     MIN = json[6];
-    EFG_PCT = json[7];
+    eFgPct = json[7];
     FTA_RATE = json[8];
-    TM_TOV_PCT = json[9];
-    OREB_PCT = json[10];
-    OPP_EFG_PCT = json[11];
+    tmTovPct = json[9];
+    oRebPct = json[10];
+    OPP_eFgPct = json[11];
     OPP_FTA_RATE = json[12];
     OPP_TOV_PCT = json[13];
-    OPP_OREB_PCT = json[14];
+    OPP_oRebPct = json[14];
     GP_RANK = json[15];
     W_RANK = json[16];
     L_RANK = json[17];
     W_PCT_RANK = json[18];
     MIN_RANK = json[19];
-    EFG_PCT_RANK = json[20];
+    eFgPct_RANK = json[20];
     FTA_RATE_RANK = json[21];
-    TM_TOV_PCT_RANK = json[22];
-    OREB_PCT_RANK = json[23];
-    OPP_EFG_PCT_RANK = json[24];
+    tmTovPct_RANK = json[22];
+    oRebPct_RANK = json[23];
+    OPP_eFgPct_RANK = json[24];
     OPP_FTA_RATE_RANK = json[25];
     OPP_TOV_PCT_RANK = json[26];
-    OPP_OREB_PCT_RANK = json[27];
+    OPP_oRebPct_RANK = json[27];
     CFID = json[28];
     CFPARAMS = json[29];
   }
@@ -178,14 +178,14 @@ class FourFactorsStatsLeagueList {
   void sortEFGPct(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.EFG_PCT > a.EFG_PCT)
+        if (b.eFgPct > a.eFgPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.EFG_PCT > b.EFG_PCT)
+        if (a.eFgPct > b.eFgPct)
           return 1;
         else
           return -1;
@@ -214,14 +214,14 @@ class FourFactorsStatsLeagueList {
   void sortTmTovPct(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.TM_TOV_PCT > a.TM_TOV_PCT)
+        if (b.tmTovPct > a.tmTovPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.TM_TOV_PCT > b.TM_TOV_PCT)
+        if (a.tmTovPct > b.tmTovPct)
           return 1;
         else
           return -1;
@@ -232,14 +232,14 @@ class FourFactorsStatsLeagueList {
   void sortORebPct(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.OREB_PCT > a.OREB_PCT)
+        if (b.oRebPct > a.oRebPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.OREB_PCT > b.OREB_PCT)
+        if (a.oRebPct > b.oRebPct)
           return 1;
         else
           return -1;
@@ -250,14 +250,14 @@ class FourFactorsStatsLeagueList {
   void sortOppEFGPct(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.OPP_EFG_PCT > a.OPP_EFG_PCT)
+        if (b.OPP_eFgPct > a.OPP_eFgPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.OPP_EFG_PCT > b.OPP_EFG_PCT)
+        if (a.OPP_eFgPct > b.OPP_eFgPct)
           return 1;
         else
           return -1;
@@ -304,14 +304,14 @@ class FourFactorsStatsLeagueList {
   void sortOppORebPct(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.OPP_OREB_PCT > a.OPP_OREB_PCT)
+        if (b.OPP_oRebPct > a.OPP_oRebPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.OPP_OREB_PCT > b.OPP_OREB_PCT)
+        if (a.OPP_oRebPct > b.OPP_oRebPct)
           return 1;
         else
           return -1;

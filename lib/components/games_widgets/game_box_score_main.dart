@@ -61,9 +61,9 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
   @override
   Widget build(BuildContext context) {
     if (widget.isHomeTeam) {
-      teamId = widget.game["hTeam"]["teamId"];
+      teamId = widget.game["homeTeam"]["teamId"].toString();
     } else {
-      teamId = widget.game["vTeam"]["teamId"];
+      teamId = widget.game["awayTeam"]["teamId"].toString();
     }
 
     return Container(

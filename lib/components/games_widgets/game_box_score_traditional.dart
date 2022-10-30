@@ -6,17 +6,18 @@ import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 
-class GameBoxScoreAdvanced extends StatefulWidget {
+class GameBoxScoreTraditional extends StatefulWidget {
   final String gameId;
   final String teamId;
 
-  GameBoxScoreAdvanced({this.gameId, this.teamId});
+  GameBoxScoreTraditional({this.gameId, this.teamId});
 
   @override
-  _GameBoxScoreAdvancedState createState() => _GameBoxScoreAdvancedState();
+  _GameBoxScoreTraditionalState createState() =>
+      _GameBoxScoreTraditionalState();
 }
 
-class _GameBoxScoreAdvancedState extends State<GameBoxScoreAdvanced> {
+class _GameBoxScoreTraditionalState extends State<GameBoxScoreTraditional> {
   GameBoxScoreAdvancedList list;
 
   @override
