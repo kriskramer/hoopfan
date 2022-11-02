@@ -6,20 +6,22 @@ import 'package:hoop/models/lead_tracker.dart';
 
 class GameFeedLeadTracker extends StatelessWidget {
   final dynamic game;
-  final PbpItem pbp;
+  final PbpItem2 pbp;
 
   const GameFeedLeadTracker(this.game, this.pbp);
 
   @override
   Widget build(BuildContext context) {
-    var vTeamColor = ConstantHelper.getTeamColor(game["vTeam"]["teamId"]);
-    var hTeamColor = ConstantHelper.getTeamColor(game["hTeam"]["teamId"]);
+    var vTeamColor =
+        ConstantHelper.getTeamColor(game.awayTeam.teamId.toString());
+    var hTeamColor =
+        ConstantHelper.getTeamColor(game.homeTeam.teamId.toString());
 
     LeadTrackerItem lti = new LeadTrackerItem(
         clock: pbp.clock,
         period: pbp.period,
-        vScore: int.parse(pbp.vTeamScore),
-        hScore: int.parse(pbp.hTeamScore),
+        vScore: pbp.vTeamScore,
+        hScore: pbp.hTeamScore,
         isScoreChange: true);
 
     return Row(children: [

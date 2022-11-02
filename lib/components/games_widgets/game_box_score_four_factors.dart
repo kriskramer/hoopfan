@@ -50,26 +50,26 @@ class _GameBoxScoreFourFactorsState extends State<GameBoxScoreFourFactors> {
 
     for (var p in list.items) {
       rows.add(DataRow(cells: [
-        DataCell(Text(p.PLAYER_NAME)),
-        DataCell(Text(p.EFG_PCT.toStringAsFixed(2))),
-        DataCell(Text(p.OPP_EFG_PCT.toStringAsFixed(2))),
+        DataCell(Text(p.playerName)),
+        DataCell(Text(p.eFgPct.toStringAsFixed(2))),
+        DataCell(Text(p.OPP_eFgPct.toStringAsFixed(2))),
         DataCell(VerticalDivider(color: Colors.black)),
-        getDiffDataCell(p.EFG_PCT, p.OPP_EFG_PCT),
+        getDiffDataCell(p.eFgPct, p.OPP_eFgPct),
         DataCell(VerticalDivider(color: Colors.black)),
         DataCell(Text(p.FTA_RATE.toStringAsFixed(2))),
         DataCell(Text(p.OPP_FTA_RATE.toStringAsFixed(2))),
         DataCell(VerticalDivider(color: Colors.black)),
         getDiffDataCell(p.FTA_RATE, p.OPP_FTA_RATE),
         DataCell(VerticalDivider(color: Colors.black)),
-        DataCell(Text(p.TM_TOV_PCT.toStringAsFixed(2))),
-        DataCell(Text(p.OPP_TM_TOV_PCT.toStringAsFixed(2))),
+        DataCell(Text(p.tmTovPct.toStringAsFixed(2))),
+        DataCell(Text(p.OPP_tmTovPct.toStringAsFixed(2))),
         DataCell(VerticalDivider(color: Colors.black)),
-        getDiffDataCell(p.TM_TOV_PCT, p.OPP_TM_TOV_PCT),
+        getDiffDataCell(p.tmTovPct, p.OPP_tmTovPct),
         DataCell(VerticalDivider(color: Colors.black)),
-        DataCell(Text(p.OREB_PCT.toStringAsFixed(2))),
-        DataCell(Text(p.OPP_OREB_PCT.toStringAsFixed(2))),
+        DataCell(Text(p.oRebPct.toStringAsFixed(2))),
+        DataCell(Text(p.OPP_oRebPct.toStringAsFixed(2))),
         DataCell(VerticalDivider(color: Colors.black)),
-        getDiffDataCell(p.OREB_PCT, p.OPP_OREB_PCT),
+        getDiffDataCell(p.oRebPct, p.OPP_oRebPct),
       ]));
     }
 

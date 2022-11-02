@@ -6,8 +6,8 @@ class Urls {
   static final String _sioBaseUrl =
       "https://api.sportsdata.io/v3/nba/stats/json/";
 
-  static final String _season = "2021-22";
-  static final String _seasonShort = "2021";
+  static final String _season = "2022-23";
+  static final String _seasonShort = "2022";
 
   // static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
 
@@ -118,27 +118,29 @@ class Urls {
       "http://data.nba.net/10s//prod/v1/current/standings_division.json";
 
   static String nbaGamesToday() {
-    DateTime today = new DateTime.now();
-    if (today.hour > 12) {
-      String year = today.year.toString();
-      String month = today.month.toString().padLeft(2, '0');
-      String day = today.day.toString().padLeft(2, '0');
+    // DateTime today = new DateTime.now();
+    // if (today.hour > 12) {
+    //   String year = today.year.toString();
+    //   String month = today.month.toString().padLeft(2, '0');
+    //   String day = today.day.toString().padLeft(2, '0');
 
-      return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
-    } else {
-      DateTime yesterday = new DateTime.now().subtract(new Duration(days: 1));
+    //   return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    // } else {
+    //   DateTime yesterday = new DateTime.now().subtract(new Duration(days: 1));
 
-      String year = yesterday.year.toString();
-      String month = yesterday.month.toString().padLeft(2, '0');
-      String day = yesterday.day.toString().padLeft(2, '0');
+    //   String year = yesterday.year.toString();
+    //   String month = yesterday.month.toString().padLeft(2, '0');
+    //   String day = yesterday.day.toString().padLeft(2, '0');
 
-      return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
-    }
-    //return "http://data.nba.net/10s/prod/v1/20210111/scoreboard.json";
+    //   return "http://data.nba.net/10s/prod/v1/${year + month + day}/scoreboard.json";
+    // }
+    // //return "http://data.nba.net/10s/prod/v1/20210111/scoreboard.json";
+    return "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json";
   }
 
   static String nbaGamesSelectedDate(String date) {
-    return "http://data.nba.net/10s/prod/v1/$date/scoreboard.json";
+    //return "http://data.nba.net/10s/prod/v1/$date/scoreboard.json";
+    return "https://stats.nba.com/stats/scoreboardv3?GameDate=$date&LeagueID=00";
   }
 
   static String nbaGamesDayMinusOne() {
@@ -322,9 +324,22 @@ class Urls {
     return "https://stats.nba.com/stats/boxscoresummaryv2?GameID=$gameId";
   }
 
+  // New URL
+  static String getBoxScoreTraditional(String gameId) {
+    return "https://cdn.nba.com/static/json/liveData/boxscore/boxscore_$gameId.json";
+  }
+
+  static String getScoreboard() {
+    return "https://stats.nba.com/stats/scoreboardv2?DayOffset=0&GameDate=2022-10-29&LeagueID=00";
+  }
+
   // This pulls the full game. Can eventually create a new version that pulls by quarter.
   static String getNbaStatsBoxScoreAdvanced(String gameId) {
     return "https://stats.nba.com/stats/boxscoreadvancedv2?EndPeriod=0&EndRange=0&GameID=$gameId&RangeType=0&StartPeriod=0&StartRange=0";
+  }
+
+  static String getNbaStatsBoxScoreTraditional(String gameId) {
+    return "https://stats.nba.com/stats/boxscoretraditionalv2?EndPeriod=0&EndRange=0&GameID=$gameId&RangeType=0&StartPeriod=0&StartRange=0";
   }
 
   static String getNbaStatsBoxScoreDefensive(String gameId) {

@@ -53,6 +53,9 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
             leaders.clear();
             //print('reloading game_view data');
             var gameData = snapshot.data["basicGameData"];
+            if (snapshot.data["stats"] == null) {
+              return Text("");
+            }
             var stats = snapshot.data["stats"];
 
             dynamic hTeam = stats["hTeam"]["leaders"];
@@ -181,7 +184,7 @@ class _GameLeadersFeedState extends State<GameLeadersFeed> {
 
   Future<dynamic> loadStats() async {
     String gameId = widget.game["gameId"];
-    String gameUrlCode = widget.game["gameUrlCode"];
+    String gameUrlCode = widget.game["gameCode"];
     String gameDate = gameUrlCode.split("/")[0];
     print('game_view network call');
     return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));

@@ -3,13 +3,13 @@ import 'package:hoop/components/games_widgets/game_box_score_advanced.dart';
 import 'package:hoop/components/games_widgets/game_box_score_defense.dart';
 import 'package:hoop/components/games_widgets/game_box_score_four_factors.dart';
 import 'package:hoop/components/games_widgets/game_box_score_summary.dart';
+import 'package:hoop/models/game_data.dart';
 
 class GameBoxScoreMain extends StatefulWidget {
-  final dynamic game;
-  final dynamic stats;
+  final GameData game;
   final bool isHomeTeam;
 
-  GameBoxScoreMain({this.game, this.stats, this.isHomeTeam});
+  GameBoxScoreMain({this.game, this.isHomeTeam});
 
   @override
   _GameBoxScoreMainState createState() => _GameBoxScoreMainState();
@@ -61,9 +61,9 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
   @override
   Widget build(BuildContext context) {
     if (widget.isHomeTeam) {
-      teamId = widget.game["hTeam"]["teamId"];
+      teamId = widget.game.homeTeam.teamId.toString();
     } else {
-      teamId = widget.game["vTeam"]["teamId"];
+      teamId = widget.game.awayTeam.teamId.toString();
     }
 
     return Container(
@@ -128,25 +128,23 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
         ),
         showSummary
             ? GameBoxScoreSummary(
-                game: widget.game,
-                stats: widget.stats,
-                isHomeTeam: widget.isHomeTeam)
+                game: widget.game, isHomeTeam: widget.isHomeTeam)
             : SizedBox(),
         showAdvanced
             ? GameBoxScoreAdvanced(
-                gameId: widget.game["gameId"],
+                gameId: widget.game.gameId,
                 teamId: teamId,
               )
             : SizedBox(),
         showDefensive
             ? GameBoxScoreDefense(
-                gameId: widget.game["gameId"],
+                gameId: widget.game.gameId,
                 teamId: teamId,
               )
             : SizedBox(),
         showFourFactors
             ? GameBoxScoreFourFactors(
-                gameId: widget.game["gameId"],
+                gameId: widget.game.gameId,
                 teamId: teamId,
               )
             : SizedBox(),

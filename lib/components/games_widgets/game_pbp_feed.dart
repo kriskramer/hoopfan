@@ -194,8 +194,7 @@ class _GamePbpFeedState extends State<GamePbpFeed> {
           showDialog(
               context: context,
               builder: (context) {
-                return GamePlayerPopup(
-                    personId: pbp.personId, game: game, stats: stats);
+                return GamePlayerPopup(personId: pbp.personId, game: game);
               });
         }
       },

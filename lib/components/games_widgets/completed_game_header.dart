@@ -10,10 +10,10 @@ import 'package:hoop/json/jsons.dart';
 
 import '../../screens/views/games/game_view.dart';
 
-class CompletedGameCardDashboard extends StatelessWidget {
+class CompletedGameHeader extends StatelessWidget {
   final dynamic game;
 
-  CompletedGameCardDashboard({this.game});
+  CompletedGameHeader({this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class CompletedGameCardDashboard extends StatelessWidget {
                           game["homeTeam"]["teamId"].toString())),
                 ],
               ),
-              GameFeedLatest(gameId)
+              //GameFeedLatest(gameId)
             ],
           ),
         ),

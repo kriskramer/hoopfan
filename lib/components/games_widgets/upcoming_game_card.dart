@@ -3,12 +3,11 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games/game_preview_article_header.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/utils/formatdate.dart';
 
-import '../../screens/views/games/game_feed_view.dart';
+import '../../screens/views/games/game_view.dart';
 
 class UpcomingGameCard extends StatelessWidget {
   final dynamic game;
@@ -19,15 +18,15 @@ class UpcomingGameCard extends StatelessWidget {
     final standings = Provider.of<JsonFiles>(context, listen: false)
         .getLeagueStandings(); //["league"]["standard"]["conference"];
     final LeagueStanding vTeam =
-        standings.getTeamStandings(game["vTeam"]["teamId"]);
+        standings.getTeamStandings(game["awayTeam"]["teamId"].toString());
     final LeagueStanding hTeam =
-        standings.getTeamStandings(game["hTeam"]["teamId"]);
+        standings.getTeamStandings(game["homeTeam"]["teamId"].toString());
     var countdown = getStartCountdown(game);
-    bool preview = game["isPreviewArticleAvail"];
+    //bool preview = game["isPreviewArticleAvail"];
     var gameId = game["gameId"];
     var date = game["gameUrlCode"].toString().split("/")[0];
 
-    DateTime time = DateTime.parse(game["startTimeUTC"]);
+    DateTime time = DateTime.parse(game["gameTimeUTC"]);
     DateTime newTime = time.toLocal();
     print(newTime);
     // print("UTC time: $time");
@@ -45,34 +44,35 @@ class UpcomingGameCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => GameFeedView(
+                  builder: (context) => GameView(
                         game: game,
                       )));
         },
         child: Column(
           children: [
-            preview
-                ? GamePreviewArticleHeader(gameId: gameId, gameDate: date)
-                : SizedBox(),
+            // preview
+            //     ? GamePreviewArticleHeader(gameId: gameId, gameDate: date)
+            //     : SizedBox(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CachedLogo(
                     radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+                    url: ConstantHelper.getTeamLogo(
+                        game["awayTeam"]["teamId"].toString())),
                 Text(
                   "(${vTeam.wins}-${vTeam.losses})",
                   style: TextStyle(color: Colors.grey[700], fontSize: 14),
                 ),
                 Column(children: [
                   Text(
-                    formatDate(game["startTimeUTC"].toString())[0],
+                    formatDate(game["gameTimeUTC"].toString())[0],
                     style: TextStyle(
                       fontSize: 14,
                     ),
                   ),
                   Text(
-                    formatDate(game["startTimeUTC"].toString())[1],
+                    formatDate(game["gameTimeUTC"].toString())[1],
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -96,7 +96,8 @@ class UpcomingGameCard extends StatelessWidget {
                 ),
                 CachedLogo(
                     radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+                    url: ConstantHelper.getTeamLogo(
+                        game["homeTeam"]["teamId"].toString())),
               ],
             ),
           ],
@@ -104,46 +105,6 @@ class UpcomingGameCard extends StatelessWidget {
       ),
     );
   }
-
-  // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["vTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
-
-  // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["hTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
 
   String getHowToWatch() {
     String howToWatch = "";
@@ -172,7 +133,7 @@ class UpcomingGameCard extends StatelessWidget {
   }
 
   String getStartCountdown(dynamic game) {
-    String startTimeUTC = game["startTimeUTC"];
+    String startTimeUTC = game["gameTimeUTC"];
 
     if (startTimeUTC == "") {
       return "";

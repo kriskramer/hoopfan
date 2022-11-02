@@ -12,12 +12,12 @@ class ScheduledGameHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var countdown = getStartCountdown(gameData);
-    var seriesWin = gameData["vTeam"]["seriesWin"] == ""
+    var seriesWin = gameData["awayTeam"]["seriesWin"] == ""
         ? "0"
-        : gameData["vTeam"]["seriesWin"];
-    var seriesLoss = gameData["vTeam"]["seriesLoss"] == ""
+        : gameData["awayTeam"]["seriesWin"];
+    var seriesLoss = gameData["awayTeam"]["seriesLoss"] == ""
         ? "0"
-        : gameData["vTeam"]["seriesLoss"];
+        : gameData["awayTeam"]["seriesLoss"];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -26,20 +26,22 @@ class ScheduledGameHeader extends StatelessWidget {
           GestureDetector(
             child: CachedLogo(
                 radius: 35,
-                url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"])),
+                url: ConstantHelper.getTeamLogo(
+                    gameData["awayTeam"]["teamId"].toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["vTeam"]["teamId"])));
+                      builder: (context) => TeamDetails(
+                          nbaTeamId:
+                              gameData["awayTeam"]["teamId"].toString())));
             },
           ),
           SizedBox(
             height: 5,
           ),
           Text(
-            "${gameData["vTeam"]["triCode"]} (${gameData["vTeam"]["win"]} - ${gameData["vTeam"]["loss"]})",
+            "${gameData["awayTeam"]["teamTricode"]} (${gameData["awayTeam"]["wins"]} - ${gameData["awayTeam"]["losses"]})",
             style: TextStyle(fontSize: 14),
           ),
         ]),
@@ -48,11 +50,11 @@ class ScheduledGameHeader extends StatelessWidget {
             height: 10,
           ),
           Text(
-            formatDate(gameData["startTimeUTC"].toString())[0],
+            formatDate(gameData["gameTimeUTC"].toString())[0],
             style: TextStyle(fontSize: 18),
           ),
           Text(
-            formatDate(gameData["startTimeUTC"].toString())[1],
+            formatDate(gameData["gameTimeUTC"].toString())[1],
             style: TextStyle(fontSize: 18),
           ),
           SizedBox(
@@ -78,20 +80,22 @@ class ScheduledGameHeader extends StatelessWidget {
           GestureDetector(
             child: CachedLogo(
                 radius: 35,
-                url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"])),
+                url: ConstantHelper.getTeamLogo(
+                    gameData["homeTeam"]["teamId"].toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: gameData["hTeam"]["teamId"])));
+                      builder: (context) => TeamDetails(
+                          nbaTeamId:
+                              gameData["homeTeam"]["teamId"].toString())));
             },
           ),
           SizedBox(
             height: 5,
           ),
           Text(
-            "${gameData["hTeam"]["triCode"]} (${gameData["hTeam"]["win"]} - ${gameData["hTeam"]["loss"]})",
+            "${gameData["homeTeam"]["teamTricode"]} (${gameData["homeTeam"]["wins"]} - ${gameData["homeTeam"]["losses"]})",
             style: TextStyle(fontSize: 14),
           ),
         ]),
@@ -100,7 +104,7 @@ class ScheduledGameHeader extends StatelessWidget {
   }
 
   String getStartCountdown(dynamic game) {
-    String startTimeUTC = game["startTimeUTC"];
+    String startTimeUTC = game["gameTimeUTC"];
 
     if (startTimeUTC == "") {
       return "";

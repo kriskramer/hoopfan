@@ -5,11 +5,10 @@ import 'package:hoop/components/game_feed_widgets/game_feed_latest.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games/game_preview_article_header.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-import '../../screens/views/games/game_feed_view.dart';
+import '../../screens/views/games/game_view.dart';
 
 class InProgressGameCardDashboard extends StatelessWidget {
   final dynamic game;
@@ -19,7 +18,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     var gameId = game["gameId"];
     DatabaseReference gameDataDb =
-        FirebaseDatabase.instance.ref('gameData/$gameId');
+        FirebaseDatabase.instance.ref('gameData22/$gameId');
 
     return StreamBuilder(
         //future: _gameData,
@@ -34,20 +33,20 @@ class InProgressGameCardDashboard extends StatelessWidget {
                 Text("No data"),
               ]);
             }
-            var gameStream = values["data"]["basicGameData"];
+            var gameStream = values["data"]["game"];
             final standings = Provider.of<JsonFiles>(context, listen: false)
                 .getLeagueStandings(); //["league"]["standard"]["conference"];
-            final LeagueStanding vTeam =
-                standings.getTeamStandings(gameStream["vTeam"]["teamId"]);
-            final LeagueStanding hTeam =
-                standings.getTeamStandings(gameStream["hTeam"]["teamId"]);
+            final LeagueStanding vTeam = standings
+                .getTeamStandings(gameStream["awayTeam"]["teamId"].toString());
+            final LeagueStanding hTeam = standings
+                .getTeamStandings(gameStream["homeTeam"]["teamId"].toString());
 
-            String vTeamScore = gameStream["vTeam"]["score"] == ""
+            int vTeamScore = gameStream["awayTeam"]["score"] == ""
                 ? "0"
-                : gameStream["vTeam"]["score"];
-            String hTeamScore = gameStream["hTeam"]["score"] == ""
+                : gameStream["awayTeam"]["score"];
+            int hTeamScore = gameStream["homeTeam"]["score"] == ""
                 ? "0"
-                : gameStream["hTeam"]["score"];
+                : gameStream["homeTeam"]["score"];
             bool preview = gameStream["isPreviewArticleAvail"];
             var date = gameStream["gameUrlCode"].toString().split("/")[0];
 
@@ -59,7 +58,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GameFeedView(
+                      builder: (context) => GameView(
                         game: gameStream,
                       ),
                     ),
@@ -69,7 +68,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   child: Column(
                     children: [
-                      preview
+                      preview != null
                           ? GamePreviewArticleHeader(
                               gameId: gameId, gameDate: date)
                           : SizedBox(),
@@ -79,33 +78,35 @@ class InProgressGameCardDashboard extends StatelessWidget {
                           CachedLogo(
                               radius: 35,
                               url: ConstantHelper.getTeamLogo(
-                                  gameStream["vTeam"]["teamId"])),
+                                  gameStream["awayTeam"]["teamId"].toString())),
                           Text(
-                            "(${vTeam.wins}-${vTeam.losses})",
+                            "(${vTeam.record})",
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                           Column(children: [
                             Text(
-                              vTeamScore + " - " + hTeamScore,
+                              vTeamScore.toString() +
+                                  " - " +
+                                  hTeamScore.toString(),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.red[600],
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              getCurrentPeriod(game),
+                              gameStream["gameStatusText"],
                               style: TextStyle(
                                   fontSize: 16, color: Colors.green[800]),
                             ),
                           ]),
                           Text(
-                            "(${hTeam.wins}-${hTeam.losses})",
+                            "(${hTeam.record})",
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                           CachedLogo(
                               radius: 35,
                               url: ConstantHelper.getTeamLogo(
-                                  gameStream["hTeam"]["teamId"])),
+                                  gameStream["homeTeam"]["teamId"].toString())),
                         ],
                       ),
                       GameFeedLatest(gameId)
@@ -120,36 +121,37 @@ class InProgressGameCardDashboard extends StatelessWidget {
   }
 
   String getCurrentPeriod(dynamic json) {
-    var period = json["period"]["current"];
-    var periodString = "";
-    var clock = json["clock"];
-    var isHalftime = json["period"]["isHalftime"];
-    var clockString = "";
+    return json["gameStatusText"];
+    // var period = json["period"];
+    // var periodString = "";
+    // var clock = json["clock"];
+    // var isHalftime = json["period"]["isHalftime"];
+    // var clockString = "";
 
-    if (period == 1) {
-      periodString = "1st";
-    } else if (period == 2) {
-      periodString = "2nd";
-    } else if (period == 3) {
-      periodString = "3rd";
-    } else if (period == 4) {
-      periodString = "4th";
-    } else if (period > 4) {
-      periodString = "OT";
-    }
+    // if (period == 1) {
+    //   periodString = "1st";
+    // } else if (period == 2) {
+    //   periodString = "2nd";
+    // } else if (period == 3) {
+    //   periodString = "3rd";
+    // } else if (period == 4) {
+    //   periodString = "4th";
+    // } else if (period > 4) {
+    //   periodString = "OT";
+    // }
 
-    if (isHalftime) {
-      clockString = "Halftime";
-    } else {
-      clockString = periodString + "  " + clock;
-    }
+    // if (isHalftime) {
+    //   clockString = "Halftime";
+    // } else {
+    //   clockString = periodString + "  " + clock;
+    // }
 
-    return clockString;
+    // return clockString;
   }
 
   // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
   //   dynamic team;
-  //   String teamId = game["vTeam"]["teamId"];
+  //   String teamId = game["awayTeam"]["teamId"];
 
   //   for (var t in json["east"]) {
   //     if (t["teamId"] == teamId) {
@@ -169,7 +171,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
 
   // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
   //   dynamic team;
-  //   String teamId = game["hTeam"]["teamId"];
+  //   String teamId = game["homeTeam"]["teamId"];
 
   //   for (var t in json["east"]) {
   //     if (t["teamId"] == teamId) {
@@ -197,13 +199,15 @@ class InProgressGameCardDashboard extends StatelessWidget {
     } else {
       nat = "";
     }
-    if (game["watch"]["broadcast"]["broadcasters"]["hTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["hTeam"][0]["shortName"];
+    if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
+      h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
+          ["shortName"];
     } else {
       h = "";
     }
-    if (game["watch"]["broadcast"]["broadcasters"]["vTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["vTeam"][0]["shortName"];
+    if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
+      v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
+          ["shortName"];
     } else {
       v = "";
     }

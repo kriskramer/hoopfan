@@ -1,5 +1,5 @@
 class OpponentStatsLeague {
-  var TEAM_ID;
+  var TEAMID;
   var TEAM_NAME;
   var GP;
   var W;
@@ -55,7 +55,7 @@ class OpponentStatsLeague {
   var PLUS_MINUS_RANK;
 
   OpponentStatsLeague(dynamic json) {
-    TEAM_ID = json[0];
+    TEAMID = json[0];
     TEAM_NAME = json[1];
     GP = json[2];
     W = json[3];

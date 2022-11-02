@@ -1686,7 +1686,7 @@ Map allStats = {
 
 class StatHelper {
   static Stat getStat(String statKey) {
-    print(statKey);
+    //print(statKey);
     Stat s = Stat();
 
     // Loops through all stats above and checks for a Labels array. If it finds it, it searches for a match in the array.

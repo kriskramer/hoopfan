@@ -2,15 +2,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/connection.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:provider/provider.dart';
 
 class GamePbpPopup extends StatefulWidget {
-  final dynamic game;
-  final dynamic stats;
-  final PbpItem pbp;
+  final String gameId;
+  final PbpItem2 pbp;
 
-  const GamePbpPopup({this.game, this.stats, this.pbp});
+  const GamePbpPopup({this.gameId, this.pbp});
 
   @override
   State<GamePbpPopup> createState() => _GamePbpPopupState();
@@ -24,7 +24,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
 
   @override
   Widget build(BuildContext context) {
-    String gameId = widget.game["gameId"];
+    String gameId = widget.gameId;
     var pbp = widget.pbp;
     String key = pbp.timestamp.toString();
 
@@ -36,7 +36,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     if (boosCount == null) boosCount = 0;
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/${pbp.timestamp}');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/${pbp.timestamp}');
 
     if (pbp == null) {
       return Dialog(
@@ -203,7 +203,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     // happening eventually.
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/$key/pbp');
 
     if (cheers == null) {
       cheers = 1;
@@ -231,7 +231,7 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
     }
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/$gameId/$key');
+        FirebaseDatabase.instance.ref('gameFeed22/$gameId/$key/pbp');
 
     if (boos == null) {
       boos = 1;

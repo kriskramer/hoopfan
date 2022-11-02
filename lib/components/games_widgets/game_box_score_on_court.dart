@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
+import 'package:hoop/models/game_data.dart';
 
 class GameBoxScoreOnCourt extends StatelessWidget {
-  final dynamic game;
-  final dynamic stats;
+  final GameData game;
   final bool isHomeTeam;
 
-  GameBoxScoreOnCourt({this.game, this.stats, this.isHomeTeam});
+  GameBoxScoreOnCourt({this.game, this.isHomeTeam});
 
   @override
   Widget build(BuildContext context) {
-    String vTeamId = game["vTeam"]["teamId"];
-    String hTeamId = game["hTeam"]["teamId"];
-    dynamic players = stats["activePlayers"];
-    List<dynamic> vTeamPlayers = [];
-    List<dynamic> hTeamPlayers = [];
+    String vTeamId = game.awayTeam.teamId.toString();
+    String hTeamId = game.homeTeam.teamId.toString();
+    List<GamePlayer> vTeamPlayers = [];
+    List<GamePlayer> hTeamPlayers = [];
 
     if (isHomeTeam) {
       // Loop through players and assign to teams
-      for (var p in players) {
-        if (p["teamId"] == hTeamId && p["isOnCourt"]) {
+      for (var p in game.homeTeam.players.players) {
+        if (p.oncourt == "1") {
           hTeamPlayers.add(p);
         }
       }
@@ -28,7 +27,7 @@ class GameBoxScoreOnCourt extends StatelessWidget {
       // Have to do the try/catch on the sort because some players have no values if they're marked as DNP
       hTeamPlayers.sort((a, b) {
         try {
-          return int.parse(a["points"]) < int.parse(b["points"]) ? 1 : -1;
+          return (a.statistics.points < b.statistics.points) ? 1 : -1;
         } catch (e) {
           //print(e);
           return -1;
@@ -36,8 +35,8 @@ class GameBoxScoreOnCourt extends StatelessWidget {
       });
     } else {
       // Loop through players and assign to teams
-      for (var p in players) {
-        if (p["teamId"] == vTeamId && p["isOnCourt"]) {
+      for (var p in game.awayTeam.players.players) {
+        if (p.oncourt == "1") {
           vTeamPlayers.add(p);
         }
       }
@@ -45,7 +44,7 @@ class GameBoxScoreOnCourt extends StatelessWidget {
       // Have to do the try/catch on the sort because some players have no values if they're marked as DNP
       vTeamPlayers.sort((a, b) {
         try {
-          return int.parse(a["points"]) < int.parse(b["points"]) ? 1 : -1;
+          return (a.statistics.points < b.statistics.points) ? 1 : -1;
         } catch (e) {
           //print(e);
           return -1;
@@ -57,45 +56,48 @@ class GameBoxScoreOnCourt extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         isHomeTeam
-            ? getDataTable(hTeamPlayers, context)
-            : getDataTable(vTeamPlayers, context),
+            ? getDataTable(
+                hTeamPlayers, game.homeTeam.teamId.toString(), context)
+            : getDataTable(
+                vTeamPlayers, game.awayTeam.teamId.toString(), context),
       ],
     );
   }
 
-  Widget getDataTable(List<dynamic> players, BuildContext ctx) {
+  Widget getDataTable(
+      List<GamePlayer> players, String teamId, BuildContext ctx) {
     List<DataRow> rows = [];
 
     for (var p in players) {
       rows.add(
         DataRow(cells: [
-          DataCell(Container(child: Text(p["lastName"])), onTap: () {
+          DataCell(Container(child: Text(p.familyName)), onTap: () {
             Navigator.push(
               ctx,
               MaterialPageRoute(
-                builder: (context) => GamePlayerShotChart(
-                    p["personId"], p["teamId"], game["gameId"]),
+                builder: (context) =>
+                    GamePlayerShotChart(p.personId, teamId, game.gameId),
               ),
             );
           }),
           DataCell(Center(
             child: Text(
-              p["points"],
+              p.statistics.points.toString(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["assists"]))),
-          DataCell(Center(child: Text(p["turnovers"]))),
+          DataCell(Center(child: Text(p.statistics.assists.toString()))),
+          DataCell(Center(child: Text(p.statistics.turnovers.toString()))),
           DataCell(Center(
             child: Text(
-              p["totReb"],
+              p.statistics.reboundsTotal.toString(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(child: Text(p["pFouls"]))),
+          DataCell(Center(child: Text(p.statistics.foulsPersonal.toString()))),
           DataCell(Center(
             child: Text(
-              p["plusMinus"],
+              p.statistics.plusMinusPoints.toString(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),

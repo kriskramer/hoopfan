@@ -58,7 +58,7 @@ class _LeagueStatsFourFactorsGridState
   DataRow getFourFactorDataRow(FourFactorsStatsLeague item, int index) {
     return DataRow(
         color: MaterialStateColor.resolveWith((states) {
-          if (item.TEAM_ID == selectedTeamId) {
+          if (item.TEAMID == selectedTeamId) {
             return Colors.blue[50];
           } else {
             return Colors.white;
@@ -71,12 +71,12 @@ class _LeagueStatsFourFactorsGridState
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return TeamDetails(nbaTeamId: item.TEAM_ID.toString());
+                      return TeamDetails(nbaTeamId: item.TEAMID.toString());
                     });
               },
               onTap: () {
                 setState(() {
-                  selectedTeamId = item.TEAM_ID;
+                  selectedTeamId = item.TEAMID;
                 });
               },
               child: Text(item.TEAM_NAME))),
@@ -85,10 +85,10 @@ class _LeagueStatsFourFactorsGridState
           getDataCell(item.L.toString(), item.L_RANK, item),
           getDataCell(item.W_PCT.toString(), item.W_PCT_RANK, item),
           getDataCell(item.MIN.toString(), item.MIN_RANK, item),
-          getDataCell(item.EFG_PCT.toString(), item.EFG_PCT_RANK, item),
-          getDataCell(item.OPP_EFG_PCT.toString(), item.OPP_EFG_PCT_RANK, item),
+          getDataCell(item.eFgPct.toString(), item.eFgPct_RANK, item),
+          getDataCell(item.OPP_eFgPct.toString(), item.OPP_eFgPct_RANK, item),
           DataCell(VerticalDivider()),
-          getDiffDataCell(item.EFG_PCT, item.OPP_EFG_PCT),
+          getDiffDataCell(item.eFgPct, item.OPP_eFgPct),
           DataCell(VerticalDivider()),
           getDataCell(item.FTA_RATE.toString(), item.FTA_RATE_RANK, item),
           getDataCell(
@@ -96,35 +96,33 @@ class _LeagueStatsFourFactorsGridState
           DataCell(VerticalDivider()),
           getDiffDataCell(item.FTA_RATE, item.OPP_FTA_RATE),
           DataCell(VerticalDivider()),
-          getDataCell(item.TM_TOV_PCT.toString(), item.TM_TOV_PCT_RANK, item),
+          getDataCell(item.tmTovPct.toString(), item.tmTovPct_RANK, item),
           getDataCell(item.OPP_TOV_PCT.toString(), item.OPP_TOV_PCT_RANK, item),
           DataCell(VerticalDivider()),
-          getDiffDataCell(item.TM_TOV_PCT, item.OPP_TOV_PCT),
+          getDiffDataCell(item.tmTovPct, item.OPP_TOV_PCT),
           DataCell(VerticalDivider()),
-          getDataCell(item.OREB_PCT.toString(), item.OREB_PCT_RANK, item),
-          getDataCell(
-              item.OPP_OREB_PCT.toString(), item.OPP_OREB_PCT_RANK, item),
+          getDataCell(item.oRebPct.toString(), item.oRebPct_RANK, item),
+          getDataCell(item.OPP_oRebPct.toString(), item.OPP_oRebPct_RANK, item),
           DataCell(VerticalDivider()),
-          getDiffDataCell(item.OREB_PCT, item.OPP_OREB_PCT),
+          getDiffDataCell(item.oRebPct, item.OPP_oRebPct),
           DataCell(VerticalDivider()),
           getDataCell(item.GP_RANK.toString(), item.GP_RANK, item),
           getDataCell(item.W_RANK.toString(), item.W_RANK, item),
           getDataCell(item.L_RANK.toString(), item.L_RANK, item),
           getDataCell(item.W_PCT_RANK.toString(), item.W_PCT_RANK, item),
           getDataCell(item.MIN_RANK.toString(), item.MIN_RANK, item),
-          getDataCell(item.EFG_PCT_RANK.toString(), item.EFG_PCT_RANK, item),
+          getDataCell(item.eFgPct_RANK.toString(), item.eFgPct_RANK, item),
           getDataCell(item.FTA_RATE_RANK.toString(), item.FTA_RATE_RANK, item),
+          getDataCell(item.tmTovPct_RANK.toString(), item.tmTovPct_RANK, item),
+          getDataCell(item.oRebPct_RANK.toString(), item.oRebPct_RANK, item),
           getDataCell(
-              item.TM_TOV_PCT_RANK.toString(), item.TM_TOV_PCT_RANK, item),
-          getDataCell(item.OREB_PCT_RANK.toString(), item.OREB_PCT_RANK, item),
-          getDataCell(
-              item.OPP_EFG_PCT_RANK.toString(), item.OPP_EFG_PCT_RANK, item),
+              item.OPP_eFgPct_RANK.toString(), item.OPP_eFgPct_RANK, item),
           getDataCell(
               item.OPP_FTA_RATE_RANK.toString(), item.OPP_FTA_RATE_RANK, item),
           getDataCell(
               item.OPP_TOV_PCT_RANK.toString(), item.OPP_TOV_PCT_RANK, item),
           getDataCell(
-              item.OPP_OREB_PCT_RANK.toString(), item.OPP_OREB_PCT_RANK, item),
+              item.OPP_oRebPct_RANK.toString(), item.OPP_oRebPct_RANK, item),
         ]);
   }
 
@@ -253,7 +251,7 @@ class _LeagueStatsFourFactorsGridState
   DataCell getDataCell(String value, int rank, FourFactorsStatsLeague item) {
     return DataCell(Text(value, style: rankColors(rank)), onTap: () {
       setState(() {
-        selectedTeamId = item.TEAM_ID;
+        selectedTeamId = item.TEAMID;
       });
     });
   }

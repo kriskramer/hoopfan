@@ -89,15 +89,15 @@ class TeamTricodeCardFromTeamId extends StatelessWidget {
 }
 
 class TeamIconFromTeamId extends StatelessWidget {
-  final String teamId;
+  final int teamId;
 
   TeamIconFromTeamId({this.teamId});
 
   @override
   Widget build(BuildContext context) {
-    var teamColor = ConstantHelper.getTeamColor(teamId);
-    var teamTextColor = ConstantHelper.getTeamTextColor(teamId);
-    var triCode = ConstantHelper.getTeamTriCode(teamId);
+    var teamColor = ConstantHelper.getTeamColor(teamId.toString());
+    var teamTextColor = ConstantHelper.getTeamTextColor(teamId.toString());
+    var triCode = ConstantHelper.getTeamTriCode(teamId.toString());
 
     return teamId == null
         ? SizedBox()

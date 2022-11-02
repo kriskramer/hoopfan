@@ -1,27 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:hoop/components/connection.dart';
+import 'package:hoop/components/game_feed_widgets/chat_feed.dart';
+import 'package:hoop/components/game_feed_widgets/chat_feed_count.dart';
+import 'package:hoop/components/game_feed_widgets/game_feed_count.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
-import 'package:hoop/components/games_widgets/arena_card.dart';
-import 'package:hoop/components/games_widgets/game_box_score_main.dart';
-import 'package:hoop/components/games_widgets/game_foul_trouble_feed.dart';
+import 'package:hoop/components/games_widgets/fab_with_icons.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
-import 'package:hoop/components/games_widgets/game_officials.dart';
-import 'package:hoop/components/games_widgets/game_pbp_feed.dart';
-import 'package:hoop/components/games_widgets/game_stats.dart';
-import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
+import 'package:hoop/components/games_widgets/game_news_view.dart';
+import 'package:hoop/components/games_widgets/game_stats_view.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
-import 'package:hoop/components/games_widgets/on_court_card.dart';
 import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
-import 'package:hoop/components/social_widgets/twitter_feed.dart';
-import 'package:hoop/constant.dart';
-import 'package:hoop/screens/views/games/chat_main.dart';
-import 'package:hoop/screens/views/games/game_preview_article.dart';
-import 'package:hoop/screens/views/games/game_recap_article.dart';
-import 'package:hoop/services/network.dart';
-import 'package:hoop/services/urls.dart';
+import 'package:hoop/models/game_data.dart';
+
+import 'package:firebase_database/firebase_database.dart';
+
+import '../../../components/games_widgets/game_feed_chat_popup.dart';
+import '../players/player_search.dart';
+import 'game_info_view.dart';
 
 class GameView extends StatefulWidget {
   final dynamic game;
@@ -33,340 +28,225 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
-  Future<dynamic> _gameData;
-  Timer _timer;
-  int timerDuration = 30;
-  String vTeamScore;
-  String hTeamScore;
-  String period;
-  String clock;
-
-  @override
-  void initState() {
-    super.initState();
-    _gameData = loadGameData();
-    // TODO: Can't figure out the timer... it runs fine a few times, then just seems to crash the app.
-    _timer = new Timer.periodic(Duration(seconds: timerDuration), (Timer t) {
-      refreshGameData();
-      print('game_view timer tick');
-    });
-  }
-
-  void refreshGameData() {
-    setState(() {
-      _gameData = loadGameData();
-    });
-  }
+  String gameId;
+  dynamic gameData;
+  GameData game;
+  bool showChat = false;
+  bool showPbp = true;
+  bool showStats = false;
+  bool showNews = false;
 
   @override
   void dispose() {
-    _timer.cancel();
+    // Call code here to decrement the viewing numbers for this game
+
     super.dispose();
+  }
+
+  void pbpClick() {
+    setState(() {
+      showPbp = true;
+      showChat = false;
+      showStats = false;
+      showNews = false;
+    });
+  }
+
+  void chatClick() {
+    setState(() {
+      showPbp = false;
+      showChat = true;
+      showStats = false;
+      showNews = false;
+    });
+  }
+
+  void statsClick() {
+    setState(() {
+      showPbp = false;
+      showChat = false;
+      showStats = true;
+      showNews = false;
+    });
+  }
+
+  void newsClick() {
+    setState(() {
+      showPbp = false;
+      showChat = false;
+      showStats = false;
+      showNews = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (vTeamScore == null) vTeamScore = widget.game["vTeam"]["score"];
-    if (hTeamScore == null) hTeamScore = widget.game["hTeam"]["score"];
-    var gameStatus = widget.game["statusNum"];
+    var gameStatus = widget.game["gameStatus"];
+    gameId = widget.game["gameId"];
+    int vTeamId = widget.game["awayTeam"]["teamId"];
+    int hTeamId = widget.game["homeTeam"]["teamId"];
+
+    DatabaseReference gameDataDb =
+        FirebaseDatabase.instance.ref('gameData22/$gameId');
 
     return Scaffold(
-      bottomNavigationBar: gameStatus > 1
-          ? GameLeadersFeed(
-              game: widget.game,
-            )
-          : SizedBox(),
-      body: FutureBuilder(
-          future: _gameData,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+      // bottomNavigationBar: gameStatus > 1
+      //     ? GameLeadersFeed(
+      //         game: widget.game,
+      //       )
+      //     : SizedBox(),
+      bottomNavigationBar:
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(
+          children: [
+            IconButton(
+                color: Colors.blue,
+                onPressed: () {
+                  pbpClick();
+                },
+                icon: Icon(Icons.sports_basketball)),
+            GameFeedCount(gameId),
+          ],
+        ),
+        Row(
+          children: [
+            IconButton(
+                color: Colors.blue,
+                onPressed: () {
+                  chatClick();
+                },
+                icon: Icon(
+                  Icons.comment,
+                )),
+            ChatFeedCount(gameId),
+          ],
+        ),
+        IconButton(
+            color: Colors.blue,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        GameStatsView(widget.game, gameId, game)),
+              );
+            },
+            icon: Icon(
+              Icons.stacked_bar_chart_sharp,
+            )),
+        IconButton(
+            color: Colors.blue,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GameNewsView(widget.game, gameId)),
+              );
+            },
+            icon: Icon(
+              Icons.article,
+            )),
+        Container(
+          width: 75,
+          decoration: BoxDecoration(color: Colors.blue),
+          child: IconButton(
+              color: Colors.white,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return GameFeedChatPopup(
+                        gameId: gameId,
+                        vTeamId: vTeamId,
+                        hTeamId: hTeamId,
+                      );
+                    });
+                setState(() {
+                  showChat = true;
+                  showPbp = false;
+                });
+              },
+              icon: Icon(Icons.add_comment_outlined)),
+        )
+      ]),
+      resizeToAvoidBottomInset: true,
+      body: StreamBuilder(
+          //future: _gameData,
+          stream: gameDataDb.onValue,
+          builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
             if (snapshot.hasData) {
-              //print('reloading game_view data');
-              var gameData = snapshot.data["basicGameData"];
-              var stats = snapshot.data["stats"];
+              DataSnapshot dataValues = snapshot.data.snapshot;
+              Map<dynamic, dynamic> values = dataValues.value;
+              if (values == null) {
+                // If no game data yet...
 
-              bool preview = gameData["isPreviewArticleAvail"];
-              bool recap = gameData["isRecapArticleAvail"];
-
-              //var gameStatus = gameData["statusNum"];
-              var gameActivated = gameData["isGameActivated"];
-
-              var gameId = gameData["gameId"];
-              var date = gameData["gameUrlCode"].toString().split("/")[0];
-              // var currentPeriod = gameData["period"]["current"];
-
-              var newsSearchString = getNewsSearchString(gameData);
-              var twitterSearchString = getTwitterSearchString(gameData);
-
-              vTeamScore = gameData["vTeam"]["score"];
-              hTeamScore = gameData["hTeam"]["score"];
-
-              if (gameData["isGameActivated"]) {
-                timerDuration = 30;
-              } else {
-                _timer.cancel();
+                //populateGameData(gameId, widget.game);
+                return SafeArea(
+                  child: CustomScrollView(slivers: [
+                    SliverAppBar(
+                      iconTheme: IconThemeData(color: Colors.blue),
+                      pinned: true,
+                      elevation: 10,
+                      collapsedHeight: 132,
+                      backgroundColor: Colors.white,
+                      flexibleSpace: Container(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: ScheduledGameHeader(
+                            gameData: widget.game,
+                          )),
+                      expandedHeight: 120,
+                    ),
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Column(
+                          children: [
+                            Text("No game data yet..."),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ]),
+                );
               }
+
+              // If there is game data, we work as normal
+              //gameData = values["data"]["game"];
+              game = GameData(values["data"]["game"]);
+
+              DatabaseReference pbpFeed =
+                  FirebaseDatabase.instance.ref('gamePbp22/${gameId}');
+
               return SafeArea(
                 child: CustomScrollView(slivers: [
                   SliverAppBar(
                     iconTheme: IconThemeData(color: Colors.blue),
                     pinned: true,
                     elevation: 10,
-                    collapsedHeight: 120,
+                    collapsedHeight: 122,
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
-                      padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: gameStatus > 1 || gameActivated
-                          ? InProgressGameHeader(
-                              gameData: gameData, stats: stats)
-                          : ScheduledGameHeader(gameData: gameData),
-                    ),
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: getGameHeader(widget.game)),
                     expandedHeight: 120,
                   ),
                   SliverList(
                     delegate: SliverChildListDelegate([
                       Column(
                         children: [
-                          ButtonBar(
-                            alignment: MainAxisAlignment.spaceEvenly,
-                            layoutBehavior: ButtonBarLayoutBehavior.constrained,
-                            children: [
-                              GestureDetector(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: preview
-                                          ? Colors.teal[200]
-                                          : Colors.grey,
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.article,
-                                        color: Colors.grey[100],
-                                      ),
-                                    ),
-                                    Text(
-                                      'Preview',
-                                      style: TextStyle(color: Colors.blueGrey),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (preview) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GamePreviewArticle(
-                                          gameDate: date,
-                                          gameId: gameId,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              GestureDetector(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.teal[200],
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.article,
-                                        color: Colors.grey[100],
-                                      ),
-                                    ),
-                                    Text(
-                                      'News',
-                                      style: TextStyle(color: Colors.blueGrey),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      // builder: (context) => GameNews(
-                                      //   searchString: newsSearchString,
-                                      // ),
-                                      builder: (context) => TwitterFeed(
-                                        searchTerms: twitterSearchString,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              GestureDetector(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.teal[200],
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.chat_bubble_outline,
-                                        color: Colors.grey[100],
-                                      ),
-                                    ),
-                                    Text(
-                                      'Chat',
-                                      style: TextStyle(color: Colors.blueGrey),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (recap) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatMain(
-                                          gameId,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              GestureDetector(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: recap
-                                          ? Colors.teal[200]
-                                          : Colors.grey,
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.article,
-                                        color: Colors.grey[100],
-                                      ),
-                                    ),
-                                    Text(
-                                      'Recap',
-                                      style: TextStyle(color: Colors.blueGrey),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (recap) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => GameRecapArticle(
-                                          gameDate: date,
-                                          gameId: gameId,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
+                          // gameStatus == 1
+                          //     ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
+                          //     : GameFeedMain(gameId, gameData, stats),
+
+                          showPbp
+                              ? GameFeedMain(gameId, game, pbpFeed)
+                              : SizedBox(),
+                          showChat ? ChatFeed(gameId, game) : SizedBox(),
                           SizedBox(
                             height: 15,
                           ),
-                          WinProbability(
-                            gameId: gameId,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          gameStatus == 1
-                              ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
-                              : DefaultTabController(
-                                  length: 4, // length of tabs
-                                  initialIndex: 0,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: <Widget>[
-                                      Container(
-                                        child: TabBar(
-                                          labelColor: Colors.green,
-                                          unselectedLabelColor: Colors.black,
-                                          tabs: [
-                                            Tab(text: 'Game'),
-                                            Tab(
-                                                text: gameData["vTeam"]
-                                                    ["triCode"]),
-                                            Tab(
-                                                text: gameData["hTeam"]
-                                                    ["triCode"]),
-                                            Tab(text: 'Stats'),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 1300, //height of TabBarView
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                top: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 0.5))),
-                                        child: TabBarView(
-                                          children: <Widget>[
-                                            Container(
-                                              alignment: Alignment.topLeft,
-                                              child: Column(children: [
-                                                Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      15, 10, 15, 5),
-                                                  child: OnCourtCard(
-                                                    stats: stats,
-                                                    game: gameData,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 12,
-                                                ),
-                                                GamePbpFeed(
-                                                    gameData: gameData,
-                                                    stats: stats),
-                                                SizedBox(
-                                                  height: 12,
-                                                ),
-                                                GameFoulTroubleFeed(
-                                                    game: gameData,
-                                                    stats: stats),
-                                              ]),
-                                            ),
-                                            Container(
-                                              child: GameBoxScoreMain(
-                                                game: gameData,
-                                                stats: stats,
-                                                isHomeTeam: false,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: GameBoxScoreMain(
-                                                game: gameData,
-                                                stats: stats,
-                                                isHomeTeam: true,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: GameStats(
-                                                stats: stats,
-                                                gameData: gameData,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ArenaCard(
-                            gameData: gameData,
-                          ),
-                          GameOfficials(
-                            game: gameData,
-                          ),
-                          gameStatus < 3
-                              ? HowToWatchCard(game: widget.game)
-                              : Text(''),
-                          gameStatus < 3 ? getTicketsCard() : Text('')
                         ],
                       ),
                     ]),
@@ -374,72 +254,243 @@ class _GameViewState extends State<GameView> {
                 ]),
               );
             } else {
-              return NoConnection();
+              return gameStatus > 1
+                  ? ElevatedButton(
+                      onPressed: () {
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => GameView(game: gameData)),
+                        // );
+                        var date = gameData["homeStartDate"];
+                        //getPbpData(date, gameId);
+                      },
+                      child: Text("Refresh"))
+                  : SizedBox();
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-      ),
+      //floatingActionButton: _buildFab(context, game),
     );
   }
 
-  Future<dynamic> loadGameData() async {
-    String gameId = widget.game["gameId"];
-    String gameUrlCode = widget.game["gameUrlCode"];
-    String gameDate = gameUrlCode.split("/")[0];
-    print('game_view network call');
-    return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
-  }
-
-  String formatDate(String date) {
-    String d = "";
-
-    var dt = DateTime.parse(date);
-    d = "${dt.month}-${dt.day}-${dt.year}";
-
-    return d;
-  }
-
-  Widget getTicketsCard() {
-    return Card(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Text("GET TICKETS", style: TextStyle(fontWeight: FontWeight.bold)),
-            Container(
-                padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
-                child: Text(
-                  //widget.game["tickets"]["mobileApp"],
-                  'Coming Soon',
-                  style: TextStyle(fontSize: 12),
-                )),
-          ],
+  Widget getGameHeader(dynamic game) {
+    if (game["gameStatus"] == 1) {
+      return ScheduledGameHeader(
+        gameData: game,
+      );
+    } else if (game["gameStatus"] == 2) {
+      return Column(children: [
+        InProgressGameHeader(
+          gameData: game,
         ),
-      ),
+        WinProbability(gameId: game["gameId"]),
+      ]);
+    } else if (game["gameStatus"] == 3) {
+      return InProgressGameHeader(
+        gameData: game,
+      );
+    }
+
+    return null;
+  }
+
+  Widget _buildFab(BuildContext context, GameData game) {
+    final icons = [
+      Icons.settings,
+      Icons.article_outlined,
+      Icons.sports_basketball,
+      Icons.sms,
+    ];
+
+    return FabWithIcons(
+      icons: icons,
+      onIconTapped: (index) {
+        if (index == 0) {
+          // show game settings page
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameSettings(gameData, gameId, _update);
+              });
+        } else if (index == 1) {
+          //show news page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GameNewsView(gameData, gameId)),
+          );
+        } else if (index == 2) {
+          // show stats page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GameStatsView(gameData, gameId, game)),
+          );
+        } else if (index == 3) {
+          // chat
+          showDialog(
+              context: context,
+              builder: (context) {
+                return GameFeedChatPopup(
+                  gameId: gameId,
+                  vTeamId: game.awayTeam.teamId,
+                  hTeamId: game.homeTeam.teamId,
+                );
+              });
+        }
+      },
     );
   }
 
-  String getNewsSearchString(dynamic gameData) {
-    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
-    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
-
-    var search = "nba game " +
-        vTeamName +
-        " at " +
-        hTeamName +
-        " " +
-        gameData["startDateEastern"];
-
-    return search;
+  void _update(int count) {
+    setState(() => {});
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: const Text('snack'),
+    //   duration: const Duration(seconds: 5),
+    //   action: SnackBarAction(
+    //     label: 'ACTION',
+    //     onPressed: () {},
+    //   ),
+    // ));
   }
 
-  String getTwitterSearchString(dynamic gameData) {
-    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
-    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+  // Future<dynamic> loadGameData() async {
+  //   String gameId = widget.game["gameId"];
+  //   String gameUrlCode = widget.game["gameCode"];
+  //   String gameDate = gameUrlCode.split("/")[0];
+  //   print('game_view network call');
+  //   return await Network.getJson(Urls.nbaBoxScore(gameDate, gameId));
+  // }
 
-    var search = vTeamName + " " + hTeamName;
+  // String formatDate(String date) {
+  //   String d = "";
 
-    return search;
-  }
+  //   var dt = DateTime.parse(date);
+  //   d = "${dt.month}-${dt.day}-${dt.year}";
+
+  //   return d;
+  // }
+
+  // Widget getTicketsCard() {
+  //   return Card(
+  //     child: Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       child: Column(
+  //         children: [
+  //           Text("GET TICKETS", style: TextStyle(fontWeight: FontWeight.bold)),
+  //           Container(
+  //               padding: EdgeInsets.fromLTRB(15, 12, 15, 5),
+  //               child: Text(
+  //                 //widget.game["tickets"]["mobileApp"],
+  //                 'Coming Soon',
+  //                 style: TextStyle(fontSize: 12),
+  //               )),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // String getNewsSearchString(dynamic gameData) {
+  //   var vTeamName = ConstantHelper.getTeamName(gameData["awayTeam"]["teamId"]);
+  //   var hTeamName = ConstantHelper.getTeamName(gameData["homeTeam"]["teamId"]);
+
+  //   var search = "nba game " +
+  //       vTeamName +
+  //       " at " +
+  //       hTeamName +
+  //       " " +
+  //       gameData["startDateEastern"];
+
+  //   return search;
+  // }
+
+  // String getTwitterSearchString(dynamic gameData) {
+  //   var vTeamName = ConstantHelper.getTeamName(gameData["awayTeam"]["teamId"]);
+  //   var hTeamName = ConstantHelper.getTeamName(gameData["homeTeam"]["teamId"]);
+
+  //   var search = vTeamName + " " + hTeamName;
+
+  //   return search;
+  // }
+
+  // int getStartCountdown(dynamic game) {
+  //   String startTimeUTC = game["startTimeUTC"];
+
+  //   if (startTimeUTC == "") {
+  //     return null;
+  //   }
+
+  //   DateTime start = DateTime.parse(startTimeUTC);
+  //   Duration duration = start.difference(DateTime.now());
+
+  //   return duration.inMinutes;
+  // }
+
+  // Future<void> getPbpData(String date, String gameId) async {
+  //   // If the play-by-play doesn't yet exist for this game (and it's already started) then
+  //   // this method lets the user kick off loading the data from the url endpoint below and then saving it to the
+  //   // gameFeed22 DB in firebase. However, it's pulling from the old endpoint so I need to
+  //   // update it to get from the new one.
+  //   var currentPeriod = gameData["period"];
+
+  //   for (int i = 1; i <= currentPeriod; i++) {
+  //     var _pbpFeed =
+  //         await Network.getJson(Urls.nbaPlayByPlay(date, gameId, i.toString()));
+  //     //print(_pbpFeed);
+  //     var plays = _pbpFeed["plays"];
+
+  //     if (plays.length > 0) {
+  //       for (int j = 0; j < plays.length; j++) {
+  //         print(plays[j]);
+  //         var pbp = plays[j];
+
+  //         DatabaseReference pbpFeed = FirebaseDatabase.instance.ref(
+  //             'gameFeed22/' +
+  //                 gameId +
+  //                 '/' +
+  //                 DateTime.now().millisecondsSinceEpoch.toString());
+
+  //         pbpFeed.set({
+  //           "type": "1",
+  //           "period": i,
+  //           "clock": pbp["clock"],
+  //           "description": pbp["description"],
+  //           "hTeamScore": pbp["hTeamScore"],
+  //           "vTeamScore": pbp["vTeamScore"],
+  //           "eventMsgType": pbp["eventMsgType"],
+  //           "personId": pbp["personId"],
+  //           "teamId": pbp["teamId"],
+  //           "isScoreChange": pbp["isScoreChange"],
+  //           "isVideoAvailable": pbp["isVideoAvailable"],
+  //           "formatted": pbp["formatted"]
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
+
+  // void populateGameData(String gameId, dynamic gameData) async {
+  //   var dt = gameData["gameEt"].toString().split("T")[0];
+
+  //   var games = await Network.getJson(
+  //     Urls.nbaGamesSelectedDate(dt),
+  //     requestHeaders: RequestHeaders.nbaStatsHeaders,
+  //   );
+
+  //   var _gameData;
+
+  //   if (games != null) {
+  //     for (var g in games["scoreboard"]["games"]) {
+  //       if (g["gameId"].toString() == gameId) {
+  //         _gameData = g;
+  //       }
+  //     }
+  //   }
+
+  //   DatabaseReference gameDb =
+  //       FirebaseDatabase.instance.ref('gameData22/' + gameId);
+
+  //   gameDb.set({"data": _gameData});
+  // }
 }

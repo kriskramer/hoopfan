@@ -7,8 +7,8 @@ import '../../providers/user_prov.dart';
 
 class GameFeedChatPopup extends StatefulWidget {
   final String gameId;
-  final String vTeamId;
-  final String hTeamId;
+  final int vTeamId;
+  final int hTeamId;
 
   const GameFeedChatPopup({this.gameId, this.vTeamId, this.hTeamId});
 
@@ -118,13 +118,12 @@ class _GameFeedChatPopupState extends State<GameFeedChatPopup> {
     //print(DateTime.now().millisecondsSinceEpoch.toString());
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed/${widget.gameId}/$key');
+        FirebaseDatabase.instance.ref('gameChat22/${widget.gameId}/$key');
 
     if (text != "") {
       Provider.of<UserProv>(context, listen: false).setFanValue(_fanValue);
       feed.set({
-        "type": "2",
-        "chat": text,
+        "comment": text,
         "displayName": name,
         "fanLevel": _fanValue == null ? 30 : _fanValue,
         "cheers": 0,

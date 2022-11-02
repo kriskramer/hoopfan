@@ -3,24 +3,26 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/games_widgets/quarter_scores.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/advanced_stats.dart';
+import 'package:hoop/models/game_data.dart';
 
 class GameStats extends StatelessWidget {
-  final dynamic stats;
-  final dynamic gameData;
+  final GameData game;
 
-  GameStats({this.stats, this.gameData});
+  GameStats({this.game});
 
   @override
   Widget build(BuildContext context) {
-    if (stats == null) {
+    if (game == null) {
       return Center(
         child: Text("No data available..."),
       );
     }
-    dynamic vTeam = stats["vTeam"]["totals"];
-    dynamic hTeam = stats["hTeam"]["totals"];
+    //dynamic vTeam = gameData["awayTeam"]["totals"];
+    //dynamic hTeam = gameData["homeTeam"]["totals"];
+    TeamStatistics vTeam = game.awayTeam.statistics;
+    TeamStatistics hTeam = game.homeTeam.statistics;
 
-    AdvancedStats st = AdvancedStats(stats: stats);
+    AdvancedStats st = AdvancedStats(stats: game);
 
     //print('teatstst');
 
@@ -31,49 +33,62 @@ class GameStats extends StatelessWidget {
             height: 15,
           ),
           QuarterScores(
-            game: gameData,
+            game: game,
           ),
           SizedBox(
             height: 15,
           ),
-          headerRow(gameData),
+          headerRow(game),
           SizedBox(
             height: 10,
           ),
-          statsRow(vTeam["fgp"], hTeam["fgp"], "FG %", true),
-          statsRow(vTeam["ftp"], hTeam["ftp"], "FT %", true),
-          statsRow(vTeam["tpp"], hTeam["tpp"], "3P %", true),
+          statsRow(vTeam.fieldGoalsPercentage.toStringAsFixed(2),
+              hTeam.fieldGoalsPercentage.toStringAsFixed(2), "FG %", true),
+          statsRow(vTeam.freeThrowsPercentage.toStringAsFixed(2),
+              hTeam.freeThrowsPercentage.toStringAsFixed(2), "FT %", true),
+          statsRow(vTeam.threePointersPercentage.toStringAsFixed(2),
+              hTeam.threePointersPercentage.toStringAsFixed(2), "3P %", true),
           statsRow(st.vTeam.tsPct, st.hTeam.tsPct, "TS %", true),
           statsRow(st.vTeam.efg, st.hTeam.efg, "eFG %", true),
-          statsRow(vTeam["totReb"], hTeam["totReb"], "Rebounds"),
-          statsRow(vTeam["assists"], hTeam["assists"], "Assists"),
-          statsRow(vTeam["steals"], hTeam["steals"], "Steals"),
-          statsRow(vTeam["blocks"], hTeam["blocks"], "Blocks"),
-          statsRow(vTeam["turnovers"], hTeam["turnovers"], "TOs"),
+          statsRow(vTeam.reboundsTotal.toString(),
+              hTeam.reboundsTotal.toString(), "Rebounds"),
+          statsRow(
+              vTeam.assists.toString(), hTeam.assists.toString(), "Assists"),
+          statsRow(vTeam.steals.toString(), hTeam.steals.toString(), "Steals"),
+          statsRow(vTeam.blocks.toString(), hTeam.blocks.toString(), "Blocks"),
+          statsRow(
+              vTeam.turnovers.toString(), hTeam.turnovers.toString(), "TOs"),
           statsRow(st.vTeam.tovPct, st.hTeam.tovPct, "TOV %", true),
-          statsRow(vTeam["pFouls"], hTeam["pFouls"], "Fouls"),
-          statsRow(stats["vTeam"]["fastBreakPoints"],
-              stats["hTeam"]["fastBreakPoints"], "Fast Break Pts"),
-          statsRow(stats["vTeam"]["pointsInPaint"],
-              stats["hTeam"]["pointsInPaint"], "Pts in Paint"),
-          statsRow(stats["vTeam"]["biggestLead"], stats["hTeam"]["biggestLead"],
+          statsRow(vTeam.foulsPersonal.toString(),
+              hTeam.foulsPersonal.toString(), "Fouls"),
+          statsRow(vTeam.fastBreakPointsMade.toString(),
+              hTeam.fastBreakPointsMade.toString(), "Fast Break Pts"),
+          statsRow(vTeam.pointsInThePaint.toString(),
+              hTeam.pointsInThePaint.toString(), "Pts in Paint"),
+          statsRow(vTeam.biggestLead.toString(), hTeam.biggestLead.toString(),
               "Biggest Lead"),
-          statsRow(stats["vTeam"]["longestRun"], stats["hTeam"]["longestRun"],
-              "Longest Run"),
-          statsRow(stats["vTeam"]["secondChancePoints"],
-              stats["hTeam"]["secondChancePoints"], "2nd Chance Pts"),
-          statsRow(stats["vTeam"]["pointsOffTurnovers"],
-              stats["hTeam"]["pointsOffTurnovers"], "Pts off TOs"),
+          statsRow(vTeam.biggestScoringRun.toString(),
+              hTeam.biggestScoringRun.toString(), "Longest Run"),
+          statsRow(vTeam.secondChancePointsMade.toString(),
+              hTeam.secondChancePointsMade.toString(), "2nd Chance Pts"),
+          statsRow(vTeam.pointsFromTurnovers.toString(),
+              hTeam.pointsFromTurnovers.toString(), "Pts off TOs"),
           statsRow(st.vTeam.ppp, st.hTeam.ppp, "PPP"),
           statsRow(st.vTeam.getORtg(), st.hTeam.getORtg(), "ORtg"),
           statsRow(st.vTeam.getDRtg(st.hTeam.points),
               st.hTeam.getDRtg(st.vTeam.points), "DRtg"),
-          statsRowText("${vTeam["fgm"]}/${vTeam["fga"]}",
-              "${hTeam["fgm"]}/${hTeam["fga"]}", "FGs"),
-          statsRowText("${vTeam["ftm"]}/${vTeam["fta"]}",
-              "${hTeam["ftm"]}/${hTeam["fta"]}", "FTs"),
-          statsRowText("${vTeam["tpm"]}/${vTeam["tpa"]}",
-              "${hTeam["tpm"]}/${hTeam["tpa"]}", "3Ps"),
+          statsRowText(
+              "${vTeam.fieldGoalsMade.toString()}/${vTeam.fieldGoalsAttempted.toString()}",
+              "${hTeam.fieldGoalsMade.toString()}/${hTeam.fieldGoalsAttempted.toString()}",
+              "FGs"),
+          statsRowText(
+              "${vTeam.freeThrowsMade.toString()}/${vTeam.freeThrowsAttempted.toString()}",
+              "${hTeam.freeThrowsMade.toString()}/${hTeam.freeThrowsAttempted.toString()}",
+              "FTs"),
+          statsRowText(
+              "${vTeam.threePointersMade.toString()}/${vTeam.threePointersAttempted.toString()}",
+              "${hTeam.threePointersMade.toString()}/${hTeam.threePointersAttempted.toString()}",
+              "3Ps"),
           statsRowText(st.getVTeamPoss(), st.getHTeamPoss(), "Poss"),
           //statsRowText(st.getVTeamPace(), st.getHTeamPace(), "Pace"),
           SizedBox(
@@ -84,7 +99,7 @@ class GameStats extends StatelessWidget {
     );
   }
 
-  Widget headerRow(dynamic game) {
+  Widget headerRow(GameData game) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -92,7 +107,7 @@ class GameStats extends StatelessWidget {
           padding: EdgeInsets.all(5),
           width: 55,
           child: CachedLogo(
-            url: ConstantHelper.getTeamLogo(gameData["vTeam"]["teamId"]),
+            url: ConstantHelper.getTeamLogo(game.awayTeam.teamId.toString()),
             radius: 20,
           ),
         ),
@@ -110,7 +125,7 @@ class GameStats extends StatelessWidget {
                     style: TextStyle(fontSize: 14),
                   ),
                   Text(
-                    stats["leadChanges"],
+                    game.homeTeam.statistics.leadChanges.toString(),
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
@@ -123,7 +138,7 @@ class GameStats extends StatelessWidget {
                     style: TextStyle(fontSize: 14),
                   ),
                   Text(
-                    stats["timesTied"],
+                    game.homeTeam.statistics.timesTied.toString(),
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
@@ -135,7 +150,7 @@ class GameStats extends StatelessWidget {
           padding: EdgeInsets.all(5),
           width: 55,
           child: CachedLogo(
-            url: ConstantHelper.getTeamLogo(gameData["hTeam"]["teamId"]),
+            url: ConstantHelper.getTeamLogo(game.homeTeam.teamId.toString()),
             radius: 20,
           ),
         ),

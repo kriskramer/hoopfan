@@ -89,7 +89,7 @@ Map eastID = {
   "24": [
     'New York Knicks',
     'Knicks',
-    'https://upload.wikimedia.org//wikipedia//fr//d//dc//NY_Knicks_Logo_2011.png',
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1261px-New_York_Knicks_logo.svg.png',
     'East',
     'NYK',
     '1610612752' //nba team id
@@ -267,7 +267,7 @@ Map atlanticId = {
   "24": [
     'New York Knicks',
     'Knicks',
-    'https://upload.wikimedia.org//wikipedia//fr//d//dc//NY_Knicks_Logo_2011.png',
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1261px-New_York_Knicks_logo.svg.png',
     'East'
   ],
   "27": [
@@ -577,7 +577,7 @@ Map allTeams = {
   "1610612752": [
     'New York Knicks',
     'Knicks',
-    'https://upload.wikimedia.org//wikipedia//fr//d//dc//NY_Knicks_Logo_2011.png',
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1261px-New_York_Knicks_logo.svg.png',
     'East',
     'NYK',
     '1610612752', //nba team id

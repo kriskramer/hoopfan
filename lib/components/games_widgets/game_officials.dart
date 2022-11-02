@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/models/game_data.dart';
 
 class GameOfficials extends StatelessWidget {
-  final dynamic game;
+  final GameData game;
 
   GameOfficials({this.game});
 
@@ -9,13 +10,11 @@ class GameOfficials extends StatelessWidget {
   Widget build(BuildContext context) {
     String returnValue = "";
 
-    if (game["officials"] == null) {
+    if (game.officials.officials.length == 0) {
       returnValue = "Not yet listed";
     } else {
-      dynamic officials = game["officials"]["formatted"];
-
-      for (var o in officials) {
-        returnValue += o["firstNameLastName"];
+      for (var o in game.officials.officials) {
+        returnValue += o.nameI;
         returnValue += ", ";
       }
 

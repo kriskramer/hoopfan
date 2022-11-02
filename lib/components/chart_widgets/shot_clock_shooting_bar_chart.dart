@@ -53,8 +53,8 @@ class ShotClockShootingDataList {
   List<ShotClockShootingData> items = [];
 
   ShotClockShootingDataList(dynamic json) {
-    for (var s in json) {
-      //items.add(ShotClockShootingData(s["resultSets"][2]["rowSet"], percent, color))
-    }
+    //for (var s in json) {
+    //items.add(ShotClockShootingData(s["resultSets"][2]["rowSet"], percent, color))
+    //}
   }
 }

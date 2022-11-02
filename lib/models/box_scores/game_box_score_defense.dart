@@ -1,13 +1,13 @@
 class GameBoxScoreDefense {
-  String GAME_ID;
-  String TEAM_ID;
-  String TEAM_ABBREVIATION;
-  String TEAM_CITY;
+  String gameId;
+  String TEAMID;
+  String teamAbbreviation;
+  String teamCity;
   String TEAM_NICKNAME;
-  String PLAYER_ID;
-  String PLAYER_NAME;
-  String START_POSITION;
-  String COMMENT;
+  String playerId;
+  String playerName;
+  String startPosition;
+  String comment;
   String MATCHUP_MIN;
   double PARTIAL_POSS;
   int SWITCHES_ON;
@@ -25,15 +25,15 @@ class GameBoxScoreDefense {
   double MATCHUP_FG3_PCT;
 
   GameBoxScoreDefense(dynamic json) {
-    GAME_ID = json[0];
-    TEAM_ID = json[1].toString();
-    TEAM_ABBREVIATION = json[2];
-    TEAM_CITY = json[3];
+    gameId = json[0];
+    TEAMID = json[1].toString();
+    teamAbbreviation = json[2];
+    teamCity = json[3];
     TEAM_NICKNAME = json[4];
-    PLAYER_ID = json[5].toString();
-    PLAYER_NAME = json[6];
-    START_POSITION = json[7];
-    COMMENT = json[8];
+    playerId = json[5].toString();
+    playerName = json[6];
+    startPosition = json[7];
+    comment = json[8];
     MATCHUP_MIN = json[9] == null ? "0" : json[9];
     PARTIAL_POSS = json[10] == null ? 0.0 : json[10];
     SWITCHES_ON = json[11] == null ? 0 : json[11];

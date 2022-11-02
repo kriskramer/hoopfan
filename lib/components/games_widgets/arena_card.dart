@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/models/game_data.dart';
 
 class ArenaCard extends StatelessWidget {
-  final dynamic gameData;
+  final GameData game;
 
-  ArenaCard({this.gameData});
+  ArenaCard({this.game});
 
   @override
   Widget build(BuildContext context) {
-    var arena = gameData["arena"]["name"];
-    var arenaLoc =
-        gameData["arena"]["city"] + " " + gameData["arena"]["stateAbbr"];
+    var arena = game.arena.arenaName;
+    var arenaLoc = game.arena.arenaCity + " " + game.arena.arenaState;
 
     return Card(
       elevation: 1,

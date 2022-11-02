@@ -48,7 +48,7 @@ class _GameBoxScoreDefenseState extends State<GameBoxScoreDefense> {
 
     for (var p in list.items) {
       rows.add(DataRow(cells: [
-        DataCell(Text(p.PLAYER_NAME)),
+        DataCell(Text(p.playerName)),
         DataCell(Text(p.MATCHUP_MIN.toString())),
         DataCell(Text(p.PARTIAL_POSS.toStringAsFixed(2))),
         DataCell(Text(p.SWITCHES_ON.toString())),

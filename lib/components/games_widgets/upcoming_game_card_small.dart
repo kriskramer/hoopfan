@@ -3,12 +3,11 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games/game_preview_article_header.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/utils/formatdate.dart';
 
-import '../../screens/views/games/game_feed_view.dart';
+import '../../screens/views/games/game_view.dart';
 
 class UpcomingGameCardSmall extends StatelessWidget {
   final dynamic game;
@@ -45,7 +44,7 @@ class UpcomingGameCardSmall extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => GameFeedView(
+                  builder: (context) => GameView(
                         game: game,
                       )));
         },

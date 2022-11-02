@@ -77,8 +77,10 @@ class GameNewsView extends StatelessWidget {
   }
 
   String getTwitterSearchString(dynamic gameData) {
-    var vTeamName = ConstantHelper.getTeamName(gameData["vTeam"]["teamId"]);
-    var hTeamName = ConstantHelper.getTeamName(gameData["hTeam"]["teamId"]);
+    var vTeamName =
+        ConstantHelper.getTeamName(gameData["awayTeam"]["teamId"].toString());
+    var hTeamName =
+        ConstantHelper.getTeamName(gameData["homeTeam"]["teamId"].toString());
 
     var search = vTeamName + " " + hTeamName + " nba game";
 

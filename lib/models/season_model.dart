@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class SeasonProv with ChangeNotifier {
-  String _seasonVal = "2021-22"; // value of the current season
+  String _seasonVal = "2022-23"; // value of the current season
 
   List<String> _seasonList = [
+    "2022-23",
     "2021-22",
     "2020-21",
     "2019-20",

@@ -1,29 +1,29 @@
 class AdvancedStatsLeague {
-  var TEAM_ID;
+  var TEAMID;
   var TEAM_NAME;
   var GP;
   var W;
   var L;
   var W_PCT;
   var MIN;
-  var E_OFF_RATING;
-  var OFF_RATING;
-  var E_DEF_RATING;
-  var DEF_RATING;
-  var E_NET_RATING;
-  var NET_RATING;
-  var AST_PCT;
+  var eOffRating;
+  var offRating;
+  var eDefRating;
+  var defRating;
+  var eNetRating;
+  var netRating;
+  var astPct;
   var AST_TO;
-  var AST_RATIO;
-  var OREB_PCT;
-  var DREB_PCT;
-  var REB_PCT;
-  var TM_TOV_PCT;
-  var EFG_PCT;
-  var TS_PCT;
-  var E_PACE;
+  var astRatio;
+  var oRebPct;
+  var dRebPct;
+  var rebPct;
+  var tmTovPct;
+  var eFgPct;
+  var tsPct;
+  var ePace;
   var PACE;
-  var PACE_PER40;
+  var pacePer40;
   var POSS;
   var PIE;
   var GP_RANK;
@@ -31,49 +31,49 @@ class AdvancedStatsLeague {
   var L_RANK;
   var W_PCT_RANK;
   var MIN_RANK;
-  var OFF_RATING_RANK;
-  var DEF_RATING_RANK;
-  var NET_RATING_RANK;
-  var AST_PCT_RANK;
+  var offRating_RANK;
+  var defRating_RANK;
+  var netRating_RANK;
+  var astPct_RANK;
   var AST_TO_RANK;
-  var AST_RATIO_RANK;
-  var OREB_PCT_RANK;
-  var DREB_PCT_RANK;
-  var REB_PCT_RANK;
-  var TM_TOV_PCT_RANK;
-  var EFG_PCT_RANK;
-  var TS_PCT_RANK;
+  var astRatio_RANK;
+  var oRebPct_RANK;
+  var dRebPct_RANK;
+  var rebPct_RANK;
+  var tmTovPct_RANK;
+  var eFgPct_RANK;
+  var tsPct_RANK;
   var PACE_RANK;
   var PIE_RANK;
   var CFID;
   var CFPARAMS;
 
   AdvancedStatsLeague(dynamic json) {
-    TEAM_ID = json[0];
+    TEAMID = json[0];
     TEAM_NAME = json[1];
     GP = json[2];
     W = json[3];
     L = json[4];
     W_PCT = json[5];
     MIN = json[6];
-    E_OFF_RATING = json[7];
-    OFF_RATING = json[8];
-    E_DEF_RATING = json[9];
-    DEF_RATING = json[10];
-    E_NET_RATING = json[11];
-    NET_RATING = json[12];
-    AST_PCT = json[13];
+    eOffRating = json[7];
+    offRating = json[8];
+    eDefRating = json[9];
+    defRating = json[10];
+    eNetRating = json[11];
+    netRating = json[12];
+    astPct = json[13];
     AST_TO = json[14];
-    AST_RATIO = json[15];
-    OREB_PCT = json[16];
-    DREB_PCT = json[17];
-    REB_PCT = json[18];
-    TM_TOV_PCT = json[19];
-    EFG_PCT = json[20];
-    TS_PCT = json[21];
-    E_PACE = json[22];
+    astRatio = json[15];
+    oRebPct = json[16];
+    dRebPct = json[17];
+    rebPct = json[18];
+    tmTovPct = json[19];
+    eFgPct = json[20];
+    tsPct = json[21];
+    ePace = json[22];
     PACE = json[23];
-    PACE_PER40 = json[24];
+    pacePer40 = json[24];
     POSS = json[25];
     PIE = json[26];
     GP_RANK = json[27];
@@ -81,18 +81,18 @@ class AdvancedStatsLeague {
     L_RANK = json[29];
     W_PCT_RANK = json[30];
     MIN_RANK = json[31];
-    OFF_RATING_RANK = json[32];
-    DEF_RATING_RANK = json[33];
-    NET_RATING_RANK = json[34];
-    AST_PCT_RANK = json[35];
+    offRating_RANK = json[32];
+    defRating_RANK = json[33];
+    netRating_RANK = json[34];
+    astPct_RANK = json[35];
     AST_TO_RANK = json[36];
-    AST_RATIO_RANK = json[37];
-    OREB_PCT_RANK = json[38];
-    DREB_PCT_RANK = json[39];
-    REB_PCT_RANK = json[40];
-    TM_TOV_PCT_RANK = json[41];
-    EFG_PCT_RANK = json[42];
-    TS_PCT_RANK = json[43];
+    astRatio_RANK = json[37];
+    oRebPct_RANK = json[38];
+    dRebPct_RANK = json[39];
+    rebPct_RANK = json[40];
+    tmTovPct_RANK = json[41];
+    eFgPct_RANK = json[42];
+    tsPct_RANK = json[43];
     PACE_RANK = json[44];
     PIE_RANK = json[45];
     CFID = json[46];
@@ -111,8 +111,8 @@ class AdvancedStatsLeagueList {
 
   String getTopORtg() {
     for (AdvancedStatsLeague b in items) {
-      if (b.OFF_RATING_RANK == 1) {
-        return (b.OFF_RATING).toStringAsFixed(2);
+      if (b.offRating_RANK == 1) {
+        return (b.offRating).toStringAsFixed(2);
       }
     }
     return "";
@@ -120,8 +120,8 @@ class AdvancedStatsLeagueList {
 
   String getBottomORtg() {
     for (AdvancedStatsLeague b in items) {
-      if (b.OFF_RATING_RANK == 30) {
-        return (b.OFF_RATING).toStringAsFixed(2);
+      if (b.offRating_RANK == 30) {
+        return (b.offRating).toStringAsFixed(2);
       }
     }
     return "";
@@ -130,7 +130,7 @@ class AdvancedStatsLeagueList {
   String getAvgORtg() {
     var total = 0.0;
     for (AdvancedStatsLeague b in items) {
-      total += b.OFF_RATING;
+      total += b.offRating;
     }
 
     return (total / 30).toStringAsFixed(2);
@@ -138,8 +138,8 @@ class AdvancedStatsLeagueList {
 
   String getTopDRtg() {
     for (AdvancedStatsLeague b in items) {
-      if (b.DEF_RATING_RANK == 1) {
-        return (b.DEF_RATING).toStringAsFixed(2);
+      if (b.defRating_RANK == 1) {
+        return (b.defRating).toStringAsFixed(2);
       }
     }
     return "";
@@ -147,8 +147,8 @@ class AdvancedStatsLeagueList {
 
   String getBottomDRtg() {
     for (AdvancedStatsLeague b in items) {
-      if (b.DEF_RATING_RANK == 30) {
-        return (b.DEF_RATING).toStringAsFixed(2);
+      if (b.defRating_RANK == 30) {
+        return (b.defRating).toStringAsFixed(2);
       }
     }
     return "";
@@ -157,7 +157,7 @@ class AdvancedStatsLeagueList {
   String getAvgDRtg() {
     var total = 0.0;
     for (AdvancedStatsLeague b in items) {
-      total += b.DEF_RATING;
+      total += b.defRating;
     }
 
     return (total / 30).toStringAsFixed(2);
@@ -165,8 +165,8 @@ class AdvancedStatsLeagueList {
 
   String getTopTSPct() {
     for (AdvancedStatsLeague b in items) {
-      if (b.TS_PCT_RANK == 1) {
-        return (b.TS_PCT).toStringAsFixed(2);
+      if (b.tsPct_RANK == 1) {
+        return (b.tsPct).toStringAsFixed(2);
       }
     }
     return "";
@@ -174,8 +174,8 @@ class AdvancedStatsLeagueList {
 
   String getBottomTSPct() {
     for (AdvancedStatsLeague b in items) {
-      if (b.TS_PCT_RANK == 30) {
-        return (b.TS_PCT).toStringAsFixed(2);
+      if (b.tsPct_RANK == 30) {
+        return (b.tsPct).toStringAsFixed(2);
       }
     }
     return "";
@@ -184,7 +184,7 @@ class AdvancedStatsLeagueList {
   String getAvgTSPct() {
     var total = 0.0;
     for (AdvancedStatsLeague b in items) {
-      total += b.TS_PCT;
+      total += b.tsPct;
     }
 
     return (total / 30).toStringAsFixed(2);
@@ -192,8 +192,8 @@ class AdvancedStatsLeagueList {
 
   String getTopEFgPct() {
     for (AdvancedStatsLeague b in items) {
-      if (b.EFG_PCT_RANK == 1) {
-        return (b.EFG_PCT).toStringAsFixed(2);
+      if (b.eFgPct_RANK == 1) {
+        return (b.eFgPct).toStringAsFixed(2);
       }
     }
     return "";
@@ -201,8 +201,8 @@ class AdvancedStatsLeagueList {
 
   String getBottomEFgPct() {
     for (AdvancedStatsLeague b in items) {
-      if (b.EFG_PCT_RANK == 30) {
-        return (b.EFG_PCT).toStringAsFixed(2);
+      if (b.eFgPct_RANK == 30) {
+        return (b.eFgPct).toStringAsFixed(2);
       }
     }
     return "";
@@ -211,7 +211,7 @@ class AdvancedStatsLeagueList {
   String getAvgEFgPct() {
     var total = 0.0;
     for (AdvancedStatsLeague b in items) {
-      total += b.EFG_PCT;
+      total += b.eFgPct;
     }
 
     return (total / 30).toStringAsFixed(2);
@@ -349,14 +349,14 @@ class AdvancedStatsLeagueList {
   void sortORTG(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.OFF_RATING > a.OFF_RATING)
+        if (b.offRating > a.offRating)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.OFF_RATING > b.OFF_RATING)
+        if (a.offRating > b.offRating)
           return 1;
         else
           return -1;
@@ -367,14 +367,14 @@ class AdvancedStatsLeagueList {
   void sortDRTG(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.DEF_RATING > a.DEF_RATING)
+        if (b.defRating > a.defRating)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.DEF_RATING > b.DEF_RATING)
+        if (a.defRating > b.defRating)
           return 1;
         else
           return -1;
@@ -385,14 +385,14 @@ class AdvancedStatsLeagueList {
   void sortNET(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.NET_RATING > a.NET_RATING)
+        if (b.netRating > a.netRating)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.NET_RATING > b.NET_RATING)
+        if (a.netRating > b.netRating)
           return 1;
         else
           return -1;
@@ -403,14 +403,14 @@ class AdvancedStatsLeagueList {
   void sortASTPCT(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.AST_PCT > a.AST_PCT)
+        if (b.astPct > a.astPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.AST_PCT > b.AST_PCT)
+        if (a.astPct > b.astPct)
           return 1;
         else
           return -1;
@@ -439,14 +439,14 @@ class AdvancedStatsLeagueList {
   void sortASTRATIO(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.AST_RATIO > a.AST_RATIO)
+        if (b.astRatio > a.astRatio)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.AST_RATIO > b.AST_RATIO)
+        if (a.astRatio > b.astRatio)
           return 1;
         else
           return -1;
@@ -457,14 +457,14 @@ class AdvancedStatsLeagueList {
   void sortOREBPCT(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.OREB_PCT > a.OREB_PCT)
+        if (b.oRebPct > a.oRebPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.OREB_PCT > b.OREB_PCT)
+        if (a.oRebPct > b.oRebPct)
           return 1;
         else
           return -1;
@@ -475,14 +475,14 @@ class AdvancedStatsLeagueList {
   void sortDREBPCT(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.DREB_PCT > a.DREB_PCT)
+        if (b.dRebPct > a.dRebPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.DREB_PCT > b.DREB_PCT)
+        if (a.dRebPct > b.dRebPct)
           return 1;
         else
           return -1;
@@ -493,14 +493,14 @@ class AdvancedStatsLeagueList {
   void sortREBPCT(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.REB_PCT > a.REB_PCT)
+        if (b.rebPct > a.rebPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.REB_PCT > b.REB_PCT)
+        if (a.rebPct > b.rebPct)
           return 1;
         else
           return -1;
@@ -511,14 +511,14 @@ class AdvancedStatsLeagueList {
   void sortTMTOVPCT(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.TM_TOV_PCT > a.TM_TOV_PCT)
+        if (b.tmTovPct > a.tmTovPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.TM_TOV_PCT > b.TM_TOV_PCT)
+        if (a.tmTovPct > b.tmTovPct)
           return 1;
         else
           return -1;
@@ -529,14 +529,14 @@ class AdvancedStatsLeagueList {
   void sortEFG(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.EFG_PCT > a.EFG_PCT)
+        if (b.eFgPct > a.eFgPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.EFG_PCT > b.EFG_PCT)
+        if (a.eFgPct > b.eFgPct)
           return 1;
         else
           return -1;
@@ -547,14 +547,14 @@ class AdvancedStatsLeagueList {
   void sortTS(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.TS_PCT > a.TS_PCT)
+        if (b.tsPct > a.tsPct)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.TS_PCT > b.TS_PCT)
+        if (a.tsPct > b.tsPct)
           return 1;
         else
           return -1;
@@ -583,14 +583,14 @@ class AdvancedStatsLeagueList {
   void sortPACE40(bool asc) {
     if (asc) {
       items.sort((a, b) {
-        if (b.PACE_PER40 > a.PACE_PER40)
+        if (b.pacePer40 > a.pacePer40)
           return 1;
         else
           return -1;
       });
     } else {
       items.sort((a, b) {
-        if (a.PACE_PER40 > b.PACE_PER40)
+        if (a.pacePer40 > b.pacePer40)
           return 1;
         else
           return -1;

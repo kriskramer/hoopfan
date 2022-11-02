@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_box_score_on_court.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/advanced_stats.dart';
+import 'package:hoop/models/game_data.dart';
 
 class OnCourtCard extends StatefulWidget {
-  final dynamic stats;
-  final dynamic game;
+  final GameData game;
 
-  OnCourtCard({this.stats, this.game});
+  OnCourtCard({this.game});
 
   @override
   State<OnCourtCard> createState() => _OnCourtCardState();
@@ -19,17 +19,16 @@ class _OnCourtCardState extends State<OnCourtCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.stats == null) {
+    if (widget.game == null) {
       return Center(child: Text("No data available..."));
     }
 
-    dynamic vTeam = widget.stats["vTeam"]["totals"];
-    dynamic hTeam = widget.stats["hTeam"]["totals"];
-    String vTeamId = widget.game["vTeam"]["teamId"];
-    String hTeamId = widget.game["hTeam"]["teamId"];
-    dynamic players = widget.stats["activePlayers"];
-    String vTeamName = ConstantHelper.getTeamName(vTeamId);
-    String hTeamName = ConstantHelper.getTeamName(hTeamId);
+    var game = widget.game;
+
+    String vTeamName =
+        ConstantHelper.getTeamName(game.awayTeam.teamId.toString());
+    String hTeamName =
+        ConstantHelper.getTeamName(game.homeTeam.teamId.toString());
 
     String hTeamPlayers = "";
     String vTeamPlayers = "";
@@ -38,17 +37,15 @@ class _OnCourtCardState extends State<OnCourtCard> {
     List<Widget> vTeamPlayersWidgets = [];
     List<Widget> hTeamPlayersWidgets = [];
 
-    AdvancedStats st = AdvancedStats(stats: widget.stats);
-
-    for (var p in players) {
-      if (p["teamId"] == hTeamId && p["isOnCourt"]) {
-        hTeamPlayers += p["lastName"] + ", ";
+    for (var p in game.homeTeam.players.players) {
+      if (p.oncourt == "1") {
+        hTeamPlayers += p.familyName + ", ";
       }
     }
 
-    for (var p in players) {
-      if (p["teamId"] == vTeamId && p["isOnCourt"]) {
-        vTeamPlayers += p["lastName"] + ", ";
+    for (var p in game.awayTeam.players.players) {
+      if (p.oncourt == "1") {
+        vTeamPlayers += p.familyName + ", ";
       }
     }
 
@@ -92,11 +89,14 @@ class _OnCourtCardState extends State<OnCourtCard> {
       children: [...hTeamPlayersWidgets],
     );
 
+    AdvancedStats st = AdvancedStats(stats: widget.game);
+
     return Container(
       child: Column(
         children: [
           Card(
-            color: Color(ConstantHelper.getTeamColor(vTeamId)),
+            color: Color(
+                ConstantHelper.getTeamColor(game.awayTeam.teamId.toString())),
             elevation: 1,
             child: Container(
                 padding: EdgeInsets.all(2),
@@ -105,19 +105,29 @@ class _OnCourtCardState extends State<OnCourtCard> {
                     child: Text(vTeamName,
                         style: TextStyle(
                             fontSize: 14,
-                            color: Color(
-                                ConstantHelper.getTeamTextColor(vTeamId)))))),
+                            color: Color(ConstantHelper.getTeamTextColor(
+                                game.awayTeam.teamId.toString())))))),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                smallStat("FG %", vTeam["fgp"]),
-                smallStat("FT %", vTeam["ftp"]),
-                smallStat("3P %", vTeam["tpp"]),
-                smallStat("TS %", st.vTeam.tsPct),
-                smallStat("eFG %", st.vTeam.efg),
-                smallStat("TOs", vTeam["turnovers"]),
+                smallStat(
+                    "FG %",
+                    game.awayTeam.statistics.fieldGoalsPercentage
+                        .toStringAsFixed(2)),
+                smallStat(
+                    "FT %",
+                    game.awayTeam.statistics.freeThrowsPercentage
+                        .toStringAsFixed(2)),
+                smallStat(
+                    "3P %",
+                    game.awayTeam.statistics.threePointersPercentage
+                        .toStringAsFixed(2)),
+                smallStat("TS %", st.vTeam.tsPct.toString()),
+                smallStat("eFG %", st.vTeam.efg.toString().toString()),
+                smallStat(
+                    "TOs", game.awayTeam.statistics.turnoversTeam.toString()),
               ],
             ),
           ),
@@ -128,14 +138,14 @@ class _OnCourtCardState extends State<OnCourtCard> {
           //vTeamPlayersRow,
           GameBoxScoreOnCourt(
             game: widget.game,
-            stats: widget.stats,
             isHomeTeam: false,
           ),
           SizedBox(
             height: 15,
           ),
           Card(
-            color: Color(ConstantHelper.getTeamColor(hTeamId)),
+            color: Color(
+                ConstantHelper.getTeamColor(game.homeTeam.teamId.toString())),
             elevation: 1,
             child: Container(
                 padding: EdgeInsets.all(2),
@@ -144,19 +154,29 @@ class _OnCourtCardState extends State<OnCourtCard> {
                     child: Text(hTeamName,
                         style: TextStyle(
                             fontSize: 14,
-                            color: Color(
-                                ConstantHelper.getTeamTextColor(hTeamId)))))),
+                            color: Color(ConstantHelper.getTeamTextColor(
+                                game.homeTeam.teamId.toString())))))),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                smallStat("FG %", hTeam["fgp"]),
-                smallStat("FT %", hTeam["ftp"]),
-                smallStat("3P %", hTeam["tpp"]),
-                smallStat("TS %", st.hTeam.tsPct),
-                smallStat("eFG %", st.hTeam.efg),
-                smallStat("TOs", hTeam["turnovers"]),
+                smallStat(
+                    "FG %",
+                    game.homeTeam.statistics.fieldGoalsPercentage
+                        .toStringAsFixed(2)),
+                smallStat(
+                    "FT %",
+                    game.homeTeam.statistics.freeThrowsPercentage
+                        .toStringAsFixed(2)),
+                smallStat(
+                    "3P %",
+                    game.homeTeam.statistics.threePointersPercentage
+                        .toStringAsFixed(2)),
+                smallStat("TS %", st.hTeam.tsPct.toString()),
+                smallStat("eFG %", st.hTeam.efg.toString()),
+                smallStat(
+                    "TOs", game.homeTeam.statistics.turnoversTeam.toString()),
               ],
             ),
           ),
@@ -166,7 +186,6 @@ class _OnCourtCardState extends State<OnCourtCard> {
           //hTeamPlayersRow,
           GameBoxScoreOnCourt(
             game: widget.game,
-            stats: widget.stats,
             isHomeTeam: true,
           )
         ],

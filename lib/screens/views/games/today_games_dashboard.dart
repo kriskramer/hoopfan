@@ -7,9 +7,12 @@ import 'package:hoop/components/games_widgets/upcoming_game_card_dashboard.dart'
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:hoop/utils/date_helper.dart';
 import 'package:hoop/utils/formatdate.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../../services/headers.dart';
 
 class TodaysGamesDashboard extends StatefulWidget {
   @override
@@ -58,9 +61,9 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
             _listGames, //loadData(context), // Network.getJson(Urls.nbaGamesToday()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            var games = snapshot.data;
+            var games = snapshot.data["scoreboard"];
 
-            int count = games["numGames"];
+            int count = games["games"].length;
             var gamesCompleted = getGamesCompleted(games);
             var gamesInProgress = getGamesInProgress(games);
             var gamesWaiting = getGamesWaiting(games);
@@ -245,25 +248,32 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   Future<dynamic> loadGames(BuildContext context) async {
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    print(selectedDate);
+    var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
 
-    return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
+    return await Network.getJson(
+      Urls.nbaGamesSelectedDate(selectedDate2),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
+    //return await Network.getJson(Urls.nbaGamesToday());
   }
 
   Future<dynamic> loadGames2(BuildContext context) async {
-    print('TestWidget: ${ModalRoute.of(context).isCurrent}');
+    // Future<dynamic> empty;
 
-    Future<dynamic> empty;
-
-    // I can't remember why I put this in here...
-    if (!ModalRoute.of(context).isCurrent) {
-      return empty;
-    }
+    // // I can't remember why I put this in here...
+    // if (!ModalRoute.of(context).isCurrent) {
+    //   return empty;
+    // }
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    print(selectedDate);
+    //print(selectedDate);
+    var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
 
-    return await Network.getJson(Urls.nbaGamesSelectedDate(selectedDate));
+    return await Network.getJson(
+      Urls.nbaGamesSelectedDate(selectedDate2),
+      requestHeaders: RequestHeaders.nbaStatsHeaders,
+    );
+    //return await Network.getJson(Urls.nbaGamesToday());
   }
 
   List<dynamic> getGamesWaiting(dynamic json) {
@@ -271,7 +281,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
     for (var g in json["games"]) {
       //print(g);
-      if (g["isGameActivated"] == false && g["statusNum"] == 1) {
+      if (g["gameStatus"] == 1) {
         games.add(g);
       }
     }
@@ -284,7 +294,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
     for (var g in json["games"]) {
       //print(g);
-      if (g["isGameActivated"] == false && g["statusNum"] == 3) {
+      if (g["gameStatus"] == 3) {
         games.add(g);
       }
     }
@@ -297,7 +307,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
     for (var g in json["games"]) {
       //print(g);
-      if (g["isGameActivated"]) {
+      if (g["gameStatus"] == 2) {
         games.add(g);
       }
     }

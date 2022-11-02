@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/games_widgets/game_player_shot_chart.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/models/player_base_stat_and_rank.dart';
 import 'package:hoop/screens/views/players/player_detail.dart';
+import 'package:hoop/screens/views/players/player_search.dart';
 import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
@@ -13,11 +15,10 @@ import 'package:provider/provider.dart';
 
 class GamePlayerPopup extends StatefulWidget {
   final String personId;
-  final dynamic game;
-  final dynamic stats;
-  final PbpItem pbp;
+  final GameData game;
+  final PbpItem2 pbp;
 
-  const GamePlayerPopup({this.personId, this.game, this.stats, this.pbp});
+  const GamePlayerPopup({this.personId, this.game, this.pbp});
 
   @override
   State<GamePlayerPopup> createState() => _GamePlayerPopupState();
@@ -27,20 +28,27 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
   @override
   Widget build(BuildContext context) {
     var player = Provider.of<JsonFiles>(context, listen: false)
-        .getPlayer(widget.personId);
+        .getPlayer(widget.personId.toString());
     var playerStats;
     // PlayerBaseStatAndRank playerAllStats;
     // String gameId = widget.game["gameId"];
 
-    for (var p in widget.stats["activePlayers"]) {
-      if (widget.personId == p["personId"]) {
+    for (var p in widget.game.homeTeam.players.players) {
+      if (widget.personId == p.personId.toString()) {
         playerStats = p;
+      }
+    }
+    if (playerStats == null) {
+      for (var p in widget.game.awayTeam.players.players) {
+        if (widget.personId == p.personId.toString()) {
+          playerStats = p;
+        }
       }
     }
 
     print("PlayerId: ${widget.personId}");
     print("TeamId: ${player["teamId"]}");
-    print("GameId: ${widget.game["gameId"]}");
+    print("GameId: ${widget.game.gameId}");
 
     if (player == null) {
       return Dialog(
@@ -104,8 +112,8 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  PlayerDetail(playerId: widget.personId)));
+                              builder: (context) => PlayerDetail(
+                                  playerId: widget.personId.toString())));
                     },
                     child: Text("Player Card")),
                 ElevatedButton(
@@ -116,7 +124,7 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
                               builder: (context) => GamePlayerShotChart(
                                   widget.personId,
                                   player["teamId"],
-                                  widget.game["gameId"])));
+                                  widget.game.gameId)));
                     },
                     child: Text("Shot Chart"))
               ]),
@@ -146,14 +154,16 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
   // Widget getStatLabel(String label) {
   Widget getGameStat(String value) {
     return Text(
-      value,
+      value.toString(),
       style: TextStyle(
           fontSize: 20, color: Colors.blue[900], fontWeight: FontWeight.w500),
     );
   }
 
   // Widget getSeasonStat(String value) {
-  Widget getDataTableFull(dynamic playerStats, dynamic playerAllStats) {
+  Widget getDataTableFull(GamePlayer playerStats, dynamic playerAllStats) {
+    GamePlayerStatistics stats = playerStats.statistics;
+
     return DataTable(
       columnSpacing: 10,
       horizontalMargin: 5,
@@ -172,82 +182,97 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
       rows: [
         DataRow(cells: [
           DataCell(Center(child: Text("PTS"))),
-          DataCell(Center(child: getGameStat(playerStats["points"]))),
+          DataCell(Center(child: getGameStat(stats.points.toString()))),
           DataCell(Center(child: Text(playerAllStats.pts.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["points"]),
+              child: getComparison(double.parse(stats.points.toString()),
                   playerAllStats.pts, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("FG%"))),
-          DataCell(Center(child: getGameStat(playerStats["fgp"]))),
+          DataCell(Center(
+              child: getGameStat(
+                  double.parse(stats.fieldGoalsPercentage.toString())
+                      .toStringAsFixed(2)))),
           DataCell(Center(child: Text(playerAllStats.fgPct.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["fgp"]),
-                  playerAllStats.fgPct, true))),
+              child: getComparison(
+                  double.parse(stats.fieldGoalsPercentage.toString()),
+                  playerAllStats.fgPct,
+                  true))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("FT%"))),
-          DataCell(Center(child: getGameStat(playerStats["ftp"]))),
+          DataCell(Center(
+              child: getGameStat(
+                  double.parse(stats.freeThrowsPercentage.toString())
+                      .toStringAsFixed(2)))),
           DataCell(Center(child: Text(playerAllStats.ftPct.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["ftp"]),
-                  playerAllStats.ftPct, true))),
+              child: getComparison(
+                  double.parse(stats.freeThrowsPercentage.toString()),
+                  playerAllStats.ftPct,
+                  true))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("3P%"))),
-          DataCell(Center(child: getGameStat(playerStats["tpp"]))),
+          DataCell(Center(
+              child: getGameStat(
+                  double.parse(stats.threePointersPercentage.toString())
+                      .toStringAsFixed(2)))),
           DataCell(Center(child: Text(playerAllStats.fg3Pct.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["tpp"]),
-                  playerAllStats.fg3Pct, true))),
+              child: getComparison(
+                  double.parse(stats.threePointersPercentage.toString()),
+                  playerAllStats.fg3Pct,
+                  true))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("REB"))),
-          DataCell(Center(child: getGameStat(playerStats["totReb"]))),
+          DataCell(Center(child: getGameStat(stats.reboundsTotal.toString()))),
           DataCell(Center(child: Text(playerAllStats.reb.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["totReb"]),
+              child: getComparison(double.parse(stats.reboundsTotal.toString()),
                   playerAllStats.reb, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("AST"))),
-          DataCell(Center(child: getGameStat(playerStats["assists"]))),
+          DataCell(Center(child: getGameStat(stats.assists.toString()))),
           DataCell(Center(child: Text(playerAllStats.ast.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["assists"]),
+              child: getComparison(double.parse(stats.assists.toString()),
                   playerAllStats.ast, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("STL"))),
-          DataCell(Center(child: getGameStat(playerStats["steals"]))),
+          DataCell(Center(child: getGameStat(stats.steals.toString()))),
           DataCell(Center(child: Text(playerAllStats.stl.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["steals"]),
+              child: getComparison(double.parse(stats.steals.toString()),
                   playerAllStats.stl, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("TO"))),
-          DataCell(Center(child: getGameStat(playerStats["turnovers"]))),
+          DataCell(Center(child: getGameStat(stats.turnovers.toString()))),
           DataCell(Center(child: Text(playerAllStats.tov.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["turnovers"]),
+              child: getComparison(double.parse(stats.turnovers.toString()),
                   playerAllStats.tov, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("BLK"))),
-          DataCell(Center(child: getGameStat(playerStats["blocks"]))),
+          DataCell(Center(child: getGameStat(stats.blocks.toString()))),
           DataCell(Center(child: Text(playerAllStats.blk.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["blocks"]),
+              child: getComparison(double.parse(stats.blocks.toString()),
                   playerAllStats.blk, false))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("PF"))),
-          DataCell(Center(child: getGameStat(playerStats["pFouls"]))),
+          DataCell(Center(child: getGameStat(stats.foulsPersonal.toString()))),
           DataCell(Center(child: Text(playerAllStats.pf.toString()))),
           DataCell(Center(
-              child: getComparison(double.parse(playerStats["pFouls"]),
+              child: getComparison(double.parse(stats.foulsPersonal.toString()),
                   playerAllStats.pf, false))),
         ]),
         DataRow(cells: [
@@ -266,7 +291,8 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
     );
   }
 
-  Widget getDataTableGameOnly(dynamic playerStats) {
+  Widget getDataTableGameOnly(GamePlayer playerStats) {
+    GamePlayerStatistics stats = playerStats.statistics;
     return DataTable(
       columnSpacing: 10,
       horizontalMargin: 5,
@@ -281,43 +307,49 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
       rows: [
         DataRow(cells: [
           DataCell(Center(child: Text("PTS"))),
-          DataCell(Center(child: getGameStat(playerStats["points"]))),
+          DataCell(Center(child: getGameStat(stats.points.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("FG%"))),
-          DataCell(Center(child: getGameStat(playerStats["fgp"]))),
+          DataCell(Center(
+              child:
+                  getGameStat(stats.fieldGoalsPercentage.toStringAsFixed(2)))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("FT%"))),
-          DataCell(Center(child: getGameStat(playerStats["ftp"]))),
+          DataCell(Center(
+              child:
+                  getGameStat(stats.freeThrowsPercentage.toStringAsFixed(2)))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("3P%"))),
-          DataCell(Center(child: getGameStat(playerStats["tpp"]))),
+          DataCell(Center(
+              child: getGameStat(
+                  stats.threePointersPercentage.toStringAsFixed(2)))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("REB"))),
-          DataCell(Center(child: getGameStat(playerStats["totReb"]))),
+          DataCell(Center(child: getGameStat(stats.reboundsTotal.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("AST"))),
-          DataCell(Center(child: getGameStat(playerStats["assists"]))),
+          DataCell(Center(child: getGameStat(stats.assists.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("STL"))),
-          DataCell(Center(child: getGameStat(playerStats["steals"]))),
+          DataCell(Center(child: getGameStat(stats.steals.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("TO"))),
-          DataCell(Center(child: getGameStat(playerStats["turnovers"]))),
+          DataCell(Center(child: getGameStat(stats.turnovers.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("BLK"))),
-          DataCell(Center(child: getGameStat(playerStats["blocks"]))),
+          DataCell(Center(child: getGameStat(stats.blocks.toString()))),
         ]),
         DataRow(cells: [
           DataCell(Center(child: Text("PF"))),
-          DataCell(Center(child: getGameStat(playerStats["pFouls"]))),
+          DataCell(Center(child: getGameStat(stats.foulsPersonal.toString()))),
         ]),
       ],
     );
