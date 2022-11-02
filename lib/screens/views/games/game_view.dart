@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hoop/components/game_feed_widgets/chat_feed.dart';
+import 'package:hoop/components/game_feed_widgets/chat_feed_count.dart';
+import 'package:hoop/components/game_feed_widgets/game_feed_count.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
 import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
@@ -30,6 +33,8 @@ class _GameViewState extends State<GameView> {
   GameData game;
   bool showChat = false;
   bool showPbp = true;
+  bool showStats = false;
+  bool showNews = false;
 
   @override
   void dispose() {
@@ -38,10 +43,48 @@ class _GameViewState extends State<GameView> {
     super.dispose();
   }
 
+  void pbpClick() {
+    setState(() {
+      showPbp = true;
+      showChat = false;
+      showStats = false;
+      showNews = false;
+    });
+  }
+
+  void chatClick() {
+    setState(() {
+      showPbp = false;
+      showChat = true;
+      showStats = false;
+      showNews = false;
+    });
+  }
+
+  void statsClick() {
+    setState(() {
+      showPbp = false;
+      showChat = false;
+      showStats = true;
+      showNews = false;
+    });
+  }
+
+  void newsClick() {
+    setState(() {
+      showPbp = false;
+      showChat = false;
+      showStats = false;
+      showNews = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var gameStatus = widget.game["gameStatus"];
     gameId = widget.game["gameId"];
+    int vTeamId = widget.game["awayTeam"]["teamId"];
+    int hTeamId = widget.game["homeTeam"]["teamId"];
 
     DatabaseReference gameDataDb =
         FirebaseDatabase.instance.ref('gameData22/$gameId');
@@ -52,38 +95,79 @@ class _GameViewState extends State<GameView> {
       //         game: widget.game,
       //       )
       //     : SizedBox(),
-      bottomNavigationBar: Row(children: [
+      bottomNavigationBar:
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(
+          children: [
+            IconButton(
+                color: Colors.blue,
+                onPressed: () {
+                  pbpClick();
+                },
+                icon: Icon(Icons.sports_basketball)),
+            GameFeedCount(gameId),
+          ],
+        ),
+        Row(
+          children: [
+            IconButton(
+                color: Colors.blue,
+                onPressed: () {
+                  chatClick();
+                },
+                icon: Icon(
+                  Icons.comment,
+                )),
+            ChatFeedCount(gameId),
+          ],
+        ),
         IconButton(
             color: Colors.blue,
             onPressed: () {
-              setState(() {
-                showChat = false;
-                showPbp = true;
-              });
-            },
-            icon: Icon(Icons.sports_basketball)),
-        IconButton(
-            color: Colors.blue,
-            onPressed: () {
-              setState(() {
-                showChat = true;
-                showPbp = false;
-              });
-            },
-            icon: Icon(
-              Icons.comment,
-            )),
-        IconButton(
-            color: Colors.blue,
-            onPressed: () {
-              setState(() {
-                showChat = false;
-                showPbp = false;
-              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        GameStatsView(widget.game, gameId, game)),
+              );
             },
             icon: Icon(
               Icons.stacked_bar_chart_sharp,
             )),
+        IconButton(
+            color: Colors.blue,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GameNewsView(widget.game, gameId)),
+              );
+            },
+            icon: Icon(
+              Icons.article,
+            )),
+        Container(
+          width: 75,
+          decoration: BoxDecoration(color: Colors.blue),
+          child: IconButton(
+              color: Colors.white,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return GameFeedChatPopup(
+                        gameId: gameId,
+                        vTeamId: vTeamId,
+                        hTeamId: hTeamId,
+                      );
+                    });
+                setState(() {
+                  showChat = true;
+                  showPbp = false;
+                });
+              },
+              icon: Icon(Icons.add_comment_outlined)),
+        )
       ]),
       resizeToAvoidBottomInset: true,
       body: StreamBuilder(
@@ -141,12 +225,11 @@ class _GameViewState extends State<GameView> {
                     iconTheme: IconThemeData(color: Colors.blue),
                     pinned: true,
                     elevation: 10,
-                    collapsedHeight: 132,
+                    collapsedHeight: 122,
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
                         padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                        child: getGameHeader(
-                            gameStatus, gameId, values["data"]["game"])),
+                        child: getGameHeader(widget.game)),
                     expandedHeight: 120,
                   ),
                   SliverList(
@@ -159,7 +242,8 @@ class _GameViewState extends State<GameView> {
 
                           showPbp
                               ? GameFeedMain(gameId, game, pbpFeed)
-                              : Text("chat"),
+                              : SizedBox(),
+                          showChat ? ChatFeed(gameId, game) : SizedBox(),
                           SizedBox(
                             height: 15,
                           ),
@@ -185,32 +269,32 @@ class _GameViewState extends State<GameView> {
                   : SizedBox();
             }
           }),
-      floatingActionButton: _buildFab(context),
+      //floatingActionButton: _buildFab(context, game),
     );
   }
 
-  Widget getGameHeader(int gameStatus, String gameId, dynamic gameData) {
-    if (gameStatus == 1) {
+  Widget getGameHeader(dynamic game) {
+    if (game["gameStatus"] == 1) {
       return ScheduledGameHeader(
-        gameData: gameData,
+        gameData: game,
       );
-    } else if (gameStatus == 2) {
+    } else if (game["gameStatus"] == 2) {
       return Column(children: [
         InProgressGameHeader(
-          gameData: gameData,
+          gameData: game,
         ),
-        WinProbability(gameId: gameId),
+        WinProbability(gameId: game["gameId"]),
       ]);
-    } else if (gameStatus == 3) {
+    } else if (game["gameStatus"] == 3) {
       return InProgressGameHeader(
-        gameData: gameData,
+        gameData: game,
       );
     }
 
     return null;
   }
 
-  Widget _buildFab(BuildContext context) {
+  Widget _buildFab(BuildContext context, GameData game) {
     final icons = [
       Icons.settings,
       Icons.article_outlined,
@@ -249,8 +333,8 @@ class _GameViewState extends State<GameView> {
               builder: (context) {
                 return GameFeedChatPopup(
                   gameId: gameId,
-                  vTeamId: gameData["awayTeam"]["teamId"],
-                  hTeamId: gameData["homeTeam"]["teamId"],
+                  vTeamId: game.awayTeam.teamId,
+                  hTeamId: game.homeTeam.teamId,
                 );
               });
         }
@@ -410,5 +494,3 @@ class _GameViewState extends State<GameView> {
   //   gameDb.set({"data": _gameData});
   // }
 }
-
-class ChatItem {}

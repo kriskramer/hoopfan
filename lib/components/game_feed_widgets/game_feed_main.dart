@@ -7,7 +7,6 @@ import 'package:hoop/components/game_feed_widgets/game_feed_display_item.dart';
 import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
-import 'package:hoop/json/jsons.dart';
 import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
@@ -107,43 +106,62 @@ class _GameFeedMainState extends State<GameFeedMain> {
             // Provider.of<JsonFiles>(context, listen: false)
             //     .setGameFeed(widget.gameId, list);
 
-            return new ListView.builder(
-              shrinkWrap: true,
-              //controller: _scrollController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: (list.items.length > 200 && !showAll)
-                  ? 200
-                  : list.items.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (list.items.length > 200 && index == 0 && !showAll) {
-                  return Column(children: [
-                    Center(
-                      child: Text("Showing latest 200 items..."),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            showAll = true;
-                          });
-                        },
-                        child: Text("Show All"))
-                  ]);
-                }
+            return Column(
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (showAll) {
+                        setState(() {
+                          showAll = false;
+                        });
+                      } else {
+                        setState(() {
+                          showAll = true;
+                        });
+                      }
+                    },
+                    child: showAll
+                        ? Text(
+                            "Showing all items...",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.blue,
+                            ),
+                          )
+                        : Text(
+                            "Showing latest 200 items...",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.blue,
+                            ),
+                          ),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  //controller: _scrollController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: (list.items.length > 200 && !showAll)
+                      ? 200
+                      : list.items.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    int idx = index;
+                    // Only show the latest 200 items (for now)
+                    if (!showAll) {
+                      if (list.items.length > 200) {
+                        idx = index + list.items.length - 200;
+                      }
 
-                int idx = index;
-                // Only show the latest 200 items (for now)
-                if (!showAll) {
-                  if (list.items.length > 200) {
-                    idx = index + list.items.length - 200;
-                  }
-
-                  if (idx < 0) {
-                    idx = 0;
-                  }
-                }
-                return GameFeedDisplayItem(
-                    list.items[idx], showLead, widget.game);
-              },
+                      if (idx < 0) {
+                        idx = 0;
+                      }
+                    }
+                    return GameFeedDisplayItem(
+                        list.items[idx], showLead, widget.game);
+                  },
+                ),
+              ],
             );
           }
           return Container(child: Text("Loading Game Feed..."));

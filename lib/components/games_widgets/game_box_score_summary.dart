@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
+import 'package:hoop/models/game_data.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
-  final dynamic game;
+  final GameData game;
   final bool isHomeTeam;
 
   GameBoxScoreSummary({this.game, this.isHomeTeam});
@@ -16,22 +17,21 @@ class GameBoxScoreSummary extends StatelessWidget {
       );
     }
     Widget c;
-    String vTeamId = game["awayTeam"]["teamId"].toString();
-    String hTeamId = game["homeTeam"]["teamId"].toString();
+    String vTeamId = game.awayTeam.teamId.toString();
+    String hTeamId = game.homeTeam.teamId.toString();
     List<dynamic> vTeamPlayers = [];
     List<dynamic> hTeamPlayers = [];
 
     if (isHomeTeam) {
       // Loop through players and assign to teams
-      for (var p in game["homeTeam"]["players"]) {
+      for (var p in game.homeTeam.players.players) {
         hTeamPlayers.add(p);
       }
 
       // Have to do the try/catch on the sort because some players have no values if they're marked as DNP
       hTeamPlayers.sort((a, b) {
         try {
-          return int.parse(a["statistics"]["points"]) <
-                  int.parse(b["statistics"]["points"])
+          return int.parse(a.statistics.points) < int.parse(b.statistics.points)
               ? 1
               : -1;
         } catch (e) {
@@ -41,15 +41,14 @@ class GameBoxScoreSummary extends StatelessWidget {
       });
     } else {
       // Loop through players and assign to teams
-      for (var p in game["awayTeam"]["players"]) {
+      for (var p in game.awayTeam.players.players) {
         vTeamPlayers.add(p);
       }
 
       // Have to do the try/catch on the sort because some players have no values if they're marked as DNP
       vTeamPlayers.sort((a, b) {
         try {
-          return int.parse(a["statistics"]["points"]) <
-                  int.parse(b["statistics"]["points"])
+          return int.parse(a.statistics.points) < int.parse(b.statistics.points)
               ? 1
               : -1;
         } catch (e) {
@@ -80,19 +79,19 @@ class GameBoxScoreSummary extends StatelessWidget {
     for (var p in players) {
       rows.add(
         DataRow(cells: [
-          DataCell(Text(p["familyName"]), onTap: () {
+          DataCell(Text(p.familyName), onTap: () {
             // Navigator.push(
             //   ctx,
             //   MaterialPageRoute(
             //     //
             //     builder: (context) => GamePlayerShotChart(
-            //         p["personId"], p["teamId"], game["gameId"]),
+            //         p.personId, p.teamId, game.gameId),
             //   ),
             // );
             showDialog(
                 context: ctx,
                 builder: (context) {
-                  return GamePlayerPopup(personId: p["personId"], game: game);
+                  return GamePlayerPopup(personId: p.personId, game: game);
                 });
           }),
         ]),
@@ -124,97 +123,91 @@ class GameBoxScoreSummary extends StatelessWidget {
       rows.add(
         DataRow(cells: [
           DataCell(
-            Text(p["jerseyNum"]),
+            Text(p.jerseyNum),
           ),
           DataCell(Row(children: [
-            p["oncourt"] == "1"
+            p.oncourt == "1"
                 ? CircleAvatar(
                     backgroundColor: Colors.green,
                     minRadius: 4,
                   )
                 : Text(''),
-            Text(p["position"] == null ? "" : p["position"].toString())
+            Text(p.position == null ? "" : p.position.toString())
           ])),
-          DataCell(Text(getMinutesFormatted(p["statistics"]["minutes"]))),
+          DataCell(Text(getMinutesFormatted(p.statistics.minutes))),
           DataCell(Center(
             child: Text(
-              p["statistics"]["points"].toString(),
+              p.statistics.points.toString(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
-          DataCell(Center(
-              child: Text(p["statistics"]["fieldGoalsMade"].toString()))),
-          DataCell(Center(
-              child: Text(p["statistics"]["fieldGoalsAttempted"].toString()))),
-          DataCell(Center(
-            child: Text(
-              p["statistics"]["fieldGoalsPercentage"].toStringAsFixed(2) + "%",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          )),
-          DataCell(Center(child: VerticalDivider())),
-          DataCell(Center(
-              child: Text(p["statistics"]["twoPointersMade"].toString()))),
-          DataCell(Center(
-              child: Text(p["statistics"]["twoPointersAttempted"].toString()))),
-          DataCell(Center(
-            child: Text(
-              p["statistics"]["twoPointersPercentage"].toStringAsFixed(2) + "%",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          )),
-          DataCell(Center(child: VerticalDivider())),
-          DataCell(Center(
-              child: Text(p["statistics"]["threePointersMade"].toString()))),
-          DataCell(Center(
-              child:
-                  Text(p["statistics"]["threePointersAttempted"].toString()))),
-          DataCell(Center(
-            child: Text(
-              p["statistics"]["threePointersPercentage"].toStringAsFixed(2) +
-                  "%",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          )),
-          DataCell(Center(child: VerticalDivider())),
-          DataCell(Center(
-              child: Text(p["statistics"]["freeThrowsMade"].toString()))),
-          DataCell(Center(
-              child: Text(p["statistics"]["freeThrowsAttempted"].toString()))),
-          DataCell(Center(
-            child: Text(
-              p["statistics"]["freeThrowsPercentage"].toStringAsFixed(2) + "%",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          )),
-          DataCell(Center(child: VerticalDivider())),
-          DataCell(Center(child: Text(p["statistics"]["assists"].toString()))),
+          DataCell(Center(child: Text(p.statistics.fieldGoalsMade.toString()))),
           DataCell(
-              Center(child: Text(p["statistics"]["turnovers"].toString()))),
-          DataCell(Center(child: Text(p["statistics"]["steals"].toString()))),
-          DataCell(Center(child: Text(p["statistics"]["blocks"].toString()))),
-          DataCell(Center(
-              child: Text(p["statistics"]["reboundsOffensive"].toString()))),
-          DataCell(Center(
-              child: Text(p["statistics"]["reboundsDefensive"].toString()))),
+              Center(child: Text(p.statistics.fieldGoalsAttempted.toString()))),
           DataCell(Center(
             child: Text(
-              p["statistics"]["reboundsTotal"].toString(),
+              p.statistics.fieldGoalsPercentage.toStringAsFixed(2) + "%",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
+          DataCell(Center(child: VerticalDivider())),
           DataCell(
-              Center(child: Text(p["statistics"]["foulsPersonal"].toString()))),
+              Center(child: Text(p.statistics.twoPointersMade.toString()))),
+          DataCell(Center(
+              child: Text(p.statistics.twoPointersAttempted.toString()))),
           DataCell(Center(
             child: Text(
-              p["statistics"]["plusMinusPoints"].toString(),
+              p.statistics.twoPointersPercentage.toStringAsFixed(2) + "%",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )),
+          DataCell(Center(child: VerticalDivider())),
+          DataCell(
+              Center(child: Text(p.statistics.threePointersMade.toString()))),
+          DataCell(Center(
+              child: Text(p.statistics.threePointersAttempted.toString()))),
+          DataCell(Center(
+            child: Text(
+              p.statistics.threePointersPercentage.toStringAsFixed(2) + "%",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )),
+          DataCell(Center(child: VerticalDivider())),
+          DataCell(Center(child: Text(p.statistics.freeThrowsMade.toString()))),
+          DataCell(
+              Center(child: Text(p.statistics.freeThrowsAttempted.toString()))),
+          DataCell(Center(
+            child: Text(
+              p.statistics.freeThrowsPercentage.toStringAsFixed(2) + "%",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )),
+          DataCell(Center(child: VerticalDivider())),
+          DataCell(Center(child: Text(p.statistics.assists.toString()))),
+          DataCell(Center(child: Text(p.statistics.turnovers.toString()))),
+          DataCell(Center(child: Text(p.statistics.steals.toString()))),
+          DataCell(Center(child: Text(p.statistics.blocks.toString()))),
+          DataCell(
+              Center(child: Text(p.statistics.reboundsOffensive.toString()))),
+          DataCell(
+              Center(child: Text(p.statistics.reboundsDefensive.toString()))),
+          DataCell(Center(
+            child: Text(
+              p.statistics.reboundsTotal.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          )),
+          DataCell(Center(child: Text(p.statistics.foulsPersonal.toString()))),
+          DataCell(Center(
+            child: Text(
+              p.statistics.plusMinusPoints.toString(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),
           DataCell(Center(child: Text(getTrueShootingAttempts(p)))),
           DataCell(Center(child: Text(getTrueShootingPercentage(p) + "%"))),
           DataCell(Center(child: Text(getEffectiveFG(p) + "%"))),
-          DataCell(Text(p["status"])),
+          DataCell(Text(p.status)),
         ]),
       );
     }
@@ -304,9 +297,9 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   String getTrueShootingAttempts(dynamic player) {
-    if (player["status"] == "ACTIVE") {
-      int fga = player["statistics"]["fieldGoalsAttempted"];
-      int fta = player["statistics"]["freeThrowsAttempted"];
+    if (player.status == "ACTIVE") {
+      int fga = player.statistics.fieldGoalsAttempted;
+      int fta = player.statistics.freeThrowsAttempted;
 
       double tsa = fga + (0.44 * fta);
 
@@ -321,10 +314,10 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   String getTrueShootingPercentage(dynamic player) {
-    if (player["status"] == "ACTIVE") {
-      int points = player["statistics"]["points"];
-      int fga = player["statistics"]["fieldGoalsAttempted"];
-      int fta = player["statistics"]["freeThrowsAttempted"];
+    if (player.status == "ACTIVE") {
+      int points = player.statistics.points;
+      int fga = player.statistics.fieldGoalsAttempted;
+      int fta = player.statistics.freeThrowsAttempted;
       double tsa = fga + (0.44 * fta);
       double tsp = points / (2 * tsa);
 
@@ -339,10 +332,10 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   String getEffectiveFG(dynamic player) {
-    if (player["status"] == "ACTIVE") {
-      int fgm = player["statistics"]["fieldGoalsMade"];
-      int fga = player["statistics"]["fieldGoalsAttempted"];
-      int tpm = player["statistics"]["threePointersMade"];
+    if (player.status == "ACTIVE") {
+      int fgm = player.statistics.fieldGoalsMade;
+      int fga = player.statistics.fieldGoalsAttempted;
+      int tpm = player.statistics.threePointersMade;
       double efg = (fgm + (tpm * 0.5)) / fga;
 
       if (efg.toString() == "NaN") {
@@ -356,11 +349,11 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   String get2PA(dynamic player) {
-    if (player["status"] == "ACTIVE") {
-      int fga = int.parse(
-          player["statistics"]["fga"] == "" ? 0 : player["statistics"]["fga"]);
-      int tpa = int.parse(
-          player["statistics"]["tpa"] == "" ? 0 : player["statistics"]["tpa"]);
+    if (player.status == "ACTIVE") {
+      int fga =
+          int.parse(player.statistics.fga == "" ? 0 : player.statistics.fga);
+      int tpa =
+          int.parse(player.statistics.tpa == "" ? 0 : player.statistics.tpa);
       int twopa = fga - tpa;
 
       return twopa.toString();
@@ -370,11 +363,11 @@ class GameBoxScoreSummary extends StatelessWidget {
   }
 
   String get2PM(dynamic player) {
-    if (player["status"] == "ACTIVE") {
-      int fgm = int.parse(
-          player["statistics"]["fgm"] == "" ? 0 : player["statistics"]["fgm"]);
-      int tpm = int.parse(
-          player["statistics"]["tpm"] == "" ? 0 : player["statistics"]["tpm"]);
+    if (player.status == "ACTIVE") {
+      int fgm =
+          int.parse(player.statistics.fgm == "" ? 0 : player.statistics.fgm);
+      int tpm =
+          int.parse(player.statistics.tpm == "" ? 0 : player.statistics.tpm);
       int twopm = fgm - tpm;
 
       return twopm.toString();

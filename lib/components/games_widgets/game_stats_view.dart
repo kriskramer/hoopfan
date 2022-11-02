@@ -88,15 +88,13 @@ class GameStatsView extends StatelessWidget {
                       ),
                       Container(
                         child: GameBoxScoreMain(
-                          game: gameData,
-                          stats: stats,
+                          game: game,
                           isHomeTeam: false,
                         ),
                       ),
                       Container(
                         child: GameBoxScoreMain(
-                          game: gameData,
-                          stats: stats,
+                          game: game,
                           isHomeTeam: true,
                         ),
                       ),

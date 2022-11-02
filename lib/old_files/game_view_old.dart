@@ -17,7 +17,7 @@ import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
 import 'package:hoop/components/social_widgets/twitter_feed.dart';
 import 'package:hoop/constant.dart';
-import 'package:hoop/old_files/chat_main.dart';
+import 'package:hoop/components/game_feed_widgets/chat_feed.dart';
 import 'package:hoop/screens/views/games/game_preview_article.dart';
 import 'package:hoop/screens/views/games/game_recap_article.dart';
 import 'package:hoop/services/network.dart';
@@ -194,36 +194,36 @@ class _GameView_oldState extends State<GameView_old> {
                                   );
                                 },
                               ),
-                              GestureDetector(
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.teal[200],
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.chat_bubble_outline,
-                                        color: Colors.grey[100],
-                                      ),
-                                    ),
-                                    Text(
-                                      'Chat',
-                                      style: TextStyle(color: Colors.blueGrey),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (recap) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatMain(
-                                          gameId,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
+                              // GestureDetector(
+                              //   child: Column(
+                              //     children: [
+                              //       CircleAvatar(
+                              //         backgroundColor: Colors.teal[200],
+                              //         radius: 20,
+                              //         child: Icon(
+                              //           Icons.chat_bubble_outline,
+                              //           color: Colors.grey[100],
+                              //         ),
+                              //       ),
+                              //       Text(
+                              //         'Chat',
+                              //         style: TextStyle(color: Colors.blueGrey),
+                              //       )
+                              //     ],
+                              //   ),
+                              //   onTap: () {
+                              //     if (recap) {
+                              //       Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //           builder: (context) => ChatFeed(
+                              //             gameId,
+                              //           ),
+                              //         ),
+                              //       );
+                              //     }
+                              //   },
+                              // ),
                               GestureDetector(
                                 child: Column(
                                   children: [
@@ -329,14 +329,12 @@ class _GameView_oldState extends State<GameView_old> {
                                             Container(
                                               child: GameBoxScoreMain(
                                                 game: gameData,
-                                                stats: stats,
                                                 isHomeTeam: false,
                                               ),
                                             ),
                                             Container(
                                               child: GameBoxScoreMain(
                                                 game: gameData,
-                                                stats: stats,
                                                 isHomeTeam: true,
                                               ),
                                             ),
