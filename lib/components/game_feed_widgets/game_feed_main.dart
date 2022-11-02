@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -6,35 +8,34 @@ import 'package:hoop/components/games_widgets/arena_card.dart';
 import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
 import 'package:hoop/json/jsons.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 import 'package:hoop/providers/game_settings.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/services/network.dart';
-import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
 class GameFeedMain extends StatefulWidget {
   final String gameId;
-  final dynamic gameData;
-  final dynamic stats;
+  final GameData game;
+  final DatabaseReference pbpFeed;
 
-  const GameFeedMain(this.gameId, this.gameData, this.stats);
+  const GameFeedMain(this.gameId, this.game, this.pbpFeed);
 
   @override
   State<GameFeedMain> createState() => _GameFeedMainState();
 }
 
 class _GameFeedMainState extends State<GameFeedMain> {
-  final FeedList list = new FeedList();
+  final FeedList2 list = new FeedList2();
   ScrollController _scrollController = ScrollController();
   bool showAll = false;
 
   @override
   Widget build(BuildContext context) {
-    DatabaseReference pbpFeed =
-        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}');
-    var gameData = widget.gameData;
-    var gameStatus = gameData["statusNum"];
+    // DatabaseReference pbpFeed =
+    //     FirebaseDatabase.instance.ref('gamePbp22/${widget.gameId}');
+    var game = widget.game;
+    print(widget.gameId);
 
     bool showPbp =
         Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
@@ -46,7 +47,7 @@ class _GameFeedMainState extends State<GameFeedMain> {
     return Container(
       padding: EdgeInsets.all(15),
       child: StreamBuilder(
-        stream: pbpFeed.onValue,
+        stream: widget.pbpFeed.onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData) {
             //print("Error on the way");
@@ -55,16 +56,16 @@ class _GameFeedMainState extends State<GameFeedMain> {
             Map<dynamic, dynamic> values = dataValues.value;
             if (values == null) {
               return Column(children: [
-                Text("No data yet..."),
-                gameStatus > 1
+                Text("No play-by-play data yet..."),
+                game.gameStatus > 1
                     ? ElevatedButton(
                         onPressed: () {
-                          var date = widget.gameData["homeStartDate"];
+                          var date = game.gameTimeHome;
                           getPbpData(date, widget.gameId);
                         },
                         child: Text("Refresh"))
                     : Text(
-                        getStartCountdown(widget.gameData),
+                        getStartCountdown(game),
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.purple,
@@ -74,34 +75,37 @@ class _GameFeedMainState extends State<GameFeedMain> {
                   height: 25,
                 ),
                 ArenaCard(
-                  gameData: gameData,
+                  game: game,
                 ),
                 GameOfficials(
-                  game: gameData,
+                  game: game,
                 ),
-                gameStatus < 3 ? HowToWatchCard(game: gameData) : Text(''),
-                gameStatus < 3 ? getTicketsCard() : Text('')
+                game.gameStatus < 3 ? HowToWatchCard(game: game) : Text(''),
+                game.gameStatus < 3 ? getTicketsCard() : Text('')
               ]);
             }
-            values.forEach((key, values) {
-              PbpItem pbp = PbpItem(key, values);
+            for (var p in values["pbp"]["actions"]) {
+              list.items.add(PbpItem2(p));
+            }
+            // values["pbp"]["actions"].forEach((key, val) {
+            //   PbpItem pbp = PbpItem(key, val);
 
-              if (pbp.type == "1" && showPbp) {
-                list.items.add(PbpItem(key, values));
-              }
-              if (pbp.type == "2" && showChat) {
-                list.items.add(PbpItem(key, values));
-              }
-              // temp fix
-              if (pbp.type == null) {
-                list.items.add(PbpItem(key, values));
-              }
-            });
+            //   if (pbp.type == "1" && showPbp) {
+            //     list.items.add(PbpItem(key, val));
+            //   }
+            //   if (pbp.type == "2" && showChat) {
+            //     list.items.add(PbpItem(key, val));
+            //   }
+            //   // temp fix
+            //   if (pbp.type == null) {
+            //     list.items.add(PbpItem(key, val));
+            //   }
+            // });
 
             list.sort();
 
-            Provider.of<JsonFiles>(context, listen: false)
-                .setGameFeed(widget.gameId, list);
+            // Provider.of<JsonFiles>(context, listen: false)
+            //     .setGameFeed(widget.gameId, list);
 
             return new ListView.builder(
               shrinkWrap: true,
@@ -138,7 +142,7 @@ class _GameFeedMainState extends State<GameFeedMain> {
                   }
                 }
                 return GameFeedDisplayItem(
-                    list.items[idx], widget.gameData, widget.stats, showLead);
+                    list.items[idx], showLead, widget.game);
               },
             );
           }
@@ -168,8 +172,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
     );
   }
 
-  String getStartCountdown(dynamic game) {
-    String startTimeUTC = game["startTimeUTC"];
+  String getStartCountdown(GameData game) {
+    String startTimeUTC = game.gameTimeUTC;
 
     if (startTimeUTC == "") {
       return "";
@@ -187,40 +191,31 @@ class _GameFeedMainState extends State<GameFeedMain> {
   }
 
   Future<void> getPbpData(String date, String gameId) async {
-    // Get the current period's pbp feed in real-time
-    var currentPeriod = widget.gameData["period"]["current"];
+    const BASE_URL = "https://cdn.nba.com/static/json/liveData/playbyplay/";
+    var url = "${BASE_URL}playbyplay_${gameId}.json";
 
-    for (int i = 1; i <= currentPeriod; i++) {
-      var _pbpFeed =
-          await Network.getJson(Urls.nbaPlayByPlay(date, gameId, i.toString()));
-      //print(_pbpFeed);
-      var plays = _pbpFeed["plays"];
+    var pbpFeed = await Network.getJson(url);
+
+    if (pbpFeed != null) {
+      var plays = pbpFeed["game"]["actions"];
+
+      DatabaseReference pbpRef1 =
+          FirebaseDatabase.instance.ref('gamePbp22/' + gameId);
+
+      pbpRef1.set({"pbp": pbpFeed["game"]});
 
       if (plays.length > 0) {
         for (int j = 0; j < plays.length; j++) {
-          print(plays[j]);
+          //print(plays[j]);
           var pbp = plays[j];
 
-          DatabaseReference pbpFeed = FirebaseDatabase.instance.ref(
-              'gameFeed/' +
+          DatabaseReference pbpRef2 = FirebaseDatabase.instance.ref(
+              'gameFeed22/' +
                   gameId +
                   '/' +
                   DateTime.now().millisecondsSinceEpoch.toString());
 
-          pbpFeed.set({
-            "type": "1",
-            "period": i,
-            "clock": pbp["clock"],
-            "description": pbp["description"],
-            "hTeamScore": pbp["hTeamScore"],
-            "vTeamScore": pbp["vTeamScore"],
-            "eventMsgType": pbp["eventMsgType"],
-            "personId": pbp["personId"],
-            "teamId": pbp["teamId"],
-            "isScoreChange": pbp["isScoreChange"],
-            "isVideoAvailable": pbp["isVideoAvailable"],
-            "formatted": pbp["formatted"]
-          });
+          pbpRef2.set({"pbp": pbp});
         }
       }
     }

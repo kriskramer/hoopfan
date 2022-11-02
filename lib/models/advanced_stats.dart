@@ -1,12 +1,14 @@
+import 'package:hoop/models/game_data.dart';
+
 class AdvancedStats {
-  final dynamic stats;
+  final GameData stats;
 
   TeamGameStats vTeam;
   TeamGameStats hTeam;
 
   AdvancedStats({this.stats}) {
-    this.vTeam = TeamGameStats(teamStats: stats["vTeam"]);
-    this.hTeam = TeamGameStats(teamStats: stats["hTeam"]);
+    this.vTeam = TeamGameStats(teamStats: stats.awayTeam.statistics);
+    this.hTeam = TeamGameStats(teamStats: stats.homeTeam.statistics);
   }
 
   String getVTeamPoss() {
@@ -49,7 +51,7 @@ class AdvancedStats {
 }
 
 class TeamGameStats {
-  final dynamic teamStats;
+  final TeamStatistics teamStats;
 
   int fgm;
   int fga;
@@ -81,31 +83,31 @@ class TeamGameStats {
 
   TeamGameStats({this.teamStats}) {
     var s = teamStats;
-    var st = teamStats["totals"];
-    fgm = int.parse(st["fgm"]);
-    fga = int.parse(st["fga"]);
-    ftm = int.parse(st["ftm"]);
-    fta = int.parse(st["fta"]);
-    tpm = int.parse(st["tpm"]);
-    tpa = int.parse(st["tpa"]);
-    points = int.parse(st["points"]);
-    offRebounds = int.parse(st["offReb"]);
-    defRebounds = int.parse(st["defReb"]);
-    totalRebounds = int.parse(st["totReb"]);
-    assists = int.parse(st["assists"]);
-    steals = int.parse(st["steals"]);
-    blocks = int.parse(st["blocks"]);
-    turnovers = int.parse(st["turnovers"]);
-    personalFouls = int.parse(st["pFouls"]);
-    teamFouls = int.parse(st["team_fouls"]);
-    fastBreakPoints = int.parse(s["fastBreakPoints"]);
-    pointsInPaint = int.parse(s["pointsInPaint"]);
-    biggestLead = int.parse(s["biggestLead"]);
-    longestRun = int.parse(s["longestRun"]);
-    secondChancePoints = int.parse(s["secondChancePoints"]);
-    pointsOffTurnovers = int.parse(s["pointsOffTurnovers"]);
-    minutes = formatMinutes(st["min"]);
-    plusMinus = int.parse(st["plusMinus"]);
+    var st = teamStats;
+    fgm = st.fieldGoalsMade;
+    fga = st.fieldGoalsAttempted;
+    ftm = st.freeThrowsMade;
+    fta = st.freeThrowsAttempted;
+    tpm = st.threePointersMade;
+    tpa = st.threePointersAttempted;
+    points = st.points;
+    offRebounds = st.reboundsOffensive;
+    defRebounds = st.reboundsDefensive;
+    totalRebounds = st.reboundsTotal;
+    assists = st.assists;
+    steals = st.steals;
+    blocks = st.blocks;
+    turnovers = st.turnoversTeam;
+    personalFouls = st.foulsPersonal;
+    teamFouls = st.foulsTeam;
+    fastBreakPoints = s.fastBreakPointsMade;
+    pointsInPaint = s.pointsInThePaint;
+    biggestLead = s.biggestLead;
+    longestRun = s.biggestScoringRun;
+    secondChancePoints = s.pointsSecondChance;
+    pointsOffTurnovers = s.pointsFromTurnovers;
+    //minutes = formatMinutes(st["min"]);
+    //plusMinus = st["plusMinus"]);
   }
 
   int formatMinutes(String m) {

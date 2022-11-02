@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/providers/game_settings.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../json/jsons.dart';

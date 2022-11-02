@@ -118,7 +118,7 @@ class _GameFeedChatPopupState extends State<GameFeedChatPopup> {
     //print(DateTime.now().millisecondsSinceEpoch.toString());
 
     DatabaseReference feed =
-        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}/$key/chat');
+        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}/$key/pbp');
 
     if (text != "") {
       Provider.of<UserProv>(context, listen: false).setFanValue(_fanValue);

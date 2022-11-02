@@ -4,15 +4,15 @@ import 'package:hoop/components/game_feed_widgets/game_feed_lead_tracker.dart';
 import 'package:hoop/components/game_feed_widgets/game_pbp_popup.dart';
 import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
 
 class GameFeedDisplayItem extends StatefulWidget {
   final pbp;
-  final game;
-  final stats;
   final showLead;
+  final GameData gameData;
 
-  const GameFeedDisplayItem(this.pbp, this.game, this.stats, this.showLead);
+  const GameFeedDisplayItem(this.pbp, this.showLead, this.gameData);
 
   @override
   State<GameFeedDisplayItem> createState() => _GameFeedDisplayItemState();
@@ -24,10 +24,10 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     Widget container;
     Widget row;
     var pbp = widget.pbp;
-    var game = widget.game;
-    var stats = widget.stats;
+    var game = widget.gameData;
 
-    if (pbp.type == "1") {
+    //if (pbp.type == "1") {
+    if (true) {
       // Play-by-play item
       row = Stack(children: [
         GestureDetector(
@@ -43,11 +43,11 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                       child: Row(
                         children: [
                           SizedBox(width: 5),
-                          getPlayerImage(pbp, game, stats),
+                          getPlayerImage(pbp, game),
                           SizedBox(width: 5),
                           Flexible(
                             child: Text(
-                              getPbPDescriptionFormatted(pbp, game),
+                              pbp.description,
                               style: pbp.isScoreChange
                                   ? TextStyle(
                                       fontSize: 14,
@@ -162,8 +162,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                 context: context,
                 builder: (context) {
                   return GamePbpPopup(
-                    game: game,
-                    stats: stats,
+                    gameId: game.gameId,
                     pbp: pbp,
                   );
                 });
@@ -256,21 +255,16 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
       // Chat message
       var displayName = (pbp.displayName == null) ? "" : pbp.displayName;
       var text = pbp.chat == null ? "" : pbp.chat;
-      var fanLevel = pbp.fanLevel;
-
-      var vTeamId = game["awayTeam"]["teamId"];
-      var hTeamId = game["homeTeam"]["teamId"];
 
       var dt = DateTime.fromMillisecondsSinceEpoch(pbp.timestamp);
-      //print(dt);
       var dtString = "${dt.year}-${dt.month}-${dt.day} ${dt.hour}:${dt.minute}";
 
       var teamId;
       if (pbp.fanLevel > 30) {
-        teamId = hTeamId;
+        teamId = game.homeTeam.teamId;
       }
       if (pbp.fanLevel < 30) {
-        teamId = vTeamId;
+        teamId = game.awayTeam.teamId;
       }
 
       return Column(children: [
@@ -337,6 +331,8 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
 
     var diff = cheers - boos;
 
+    //print(diff);
+
     // Check if cheers is higher
     if (diff > 0) {
       if (diff > 100) {
@@ -351,7 +347,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
         b = Border.all(color: Colors.green[400], width: 3);
       } else if (diff > 10) {
         b = Border.all(color: Colors.green[300], width: 3);
-      } else if (diff > 5) {
+      } else if (diff > 4) {
         b = Border.all(color: Colors.green[200], width: 2);
       } else {
         b = Border.all(color: Colors.green[100], width: 2);
@@ -410,11 +406,11 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
   }
 
   Widget getTeamCard(String desc, dynamic game) {
-    String vTeamTriCode = game["awayTeam"]["teamTricode"];
-    String hTeamTriCode = game["homeTeam"]["teamTricode"];
+    String vTeamTriCode = game.awayTeam.teamTricode;
+    String hTeamTriCode = game.homeTeam.teamTricode;
 
-    var vTeamId = game["awayTeam"]["teamId"];
-    var hTeamId = game["homeTeam"]["teamId"];
+    var vTeamId = game.awayTeam.teamId;
+    var hTeamId = game.homeTeam.teamId;
 
     int vTeamIndex = desc.indexOf("[" + vTeamTriCode) + 1;
     int hTeamIndex = desc.indexOf("[" + hTeamTriCode) + 1;
@@ -428,7 +424,7 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     }
   }
 
-  Widget getPlayerImage(PbpItem pbp, dynamic game, dynamic stats) {
+  Widget getPlayerImage(PbpItem2 pbp, GameData game) {
     if (pbp.personId == 0) return SizedBox();
     if (pbp.personId == null) return SizedBox();
 
@@ -447,7 +443,6 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
                     return GamePlayerPopup(
                       personId: pbp.personId.toString(),
                       game: game,
-                      stats: stats,
                       pbp: pbp,
                     );
                   });
@@ -495,8 +490,8 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
       String d = t.shotText;
     }
 
-    String vTeamTriCode = game["awayTeam"]["teamTricode"];
-    String hTeamTriCode = game["homeTeam"]["teamTricode"];
+    String vTeamTriCode = game.awayTeam.teamTricode;
+    String hTeamTriCode = game.homeTeam.teamTricode;
     desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
     desc = desc.replaceAll("[" + hTeamTriCode + "]", "");
     desc = desc.replaceAll("[" + vTeamTriCode + " ", "[");

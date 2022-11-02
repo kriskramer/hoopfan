@@ -4,6 +4,7 @@ import 'package:hoop/components/games_widgets/game_officials.dart';
 import 'package:hoop/components/games_widgets/game_video_feed.dart';
 import 'package:hoop/components/games_widgets/how_to_watch_card.dart';
 import 'package:hoop/components/games_widgets/on_court_card.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:provider/provider.dart';
 
 import '../../json/jsons.dart';
@@ -13,8 +14,9 @@ import 'game_stats.dart';
 class GameStatsView extends StatelessWidget {
   final dynamic gameData;
   final String gameId;
+  final GameData game;
 
-  const GameStatsView(this.gameData, this.gameId);
+  const GameStatsView(this.gameData, this.gameId, this.game);
 
   @override
   Widget build(BuildContext context) {
@@ -59,20 +61,19 @@ class GameStatsView extends StatelessWidget {
                       Column(
                         children: [
                           Container(
-                            //padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: OnCourtCard(
-                              stats: stats,
-                              game: gameData,
+                              game: game,
                             ),
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           ArenaCard(
-                            gameData: gameData,
+                            game: game,
                           ),
                           GameOfficials(
-                            game: gameData,
+                            game: game,
                           ),
                           gameStatus < 3
                               ? HowToWatchCard(game: gameData)
@@ -82,8 +83,7 @@ class GameStatsView extends StatelessWidget {
                       ),
                       Container(
                         child: GameStats(
-                          stats: stats,
-                          gameData: gameData,
+                          game: game,
                         ),
                       ),
                       Container(

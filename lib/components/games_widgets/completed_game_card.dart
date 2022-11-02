@@ -3,12 +3,11 @@ import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
 import 'package:hoop/models/league_standings.dart';
 import 'package:hoop/screens/views/games/game_recap_article_header.dart';
-import 'package:hoop/screens/views/games/game_view.dart';
 import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-import '../../screens/views/games/game_feed_view.dart';
+import '../../screens/views/games/game_view.dart';
 
 class CompletedGameCard extends StatelessWidget {
   final dynamic game;
@@ -20,18 +19,18 @@ class CompletedGameCard extends StatelessWidget {
     final standings = Provider.of<JsonFiles>(context, listen: false)
         .getLeagueStandings(); //["league"]["standard"]["conference"];
     final LeagueStanding vTeam =
-        standings.getTeamStandings(game["vTeam"]["teamId"]);
+        standings.getTeamStandings(game["awayTeam"]["teamId"].toString());
     final LeagueStanding hTeam =
-        standings.getTeamStandings(game["hTeam"]["teamId"]);
+        standings.getTeamStandings(game["homeTeam"]["teamId"].toString());
 
     bool recap = game["isRecapArticleAvail"];
     var gameId = game["gameId"];
     var date = game["gameUrlCode"].toString().split("/")[0];
 
     bool isOvertime = false;
-    if (game["period"] != null) {
-      isOvertime = game["period"]["current"] > 4 ? true : false;
-    }
+    // if (game["period"] != null) {
+    //   isOvertime = game["period"]["current"] > 4 ? true : false;
+    // }
 
     bool isHomeWin = isHomeTeamWinner(game);
 
@@ -46,7 +45,7 @@ class CompletedGameCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => GameFeedView(
+              builder: (context) => GameView(
                 game: game,
               ),
             ),
@@ -59,21 +58,22 @@ class CompletedGameCard extends StatelessWidget {
               children: [
                 CachedLogo(
                     radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["vTeam"]["teamId"])),
+                    url: ConstantHelper.getTeamLogo(
+                        game["awayTeam"]["teamId"].toString())),
                 Text(
                   "(${vTeam.wins}-${vTeam.losses})",
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Column(children: [
                   Text(
-                    formatDate(game["startDateEastern"].toString())[0],
+                    formatDate(game["gameEt"].toString())[0],
                     style: TextStyle(
                       fontSize: 12,
                     ),
                   ),
                   Row(children: [
                     Text(
-                      game["vTeam"]["score"].toString(),
+                      game["awayTeam"]["score"].toString(),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.blue,
@@ -85,7 +85,7 @@ class CompletedGameCard extends StatelessWidget {
                       style: TextStyle(fontSize: 14, color: Colors.blue),
                     ),
                     Text(
-                      game["hTeam"]["score"],
+                      game["homeTeam"]["score"].toString(),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.blue,
@@ -104,12 +104,13 @@ class CompletedGameCard extends StatelessWidget {
                 ),
                 CachedLogo(
                     radius: 35,
-                    url: ConstantHelper.getTeamLogo(game["hTeam"]["teamId"])),
+                    url: ConstantHelper.getTeamLogo(
+                        game["homeTeam"]["teamId"].toString())),
               ],
             ),
-            recap
-                ? GameRecapArticleHeader(gameId: gameId, gameDate: date)
-                : SizedBox(),
+            // recap
+            //     ? GameRecapArticleHeader(gameId: gameId, gameDate: date)
+            //     : SizedBox(),
           ],
         ),
       ),
@@ -118,7 +119,7 @@ class CompletedGameCard extends StatelessWidget {
 
   // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
   //   dynamic team;
-  //   String teamId = game["vTeam"]["teamId"];
+  //   String teamId = game["awayTeam"]["teamId"];
 
   //   for (var t in json["east"]) {
   //     if (t["teamId"] == teamId) {
@@ -138,7 +139,7 @@ class CompletedGameCard extends StatelessWidget {
 
   // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
   //   dynamic team;
-  //   String teamId = game["hTeam"]["teamId"];
+  //   String teamId = game["homeTeam"]["teamId"];
 
   //   for (var t in json["east"]) {
   //     if (t["teamId"] == teamId) {
@@ -166,13 +167,15 @@ class CompletedGameCard extends StatelessWidget {
     } else {
       nat = "";
     }
-    if (game["watch"]["broadcast"]["broadcasters"]["hTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["hTeam"][0]["shortName"];
+    if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
+      h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
+          ["shortName"];
     } else {
       h = "";
     }
-    if (game["watch"]["broadcast"]["broadcasters"]["vTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["vTeam"][0]["shortName"];
+    if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
+      v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
+          ["shortName"];
     } else {
       v = "";
     }
@@ -185,8 +188,8 @@ class CompletedGameCard extends StatelessWidget {
   bool isHomeTeamWinner(dynamic game) {
     bool isWinner = false;
 
-    int vTeamScore = int.parse(game["vTeam"]["score"]);
-    int hTeamScore = int.parse(game["hTeam"]["score"]);
+    int vTeamScore = game["awayTeam"]["score"];
+    int hTeamScore = game["homeTeam"]["score"];
 
     if (hTeamScore > vTeamScore) {
       isWinner = true;
@@ -196,11 +199,11 @@ class CompletedGameCard extends StatelessWidget {
   }
 
   bool getViewingTeamWinnerResult(dynamic game, String teamId) {
-    int vTeamScore = int.parse(game["vTeam"]["score"]);
-    int hTeamScore = int.parse(game["hTeam"]["score"]);
+    int vTeamScore = game["awayTeam"]["score"];
+    int hTeamScore = game["homeTeam"]["score"];
     bool isHomeTeam = false;
 
-    if (game["hTeam"]["teamId"] == teamId) {
+    if (game["homeTeam"]["teamId"] == teamId) {
       isHomeTeam = true;
     }
 

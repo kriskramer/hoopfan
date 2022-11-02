@@ -1,14 +1,16 @@
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/models/player_base_stat_and_rank.dart';
 
 class StatCalculator {
   // True Shooting Percentage methods
-  static double getTSPercentGame(dynamic stats) {
+  static double getTSPercentGame(GamePlayer player) {
+    GamePlayerStatistics stats = player.statistics;
+
     var ts = 0.0;
     var tsa = 2 *
-        (double.parse(stats["statistics"]["freeThrowsAttempted"].toString()) *
-                0.44 +
-            int.parse(stats["statistics"]["fieldGoalsAttempted"].toString()));
-    ts = int.parse(stats["statistics"]["points"].toString()) / tsa;
+        (double.parse(stats.freeThrowsAttempted.toString()) * 0.44 +
+            int.parse(stats.fieldGoalsAttempted.toString()));
+    ts = int.parse(stats.points.toString()) / tsa;
     return ts;
   }
 

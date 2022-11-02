@@ -6,8 +6,8 @@ class Urls {
   static final String _sioBaseUrl =
       "https://api.sportsdata.io/v3/nba/stats/json/";
 
-  static final String _season = "2021-22";
-  static final String _seasonShort = "2021";
+  static final String _season = "2022-23";
+  static final String _seasonShort = "2022";
 
   // static String seasonsUrl = "$_apiBaseUrl/seasons/?rapidapi-key=${NbaApi.key}";
 

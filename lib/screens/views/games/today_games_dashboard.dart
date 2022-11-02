@@ -7,6 +7,7 @@ import 'package:hoop/components/games_widgets/upcoming_game_card_dashboard.dart'
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
+import 'package:hoop/utils/date_helper.dart';
 import 'package:hoop/utils/formatdate.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -247,12 +248,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   Future<dynamic> loadGames(BuildContext context) async {
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    print(selectedDate);
-    var selectedDate2 = selectedDate.substring(0, 4) +
-        "-" +
-        selectedDate.substring(4, 6) +
-        "-" +
-        selectedDate.substring(6, 8);
+    var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
 
     return await Network.getJson(
       Urls.nbaGamesSelectedDate(selectedDate2),
@@ -262,22 +258,16 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   }
 
   Future<dynamic> loadGames2(BuildContext context) async {
-    print('TestWidget: ${ModalRoute.of(context).isCurrent}');
+    // Future<dynamic> empty;
 
-    Future<dynamic> empty;
-
-    // I can't remember why I put this in here...
-    if (!ModalRoute.of(context).isCurrent) {
-      return empty;
-    }
+    // // I can't remember why I put this in here...
+    // if (!ModalRoute.of(context).isCurrent) {
+    //   return empty;
+    // }
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    print(selectedDate);
-    var selectedDate2 = selectedDate.substring(0, 4) +
-        "-" +
-        selectedDate.substring(4, 6) +
-        "-" +
-        selectedDate.substring(6, 8);
+    //print(selectedDate);
+    var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
 
     return await Network.getJson(
       Urls.nbaGamesSelectedDate(selectedDate2),

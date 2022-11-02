@@ -20,7 +20,7 @@ class ScheduleHelper {
     List<dynamic> upcomingGames = [];
 
     for (var g in sched) {
-      print(g);
+      //print(g);
       if (int.parse(todayString) < int.parse(g["startDateEastern"])) {
         upcomingGames.add(g);
       }

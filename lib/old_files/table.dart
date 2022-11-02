@@ -24,7 +24,7 @@ class _ConfTableState extends State<ConfTable> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ), onTap: () {
             var teamId = team.teamID;
-            print(teamId);
+            //print(teamId);
             Navigator.push(
               context,
               MaterialPageRoute(

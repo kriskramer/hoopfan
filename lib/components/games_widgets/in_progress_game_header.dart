@@ -54,7 +54,8 @@ class InProgressGameHeader extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => TeamDetails(
-                          nbaTeamId: gameData["awayTeam"]["teamId"])));
+                          nbaTeamId:
+                              gameData["awayTeam"]["teamId"].toString())));
             },
           ),
           SizedBox(

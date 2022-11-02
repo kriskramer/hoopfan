@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hoop/models/game_feed/pbp_item.dart';
+import 'package:hoop/utils/date_helper.dart';
 
 class GameFeedLatest extends StatefulWidget {
   final String gameId;
@@ -13,12 +14,12 @@ class GameFeedLatest extends StatefulWidget {
 }
 
 class _GameFeedLatestState extends State<GameFeedLatest> {
-  final FeedList list = new FeedList();
+  final FeedList2 list = new FeedList2();
 
   @override
   Widget build(BuildContext context) {
     DatabaseReference pbpFeed =
-        FirebaseDatabase.instance.ref('gameFeed22/${widget.gameId}');
+        FirebaseDatabase.instance.ref('gamePbp22/${widget.gameId}');
     int comments = 0;
     int pbpCount = 0;
     String lastPbp = "";
@@ -38,19 +39,23 @@ class _GameFeedLatestState extends State<GameFeedLatest> {
             }
             comments = 0;
             pbpCount = 0;
-            values.forEach((key, values) {
-              var pbp = PbpItem(key, values);
-              list.items.add(pbp);
-              if (pbp.type == "1") {
-                pbpCount++;
-              }
-              if (pbp.type == "2") {
-                comments++;
-              }
-              if (pbp.type == null) {
-                pbpCount++;
-              }
-            });
+            for (var p in values["pbp"]["actions"]) {
+              list.items.add(PbpItem2(p));
+              pbpCount++;
+            }
+            // values.forEach((key, values) {
+            //   var pbp = PbpItem(key, values);
+            //   list.items.add(pbp);
+            //   if (pbp.type == "1") {
+            //     pbpCount++;
+            //   }
+            //   if (pbp.type == "2") {
+            //     comments++;
+            //   }
+            //   if (pbp.type == null) {
+            //     pbpCount++;
+            //   }
+            // });
 
             list.sort();
 
@@ -58,7 +63,9 @@ class _GameFeedLatestState extends State<GameFeedLatest> {
             var lastItem = list.items[index];
 
             if (lastItem.type == "1") {
-              lastPbp = lastItem.clock + " - " + lastItem.description;
+              lastPbp = DateHelper.formatClockWithPT(lastItem.clock) +
+                  " - " +
+                  lastItem.description;
             } else if (lastItem.type == "2") {
               lastPbp = '"' + lastItem.chat + '"';
             }

@@ -128,9 +128,7 @@ class _GameBoxScoreMainState extends State<GameBoxScoreMain> {
         ),
         showSummary
             ? GameBoxScoreSummary(
-                game: widget.game,
-                stats: widget.stats,
-                isHomeTeam: widget.isHomeTeam)
+                game: widget.game, isHomeTeam: widget.isHomeTeam)
             : SizedBox(),
         showAdvanced
             ? GameBoxScoreAdvanced(
