@@ -94,25 +94,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
             for (var p in values["pbp"]["actions"]) {
               list.items.add(PbpItem2(p));
             }
-            // values["pbp"]["actions"].forEach((key, val) {
-            //   PbpItem pbp = PbpItem(key, val);
-
-            //   if (pbp.type == "1" && showPbp) {
-            //     list.items.add(PbpItem(key, val));
-            //   }
-            //   if (pbp.type == "2" && showChat) {
-            //     list.items.add(PbpItem(key, val));
-            //   }
-            //   // temp fix
-            //   if (pbp.type == null) {
-            //     list.items.add(PbpItem(key, val));
-            //   }
-            // });
 
             list.sort();
-
-            // Provider.of<JsonFiles>(context, listen: false)
-            //     .setGameFeed(widget.gameId, list);
 
             return Column(
               children: [

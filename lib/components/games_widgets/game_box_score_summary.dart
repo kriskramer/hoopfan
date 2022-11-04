@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/components/games_widgets/game_player_popup.dart';
 import 'package:hoop/components/helper_widgets/stat_info_dialog.dart';
 import 'package:hoop/models/game_data.dart';
+import 'package:hoop/screens/views/players/player_detail.dart';
 
 class GameBoxScoreSummary extends StatelessWidget {
   final GameData game;
@@ -91,7 +92,7 @@ class GameBoxScoreSummary extends StatelessWidget {
             showDialog(
                 context: ctx,
                 builder: (context) {
-                  return GamePlayerPopup(personId: p.personId, game: game);
+                  return PlayerDetail(playerId: p.personId.toString());
                 });
           }),
         ]),
