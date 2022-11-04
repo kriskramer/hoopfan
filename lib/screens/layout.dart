@@ -25,21 +25,6 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  // int _selectedScreen = 0;
-  // List<Widget> views = [
-  //   LeagueMainView(),
-  //   NewsMainScreen(),
-  //   TodaysGames(),
-  //   LeadersMain(),
-  //   AccountMain(),
-  // ];
-
-  // void onTapChangeView(int index) {
-  //   setState(() {
-  //     _selectedScreen = index;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -51,35 +36,6 @@ class _LayoutState extends State<Layout> {
                 //body: views.elementAt(_selectedScreen),
                 body: DashboardMain(),
                 backgroundColor: Color(0XFFEDF1FF),
-                // bottomNavigationBar: BottomNavigationBar(
-                //   type: BottomNavigationBarType.fixed,
-                //   items: const <BottomNavigationBarItem>[
-                //     BottomNavigationBarItem(
-                //       icon: Icon(Icons.table_chart_outlined),
-                //       label: "League",
-                //     ),
-                //     BottomNavigationBarItem(
-                //       icon: Icon(Icons.article),
-                //       label: "News",
-                //     ),
-                //     BottomNavigationBarItem(
-                //       icon: Icon(Icons.sports_basketball_sharp),
-                //       label: "Games",
-                //     ),
-                //     BottomNavigationBarItem(
-                //       backgroundColor: Colors.blueGrey,
-                //       icon: Icon(Icons.bar_chart),
-                //       label: "Stats",
-                //     ),
-                //     BottomNavigationBarItem(
-                //       icon: Icon(Icons.person),
-                //       label: "User",
-                //     ),
-                //   ],
-                //   currentIndex: _selectedScreen,
-                //   onTap: onTapChangeView,
-                //   selectedItemColor: Color(0XFF1F6BA3),
-                // ),
               ),
             );
           } else {

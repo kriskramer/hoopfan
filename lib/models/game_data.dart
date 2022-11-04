@@ -159,7 +159,8 @@ class TeamStatistics {
     pointsFromTurnovers = json["pointsFromTurnovers"];
     pointsInThePaintAttempted = json["pointsInThePaintAttempted"];
     pointsInThePaintMade = json["pointsInThePaintMade"];
-    pointsInThePaintPercentage = json["pointsInThePaintPercentage"];
+    pointsInThePaintPercentage =
+        double.parse(json["pointsInThePaintPercentage"].toString());
     reboundsTeam = json["reboundsTeam"];
     reboundsTeamDefensive = json["reboundsTeamDefensive"];
     reboundsTeamOffensive = json["reboundsTeamOffensive"];

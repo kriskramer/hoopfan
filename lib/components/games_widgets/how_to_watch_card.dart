@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hoop/models/game_data.dart';
 
 class HowToWatchCard extends StatelessWidget {
-  final GameData game;
+  final dynamic game;
 
   HowToWatchCard({this.game});
 

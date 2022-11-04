@@ -12,12 +12,6 @@ class ScheduledGameHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var countdown = getStartCountdown(gameData);
-    var seriesWin = gameData["awayTeam"]["seriesWin"] == ""
-        ? "0"
-        : gameData["awayTeam"]["seriesWin"];
-    var seriesLoss = gameData["awayTeam"]["seriesLoss"] == ""
-        ? "0"
-        : gameData["awayTeam"]["seriesLoss"];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -50,17 +44,17 @@ class ScheduledGameHeader extends StatelessWidget {
             height: 10,
           ),
           Text(
-            formatDate(gameData["gameTimeUTC"].toString())[0],
+            formatDate(gameData["gameTimeUTC"].toString())[0], // returns date
             style: TextStyle(fontSize: 18),
           ),
           Text(
-            formatDate(gameData["gameTimeUTC"].toString())[1],
+            formatDate(gameData["gameTimeUTC"].toString())[1], // returns time
             style: TextStyle(fontSize: 18),
           ),
           SizedBox(
             height: 5,
           ),
-          Text("Series ($seriesWin - $seriesLoss)"),
+          Text(gameData["seriesText"]),
           SizedBox(
             height: 5,
           ),

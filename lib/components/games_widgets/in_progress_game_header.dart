@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/constant.dart';
+import 'package:hoop/models/game_data.dart';
 import 'package:hoop/screens/views/teams/team_main.dart';
 
 class InProgressGameHeader extends StatelessWidget {
-  final dynamic gameData;
+  final dynamic game;
+  final GameData gameData;
+  // Both of these objects are just about the same, the main difference is the dynamic game object has wins and losses included in the team objects
 
-  InProgressGameHeader({this.gameData});
+  InProgressGameHeader({this.game, this.gameData});
 
   @override
   Widget build(BuildContext context) {
     int vFullTimeouts = 0;
     int hFullTimeouts = 0;
 
-    var vScore = gameData["awayTeam"]["score"] == ""
+    var vScore =
+        game["awayTeam"]["score"] == "" ? "0" : game["awayTeam"]["score"];
+    var hScore =
+        game["homeTeam"]["score"] == "" ? "0" : game["homeTeam"]["score"];
+    var seriesWin = game["awayTeam"]["seriesWin"] == ""
         ? "0"
-        : gameData["awayTeam"]["score"];
-    var hScore = gameData["homeTeam"]["score"] == ""
+        : game["awayTeam"]["seriesWin"];
+    var seriesLoss = game["awayTeam"]["seriesLoss"] == ""
         ? "0"
-        : gameData["homeTeam"]["score"];
-    var seriesWin = gameData["awayTeam"]["seriesWin"] == ""
-        ? "0"
-        : gameData["awayTeam"]["seriesWin"];
-    var seriesLoss = gameData["awayTeam"]["seriesLoss"] == ""
-        ? "0"
-        : gameData["awayTeam"]["seriesLoss"];
+        : game["awayTeam"]["seriesLoss"];
 
-    if (gameData["playoffs"] != null) {
-      seriesWin = gameData["playoffs"]["seriesSummaryText"];
+    if (game["playoffs"] != null) {
+      seriesWin = game["playoffs"]["seriesSummaryText"];
       seriesLoss = "";
     }
 
-    var gameStatus = gameData["gameStatus"];
-    bool isOverTime = gameData["period"] > 4 ? true : false;
+    var gameStatus = game["gameStatus"];
+    bool isOverTime = game["period"] > 4 ? true : false;
 
-    vFullTimeouts = gameData["awayTeam"]["timeoutsRemaining"];
-    hFullTimeouts = gameData["homeTeam"]["timeoutsRemaining"];
+    vFullTimeouts = game["awayTeam"]["timeoutsRemaining"];
+    hFullTimeouts = game["homeTeam"]["timeoutsRemaining"];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,20 +49,20 @@ class InProgressGameHeader extends StatelessWidget {
             child: CachedLogo(
                 radius: 30,
                 url: ConstantHelper.getTeamLogo(
-                    gameData["awayTeam"]["teamId"].toString())),
+                    game["awayTeam"]["teamId"].toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TeamDetails(
-                          nbaTeamId: gameData["awayTeam"]["teamId"])));
+                      builder: (context) =>
+                          TeamDetails(nbaTeamId: game["awayTeam"]["teamId"])));
             },
           ),
           SizedBox(
             height: 5,
           ),
           Text(
-            "${gameData["awayTeam"]["teamTricode"]} (${gameData["awayTeam"]["wins"]} - ${gameData["awayTeam"]["losses"]})",
+            "${game["awayTeam"]["teamTricode"]} (${game["awayTeam"]["wins"]} - ${game["awayTeam"]["losses"]})",
             style: TextStyle(fontSize: 14),
           ),
           SizedBox(
@@ -95,7 +96,7 @@ class InProgressGameHeader extends StatelessWidget {
             "$vScore - $hScore",
             style: TextStyle(fontSize: 30, color: Colors.red),
           ),
-          Text(gameData["gameStatusText"], style: TextStyle(fontSize: 18)),
+          Text(game["gameStatusText"], style: TextStyle(fontSize: 18)),
           SizedBox(
             height: 5,
           ),
@@ -108,20 +109,20 @@ class InProgressGameHeader extends StatelessWidget {
             child: CachedLogo(
                 radius: 30,
                 url: ConstantHelper.getTeamLogo(
-                    gameData["homeTeam"]["teamId"].toString())),
+                    game["homeTeam"]["teamId"].toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TeamDetails(
-                          nbaTeamId: gameData["homeTeam"]["teamId"])));
+                      builder: (context) =>
+                          TeamDetails(nbaTeamId: game["homeTeam"]["teamId"])));
             },
           ),
           SizedBox(
             height: 5,
           ),
           Text(
-            "${gameData["homeTeam"]["teamTricode"]} (${gameData["homeTeam"]["wins"]} - ${gameData["homeTeam"]["losses"]})",
+            "${game["homeTeam"]["teamTricode"]} (${game["homeTeam"]["wins"]} - ${game["homeTeam"]["losses"]})",
             style: TextStyle(fontSize: 14),
           ),
           SizedBox(

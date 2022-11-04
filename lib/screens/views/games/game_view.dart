@@ -4,7 +4,6 @@ import 'package:hoop/components/game_feed_widgets/chat_feed_count.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_count.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
-import 'package:hoop/components/games_widgets/game_leaders_feed.dart';
 import 'package:hoop/components/games_widgets/game_news_view.dart';
 import 'package:hoop/components/games_widgets/game_stats_view.dart';
 import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
@@ -15,13 +14,13 @@ import 'package:hoop/models/game_data.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../components/games_widgets/game_feed_chat_popup.dart';
-import '../players/player_search.dart';
 import 'game_info_view.dart';
 
 class GameView extends StatefulWidget {
   final dynamic game;
+  final dynamic gameData;
 
-  GameView({this.game});
+  GameView({this.game, this.gameData});
 
   @override
   _GameViewState createState() => _GameViewState();
@@ -190,16 +189,20 @@ class _GameViewState extends State<GameView> {
                       collapsedHeight: 132,
                       backgroundColor: Colors.white,
                       flexibleSpace: Container(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: ScheduledGameHeader(
-                            gameData: widget.game,
-                          )),
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: ScheduledGameHeader(
+                          gameData: widget.game,
+                        ),
+                      ),
                       expandedHeight: 120,
                     ),
                     SliverList(
                       delegate: SliverChildListDelegate([
                         Column(
                           children: [
+                            SizedBox(
+                              height: 15,
+                            ),
                             Text("No game data yet..."),
                             SizedBox(
                               height: 15,
@@ -216,8 +219,8 @@ class _GameViewState extends State<GameView> {
               //gameData = values["data"]["game"];
               game = GameData(values["data"]["game"]);
 
-              DatabaseReference pbpFeed =
-                  FirebaseDatabase.instance.ref('gamePbp22/${gameId}');
+              // DatabaseReference pbpFeed =
+              //     FirebaseDatabase.instance.ref('gamePbp22/${gameId}');
 
               return SafeArea(
                 child: CustomScrollView(slivers: [
@@ -225,11 +228,11 @@ class _GameViewState extends State<GameView> {
                     iconTheme: IconThemeData(color: Colors.blue),
                     pinned: true,
                     elevation: 10,
-                    collapsedHeight: 122,
+                    collapsedHeight: 132,
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
                         padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                        child: getGameHeader(widget.game)),
+                        child: getGameHeader(widget.game, game)),
                     expandedHeight: 120,
                   ),
                   SliverList(
@@ -240,9 +243,7 @@ class _GameViewState extends State<GameView> {
                           //     ? SizedBox() // Replace with HowToWatch widget if status is 1 or 2
                           //     : GameFeedMain(gameId, gameData, stats),
 
-                          showPbp
-                              ? GameFeedMain(gameId, game, pbpFeed)
-                              : SizedBox(),
+                          showPbp ? GameFeedMain(gameId, game) : SizedBox(),
                           showChat ? ChatFeed(gameId, game) : SizedBox(),
                           SizedBox(
                             height: 15,
@@ -273,7 +274,7 @@ class _GameViewState extends State<GameView> {
     );
   }
 
-  Widget getGameHeader(dynamic game) {
+  Widget getGameHeader(dynamic game, GameData gameData) {
     if (game["gameStatus"] == 1) {
       return ScheduledGameHeader(
         gameData: game,
@@ -281,13 +282,15 @@ class _GameViewState extends State<GameView> {
     } else if (game["gameStatus"] == 2) {
       return Column(children: [
         InProgressGameHeader(
-          gameData: game,
+          game: game,
+          gameData: gameData,
         ),
         WinProbability(gameId: game["gameId"]),
       ]);
     } else if (game["gameStatus"] == 3) {
       return InProgressGameHeader(
-        gameData: game,
+        game: game,
+        gameData: gameData,
       );
     }
 

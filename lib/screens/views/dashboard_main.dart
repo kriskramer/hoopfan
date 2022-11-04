@@ -40,7 +40,7 @@ class _DashboardMainState extends State<DashboardMain> {
               ),
             ],
           )),
-      floatingActionButton: _buildFab(context),
+      //floatingActionButton: _buildFab(context),
     );
   }
 

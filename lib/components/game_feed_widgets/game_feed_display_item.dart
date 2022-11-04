@@ -11,8 +11,10 @@ class GameFeedDisplayItem extends StatefulWidget {
   final PbpItem2 pbp;
   final showLead;
   final GameData gameData;
+  final dynamic reactions;
 
-  const GameFeedDisplayItem(this.pbp, this.showLead, this.gameData);
+  const GameFeedDisplayItem(
+      this.pbp, this.showLead, this.gameData, this.reactions);
 
   @override
   State<GameFeedDisplayItem> createState() => _GameFeedDisplayItemState();
@@ -25,10 +27,25 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     Widget row;
     var pbp = widget.pbp;
     var game = widget.gameData;
+    var reactions = widget.reactions;
 
     var isHomeTeam = pbp.teamId == game.homeTeam.teamId;
     var isAwayTeam = pbp.teamId == game.awayTeam.teamId;
     var isNoTeam = pbp.teamId == null;
+    var num = pbp.orderNumber.toString();
+
+    int cheers = 0;
+    int boos = 0;
+
+    if (reactions != null) {
+      if (reactions["pbp"][num] != null) {
+        print(reactions["pbp"][num]);
+        if (reactions["pbp"][num]["cheers"] != null)
+          cheers = reactions["pbp"][num]["cheers"];
+        if (reactions["pbp"][num]["boos"] != null)
+          boos = reactions["pbp"][num]["boos"];
+      }
+    }
 
     Widget pbpRow;
 
@@ -172,6 +189,23 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          boos > 0
+              ? Icon(
+                  Icons.thumb_down,
+                  size: 12,
+                  color: Colors.red,
+                )
+              : SizedBox(),
+          SizedBox(
+            width: 3,
+          ),
+          boos > 0
+              ? Text(boos.toString(),
+                  style: TextStyle(color: Colors.red, fontSize: 10))
+              : SizedBox(),
+          SizedBox(
+            width: 8,
+          ),
           Text(
             getCurrentPeriod(pbp.period),
             style: TextStyle(
@@ -185,6 +219,23 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
             style: TextStyle(
                 fontSize: 12, color: Colors.blue, fontWeight: FontWeight.w500),
           ),
+          SizedBox(
+            width: 8,
+          ),
+          cheers > 0
+              ? Text(cheers.toString(),
+                  style: TextStyle(color: Colors.green, fontSize: 10))
+              : SizedBox(),
+          SizedBox(
+            width: 3,
+          ),
+          cheers > 0
+              ? Icon(
+                  Icons.thumb_up,
+                  size: 12,
+                  color: Colors.green,
+                )
+              : SizedBox(),
         ],
       ),
     ]);
@@ -197,7 +248,8 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
         padding: EdgeInsets.fromLTRB(15, 4, 15, 4),
         margin: EdgeInsets.fromLTRB(0, 2, 0, 3),
         decoration: BoxDecoration(
-          border: getReactionBorder(pbp), //Border.all(color: Colors.grey[300]),
+          border: getReactionBorder(
+              pbp, cheers, boos), //Border.all(color: Colors.grey[300]),
           borderRadius: BorderRadius.circular(10),
           color: pbp.isScoreChange
               ? teamColor == null
@@ -242,21 +294,12 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     }
   }
 
-  Border getReactionBorder(PbpItem2 pbp) {
+  Border getReactionBorder(PbpItem2 pbp, int cheers, int boos) {
     Border b;
-    int cheers;
-    int boos;
 
     if (pbp.actionType == "period") {
       b = Border.all(color: Colors.black, width: 2);
       return b;
-    }
-
-    if (pbp.cheers == null) {
-      cheers = 0;
-    }
-    if (pbp.boos == null) {
-      boos = 0;
     }
 
     var diff = cheers - boos;

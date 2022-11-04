@@ -17,6 +17,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var gameId = game["gameId"];
+
     DatabaseReference gameDataDb =
         FirebaseDatabase.instance.ref('gameData22/$gameId');
 
@@ -60,6 +61,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => GameView(
                         game: gameStream,
+                        gameData: game,
                       ),
                     ),
                   );

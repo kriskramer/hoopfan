@@ -16,9 +16,9 @@ import 'package:provider/provider.dart';
 class GameFeedMain extends StatefulWidget {
   final String gameId;
   final GameData game;
-  final DatabaseReference pbpFeed;
+  //final DatabaseReference pbpFeed;
 
-  const GameFeedMain(this.gameId, this.game, this.pbpFeed);
+  const GameFeedMain(this.gameId, this.game);
 
   @override
   State<GameFeedMain> createState() => _GameFeedMainState();
@@ -26,27 +26,35 @@ class GameFeedMain extends StatefulWidget {
 
 class _GameFeedMainState extends State<GameFeedMain> {
   final FeedList2 list = new FeedList2();
+
   ScrollController _scrollController = ScrollController();
   bool showAll = false;
 
   @override
   Widget build(BuildContext context) {
-    // DatabaseReference pbpFeed =
-    //     FirebaseDatabase.instance.ref('gamePbp22/${widget.gameId}');
+    DatabaseReference pbpFeed =
+        FirebaseDatabase.instance.ref('gamePbp22/${widget.gameId}');
+    DatabaseReference reactionFeed =
+        FirebaseDatabase.instance.ref('gameReactions22/${widget.gameId}');
+
     var game = widget.game;
     print(widget.gameId);
 
-    bool showPbp =
-        Provider.of<GameSettingsProv>(context, listen: false).getShowPbp();
-    bool showChat =
-        Provider.of<GameSettingsProv>(context, listen: false).getShowChat();
+    Stream<DatabaseEvent> stream = reactionFeed.onValue;
+    Map existingReactions;
+
+// Subscribe to the stream!
+    stream.listen((DatabaseEvent event) {
+      existingReactions = event.snapshot.value;
+    });
+
     bool showLead =
         Provider.of<GameSettingsProv>(context, listen: false).getShowLead();
 
     return Container(
       padding: EdgeInsets.all(15),
       child: StreamBuilder(
-        stream: widget.pbpFeed.onValue,
+        stream: pbpFeed.onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData) {
             //print("Error on the way");
@@ -157,8 +165,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
                         idx = 0;
                       }
                     }
-                    return GameFeedDisplayItem(
-                        list.items[idx], showLead, widget.game);
+                    return GameFeedDisplayItem(list.items[idx], showLead,
+                        widget.game, existingReactions);
                   },
                 ),
               ],
