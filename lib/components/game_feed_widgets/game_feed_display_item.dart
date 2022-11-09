@@ -456,20 +456,20 @@ class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
     );
   }
 
-  String getPbPDescriptionFormatted(PbpItem pbp, dynamic game) {
-    String desc = pbp.description;
-    if (pbp.shotResult == "Made") {
-      ScoreTextBreakdown t = pbp.getTextBreakdown();
-      String d = t.shotText;
-    }
+  // String getPbPDescriptionFormatted(PbpItem pbp, dynamic game) {
+  //   String desc = pbp.description;
+  //   if (pbp.shotResult == "Made") {
+  //     ScoreTextBreakdown t = pbp.getTextBreakdown();
+  //     String d = t.shotText;
+  //   }
 
-    String vTeamTriCode = game.awayTeam.teamTricode;
-    String hTeamTriCode = game.homeTeam.teamTricode;
-    desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
-    desc = desc.replaceAll("[" + hTeamTriCode + "]", "");
-    desc = desc.replaceAll("[" + vTeamTriCode + " ", "[");
-    desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
+  //   String vTeamTriCode = game.awayTeam.teamTricode;
+  //   String hTeamTriCode = game.homeTeam.teamTricode;
+  //   desc = desc.replaceAll("[" + vTeamTriCode + "]", "");
+  //   desc = desc.replaceAll("[" + hTeamTriCode + "]", "");
+  //   desc = desc.replaceAll("[" + vTeamTriCode + " ", "[");
+  //   desc = desc.replaceAll("[" + hTeamTriCode + " ", "[");
 
-    return desc;
-  }
+  //   return desc;
+  // }
 }

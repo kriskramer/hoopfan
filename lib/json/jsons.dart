@@ -309,7 +309,7 @@ class JsonFiles with ChangeNotifier {
     notifyListeners();
   }
 
-  void setGameFeed(String gameId, FeedList list) {
+  void setGameFeed(String gameId, FeedList2 list) {
     _gameFeed[gameId] = list;
   }
 
@@ -392,7 +392,7 @@ class JsonFiles with ChangeNotifier {
 
   String getSelectedDate() => _selectedDate;
 
-  FeedList getGameFeed(String gameId) => _gameFeed[gameId];
+  FeedList2 getGameFeed(String gameId) => _gameFeed[gameId];
 
   LeagueStandingList getLeagueStandings() => _allStandings;
   dynamic getStandings() => _confStandings;

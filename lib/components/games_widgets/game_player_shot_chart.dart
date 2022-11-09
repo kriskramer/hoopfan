@@ -6,6 +6,9 @@ import 'package:hoop/services/headers.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:provider/provider.dart';
+
+import '../../json/jsons.dart';
 
 class GamePlayerShotChart extends StatefulWidget {
   final playerId;
@@ -34,10 +37,15 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
           future: loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              dynamic player = snapshot.data["resultSets"][0]["rowSet"];
-              dynamic league = snapshot.data["resultSets"][1]["rowSet"];
+              //dynamic player = snapshot.data["resultSets"][0]["rowSet"];
+              //dynamic league = snapshot.data["resultSets"][1]["rowSet"];
 
-              PlayerShotChartList listPlayer = PlayerShotChartList(player);
+              FeedList2 list = Provider.of<JsonFiles>(context, listen: false)
+                  .getPbpFeed(widget.gameId.toString());
+
+              FeedList2 playerList = list.getByPlayer(widget.playerId);
+
+              //PlayerShotChartList listPlayer = PlayerShotChartList(player);
               //PlayerShotChartList listLeague = PlayerShotChartList(league);
 
               List<Widget> shotWidgets = [];
@@ -46,7 +54,7 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                 shotWidgets.add(getTitleSection("All Shots"));
               }
 
-              listPlayer.items.forEach((e) {
+              playerList.items.forEach((e) {
                 if (showPeriods) {
                   if (e.period != currentPeriod) {
                     currentPeriod = e.period;
@@ -57,17 +65,17 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                 shotWidgets.add(getShotCard(e));
               });
 
-              List<charts.Series<PlayerShotChart, num>> seriesShots = [
+              List<charts.Series<PbpItem2, num>> seriesShots = [
                 charts.Series(
                     id: "shots",
-                    data: listPlayer.items,
-                    domainFn: (PlayerShotChart series, _) => series.locX,
-                    measureFn: (PlayerShotChart series, _) => series.locY,
+                    data: playerList.items,
+                    domainFn: (PbpItem2 series, _) => series.x,
+                    measureFn: (PbpItem2 series, _) => series.y,
                     // Set a label accessor to control the text of the arc label.
                     // labelAccessorFn: (PlayerShotChart series, _) =>
                     //     '${series.locX.toString()}',
-                    colorFn: (PlayerShotChart shots, _) {
-                      return shots.shotMadeFlag == 1
+                    colorFn: (PbpItem2 shots, _) {
+                      return shots.shotResult == "Made"
                           ? charts.MaterialPalette.green.shadeDefault
                           : charts.MaterialPalette.red.shadeDefault;
                     }),
@@ -153,88 +161,83 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
     );
   }
 
-  Card getShotCard(PlayerShotChart e) {
-    bool madeShot = e.shotMadeFlag == 1 ? true : false;
+  Widget getShotCard(PbpItem2 e) {
+    bool madeShot = e.shotResult == "Made" ? true : false;
 
-    return Card(
-      elevation: 6,
-      borderOnForeground: true,
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      color: madeShot ? Colors.green[200] : Colors.red[200],
-      child: Container(
-        padding: EdgeInsets.all(5),
-        child: Stack(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.start,
+    return e.isFieldGoal == 1
+        ? Card(
+            elevation: 6,
+            borderOnForeground: true,
+            margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+            color: madeShot ? Colors.green[200] : Colors.red[200],
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Stack(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Coords: ${e.locX}, ${e.locY}"),
-                      ],
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            //mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  "Coords: ${e.x.toStringAsFixed(2)}, ${e.y.toStringAsFixed(2)}"),
+                            ],
+                          ),
+                          Text(e.actionType),
+                          Text(e.subType),
+                        ],
+                      ),
                     ),
-                    Text(e.actionType),
-                    //Text(e.eventType),
-                    //Text(e.gridType),
-                    //Text(e.shotAttemptedFlag.toString()),
-                    //Text(e.shotDistance.toString()),
-                    //Text(e.shotMadeFlag.toString()),
-                    Text(e.shotType),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        children: [
+                          Text(e.area),
+                          Text(e.areaDetail),
+                          Text("dist: " + e.shotDistance.toString()),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(5),
-                child: Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(e.shotZoneArea),
-                    Text(e.shotZoneBasic),
-                    Text(e.shotZoneRange),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 100,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.5),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Row(
-                  children: [
-                    Text(
-                      ConstantHelper.getPeriodText(e.period.toString()),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 100,
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(
+                        children: [
+                          Text(
+                            ConstantHelper.getPeriodText(e.period.toString()),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(e.clockFormatted().toString(),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
                     SizedBox(
-                      width: 15,
+                      width: 100,
                     ),
-                    Text(e.minutesRemaining.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(":"),
-                    Text(e.secondsRemaining.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
-              ),
-              SizedBox(
-                width: 100,
-              ),
-            ],
-          ),
-        ]),
-      ),
-    );
+              ]),
+            ),
+          )
+        : SizedBox();
   }
 }
