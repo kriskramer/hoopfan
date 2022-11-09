@@ -23,9 +23,9 @@ class GameFeedDisplayItem extends StatefulWidget {
 class _GameFeedDisplayItemState extends State<GameFeedDisplayItem> {
   @override
   Widget build(BuildContext context) {
+    PbpItem2 pbp = widget.pbp;
     Widget container;
     Widget row;
-    var pbp = widget.pbp;
     var game = widget.gameData;
     var reactions = widget.reactions;
 

@@ -5,7 +5,7 @@ import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';
 import 'package:provider/provider.dart';
 
-import '../../screens/views/games/game_view.dart';
+import '../../../screens/views/games/game_view.dart';
 
 class TeamScheduleSmall extends StatelessWidget {
   final String teamId;

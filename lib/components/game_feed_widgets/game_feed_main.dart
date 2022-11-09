@@ -13,6 +13,8 @@ import 'package:hoop/providers/game_settings.dart';
 import 'package:hoop/services/network.dart';
 import 'package:provider/provider.dart';
 
+import '../../json/jsons.dart';
+
 class GameFeedMain extends StatefulWidget {
   final String gameId;
   final GameData game;
@@ -96,6 +98,9 @@ class _GameFeedMainState extends State<GameFeedMain> {
             }
 
             list.sort();
+
+            Provider.of<JsonFiles>(context, listen: false)
+                .setPbpFeed(game.gameId, list);
 
             return Column(
               children: [

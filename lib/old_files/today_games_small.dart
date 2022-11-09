@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/completed_game_card_small.dart';
-import 'package:hoop/components/games_widgets/in_progress_game_card_small.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card_small.dart';
+import 'package:hoop/components/games_widgets/headers/completed_game_card_small.dart';
+import 'package:hoop/components/games_widgets/headers/in_progress_game_card_small.dart';
+import 'package:hoop/components/games_widgets/headers/upcoming_game_card_small.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

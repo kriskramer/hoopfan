@@ -28,6 +28,7 @@ class JsonFiles with ChangeNotifier {
   Map<String, dynamic> _recapArticles = {};
   Map<String, dynamic> _gameNews = {};
   Map<String, dynamic> _pbps = {};
+  Map<String, FeedList2> _pbpFeed = {};
   Map<String, dynamic> _fullGameLeadTracker = {};
   var _teamStatsEstimated;
   var _teamStatsBase;
@@ -130,6 +131,10 @@ class JsonFiles with ChangeNotifier {
   // key value is gameId and period concatenated together with a "-"
   void setGamePbp(String gameAndPeriodId, dynamic pbp) {
     _pbps[gameAndPeriodId] = pbp;
+  }
+
+  void setPbpFeed(String gameId, FeedList2 pbp) {
+    _pbpFeed[gameId] = pbp;
   }
 
   void setGameLeadTracker(String gameId, LeadTrackerList list) {
@@ -361,6 +366,8 @@ class JsonFiles with ChangeNotifier {
   dynamic getLeagueLeaders() => _leagueLeaders;
 
   dynamic getPbp(String gameAndPeriodId) => _pbps[gameAndPeriodId];
+  dynamic getPbpFeed(String gameId) => _pbpFeed[gameId];
+
   LeadTrackerList getFullGameLeadTracker(String gameId) =>
       _fullGameLeadTracker[gameId];
 

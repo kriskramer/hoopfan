@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:hoop/components/games_widgets/completed_game_card.dart';
-import 'package:hoop/components/games_widgets/completed_game_card_viewing_team.dart';
-import 'package:hoop/components/games_widgets/in_progress_game_card.dart';
+import 'package:hoop/components/games_widgets/headers/completed_game_card_viewing_team.dart';
+import 'package:hoop/components/games_widgets/headers/in_progress_game_card.dart';
 import 'package:hoop/components/teams_widgets/scheduled_game_card.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

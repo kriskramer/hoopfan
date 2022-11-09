@@ -6,8 +6,8 @@ import 'package:hoop/components/game_feed_widgets/game_feed_main.dart';
 import 'package:hoop/components/games_widgets/fab_with_icons.dart';
 import 'package:hoop/components/games_widgets/game_news_view.dart';
 import 'package:hoop/components/games_widgets/game_stats_view.dart';
-import 'package:hoop/components/games_widgets/in_progress_game_header.dart';
-import 'package:hoop/components/games_widgets/scheduled_game_header.dart';
+import 'package:hoop/components/games_widgets/headers/in_progress_game_header.dart';
+import 'package:hoop/components/games_widgets/headers/scheduled_game_header.dart';
 import 'package:hoop/components/games_widgets/win_prob.dart';
 import 'package:hoop/models/game_data.dart';
 
@@ -232,7 +232,7 @@ class _GameViewState extends State<GameView> {
                     backgroundColor: Colors.white,
                     flexibleSpace: Container(
                         padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                        child: getGameHeader(widget.game, game)),
+                        child: getGameHeader(widget.gameData, game)),
                     expandedHeight: 120,
                   ),
                   SliverList(
@@ -297,53 +297,54 @@ class _GameViewState extends State<GameView> {
     return null;
   }
 
-  Widget _buildFab(BuildContext context, GameData game) {
-    final icons = [
-      Icons.settings,
-      Icons.article_outlined,
-      Icons.sports_basketball,
-      Icons.sms,
-    ];
+// Save this code somewhere. This loads up the floating action button with sub buttons
+  // Widget _buildFab(BuildContext context, GameData game) {
+  //   final icons = [
+  //     Icons.settings,
+  //     Icons.article_outlined,
+  //     Icons.sports_basketball,
+  //     Icons.sms,
+  //   ];
 
-    return FabWithIcons(
-      icons: icons,
-      onIconTapped: (index) {
-        if (index == 0) {
-          // show game settings page
-          showDialog(
-              context: context,
-              builder: (context) {
-                return GameSettings(gameData, gameId, _update);
-              });
-        } else if (index == 1) {
-          //show news page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => GameNewsView(gameData, gameId)),
-          );
-        } else if (index == 2) {
-          // show stats page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => GameStatsView(gameData, gameId, game)),
-          );
-        } else if (index == 3) {
-          // chat
-          showDialog(
-              context: context,
-              builder: (context) {
-                return GameFeedChatPopup(
-                  gameId: gameId,
-                  vTeamId: game.awayTeam.teamId,
-                  hTeamId: game.homeTeam.teamId,
-                );
-              });
-        }
-      },
-    );
-  }
+  //   return FabWithIcons(
+  //     icons: icons,
+  //     onIconTapped: (index) {
+  //       if (index == 0) {
+  //         // show game settings page
+  //         showDialog(
+  //             context: context,
+  //             builder: (context) {
+  //               return GameSettings(gameData, gameId, _update);
+  //             });
+  //       } else if (index == 1) {
+  //         //show news page
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => GameNewsView(gameData, gameId)),
+  //         );
+  //       } else if (index == 2) {
+  //         // show stats page
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => GameStatsView(gameData, gameId, game)),
+  //         );
+  //       } else if (index == 3) {
+  //         // chat
+  //         showDialog(
+  //             context: context,
+  //             builder: (context) {
+  //               return GameFeedChatPopup(
+  //                 gameId: gameId,
+  //                 vTeamId: game.awayTeam.teamId,
+  //                 hTeamId: game.homeTeam.teamId,
+  //               );
+  //             });
+  //       }
+  //     },
+  //   );
+  // }
 
   void _update(int count) {
     setState(() => {});

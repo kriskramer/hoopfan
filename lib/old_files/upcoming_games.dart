@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/upcoming_game_card.dart';
+import 'package:hoop/components/games_widgets/headers/upcoming_game_card.dart';
 import 'package:hoop/constant_schedule.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:provider/provider.dart';

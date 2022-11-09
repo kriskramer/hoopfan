@@ -16,27 +16,11 @@ class InProgressGameHeader extends StatelessWidget {
     int vFullTimeouts = 0;
     int hFullTimeouts = 0;
 
-    var vScore =
-        game["awayTeam"]["score"] == "" ? "0" : game["awayTeam"]["score"];
-    var hScore =
-        game["homeTeam"]["score"] == "" ? "0" : game["homeTeam"]["score"];
-    var seriesWin = game["awayTeam"]["seriesWin"] == ""
-        ? "0"
-        : game["awayTeam"]["seriesWin"];
-    var seriesLoss = game["awayTeam"]["seriesLoss"] == ""
-        ? "0"
-        : game["awayTeam"]["seriesLoss"];
+    var vScore = gameData.awayTeam.score;
+    var hScore = gameData.homeTeam.score;
 
-    if (game["playoffs"] != null) {
-      seriesWin = game["playoffs"]["seriesSummaryText"];
-      seriesLoss = "";
-    }
-
-    var gameStatus = game["gameStatus"];
-    bool isOverTime = game["period"] > 4 ? true : false;
-
-    vFullTimeouts = game["awayTeam"]["timeoutsRemaining"];
-    hFullTimeouts = game["homeTeam"]["timeoutsRemaining"];
+    vFullTimeouts = gameData.awayTeam.timeoutsRemaining;
+    hFullTimeouts = gameData.homeTeam.timeoutsRemaining;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -49,13 +33,13 @@ class InProgressGameHeader extends StatelessWidget {
             child: CachedLogo(
                 radius: 30,
                 url: ConstantHelper.getTeamLogo(
-                    game["awayTeam"]["teamId"].toString())),
+                    gameData.awayTeam.teamId.toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: game["awayTeam"]["teamId"])));
+                      builder: (context) => TeamDetails(
+                          nbaTeamId: gameData.awayTeam.teamId.toString())));
             },
           ),
           SizedBox(
@@ -96,26 +80,23 @@ class InProgressGameHeader extends StatelessWidget {
             "$vScore - $hScore",
             style: TextStyle(fontSize: 30, color: Colors.red),
           ),
-          Text(game["gameStatusText"], style: TextStyle(fontSize: 18)),
+          Text(gameData.gameStatusText, style: TextStyle(fontSize: 18)),
           SizedBox(
             height: 5,
           ),
-          seriesWin == null
-              ? SizedBox()
-              : Text("Series ($seriesWin - $seriesLoss)"),
         ]),
         Column(children: [
           GestureDetector(
             child: CachedLogo(
                 radius: 30,
                 url: ConstantHelper.getTeamLogo(
-                    game["homeTeam"]["teamId"].toString())),
+                    gameData.homeTeam.teamId.toString())),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          TeamDetails(nbaTeamId: game["homeTeam"]["teamId"])));
+                      builder: (context) => TeamDetails(
+                          nbaTeamId: gameData.homeTeam.teamId.toString())));
             },
           ),
           SizedBox(

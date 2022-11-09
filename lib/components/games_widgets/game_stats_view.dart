@@ -75,10 +75,10 @@ class GameStatsView extends StatelessWidget {
                           GameOfficials(
                             game: game,
                           ),
-                          gameStatus < 3
-                              ? HowToWatchCard(game: gameData)
-                              : Text(''),
-                          gameStatus < 3 ? getTicketsCard(context) : Text('')
+                          // gameStatus < 3
+                          //     ? HowToWatchCard(game: gameData)
+                          //     : Text(''),
+                          // gameStatus < 3 ? getTicketsCard(context) : Text('')
                         ],
                       ),
                       Container(

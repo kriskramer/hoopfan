@@ -75,6 +75,9 @@ class _GamePbpPopupState extends State<GamePbpPopup> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Boo"),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Text("Cheer"),
                         ],
                       ),

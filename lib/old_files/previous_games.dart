@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hoop/components/games_widgets/completed_game_card.dart';
+import 'package:hoop/components/games_widgets/headers/completed_game_card.dart';
 import 'package:hoop/json/jsons.dart';
 import 'package:hoop/services/network.dart';
 import 'package:hoop/services/urls.dart';

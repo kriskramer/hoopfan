@@ -6,7 +6,7 @@ import 'package:hoop/screens/views/games/game_preview_article_header.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-import '../../screens/views/games/game_view.dart';
+import '../../../screens/views/games/game_view.dart';
 
 class InProgressGameCard extends StatelessWidget {
   final dynamic game;
@@ -158,29 +158,29 @@ class InProgressGameCard extends StatelessWidget {
   //   return team;
   // }
 
-  String getHowToWatch() {
-    String howToWatch = "";
-    String nat, v, h;
+  // String getHowToWatch() {
+  //   String howToWatch = "";
+  //   String nat, v, h;
 
-    if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
-      nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
-          ["shortName"];
-    } else {
-      nat = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["hTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["hTeam"][0]["shortName"];
-    } else {
-      h = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["vTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["vTeam"][0]["shortName"];
-    } else {
-      v = "";
-    }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
+  //     nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
+  //         ["shortName"];
+  //   } else {
+  //     nat = "";
+  //   }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["hTeam"].length > 0) {
+  //     h = game["watch"]["broadcast"]["broadcasters"]["hTeam"][0]["shortName"];
+  //   } else {
+  //     h = "";
+  //   }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["vTeam"].length > 0) {
+  //     v = game["watch"]["broadcast"]["broadcasters"]["vTeam"][0]["shortName"];
+  //   } else {
+  //     v = "";
+  //   }
 
-    howToWatch = "$nat  $v  $h";
+  //   howToWatch = "$nat  $v  $h";
 
-    return howToWatch;
-  }
+  //   return howToWatch;
+  // }
 }

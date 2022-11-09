@@ -6,7 +6,7 @@ import 'package:hoop/screens/views/games/game_preview_article_header.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-import '../../screens/views/games/game_view.dart';
+import '../../../screens/views/games/game_view.dart';
 
 class InProgressGameCardSmall extends StatelessWidget {
   final dynamic game;

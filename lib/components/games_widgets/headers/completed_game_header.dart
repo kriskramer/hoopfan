@@ -8,7 +8,7 @@ import 'package:hoop/utils/formatdate.dart';
 import 'package:provider/provider.dart';
 import 'package:hoop/json/jsons.dart';
 
-import '../../screens/views/games/game_view.dart';
+import '../../../screens/views/games/game_view.dart';
 
 class CompletedGameHeader extends StatelessWidget {
   final dynamic game;
@@ -122,33 +122,33 @@ class CompletedGameHeader extends StatelessWidget {
     );
   }
 
-  String getHowToWatch() {
-    String howToWatch = "";
-    String nat, v, h;
+  // String getHowToWatch() {
+  //   String howToWatch = "";
+  //   String nat, v, h;
 
-    if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
-      nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
-          ["shortName"];
-    } else {
-      nat = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
-          ["shortName"];
-    } else {
-      h = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
-          ["shortName"];
-    } else {
-      v = "";
-    }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
+  //     nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
+  //         ["shortName"];
+  //   } else {
+  //     nat = "";
+  //   }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
+  //     h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
+  //         ["shortName"];
+  //   } else {
+  //     h = "";
+  //   }
+  //   if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
+  //     v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
+  //         ["shortName"];
+  //   } else {
+  //     v = "";
+  //   }
 
-    howToWatch = "$nat  $v  $h";
+  //   howToWatch = "$nat  $v  $h";
 
-    return howToWatch;
-  }
+  //   return howToWatch;
+  // }
 
   bool isHomeTeamWinner(dynamic game) {
     bool isWinner = false;
