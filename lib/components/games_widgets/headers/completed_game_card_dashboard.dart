@@ -29,8 +29,8 @@ class CompletedGameCardDashboard extends StatelessWidget {
     var gameId = game["gameId"];
     var date = game["gameUrlCode"].toString().split("/")[0];
 
-    DatabaseReference gameDataDb =
-        FirebaseDatabase.instance.ref('gameData22/$gameId');
+    DatabaseReference gameHeaderDb =
+        FirebaseDatabase.instance.ref('gameHeader22/$gameId');
 
     bool isOvertime = false;
     if (game["period"] != null) {
@@ -41,7 +41,7 @@ class CompletedGameCardDashboard extends StatelessWidget {
 
     return StreamBuilder(
         //future: _gameData,
-        stream: gameDataDb.onValue,
+        stream: gameHeaderDb.onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData) {
             //print('reloading game_view data');
@@ -52,7 +52,7 @@ class CompletedGameCardDashboard extends StatelessWidget {
                 Text("No data"),
               ]);
             }
-            var gameStream = values["data"]["game"];
+            var game = values["data"];
 
             return Card(
               margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -64,7 +64,7 @@ class CompletedGameCardDashboard extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => GameView(
                                 game: game,
-                                gameData: gameStream,
+                                //gameData: gameStream,
                               )));
                 },
                 child: Container(

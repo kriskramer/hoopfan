@@ -140,7 +140,7 @@ class _GamePlayerPopupState extends State<GamePlayerPopup> {
         Provider.of<JsonFiles>(context, listen: false).getAllBasePlayerStats();
 
     if (json == null) {
-      json = Network.getJson(
+      json = await Network.getJson(
         Urls.getNbaStatsAllPlayerStats(perMode: "PerGame"),
         requestHeaders: RequestHeaders.nbaStatsHeaders,
       );

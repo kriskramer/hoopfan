@@ -69,8 +69,8 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                 charts.Series(
                     id: "shots",
                     data: playerList.items,
-                    domainFn: (PbpItem2 series, _) => series.x,
-                    measureFn: (PbpItem2 series, _) => series.y,
+                    domainFn: (PbpItem2 series, _) => series.y,
+                    measureFn: (PbpItem2 series, _) => series.x,
                     // Set a label accessor to control the text of the arc label.
                     // labelAccessorFn: (PlayerShotChart series, _) =>
                     //     '${series.locX.toString()}',
@@ -88,21 +88,21 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                             horizontal:
                                 BorderSide(width: 1, color: Colors.grey[400]))),
                     child: Column(children: [
-                      Container(
-                        height: 350,
-                        width: double.infinity,
-                        child: Stack(
-                          children: [
-                            Image.asset("images/shot_chart_background.png",
-                                fit: BoxFit.fill),
-                            charts.ScatterPlotChart(
-                              seriesShots,
-                              animate: true,
-                              behaviors: [new charts.SeriesLegend()],
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   height: 350,
+                      //   width: double.infinity,
+                      //   child: Stack(
+                      //     children: [
+                      //       Image.asset("images/shot_chart_background.png",
+                      //           fit: BoxFit.fill),
+                      //       charts.ScatterPlotChart(
+                      //         seriesShots,
+                      //         animate: true,
+                      //         behaviors: [new charts.SeriesLegend()],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -181,15 +181,10 @@ class _GamePlayerShotChartState extends State<GamePlayerShotChart> {
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Row(
-                            //mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  "Coords: ${e.x.toStringAsFixed(2)}, ${e.y.toStringAsFixed(2)}"),
-                            ],
-                          ),
                           Text(e.actionType),
                           Text(e.subType),
+                          Text(
+                              "Coords: ${e.x.toStringAsFixed(2)}, ${e.y.toStringAsFixed(2)}"),
                         ],
                       ),
                     ),

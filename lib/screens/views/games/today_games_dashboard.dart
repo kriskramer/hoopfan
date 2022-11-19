@@ -24,19 +24,19 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   DateTime savedDate;
   DateTime selectedDate;
   Timer _timer;
-  int timerDuration = 300;
+  int timerDuration = 10; //300;
 
   @override
   void initState() {
     super.initState();
 
     _listGames = loadGames(context);
-    startTimer();
+    //startTimer();
   }
 
   void refreshGames() {
     setState(() {
-      _listGames = loadGames2(context);
+      _listGames = loadGames(context);
     });
   }
 
@@ -55,6 +55,7 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    startTimer();
 //    print('TestWidget: ${ModalRoute.of(context).isCurrent}');
     return FutureBuilder(
         future:
@@ -248,25 +249,6 @@ class _TodaysGamesDashboardState extends State<TodaysGamesDashboard> {
   Future<dynamic> loadGames(BuildContext context) async {
     var selectedDate =
         Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
-
-    return await Network.getJson(
-      Urls.nbaGamesSelectedDate(selectedDate2),
-      requestHeaders: RequestHeaders.nbaStatsHeaders,
-    );
-    //return await Network.getJson(Urls.nbaGamesToday());
-  }
-
-  Future<dynamic> loadGames2(BuildContext context) async {
-    // Future<dynamic> empty;
-
-    // // I can't remember why I put this in here...
-    // if (!ModalRoute.of(context).isCurrent) {
-    //   return empty;
-    // }
-    var selectedDate =
-        Provider.of<JsonFiles>(context, listen: false).getSelectedDate();
-    //print(selectedDate);
     var selectedDate2 = DateHelper.formatDateWithDashes(selectedDate);
 
     return await Network.getJson(

@@ -122,7 +122,8 @@ class TeamStatistics {
         double.parse(json["fastBreakPointsPercentage"].toString());
     fieldGoalsAttempted = json["fieldGoalsAttempted"];
     fieldGoalsMade = json["fieldGoalsMade"];
-    fieldGoalsPercentage = json["fieldGoalsPercentage"];
+    fieldGoalsPercentage =
+        double.parse(json["fieldGoalsPercentage"].toString());
     foulsOffensive = json["foulsOffensive"];
     foulsDrawn = json["foulsDrawn"];
     foulsPersonal = json["foulsPersonal"];
@@ -149,11 +150,13 @@ class TeamStatistics {
     steals = json["steals"];
     threePointersAttempted = json["threePointersAttempted"];
     threePointersMade = json["threePointersMade"];
-    threePointersPercentage = json["threePointersPercentage"];
+    threePointersPercentage =
+        double.parse(json["threePointersPercentage"].toString());
     turnovers = json["turnovers"];
     twoPointersAttempted = json["twoPointersAttempted"];
     twoPointersMade = json["twoPointersMade"];
-    twoPointersPercentage = json["twoPointersPercentage"];
+    twoPointersPercentage =
+        double.parse(json["twoPointersPercentage"].toString());
     leadChanges = json["leadChanges"];
     pointsAgainst = json["pointsAgainst"];
     pointsFromTurnovers = json["pointsFromTurnovers"];
@@ -168,7 +171,8 @@ class TeamStatistics {
     timesTied = json["timesTied"];
     trueShootingAttempts =
         double.parse(json["trueShootingAttempts"].toString());
-    trueShootingPercentage = json["trueShootingPercentage"];
+    trueShootingPercentage =
+        double.parse(json["trueShootingPercentage"].toString());
     turnoversTeam = json["turnoversTeam"];
     turnoversTotal = json["turnoversTotal"];
   }

@@ -47,9 +47,17 @@ class _LayoutState extends State<Layout> {
     if (Provider.of<JsonFiles>(context, listen: false).getLeagueStandings() ==
         null) {
       try {
+        var season = Provider.of<SeasonProv>(context, listen: false).season;
+        var seasonShort =
+            Provider.of<SeasonProv>(context, listen: false).seasonShort;
+
+        var fullSchedule =
+            await Network.getJson(Urls.nbaFullSchedule(seasonShort));
+        Provider.of<JsonFiles>(context, listen: false)
+            .setFullSchedule(fullSchedule);
+
         var newStandings = await Network.getJson(
-          Urls.getNbaStatsLeagueStandings(
-              season: Provider.of<SeasonProv>(context, listen: false).season),
+          Urls.getNbaStatsLeagueStandings(season: season),
           requestHeaders: RequestHeaders.nbaStatsHeaders,
         );
         var players = await Network.getJson(Urls.nbaAllPlayers());

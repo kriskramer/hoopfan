@@ -20,6 +20,7 @@ class JsonFiles with ChangeNotifier {
   var _games;
   Map _idEastIndex = {};
   Map _idWestIndex = {};
+  var _fullSchedule;
   Map<String, dynamic> _teamPlayers = {}; // teamID,Player_list
   Map<String, dynamic> _teamNews = {}; // teamID,Player_list
   Map<String, dynamic> _teamVideos = {};
@@ -126,6 +127,10 @@ class JsonFiles with ChangeNotifier {
 
   void setTeamSchedule(String teamId, dynamic schedule) {
     _teamSchedule[teamId] = schedule;
+  }
+
+  void setFullSchedule(dynamic schedule) {
+    _fullSchedule = schedule;
   }
 
   // key value is gameId and period concatenated together with a "-"
@@ -346,6 +351,7 @@ class JsonFiles with ChangeNotifier {
   dynamic getGameNews(String searchString) => _gameNews[searchString];
 
   dynamic getTeamSchedule(String teamId) => _teamSchedule[teamId];
+  dynamic getFullSchedule() => _fullSchedule;
 
   dynamic getPlayerSummaryStats(String playerKey) =>
       _playerSummaryStats[playerKey];

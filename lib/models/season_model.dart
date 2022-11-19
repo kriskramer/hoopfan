@@ -36,6 +36,7 @@ class SeasonProv with ChangeNotifier {
   }
 
   String get season => _seasonVal;
+  String get seasonShort => _seasonVal.split("-")[0].toString();
   List<String> get seasonList => _seasonList;
   bool get confView => _confSelected;
   bool get divView => _divSelected;

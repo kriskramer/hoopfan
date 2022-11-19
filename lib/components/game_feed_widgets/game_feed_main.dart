@@ -89,8 +89,8 @@ class _GameFeedMainState extends State<GameFeedMain> {
                 GameOfficials(
                   game: game,
                 ),
-                game.gameStatus < 3 ? HowToWatchCard(game: game) : Text(''),
-                game.gameStatus < 3 ? getTicketsCard() : Text('')
+                //game.gameStatus < 3 ? HowToWatchCard(game: game) : Text(''),
+                //game.gameStatus < 3 ? getTicketsCard() : Text('')
               ]);
             }
             for (var p in values["pbp"]["actions"]) {

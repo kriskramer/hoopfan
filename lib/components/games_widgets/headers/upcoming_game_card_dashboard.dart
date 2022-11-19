@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hoop/components/cacheimg.dart';
 import 'package:hoop/components/game_feed_widgets/game_feed_latest.dart';
@@ -14,183 +15,138 @@ class UpcomingGameCardDashboard extends StatelessWidget {
   final dynamic game;
   UpcomingGameCardDashboard({this.game});
 
-  @override
   Widget build(BuildContext context) {
-    final standings = Provider.of<JsonFiles>(context, listen: false)
-        .getLeagueStandings(); //["league"]["standard"]["conference"];
-    final LeagueStanding vTeam =
-        standings.getTeamStandings(game["awayTeam"]["teamId"].toString());
-    final LeagueStanding hTeam =
-        standings.getTeamStandings(game["homeTeam"]["teamId"].toString());
-    var countdown = getStartCountdown(game);
-    bool preview = game["isPreviewArticleAvail"];
     var gameId = game["gameId"];
-    var date = game["gameUrlCode"].toString().split("/")[0];
 
-    DateTime time = DateTime.parse(game["gameTimeUTC"]);
-    DateTime newTime = time.toLocal();
-    //print(newTime);
-    // print("UTC time: $time");
-    // print("TIme now: ${DateTime.now()}");
-    // print(DateTime.now().difference(time));
+    DatabaseReference gameHeaderDb =
+        FirebaseDatabase.instance.ref('gameHeader22/$gameId');
 
-    return Card(
-      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
-      elevation: 5,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => GameView(
+    return StreamBuilder(
+        //future: _gameData,
+        stream: gameHeaderDb.onValue,
+        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+          if (snapshot.hasData) {
+            //print('reloading game_view data');
+            DataSnapshot dataValues = snapshot.data.snapshot;
+            Map<dynamic, dynamic> values = dataValues.value;
+            if (values == null) {
+              return Column(children: [
+                Text("No data"),
+              ]);
+            }
+            var game = values["data"];
+            final standings = Provider.of<JsonFiles>(context, listen: false)
+                .getLeagueStandings(); //["league"]["standard"]["conference"];
+            final LeagueStanding vTeam = standings
+                .getTeamStandings(game["awayTeam"]["teamId"].toString());
+            final LeagueStanding hTeam = standings
+                .getTeamStandings(game["homeTeam"]["teamId"].toString());
+
+            int vTeamScore = game["awayTeam"]["score"] == ""
+                ? "0"
+                : game["awayTeam"]["score"];
+            int hTeamScore = game["homeTeam"]["score"] == ""
+                ? "0"
+                : game["homeTeam"]["score"];
+            bool preview = game["isPreviewArticleAvail"];
+            var date = game["gameUrlCode"].toString().split("/")[0];
+
+            return Card(
+              margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              elevation: 5,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GameView(
+                        //game: gameStream,
                         game: game,
-                      )));
-        },
-        child: Container(
-          padding: EdgeInsets.all(5),
-          child: Column(
-            children: [
-              preview != null
-                  ? GamePreviewArticleHeader(gameId: gameId, gameDate: date)
-                  : SizedBox(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CachedLogo(
-                      radius: 30,
-                      url: ConstantHelper.getTeamLogo(
-                          game["awayTeam"]["teamId"].toString())),
-                  Text(
-                    "(${vTeam.record})",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 14),
-                  ),
-                  Column(children: [
-                    Text(
-                      formatDate(game["gameTimeUTC"].toString())[0],
-                      style: TextStyle(
-                        fontSize: 14,
                       ),
                     ),
-                    Text(
-                      formatDate(game["gameTimeUTC"].toString())[1],
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    countdown != ""
-                        ? Container(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
-                              countdown,
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.bold),
-                            ))
-                        : SizedBox(
-                            height: 1,
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    children: [
+                      preview != null
+                          ? GamePreviewArticleHeader(
+                              gameId: gameId, gameDate: date)
+                          : SizedBox(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CachedLogo(
+                              radius: 30,
+                              url: ConstantHelper.getTeamLogo(
+                                  game["awayTeam"]["teamId"].toString())),
+                          Text(
+                            "(${vTeam.record})",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 14),
                           ),
-                  ]),
-                  Text(
-                    "(${hTeam.record})",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                          Column(children: [
+                            Text(
+                              formatDate(game["gameTimeUTC"].toString())[0],
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              formatDate(game["gameTimeUTC"].toString())[1],
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            getStartCountdown(game)
+                          ]),
+                          Text(
+                            "(${hTeam.record})",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 14),
+                          ),
+                          CachedLogo(
+                              radius: 30,
+                              url: ConstantHelper.getTeamLogo(
+                                  game["homeTeam"]["teamId"].toString())),
+                        ],
+                      ),
+                    ],
                   ),
-                  CachedLogo(
-                      radius: 30,
-                      url: ConstantHelper.getTeamLogo(
-                          game["homeTeam"]["teamId"].toString())),
-                ],
+                ),
               ),
-              //GameFeedLatest(gameId)
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          }
+          return SizedBox();
+        });
   }
 
-  // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["awayTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
-
-  // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["homeTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
-
-  // String getHowToWatch() {
-  //   String howToWatch = "";
-  //   String nat, v, h;
-
-  //   if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
-  //     nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
-  //         ["shortName"];
-  //   } else {
-  //     nat = "";
-  //   }
-  //   if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
-  //     h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
-  //         ["shortName"];
-  //   } else {
-  //     h = "";
-  //   }
-  //   if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
-  //     v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
-  //         ["shortName"];
-  //   } else {
-  //     v = "";
-  //   }
-
-  //   howToWatch = "$nat  $v  $h";
-
-  //   return howToWatch;
-  // }
-
-  String getStartCountdown(dynamic game) {
+  Widget getStartCountdown(dynamic game) {
     String startTimeUTC = game["gameTimeUTC"];
 
     if (startTimeUTC == "") {
-      return "";
+      return SizedBox();
     }
 
     DateTime start = DateTime.parse(startTimeUTC);
 
     Duration duration = start.difference(DateTime.now());
 
+    Text t;
+
     if (duration.inMinutes < 91 && duration.inMinutes > 0) {
-      return "${duration.inMinutes.toString()} min to go!";
+      t = new Text(
+        "${duration.inMinutes.toString()} min to go!",
+        style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+      );
+    } else if (duration.inMinutes < 1) {
+      t = new Text(
+        "Starting...",
+        style: TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold),
+      );
     }
 
-    return "";
+    return Container(padding: EdgeInsets.all(4), child: t);
   }
 }

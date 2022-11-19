@@ -13,50 +13,63 @@ class TeamScheduleSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: FutureBuilder(
-      future: loadData(
-          context), //Network.getJson(Urls.nbaTeamSchedule(teamId, "2021")),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          List<dynamic> games = snapshot.data["league"]["standard"];
-          List<Widget> list = [];
-          List<dynamic> listPrevious = [];
-          List<dynamic> listUpcoming = [];
+    List<dynamic> teamSchedule = [];
+    List<dynamic> preseasonGames = [];
+    List<dynamic> regseasonGames = [];
 
-          for (var g in games) {
-            if (g["statusNum"] == 3) {
-              listPrevious.add(g);
-            }
-            if (g["statusNum"] == 1 || g["statusNum"] == 2) {
-              listUpcoming.add(g);
-            }
-          }
+    var fullSchedule =
+        Provider.of<JsonFiles>(context, listen: false).getFullSchedule();
 
-          if (listPrevious[listPrevious.length - 1] != null) {
-            list.add(Text("Last Game", style: TextStyle(fontSize: 16)));
-            list.add(getGame(listPrevious[listPrevious.length - 1], context));
-          }
-          list.add(SizedBox(height: 8));
-          list.add(Text("Next 3 Games", style: TextStyle(fontSize: 16)));
-          if (listUpcoming.length > 0) {
-            for (int i = 0; i < 3; i++) {
-              if (listUpcoming[i] != null) {
-                list.add(getGame(listUpcoming[i], context));
-              }
-            }
-          }
+    var nbaSchedule = fullSchedule["league"]["standard"];
 
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: [...list],
-            ),
-          );
-        } else {
-          return Text(' ');
+    for (var s in nbaSchedule) {
+      if (s["hTeam"]["teamId"].toString() == teamId ||
+          s["vTeam"]["teamId"].toString() == teamId) {
+        teamSchedule.add(s);
+      }
+    }
+
+    for (var g in teamSchedule) {
+      if (g["seasonStageId"] == 1) {
+        preseasonGames.add(g);
+      } else if (g["seasonStageId"] == 2) {
+        regseasonGames.add(g);
+      }
+    }
+
+    List<dynamic> listPrevious = [];
+    List<dynamic> listUpcoming = [];
+    List<dynamic> list = [];
+
+    for (var g in teamSchedule) {
+      var gameDate = DateTime.parse(g["startTimeUTC"]);
+      if (gameDate.millisecondsSinceEpoch <
+          DateTime.now().millisecondsSinceEpoch)
+        listPrevious.add(g);
+      else
+        listUpcoming.add(g);
+    }
+
+    if (listPrevious[listPrevious.length - 1] != null) {
+      list.add(Text("Last Game", style: TextStyle(fontSize: 16)));
+      list.add(getGame(listPrevious[listPrevious.length - 1], context));
+    }
+    list.add(SizedBox(height: 8));
+    list.add(Text("Next 3 Games", style: TextStyle(fontSize: 16)));
+    if (listUpcoming.length > 0) {
+      for (int i = 0; i < 3; i++) {
+        if (listUpcoming[i] != null) {
+          list.add(getGame(listUpcoming[i], context));
         }
-      },
+      }
+    }
+
+    return Container(
+        child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Column(
+        children: [...list],
+      ),
     ));
   }
 
@@ -65,7 +78,7 @@ class TeamScheduleSmall extends StatelessWidget {
     if (Provider.of<JsonFiles>(context, listen: false)
             .getTeamSchedule(teamId) ==
         null) {
-      sched = await Network.getJson(Urls.nbaTeamSchedule(teamId, "2021"));
+      sched = await Network.getJson(Urls.nbaTeamSchedule(teamId, "2022"));
 
       Provider.of<JsonFiles>(context, listen: false)
           .setTeamSchedule(teamId, sched);

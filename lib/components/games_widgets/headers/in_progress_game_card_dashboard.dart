@@ -18,12 +18,12 @@ class InProgressGameCardDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     var gameId = game["gameId"];
 
-    DatabaseReference gameDataDb =
-        FirebaseDatabase.instance.ref('gameData22/$gameId');
+    DatabaseReference gameHeaderDb =
+        FirebaseDatabase.instance.ref('gameHeader22/$gameId');
 
     return StreamBuilder(
         //future: _gameData,
-        stream: gameDataDb.onValue,
+        stream: gameHeaderDb.onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData) {
             //print('reloading game_view data');
@@ -34,22 +34,22 @@ class InProgressGameCardDashboard extends StatelessWidget {
                 Text("No data"),
               ]);
             }
-            var gameStream = values["data"]["game"];
+            var game = values["data"];
             final standings = Provider.of<JsonFiles>(context, listen: false)
                 .getLeagueStandings(); //["league"]["standard"]["conference"];
             final LeagueStanding vTeam = standings
-                .getTeamStandings(gameStream["awayTeam"]["teamId"].toString());
+                .getTeamStandings(game["awayTeam"]["teamId"].toString());
             final LeagueStanding hTeam = standings
-                .getTeamStandings(gameStream["homeTeam"]["teamId"].toString());
+                .getTeamStandings(game["homeTeam"]["teamId"].toString());
 
-            int vTeamScore = gameStream["awayTeam"]["score"] == ""
+            int vTeamScore = game["awayTeam"]["score"] == ""
                 ? "0"
-                : gameStream["awayTeam"]["score"];
-            int hTeamScore = gameStream["homeTeam"]["score"] == ""
+                : game["awayTeam"]["score"];
+            int hTeamScore = game["homeTeam"]["score"] == ""
                 ? "0"
-                : gameStream["homeTeam"]["score"];
-            bool preview = gameStream["isPreviewArticleAvail"];
-            var date = gameStream["gameUrlCode"].toString().split("/")[0];
+                : game["homeTeam"]["score"];
+            bool preview = game["isPreviewArticleAvail"];
+            var date = game["gameUrlCode"].toString().split("/")[0];
 
             return Card(
               margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -60,8 +60,8 @@ class InProgressGameCardDashboard extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => GameView(
-                        game: gameStream,
-                        gameData: game,
+                        //game: gameStream,
+                        game: game,
                       ),
                     ),
                   );
@@ -80,7 +80,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                           CachedLogo(
                               radius: 35,
                               url: ConstantHelper.getTeamLogo(
-                                  gameStream["awayTeam"]["teamId"].toString())),
+                                  game["awayTeam"]["teamId"].toString())),
                           Text(
                             "(${vTeam.record})",
                             style: TextStyle(color: Colors.grey[700]),
@@ -96,7 +96,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              gameStream["gameStatusText"],
+                              game["gameStatusText"],
                               style: TextStyle(
                                   fontSize: 16, color: Colors.green[800]),
                             ),
@@ -108,7 +108,7 @@ class InProgressGameCardDashboard extends StatelessWidget {
                           CachedLogo(
                               radius: 35,
                               url: ConstantHelper.getTeamLogo(
-                                  gameStream["homeTeam"]["teamId"].toString())),
+                                  game["homeTeam"]["teamId"].toString())),
                         ],
                       ),
                       GameFeedLatest(gameId)
@@ -120,102 +120,5 @@ class InProgressGameCardDashboard extends StatelessWidget {
           }
           return SizedBox();
         });
-  }
-
-  String getCurrentPeriod(dynamic json) {
-    return json["gameStatusText"];
-    // var period = json["period"];
-    // var periodString = "";
-    // var clock = json["clock"];
-    // var isHalftime = json["period"]["isHalftime"];
-    // var clockString = "";
-
-    // if (period == 1) {
-    //   periodString = "1st";
-    // } else if (period == 2) {
-    //   periodString = "2nd";
-    // } else if (period == 3) {
-    //   periodString = "3rd";
-    // } else if (period == 4) {
-    //   periodString = "4th";
-    // } else if (period > 4) {
-    //   periodString = "OT";
-    // }
-
-    // if (isHalftime) {
-    //   clockString = "Halftime";
-    // } else {
-    //   clockString = periodString + "  " + clock;
-    // }
-
-    // return clockString;
-  }
-
-  // dynamic getVTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["awayTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
-
-  // dynamic getHTeamStandingsFromJson(dynamic game, dynamic json) {
-  //   dynamic team;
-  //   String teamId = game["homeTeam"]["teamId"];
-
-  //   for (var t in json["east"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-  //   for (var t in json["west"]) {
-  //     if (t["teamId"] == teamId) {
-  //       team = t;
-  //       break;
-  //     }
-  //   }
-
-  //   return team;
-  // }
-
-  String getHowToWatch() {
-    String howToWatch = "";
-    String nat, v, h;
-
-    if (game["watch"]["broadcast"]["broadcasters"]["national"].length > 0) {
-      nat = game["watch"]["broadcast"]["broadcasters"]["national"][0]
-          ["shortName"];
-    } else {
-      nat = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["homeTeam"].length > 0) {
-      h = game["watch"]["broadcast"]["broadcasters"]["homeTeam"][0]
-          ["shortName"];
-    } else {
-      h = "";
-    }
-    if (game["watch"]["broadcast"]["broadcasters"]["awayTeam"].length > 0) {
-      v = game["watch"]["broadcast"]["broadcasters"]["awayTeam"][0]
-          ["shortName"];
-    } else {
-      v = "";
-    }
-
-    howToWatch = "$nat  $v  $h";
-
-    return howToWatch;
   }
 }

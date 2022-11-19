@@ -152,46 +152,46 @@ class PlayerRankItemList {
       if (measure == "BASE") {
         // Base stats - found in PlayerBaseStatAndRank class
         if (stat == "PTS") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[30], j[59]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[30], j[60]);
         }
         if (stat == "REB") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[22], j[51]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[22], j[52]);
         }
         if (stat == "OREB") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[20], j[49]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[20], j[50]);
         }
         if (stat == "DREB") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[21], j[50]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[21], j[51]);
         }
         if (stat == "AST") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[23], j[52]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[23], j[53]);
         }
         if (stat == "TOV") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[24], j[53]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[24], j[54]);
         }
         if (stat == "STL") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[25], j[54]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[25], j[55]);
         }
         if (stat == "BLK") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[26], j[55]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[26], j[56]);
         }
         if (stat == "FG %") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[13], j[42]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[13], j[43]);
         }
         if (stat == "FT %") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[19], j[48]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[19], j[49]);
         }
         if (stat == "3P %") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[16], j[45]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[16], j[46]);
         }
         if (stat == "PF") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[28], j[57]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[28], j[58]);
         }
         if (stat == "+/-") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[31], j[60]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[31], j[61]);
         }
         if (stat == "MIN") {
-          p = PlayerRankItem(j[0], j[1], j[4], stat, j[10], j[39]);
+          p = PlayerRankItem(j[0], j[1], j[4], stat, j[10], j[40]);
         }
       }
 
