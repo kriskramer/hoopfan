@@ -14,9 +14,9 @@ import 'game_stats.dart';
 class GameStatsView extends StatelessWidget {
   final dynamic gameData;
   final String gameId;
-  final GameData game;
+  //final GameData game;
 
-  const GameStatsView(this.gameData, this.gameId, this.game);
+  const GameStatsView(this.gameData, this.gameId);
 
   @override
   Widget build(BuildContext context) {
@@ -63,17 +63,17 @@ class GameStatsView extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: OnCourtCard(
-                              game: game,
+                              game: gameData,
                             ),
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           ArenaCard(
-                            game: game,
+                            game: gameData,
                           ),
                           GameOfficials(
-                            game: game,
+                            game: gameData,
                           ),
                           // gameStatus < 3
                           //     ? HowToWatchCard(game: gameData)
@@ -83,18 +83,18 @@ class GameStatsView extends StatelessWidget {
                       ),
                       Container(
                         child: GameStats(
-                          game: game,
+                          game: gameData,
                         ),
                       ),
                       Container(
                         child: GameBoxScoreMain(
-                          game: game,
+                          game: gameData,
                           isHomeTeam: false,
                         ),
                       ),
                       Container(
                         child: GameBoxScoreMain(
-                          game: game,
+                          game: gameData,
                           isHomeTeam: true,
                         ),
                       ),

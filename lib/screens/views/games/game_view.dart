@@ -126,8 +126,7 @@ class _GameViewState extends State<GameView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        GameStatsView(widget.game, gameId, game)),
+                    builder: (context) => GameStatsView(widget.game, gameId)),
               );
             },
             icon: Icon(
